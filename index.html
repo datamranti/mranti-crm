@@ -106,6 +106,7 @@
       width: 34px; height: 34px; border-radius: 50%; background: #dbeafe;
       display: flex; align-items: center; justify-content: center;
       font-size: 14px; font-weight: 700; color: #2563eb;
+      letter-spacing: -0.2px;
     }
     .user-name { font-size: 13px; font-weight: 600; color: #0f172a; }
     .user-email { font-size: 11px; color: #64748b; }
@@ -1446,16 +1447,23 @@
     // ── ACCESS TOKEN PERSISTENCE ──
     // Firebase keeps the user signed in across reloads, but the Google Calendar
     // access token it hands back is only ever held in a JS variable, so it is
-    // lost every time this page reloads (e.g. navigating back from another
-    // page). Caching it in sessionStorage lets us skip the repeated
-    // Sync + consent-popup cycle for the lifetime of the token (~1 hour) or
-    // until the tab is closed, whichever comes first.
+    // lost every time this page reloads.
+    //
+    // sessionStorage was tried first, but it's scoped to a single tab and only
+    // gets copied to a *new* tab when that tab is opened via a plain link click
+    // (no rel="noopener"). Closing tabs, reopening the browser, or any other
+    // navigation path loses it. Since this token is read-only Calendar access
+    // and already self-expires, localStorage is the better fit: it's shared
+    // across every tab for this origin and survives closing/reopening the
+    // browser. The same TOKEN_MAX_AGE_MS expiry still applies, so it never
+    // lives longer than ~50 minutes regardless of storage type - it just
+    // isn't artificially tied to one tab anymore.
     const TOKEN_STORAGE_KEY = 'mranti_crm_gcal_token';
     const TOKEN_MAX_AGE_MS = 50 * 60 * 1000; // 50 min safety buffer under Google's ~60 min token lifetime
 
     function saveAccessToken(token) {
       try {
-        sessionStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify({ token, savedAt: Date.now() }));
+        localStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify({ token, savedAt: Date.now() }));
       } catch (e) {
         // storage unavailable (private browsing etc.) - falls back to manual sync, no big deal
       }
@@ -1463,7 +1471,7 @@
 
     function loadSavedAccessToken() {
       try {
-        const raw = sessionStorage.getItem(TOKEN_STORAGE_KEY);
+        const raw = localStorage.getItem(TOKEN_STORAGE_KEY);
         if (!raw) return null;
         const { token, savedAt } = JSON.parse(raw);
         if (!token || !savedAt) return null;
@@ -1475,7 +1483,7 @@
     }
 
     function clearSavedAccessToken() {
-      try { sessionStorage.removeItem(TOKEN_STORAGE_KEY); } catch (e) {}
+      try { localStorage.removeItem(TOKEN_STORAGE_KEY); } catch (e) {}
     }
 
     let currentUser = null;
@@ -1485,6 +1493,53 @@
     let currentTab = 'past';
     let currentEvent = null;
     window._eventsCache = {};
+
+    // ── AVATAR (initials fallback, colored per person like Google/Slack do) ──
+    // Every user gets a consistent color derived from their email, not just
+    // one flat blue for everyone - makes it easier to tell people apart at
+    // a glance, same idea as Google's account avatars.
+    const AVATAR_PALETTE = [
+      { bg: '#dbeafe', text: '#2563eb' }, // blue
+      { bg: '#ede9fe', text: '#7c3aed' }, // violet
+      { bg: '#cffafe', text: '#0891b2' }, // cyan
+      { bg: '#d1fae5', text: '#059669' }, // emerald
+      { bg: '#fef3c7', text: '#b45309' }, // amber
+      { bg: '#fee2e2', text: '#dc2626' }, // red
+      { bg: '#e0e7ff', text: '#4338ca' }, // indigo
+      { bg: '#ccfbf1', text: '#0d9488' }  // teal
+    ];
+
+    function getAvatarColor(seed) {
+      const s = String(seed || 'user');
+      let hash = 0;
+      for (let i = 0; i < s.length; i++) {
+        hash = (hash * 31 + s.charCodeAt(i)) >>> 0;
+      }
+      return AVATAR_PALETTE[hash % AVATAR_PALETTE.length];
+    }
+
+    function setUserAvatar(user, firstName) {
+      const initial = firstName ? firstName[0].toUpperCase() : '?';
+      const color = getAvatarColor(user.email || user.displayName || firstName);
+      const photoEl = document.getElementById('userPhoto');
+      const initialEl = document.getElementById('userInitial');
+
+      // Set the initial + color up front, regardless of whether a photo
+      // exists. If the photo fails to load later, the fallback that
+      // appears already has the right letter and color on it.
+      initialEl.textContent = initial;
+      initialEl.style.background = color.bg;
+      initialEl.style.color = color.text;
+
+      if (user.photoURL) {
+        photoEl.src = user.photoURL;
+        photoEl.style.display = 'block';
+        initialEl.style.display = 'none';
+      } else {
+        photoEl.style.display = 'none';
+        initialEl.style.display = 'flex';
+      }
+    }
 
     // ── AUTH ──
     auth.onAuthStateChanged(user => {
@@ -1502,12 +1557,7 @@
         document.getElementById('userName').textContent = user.displayName || '';
         document.getElementById('userEmail').textContent = user.email || '';
         document.getElementById('welcomeMsg').textContent = 'Welcome, ' + firstName;
-        if (user.photoURL) {
-          document.getElementById('userPhoto').src = user.photoURL;
-        } else {
-          document.getElementById('userInitial').textContent = firstName[0].toUpperCase();
-          document.getElementById('userInitial').style.display = 'flex';
-        }
+        setUserAvatar(user, firstName);
         hideError();
         if (!googleAccessToken) {
           const savedToken = loadSavedAccessToken();
