@@ -1375,7 +1375,7 @@
   </div>
 
   <script>
-    console.log('MRANTI CRM graph sandbox index v1 loaded');
+    console.log('MRANTI CRM graph sandbox index v2 loaded');
     const firebaseConfig = {
       apiKey: "AIzaSyDXz0gL67r9BafTg8nL6VdHYdw1tfcxhto",
       authDomain: "mranticrm.firebaseapp.com",
@@ -1443,6 +1443,41 @@
       return token;
     }
 
+    // ── ACCESS TOKEN PERSISTENCE ──
+    // Firebase keeps the user signed in across reloads, but the Google Calendar
+    // access token it hands back is only ever held in a JS variable, so it is
+    // lost every time this page reloads (e.g. navigating back from another
+    // page). Caching it in sessionStorage lets us skip the repeated
+    // Sync + consent-popup cycle for the lifetime of the token (~1 hour) or
+    // until the tab is closed, whichever comes first.
+    const TOKEN_STORAGE_KEY = 'mranti_crm_gcal_token';
+    const TOKEN_MAX_AGE_MS = 50 * 60 * 1000; // 50 min safety buffer under Google's ~60 min token lifetime
+
+    function saveAccessToken(token) {
+      try {
+        sessionStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify({ token, savedAt: Date.now() }));
+      } catch (e) {
+        // storage unavailable (private browsing etc.) - falls back to manual sync, no big deal
+      }
+    }
+
+    function loadSavedAccessToken() {
+      try {
+        const raw = sessionStorage.getItem(TOKEN_STORAGE_KEY);
+        if (!raw) return null;
+        const { token, savedAt } = JSON.parse(raw);
+        if (!token || !savedAt) return null;
+        if (Date.now() - savedAt > TOKEN_MAX_AGE_MS) return null;
+        return token;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function clearSavedAccessToken() {
+      try { sessionStorage.removeItem(TOKEN_STORAGE_KEY); } catch (e) {}
+    }
+
     let currentUser = null;
     let googleAccessToken = null;
     let pastEvents = [];
@@ -1466,7 +1501,7 @@
         document.getElementById('appScreen').style.display = 'flex';
         document.getElementById('userName').textContent = user.displayName || '';
         document.getElementById('userEmail').textContent = user.email || '';
-        document.getElementById('welcomeMsg').textContent = 'Welcome, ' + firstName + ' 👋';
+        document.getElementById('welcomeMsg').textContent = 'Welcome, ' + firstName;
         if (user.photoURL) {
           document.getElementById('userPhoto').src = user.photoURL;
         } else {
@@ -1474,6 +1509,10 @@
           document.getElementById('userInitial').style.display = 'flex';
         }
         hideError();
+        if (!googleAccessToken) {
+          const savedToken = loadSavedAccessToken();
+          if (savedToken) googleAccessToken = savedToken;
+        }
         if (googleAccessToken) loadCalendar();
       } else {
         currentUser = null;
@@ -1495,6 +1534,7 @@
         }
 
         googleAccessToken = token;
+        saveAccessToken(token);
         loadCalendar();
 
       }).catch(err => {
@@ -1507,6 +1547,7 @@
 
     function doSignOut() {
       googleAccessToken = null;
+      clearSavedAccessToken();
       pastEvents = [];
       upcomingEvents = [];
       auth.signOut();
@@ -1544,6 +1585,7 @@
         }
 
         googleAccessToken = token;
+        saveAccessToken(token);
         console.log('Calendar access token received:', googleAccessToken ? 'YES' : 'NO');
 
         await loadCalendar();
@@ -1591,6 +1633,7 @@
       } catch (e) {
         if (String(e.message || '').includes('401') || String(e.message || '').toLowerCase().includes('invalid credentials')) {
           googleAccessToken = null;
+          clearSavedAccessToken();
           setCalendarStatus('⚠️ Calendar session expired. Click 🔄 Sync once to reconnect.');
         } else {
           setCalendarStatus('⚠️ ' + (e.message || 'Failed to load. Click 🔄 Sync to retry.'));
