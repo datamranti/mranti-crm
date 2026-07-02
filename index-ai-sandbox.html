@@ -1,0 +1,2416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MRANTI CRM — AI Sandbox</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background: linear-gradient(160deg, #e8f4fd 0%, #dbeafe 40%, #eff6ff 100%);
+      color: #0f172a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: -100px; right: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(ellipse, rgba(147,197,253,0.5) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -100px; left: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(ellipse, rgba(191,219,254,0.6) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── LOGIN ── */
+    #loginScreen {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 28px;
+      width: 100%; max-width: 440px;
+    }
+    .login-logo {
+      width: 160px; height: 72px;
+      background: url("https://cdn.prod.website-files.com/6719e3902a71ea8154ba371d/6996a2c470a01e3f32ffa080_M30.png") center/contain no-repeat;
+      filter: brightness(0) saturate(100%) invert(17%) sepia(80%) saturate(1200%) hue-rotate(210deg) brightness(90%);
+    }
+    .login-card {
+      width: 100%;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(147,197,253,0.4);
+      border-radius: 24px; padding: 44px 40px;
+      box-shadow: 0 8px 40px rgba(59,130,246,0.12), 0 2px 8px rgba(0,0,0,0.06);
+      backdrop-filter: blur(12px);
+      display: flex; flex-direction: column;
+      align-items: center; gap: 12px; text-align: center;
+    }
+    .login-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: #2563eb; background: rgba(37,99,235,0.08);
+      padding: 4px 14px; border-radius: 20px;
+      border: 1px solid rgba(37,99,235,0.15);
+    }
+    .login-title { font-size: 26px; font-weight: 800; color: #0f172a; margin-top: 4px; }
+    .login-sub { font-size: 13px; color: #64748b; margin-bottom: 8px; }
+    .google-btn {
+      display: flex; align-items: center; gap: 12px;
+      width: 100%; padding: 14px 20px;
+      background: #ffffff; border: 1.5px solid #d1d5db;
+      border-radius: 12px; cursor: pointer;
+      font-family: inherit; font-size: 15px; font-weight: 600;
+      color: #0f172a; transition: all 0.2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      justify-content: center;
+    }
+    .google-btn:hover { border-color: #3b82f6; box-shadow: 0 4px 16px rgba(59,130,246,0.15); transform: translateY(-1px); }
+    .google-btn img { width: 22px; height: 22px; }
+    .login-note { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+    .error-msg {
+      display: none;
+      background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3);
+      color: #dc2626; border-radius: 10px;
+      padding: 10px 16px; font-size: 13px; width: 100%; text-align: center;
+    }
+
+    /* ── APP ── */
+    #appScreen {
+      display: none; position: relative; z-index: 1;
+      width: 100%; max-width: 560px;
+      flex-direction: column; align-items: center; gap: 24px;
+    }
+    .user-bar {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255,255,255,0.85); border: 1px solid rgba(147,197,253,0.3);
+      border-radius: 14px; padding: 10px 16px;
+      box-shadow: 0 2px 8px rgba(59,130,246,0.08); backdrop-filter: blur(8px);
+    }
+    .user-info { display: flex; align-items: center; gap: 10px; }
+    .user-avatar { width: 34px; height: 34px; border-radius: 50%; border: 2px solid rgba(37,99,235,0.2); object-fit: cover; }
+    .user-avatar-placeholder {
+      width: 34px; height: 34px; border-radius: 50%; background: #dbeafe;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: #2563eb;
+      letter-spacing: -0.2px;
+    }
+    .user-name { font-size: 13px; font-weight: 600; color: #0f172a; }
+    .user-email { font-size: 11px; color: #64748b; }
+    .signout-btn {
+      padding: 7px 14px; background: transparent;
+      border: 1.5px solid rgba(147,197,253,0.5); border-radius: 8px;
+      color: #64748b; font-size: 12px; font-weight: 600;
+      cursor: pointer; font-family: inherit; transition: all 0.2s;
+    }
+    .signout-btn:hover { border-color: #ef4444; color: #ef4444; background: rgba(239,68,68,0.05); }
+    .logo {
+      width: 160px; height: 72px;
+      background: url("https://cdn.prod.website-files.com/6719e3902a71ea8154ba371d/6996a2c470a01e3f32ffa080_M30.png") center/contain no-repeat;
+      filter: brightness(0) saturate(100%) invert(17%) sepia(80%) saturate(1200%) hue-rotate(210deg) brightness(90%);
+    }
+    .card {
+      width: 100%; background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(147,197,253,0.4); border-radius: 24px; padding: 36px 32px;
+      box-shadow: 0 8px 40px rgba(59,130,246,0.12), 0 2px 8px rgba(0,0,0,0.06);
+      backdrop-filter: blur(12px);
+      display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;
+    }
+    .welcome-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: #2563eb; background: rgba(37,99,235,0.08);
+      padding: 4px 14px; border-radius: 20px; border: 1px solid rgba(37,99,235,0.15);
+      white-space: nowrap; display: inline-block;
+    }
+    .welcome-title { font-size: 28px; font-weight: 800; color: #0f172a; line-height: 1.2; margin-top: 4px; }
+    .welcome-sub { font-size: 14px; color: #64748b; margin-top: 2px; }
+    .divider {
+      width: 100%; display: flex; align-items: center; gap: 12px;
+      color: #94a3b8; font-size: 11px; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase;
+    }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: rgba(148,163,184,0.35); }
+    .choices { width: 100%; display: flex; flex-direction: column; gap: 14px; }
+    .choice-btn {
+      display: flex; align-items: center; gap: 18px;
+      width: 100%; padding: 20px 24px;
+      background: rgba(255,255,255,0.9); border: 1.5px solid rgba(147,197,253,0.35);
+      border-radius: 18px; color: #0f172a; text-decoration: none; cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 12px rgba(59,130,246,0.08), 0 1px 3px rgba(0,0,0,0.06);
+      backdrop-filter: blur(8px);
+    }
+    .choice-btn:hover { background: #ffffff; border-color: #3b82f6; transform: translateY(-3px); box-shadow: 0 12px 32px rgba(59,130,246,0.18), 0 2px 8px rgba(0,0,0,0.08); }
+    .choice-btn:active { transform: translateY(-1px); }
+    .choice-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+    .icon-blue   { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .icon-purple { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
+    .choice-text { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
+    .choice-title { font-size: 15px; font-weight: 700; color: #0f172a; }
+    .choice-desc { font-size: 12px; color: #64748b; }
+    .choice-arrow {
+      margin-left: auto; width: 32px; height: 32px; border-radius: 50%;
+      background: #2563eb; color: #ffffff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0; transition: background 0.2s;
+    }
+    .choice-btn:hover .choice-arrow { background: #1d4ed8; }
+
+    /* ── TODAY'S SCHEDULE TIMELINE + THIS MONTH HEATMAP ── */
+    .stats-card {
+      align-items: stretch;
+      text-align: left;
+      padding: 20px 22px;
+      gap: 8px;
+    }
+    .stats-card-title {
+      font-size: 10.5px; font-weight: 800; letter-spacing: 1.4px;
+      text-transform: uppercase; color: #1e3a5f;
+    }
+
+    .insights-divider {
+      height: 1px; background: rgba(148,163,184,0.24); margin: 6px 0 2px; width: 100%;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scaleX(0.9); }
+      to { opacity: 1; transform: scaleX(1); }
+    }
+
+    .timeline-header { display: flex; align-items: baseline; gap: 6px; margin-top: 2px; }
+    .timeline-count { font-size: 22px; font-weight: 800; color: #0f172a; }
+    .timeline-count-label { font-size: 11px; font-weight: 700; color: #94a3b8; }
+
+    .timeline-track {
+      position: relative; min-height: 34px; border-radius: 10px;
+      background: rgba(226,232,240,0.55); margin-top: 8px; overflow: hidden;
+      transform-origin: left center; animation: popIn 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .timeline-block {
+      position: absolute; border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(37,99,235,0.18); cursor: default;
+      border: 1.5px solid rgba(255,255,255,0.85);
+    }
+    .timeline-ticks { display: flex; justify-content: space-between; margin-top: 6px; padding: 0 1px; }
+    .timeline-tick { font-size: 8.5px; font-weight: 700; color: #94a3b8; }
+
+    .clock-legend { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+    .clock-legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #334155; min-width: 0; }
+    .clock-legend-dot { width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0; }
+    .clock-legend-title {
+      flex: 1; font-weight: 650; overflow: hidden; text-overflow: ellipsis;
+      white-space: nowrap; min-width: 0;
+    }
+    .clock-legend-time { font-size: 10px; color: #94a3b8; font-weight: 700; flex-shrink: 0; }
+    .clock-empty { font-size: 12px; color: #94a3b8; text-align: center; padding: 4px 0 2px; }
+
+    .month-chart-header { display: flex; align-items: baseline; gap: 6px; }
+    .month-chart-total { font-size: 22px; font-weight: 800; color: #0f172a; }
+    .month-chart-total-label { font-size: 11px; font-weight: 700; color: #94a3b8; }
+
+    .heatmap-weekday-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 10px; }
+    .heatmap-weekday { text-align: center; font-size: 8px; font-weight: 800; color: #94a3b8; text-transform: uppercase; }
+
+    .heatmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 4px; }
+    .heatmap-cell {
+      aspect-ratio: 1; border-radius: 4px; display: flex; align-items: center;
+      justify-content: center; transition: transform 0.15s ease;
+    }
+    .heatmap-cell.empty { background: transparent; }
+    .heatmap-cell:not(.empty):hover { transform: scale(1.18); }
+    .heatmap-cell.today-cell { box-shadow: 0 0 0 1.5px #2563eb; }
+    .heatmap-day-num { font-size: 7px; font-weight: 700; color: rgba(15,23,42,0.55); }
+
+    /* ── CALENDAR SECTION ── */
+    .calendar-section {
+      width: 100%; display: flex; flex-direction: column; gap: 14px;
+    }
+    .calendar-header {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .calendar-title { font-size: 16px; font-weight: 800; color: #0f172a; }
+    .calendar-subtitle { font-size: 12px; color: #64748b; margin-top: 2px; }
+    .sync-btn {
+      padding: 8px 16px;
+      background: rgba(37,99,235,0.08); border: 1.5px solid rgba(37,99,235,0.2);
+      border-radius: 8px; color: #2563eb;
+      font-size: 12px; font-weight: 700; cursor: pointer;
+      font-family: inherit; transition: all 0.2s; white-space: nowrap;
+    }
+    .sync-btn:hover { background: rgba(37,99,235,0.15); border-color: #3b82f6; }
+    .tabs {
+      display: flex; background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(147,197,253,0.3); border-radius: 10px;
+      padding: 4px; gap: 4px;
+    }
+    .tab-btn {
+      flex: 1; padding: 9px 12px; border: none; border-radius: 7px;
+      font-family: inherit; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; background: transparent; color: #64748b;
+    }
+    .tab-btn.active { background: #2563eb; color: #ffffff; box-shadow: 0 2px 8px rgba(37,99,235,0.25); }
+    .events-list { display: flex; flex-direction: column; gap: 10px; }
+    .event-card {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 16px 18px;
+      background: rgba(255,255,255,0.9); border: 1.5px solid rgba(147,197,253,0.3);
+      border-radius: 14px; box-shadow: 0 2px 8px rgba(59,130,246,0.06);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .event-card:hover { border-color: #3b82f6; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.15); }
+    .event-info { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
+    .event-title { font-size: 14px; font-weight: 700; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .event-date { font-size: 12px; color: #2563eb; font-weight: 600; }
+    .event-attendees { font-size: 11px; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .event-log-btn {
+      padding: 8px 14px; background: #2563eb; color: #ffffff;
+      border: none; border-radius: 8px; font-size: 12px; font-weight: 700;
+      cursor: pointer; font-family: inherit; white-space: nowrap;
+      transition: background 0.2s; flex-shrink: 0;
+    }
+    .event-log-btn:hover { background: #1d4ed8; }
+    .show-more-wrap { display: flex; justify-content: center; margin-top: 4px; }
+    .show-more-btn {
+      padding: 10px 24px; border-radius: 999px;
+      border: 1.5px solid rgba(37,99,235,0.35);
+      background: rgba(239,246,255,0.75); color: #2563eb;
+      font-family: inherit; font-weight: 800; font-size: 12.5px;
+      cursor: pointer; transition: all 0.2s ease;
+    }
+    .show-more-btn:hover { background: #ffffff; border-color: #2563eb; }
+    .calendar-status { text-align: center; padding: 20px; font-size: 13px; color: #64748b; }
+
+    /* ── MONTH CALENDAR ── */
+    .cal-nav { display: flex; align-items: center; gap: 10px; }
+    .cal-nav-btn {
+      width: 32px; height: 32px; border-radius: 10px;
+      border: 1.5px solid rgba(147,197,253,0.5); background: #ffffff;
+      color: #2563eb; font-size: 16px; font-weight: 800; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-family: inherit; transition: all 0.2s ease;
+    }
+    .cal-nav-btn:hover { background: rgba(239,246,255,0.9); border-color: #2563eb; }
+    .cal-month-label { font-size: 15px; font-weight: 800; color: #0f172a; min-width: 128px; text-align: center; }
+    .cal-today-btn {
+      margin-left: auto; padding: 7px 14px; border-radius: 10px;
+      border: 1.5px solid rgba(147,197,253,0.5); background: #ffffff;
+      color: #2563eb; font-weight: 800; font-size: 12px; cursor: pointer;
+      font-family: inherit; transition: all 0.2s ease;
+    }
+    .cal-today-btn:hover { background: rgba(239,246,255,0.9); border-color: #2563eb; }
+
+    .cal-weekday-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-top: 4px; }
+    .cal-weekday { text-align: center; font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; padding: 2px 0; }
+
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); grid-auto-rows: 104px; gap: 6px; }
+    .cal-day-cell {
+      text-align: left; border: 1px solid rgba(147,197,253,0.28);
+      background: rgba(255,255,255,0.7); border-radius: 12px; padding: 8px;
+      cursor: pointer; font-family: inherit; display: flex; flex-direction: column;
+      align-items: flex-start; gap: 4px; transition: all 0.15s ease; min-width: 0;
+      overflow: hidden;
+    }
+    .cal-day-cell:hover { border-color: rgba(37,99,235,0.45); background: #ffffff; transform: translateY(-1px); box-shadow: 0 6px 14px rgba(37,99,235,0.10); }
+    .cal-day-cell.outside { opacity: 0.35; }
+    .cal-day-cell.selected { border-color: #2563eb; box-shadow: 0 0 0 2px rgba(37,99,235,0.18); background: #ffffff; }
+    .cal-day-number {
+      width: 22px; height: 22px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; font-size: 11.5px;
+      font-weight: 800; color: #0f172a; flex-shrink: 0; transition: all 0.15s ease;
+    }
+    .cal-day-cell.today .cal-day-number {
+      background: linear-gradient(135deg, #2563eb, #06b6d4); color: #ffffff;
+      box-shadow: 0 3px 10px rgba(37,99,235,0.35);
+    }
+    .cal-day-chips { display: flex; flex-direction: column; gap: 3px; min-width: 0; width: 100%; overflow: hidden; }
+    .cal-chip {
+      font-size: 10.5px; font-weight: 700; color: #1e3a8a; line-height: 1.3;
+      background: rgba(37,99,235,0.10); border-radius: 6px; padding: 3px 7px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;
+    }
+    .cal-more { font-size: 9.5px; font-weight: 700; color: #64748b; padding: 0 7px; }
+    .cal-day-dots { display: none; gap: 3px; flex-wrap: wrap; }
+    .cal-dot { width: 6px; height: 6px; border-radius: 999px; background: #2563eb; flex-shrink: 0; }
+    .cal-dot:nth-child(2) { background: #06b6d4; }
+    .cal-dot:nth-child(3) { background: #7c3aed; }
+    .cal-dot:nth-child(4) { background: #ea580c; }
+
+    .day-detail-card .events-list { margin-top: 4px; }
+
+    @media (max-width: 620px) {
+      .cal-chip, .cal-more { display: none; }
+      .cal-day-dots { display: flex; }
+      .cal-grid { grid-auto-rows: 44px; gap: 4px; }
+      .cal-day-cell { padding: 4px; gap: 2px; align-items: center; }
+      .cal-day-number { width: 19px; height: 19px; font-size: 10.5px; }
+      .cal-month-label { min-width: 108px; font-size: 14px; }
+    }
+
+    .footer { font-size: 11px; color: #94a3b8; text-align: center; }
+
+    /* ── MEETING MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15,23,42,0.5); z-index: 1000;
+      align-items: center; justify-content: center;
+      padding: 24px; backdrop-filter: blur(4px);
+    }
+    .modal-card {
+      background: #ffffff; border-radius: 20px; padding: 32px;
+      max-width: 520px; width: 100%; max-height: 90vh;
+      overflow-y: auto; box-shadow: 0 24px 64px rgba(0,0,0,0.15);
+      position: relative;
+    }
+    .modal-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; }
+    .modal-title { font-size: 18px; font-weight: 800; color: #0f172a; }
+    .modal-subtitle { font-size: 13px; color: #64748b; margin-top: 4px; }
+    .close-btn {
+      width: 32px; height: 32px; border-radius: 50%; border: none;
+      background: #f1f5f9; color: #64748b; font-size: 20px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: all 0.2s; line-height: 1;
+    }
+    .close-btn:hover { background: #e2e8f0; color: #0f172a; }
+    .form-section-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: #94a3b8; margin-bottom: 12px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .form-label { font-size: 13px; font-weight: 600; color: #1e3a5f; }
+    .form-label .req { color: #2563eb; margin-left: 2px; }
+    .form-input, .form-textarea {
+      padding: 11px 14px; background: #f8fafc;
+      border: 1.5px solid #e2e8f0; border-radius: 10px;
+      color: #0f172a; font-size: 14px; font-family: inherit;
+      outline: none; transition: border-color 0.2s; width: 100%;
+    }
+    .form-input:focus, .form-textarea:focus { border-color: #3b82f6; background: #ffffff; }
+    .form-input.prefilled { background: #eff6ff; border-color: rgba(147,197,253,0.5); color: #1e3a5f; }
+    .form-textarea { min-height: 80px; resize: vertical; }
+    .form-divider { height: 1px; background: #e2e8f0; margin: 18px 0; }
+
+    .contact-method-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .contact-method {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      background: #f8fafc;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .contact-method:hover {
+      border-color: #bfdbfe;
+      background: #ffffff;
+    }
+
+    .contact-method input {
+      margin-top: 2px;
+      accent-color: #2563eb;
+      flex-shrink: 0;
+    }
+
+    .contact-method-title {
+      display: block;
+      font-size: 13px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.25;
+    }
+
+    .contact-method-desc {
+      display: block;
+      margin-top: 3px;
+      font-size: 11px;
+      color: #64748b;
+      line-height: 1.35;
+    }
+
+    .contact-method:has(input:checked) {
+      border-color: #2563eb;
+      background: #eff6ff;
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.08);
+    }
+
+    .manual-contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .helper-text {
+      font-size: 11.5px;
+      line-height: 1.45;
+      color: #64748b;
+      margin: -4px 0 12px;
+    }
+
+    .hidden-section {
+      display: none;
+    }
+
+    @media (max-width: 560px) {
+      .contact-method-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .submit-btn {
+      width: 100%; padding: 14px; background: #2563eb; color: #ffffff;
+      border: none; border-radius: 12px; font-size: 15px; font-weight: 700;
+      cursor: pointer; font-family: inherit; transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(37,99,235,0.3); margin-top: 8px;
+    }
+    .submit-btn:hover { background: #1d4ed8; transform: translateY(-1px); }
+    .submit-btn:disabled { background: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
+    .modal-error {
+      display: none; background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.3); color: #dc2626;
+      border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 14px;
+    }
+    .modal-success { display: none; text-align: center; padding: 40px 20px; }
+    .modal-success .s-icon { font-size: 52px; margin-bottom: 16px; display: block; }
+    .modal-success h3 { font-size: 20px; font-weight: 800; color: #0f172a; margin-bottom: 8px; }
+    .modal-success p { font-size: 14px; color: #64748b; margin-bottom: 24px; }
+    .modal-success .close-success-btn {
+      padding: 12px 32px; background: #2563eb; color: #ffffff;
+      border: none; border-radius: 10px; font-size: 14px; font-weight: 700;
+      cursor: pointer; font-family: inherit; transition: background 0.2s;
+    }
+    .modal-success .close-success-btn:hover { background: #1d4ed8; }
+
+
+    /* ── PROFESSIONAL DESKTOP APP SHELL V4 ── */
+    body {
+      justify-content: flex-start;
+      padding: 24px;
+      background:
+        radial-gradient(circle at top left, rgba(37,99,235,0.14), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(0,214,255,0.16), transparent 34%),
+        linear-gradient(145deg, #eef6ff 0%, #dbeafe 42%, #eff6ff 100%);
+    }
+
+    #appScreen {
+      max-width: 1320px;
+      align-items: stretch;
+      gap: 22px;
+      padding: 0 0 24px;
+      min-height: calc(100vh - 48px);
+    }
+
+    .top-nav {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 16px 14px 20px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(147,197,253,0.36);
+      border-radius: 22px;
+      box-shadow: 0 16px 48px rgba(37,99,235,0.10), 0 2px 8px rgba(15,23,42,0.04);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand-block {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .logo.brand-logo {
+      width: 150px;
+      height: 46px;
+      margin: 0;
+      align-self: auto;
+      flex-shrink: 0;
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 34px;
+      background: rgba(148,163,184,0.35);
+    }
+
+    .brand-kicker {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: #2563eb;
+      line-height: 1;
+    }
+
+    .brand-subtitle {
+      margin-top: 5px;
+      font-size: 12px;
+      color: #64748b;
+      white-space: nowrap;
+    }
+
+    .user-bar {
+      width: auto;
+      min-width: 310px;
+      padding: 8px 10px 8px 12px;
+      border-radius: 16px;
+      box-shadow: none;
+      background: rgba(248,250,252,0.88);
+    }
+
+    .dashboard-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(260px, 300px) minmax(680px, 1fr);
+      align-items: start;
+      gap: 20px;
+      flex: 1;
+    }
+
+    .action-panel, .calendar-panel {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .action-panel {
+      gap: 18px;
+    }
+
+    .calendar-panel {
+      gap: 16px;
+      background: rgba(255,255,255,0.68);
+      border: 1px solid rgba(147,197,253,0.36);
+      border-radius: 26px;
+      padding: 22px;
+      box-shadow: 0 18px 56px rgba(37,99,235,0.12), 0 2px 8px rgba(15,23,42,0.04);
+      backdrop-filter: blur(16px);
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 254px;
+      align-items: flex-start;
+      text-align: left;
+      justify-content: space-between;
+      padding: 34px;
+      gap: 18px;
+      background:
+        radial-gradient(circle at top right, rgba(37,99,235,0.17), transparent 34%),
+        linear-gradient(145deg, rgba(255,255,255,0.92), rgba(248,250,252,0.82));
+    }
+
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      right: -64px;
+      bottom: -84px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,99,235,0.12), transparent 62%);
+      pointer-events: none;
+    }
+
+    .welcome-label { letter-spacing: 2px; }
+    .welcome-title {
+      font-size: 34px;
+      letter-spacing: -0.8px;
+      line-height: 1.08;
+    }
+    .welcome-sub {
+      max-width: 420px;
+      font-size: 14px;
+      line-height: 1.55;
+      margin-top: 8px;
+    }
+
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .meta-pill {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(239,246,255,0.76);
+      border: 1px solid rgba(147,197,253,0.38);
+    }
+
+    .meta-label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+
+    .meta-value {
+      font-size: 13px;
+      font-weight: 800;
+      color: #1e3a8a;
+    }
+
+    .divider {
+      margin: 2px 0 0;
+      font-size: 10px;
+      letter-spacing: 1.8px;
+      font-weight: 800;
+    }
+
+    .choices { gap: 12px; }
+    .choice-btn {
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.82);
+    }
+    .choice-icon { width: 46px; height: 46px; }
+    .choice-title { font-size: 14px; }
+    .choice-desc { font-size: 11.5px; line-height: 1.35; }
+
+    .calendar-panel-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 2px 4px 4px;
+    }
+
+    .section-eyebrow {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: #2563eb;
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      line-height: 1.1;
+      letter-spacing: -0.6px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .section-subtitle {
+      margin-top: 7px;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .calendar-section { gap: 14px; flex: 1; min-height: 0; }
+    .calendar-header {
+      display: none;
+    }
+
+    .sync-btn {
+      padding: 10px 16px;
+      border-radius: 12px;
+      background: #2563eb;
+      border: 1px solid #2563eb;
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(37,99,235,0.24);
+    }
+    .sync-btn:hover { background: #1d4ed8; border-color: #1d4ed8; transform: translateY(-1px); }
+
+    .tabs {
+      padding: 5px;
+      border-radius: 14px;
+      background: rgba(239,246,255,0.72);
+      flex-shrink: 0;
+    }
+    .tab-btn {
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 800;
+    }
+
+    .events-list {
+      padding: 4px 2px 2px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      align-content: start;
+      gap: 12px;
+    }
+
+    .event-card {
+      min-height: 126px;
+      align-items: flex-start;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(147,197,253,0.34);
+      background: rgba(255,255,255,0.88);
+      box-shadow: 0 8px 20px rgba(37,99,235,0.06);
+    }
+    .event-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(37,99,235,0.13);
+    }
+    .event-info { gap: 7px; }
+    .event-title {
+      font-size: 14px;
+      line-height: 1.35;
+      white-space: normal;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .event-date { font-size: 12px; }
+    .event-attendees {
+      font-size: 11.5px;
+      line-height: 1.35;
+      white-space: normal;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .event-log-btn {
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+
+    .calendar-status {
+      grid-column: 1 / -1;
+      background: rgba(255,255,255,0.7);
+      border: 1px dashed rgba(147,197,253,0.5);
+      border-radius: 16px;
+    }
+
+    .footer {
+      margin-top: auto;
+      text-align: center;
+    }
+
+    @media (max-width: 1120px) {
+      .events-list { grid-template-columns: 1fr; }
+      .dashboard-grid { grid-template-columns: minmax(320px,0.82fr) minmax(520px,1.18fr); }
+    }
+
+    @media (max-width: 920px) {
+      body { padding: 16px; }
+      #appScreen { max-width: 620px; min-height: auto; }
+      .top-nav { flex-direction: column; align-items: stretch; }
+      .brand-block { justify-content: center; text-align: center; }
+      .brand-divider, .brand-copy { display: none; }
+      .user-bar { width: 100%; min-width: 0; }
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .calendar-panel { max-height: none; overflow: visible; padding: 18px; }
+      .events-list { max-height: none; overflow: visible; grid-template-columns: 1fr; padding-right: 0; }
+      .calendar-panel-top { flex-direction: column; }
+      .sync-btn { width: 100%; }
+      .welcome-title { font-size: 28px; }
+      .hero-meta { grid-template-columns: 1fr; }
+    }
+
+
+    /* -- CLEAN WORK APP REFINEMENT V5 -- */
+    #appScreen {
+      max-width: 1280px;
+      gap: 20px;
+    }
+
+    .top-nav {
+      padding: 18px 22px;
+      border-radius: 24px;
+      align-items: center;
+    }
+
+    .brand-block {
+      flex: 1 1 auto;
+      min-width: 320px;
+    }
+
+    .brand-copy {
+      min-width: 0;
+    }
+
+    .brand-subtitle {
+      white-space: normal;
+    }
+
+    .user-bar {
+      flex: 0 0 auto;
+      width: auto;
+      min-width: 420px;
+      max-width: 520px;
+      gap: 16px;
+      padding: 10px 12px;
+    }
+
+    .user-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .user-info > div:last-child {
+      min-width: 0;
+    }
+
+    .user-name,
+    .user-email {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .signout-btn {
+      flex-shrink: 0;
+      padding: 9px 16px;
+      border-radius: 12px;
+    }
+
+    .dashboard-grid {
+      gap: 20px;
+      grid-template-columns: minmax(260px, 300px) minmax(680px, 1fr);
+    }
+
+    .action-panel {
+      gap: 16px;
+    }
+
+    .welcome-band {
+      min-height: auto;
+      padding: 24px 28px;
+      gap: 16px;
+      align-items: stretch;
+      text-align: left;
+      border-radius: 24px;
+    }
+
+    .welcome-title {
+      font-size: 26px;
+    }
+
+    .hero-top {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap; width: 100%;
+    }
+
+    .hero-actions-title {
+      color: #94a3b8; font-size: 10px; font-weight: 800;
+      letter-spacing: 1.7px; text-transform: uppercase; white-space: nowrap;
+    }
+
+    .choices-row {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    }
+
+    .welcome-band .choice-btn {
+      background: rgba(255,255,255,0.88);
+      border-color: rgba(147,197,253,0.4);
+      box-shadow: 0 8px 24px rgba(37,99,235,0.07);
+      flex-direction: column; align-items: flex-start; gap: 12px;
+      padding: 18px;
+    }
+    .choice-btn-top { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .welcome-band .choice-title { font-size: 14px; }
+    .welcome-band .choice-desc { font-size: 11.5px; line-height: 1.45; }
+    .welcome-band .choice-arrow { margin-left: 0; width: 28px; height: 28px; }
+
+    .action-panel > .divider,
+    .action-panel > .choices {
+      display: none !important;
+    }
+
+    .calendar-panel {
+      border-radius: 24px;
+      padding: 24px;
+    }
+
+    .calendar-panel-top {
+      align-items: center;
+      padding: 0;
+    }
+
+    .section-eyebrow,
+    .section-subtitle {
+      display: none;
+    }
+
+    .section-title {
+      font-size: 26px;
+    }
+
+    .sync-btn {
+      min-width: 138px;
+      padding: 11px 18px;
+    }
+
+    .tabs {
+      margin-top: 2px;
+    }
+
+    .events-list {
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .event-card {
+      min-height: 96px;
+      align-items: flex-start;
+      border-radius: 16px;
+      padding: 15px 16px;
+    }
+
+    .event-title {
+      -webkit-line-clamp: 2;
+      font-size: 14px;
+    }
+
+    .event-attendees {
+      -webkit-line-clamp: 2;
+    }
+
+    .footer {
+      opacity: 0.75;
+    }
+
+    @media (max-width: 1180px) {
+      .dashboard-grid {
+        grid-template-columns: minmax(240px, 280px) minmax(480px, 1fr);
+      }
+
+      .user-bar {
+        min-width: 360px;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .top-nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .brand-block {
+        min-width: 0;
+      }
+
+      .user-bar {
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .choices-row {
+        grid-template-columns: 1fr;
+      }
+
+      .action-panel {
+        height: auto;
+      }
+
+      .calendar-panel {
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 620px) {
+      body {
+        padding: 12px;
+      }
+
+      #appScreen {
+        gap: 14px;
+        padding-bottom: 12px;
+      }
+
+      .top-nav {
+        padding: 14px;
+        border-radius: 18px;
+      }
+
+      .brand-block {
+        justify-content: flex-start;
+        text-align: left;
+      }
+
+      .logo.brand-logo {
+        width: 128px;
+        height: 40px;
+      }
+
+      .brand-divider,
+      .brand-copy {
+        display: none;
+      }
+
+      .user-bar {
+        align-items: center;
+        gap: 10px;
+      }
+
+      .user-name {
+        font-size: 12px;
+      }
+
+      .user-email {
+        font-size: 10px;
+      }
+
+      .signout-btn {
+        padding: 8px 12px;
+        font-size: 11px;
+      }
+
+      .hero-card,
+      .calendar-panel {
+        padding: 18px;
+        border-radius: 20px;
+      }
+
+      .welcome-title {
+        font-size: 26px;
+      }
+
+      .calendar-panel-top {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .sync-btn {
+        width: 100%;
+      }
+
+      .tab-btn {
+        font-size: 11px;
+        padding: 10px 8px;
+      }
+
+      .event-card {
+        align-items: flex-start;
+      }
+    }
+
+  
+    /* -- TECH BRAND ICON SYSTEM V6 -- */
+    .tech-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      color: #1d4ed8;
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+    }
+
+    .choice-icon {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(37,99,235,0.18);
+      background: linear-gradient(135deg, rgba(219,234,254,0.95), rgba(239,246,255,0.9)) !important;
+    }
+
+    .choice-icon::after {
+      content: '';
+      position: absolute;
+      inset: 9px;
+      border: 1px solid rgba(37,99,235,0.22);
+      border-radius: 9px;
+      pointer-events: none;
+    }
+
+    .icon-purple {
+      background: linear-gradient(135deg, rgba(237,233,254,0.95), rgba(245,243,255,0.9)) !important;
+    }
+
+    .icon-purple .tech-icon {
+      color: #6d28d9;
+    }
+
+    .sync-btn::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border: 2px solid currentColor;
+      border-top-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 8px;
+      vertical-align: -1px;
+    }
+
+    .tab-btn::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: currentColor;
+      opacity: 0.55;
+      display: inline-block;
+      margin-right: 8px;
+      vertical-align: 1px;
+    }
+
+    .event-date::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 2px;
+      border: 1.5px solid currentColor;
+      display: inline-block;
+      margin-right: 8px;
+      vertical-align: 0;
+      opacity: 0.75;
+    }
+
+    .event-attendees::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: currentColor;
+      display: inline-block;
+      margin-right: 8px;
+      vertical-align: 1px;
+      opacity: 0.55;
+    }
+
+    .modal-success .s-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, #dbeafe, #eff6ff);
+      border: 1px solid rgba(37,99,235,0.18);
+      position: relative;
+      font-size: 0 !important;
+    }
+
+    .modal-success .s-icon::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 10px;
+      border-left: 3px solid #2563eb;
+      border-bottom: 3px solid #2563eb;
+      transform: rotate(-45deg);
+      left: 18px;
+      top: 20px;
+    }
+
+    .login-title { letter-spacing: -0.4px; }
+
+    .welcome-title::after {
+      content: '';
+      display: block;
+      width: 42px;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #2563eb, #00d6ff);
+      margin-top: 14px;
+    }
+
+    .choice-arrow {
+      font-size: 0 !important;
+      position: relative;
+    }
+
+    .choice-arrow::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-top: 2px solid #fff;
+      border-right: 2px solid #fff;
+      transform: rotate(45deg);
+      display: block;
+      margin-left: -2px;
+    }
+
+    .event-log-btn {
+      font-size: 0 !important;
+      width: 42px;
+      height: 38px;
+      padding: 0 !important;
+      position: relative;
+    }
+
+    .event-log-btn::after {
+      content: '';
+      width: 9px;
+      height: 9px;
+      border-top: 2px solid #fff;
+      border-right: 2px solid #fff;
+      transform: rotate(45deg);
+      display: block;
+      margin: 0 auto;
+    }
+
+  </style>
+
+<style>
+  @media (min-width: 901px) {
+    body { zoom: 0.9; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen">
+    <div class="login-logo"></div>
+    <div class="login-card">
+      <span class="login-label">MRANTI CRM</span>
+      <h1 class="login-title">Sign in</h1>
+      <p class="login-sub">Use your MRANTI Google Workspace account to continue.</p>
+      <div class="error-msg" id="errorMsg"></div>
+      <button class="google-btn" onclick="signIn()">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google"/>
+        Continue with Google
+      </button>
+      <p class="login-note">Access is restricted to MRANTI staff only.</p>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="appScreen">
+
+    <header class="top-nav">
+      <div class="brand-block">
+        <div class="logo brand-logo"></div>
+        <div class="brand-divider"></div>
+        <div class="brand-copy">
+          <div class="brand-kicker">CRM Workspace</div>
+          <div class="brand-subtitle">Graph sandbox for meetings, contacts and relationship mapping</div>
+        </div>
+      </div>
+
+      <div class="user-bar">
+        <span style="padding:8px 14px;border-radius:999px;border:1px solid rgba(147,51,234,0.4);background:rgba(237,233,254,0.75);color:#6d28d9;font-size:11px;font-weight:800;letter-spacing:0.5px;white-space:nowrap;margin-right:10px;">AI SANDBOX</span>
+        <div class="user-info">
+          <img class="user-avatar" id="userPhoto" src="" alt=""
+            onerror="this.style.display='none';document.getElementById('userInitial').style.display='flex'"/>
+          <div class="user-avatar-placeholder" id="userInitial" style="display:none"></div>
+          <div>
+            <div class="user-name" id="userName"></div>
+            <div class="user-email" id="userEmail"></div>
+          </div>
+        </div>
+        <button class="signout-btn" onclick="doSignOut()">Sign out</button>
+      </div>
+    </header>
+
+    <div class="card welcome-band">
+      <div class="hero-top">
+        <div>
+          <span class="welcome-label">MRANTI CRM</span>
+          <h1 class="welcome-title" id="welcomeMsg">Welcome</h1>
+        </div>
+        <div class="hero-actions-title">Quick actions</div>
+      </div>
+
+      <div class="choices choices-row">
+        <a class="choice-btn" href="#" onclick="event.preventDefault();openManualModal()">
+          <div class="choice-btn-top">
+            <div class="choice-icon icon-blue"><span class="tech-icon">ID</span></div>
+            <span class="choice-arrow">›</span>
+          </div>
+          <div class="choice-text">
+            <span class="choice-title">Input Meeting Details</span>
+            <span class="choice-desc">Upload a business card or enter contact manually</span>
+          </div>
+        </a>
+
+        <a class="choice-btn" href="https://mrantidata.app.n8n.cloud/webhook/view-contacts-ai-sandbox" target="_blank">
+          <div class="choice-btn-top">
+            <div class="choice-icon icon-purple"><span class="tech-icon">DB</span></div>
+            <span class="choice-arrow">›</span>
+          </div>
+          <div class="choice-text">
+            <span class="choice-title">View &amp; Search Contacts</span>
+            <span class="choice-desc">Browse the CRM database and filter records</span>
+          </div>
+        </a>
+
+        <a class="choice-btn" href="https://mrantidata.app.n8n.cloud/webhook/relationship-graph-ai-sandbox" target="_blank">
+          <div class="choice-btn-top">
+            <div class="choice-icon icon-purple"><span class="tech-icon">NET</span></div>
+            <span class="choice-arrow">›</span>
+          </div>
+          <div class="choice-text">
+            <span class="choice-title">Relationship Graph</span>
+            <span class="choice-desc">Open the CRM network graph sandbox</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <section class="action-panel">
+        <div class="card stats-card insights-card">
+          <div class="stats-card-title">Today's Schedule</div>
+          <div class="timeline-header">
+            <span class="timeline-count" id="timelineCount">0</span>
+            <span class="timeline-count-label">meetings today</span>
+          </div>
+          <div class="timeline-track" id="timelineTrack"></div>
+          <div class="timeline-ticks">
+            <span class="timeline-tick">7am</span>
+            <span class="timeline-tick">10am</span>
+            <span class="timeline-tick">1pm</span>
+            <span class="timeline-tick">4pm</span>
+            <span class="timeline-tick">7pm</span>
+          </div>
+          <div class="clock-legend" id="clockLegend"></div>
+
+          <div class="insights-divider"></div>
+
+          <div class="stats-card-title">This Month</div>
+          <div class="month-chart-header">
+            <span class="month-chart-total" id="monthHeatmapTotal">0</span>
+            <span class="month-chart-total-label">meetings</span>
+          </div>
+          <div class="heatmap-weekday-row">
+            <span class="heatmap-weekday">S</span>
+            <span class="heatmap-weekday">M</span>
+            <span class="heatmap-weekday">T</span>
+            <span class="heatmap-weekday">W</span>
+            <span class="heatmap-weekday">T</span>
+            <span class="heatmap-weekday">F</span>
+            <span class="heatmap-weekday">S</span>
+          </div>
+          <div class="heatmap-grid" id="monthHeatmap"></div>
+        </div>
+      </section>
+
+      <section class="calendar-panel">
+        <div class="calendar-panel-top">
+          <div>
+            <div class="section-eyebrow">Calendar logging</div>
+            <div class="section-title">Your Meetings</div>
+            <div class="section-subtitle">Click a day to see its meetings, then log contact details.</div>
+          </div>
+          <button class="sync-btn" onclick="syncCalendar()">Sync Calendar</button>
+        </div>
+
+        <!-- CALENDAR SECTION -->
+        <div class="calendar-section">
+          <div class="cal-nav">
+            <button class="cal-nav-btn" onclick="changeMonth(-1)" aria-label="Previous month">‹</button>
+            <div class="cal-month-label" id="calMonthLabel">Month</div>
+            <button class="cal-nav-btn" onclick="changeMonth(1)" aria-label="Next month">›</button>
+            <button class="cal-today-btn" onclick="goToToday()">Today</button>
+          </div>
+
+          <div id="calendarStatus" class="calendar-status">Click Sync Calendar to load your meetings.</div>
+
+          <div class="cal-weekday-row">
+            <div class="cal-weekday">Sun</div>
+            <div class="cal-weekday">Mon</div>
+            <div class="cal-weekday">Tue</div>
+            <div class="cal-weekday">Wed</div>
+            <div class="cal-weekday">Thu</div>
+            <div class="cal-weekday">Fri</div>
+            <div class="cal-weekday">Sat</div>
+          </div>
+          <div id="calGrid" class="cal-grid"></div>
+        </div>
+      </section>
+    </div>
+
+    <p class="footer">MRANTI · Malaysian Research Accelerator for Technology & Innovation</p>
+  </div>
+
+  <!-- MEETING MODAL -->
+  <div class="modal-overlay" id="dayDetailModal">
+    <div class="modal-card day-detail-card">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="calDayDetailTitle">Meetings</div>
+          <div class="modal-subtitle">Click a meeting to log contact details</div>
+        </div>
+        <button class="close-btn" onclick="closeDayDetail()">×</button>
+      </div>
+      <div id="calDayEvents" class="events-list"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="meetingModal">
+    <div class="modal-card">
+
+      <!-- Success state -->
+      <div class="modal-success" id="modalSuccess">
+        <span class="s-icon"></span>
+        <h3>Saved Successfully!</h3>
+        <p>Meeting details have been saved to the CRM.</p>
+        <button class="close-success-btn" onclick="closeModal()">Done</button>
+      </div>
+
+      <!-- Form state -->
+      <div id="modalForm">
+        <div class="modal-header">
+          <div>
+            <div class="modal-title">LogMeeting Details</div>
+            <div class="modal-subtitle" id="modalSubtitle">Fill in the details below</div>
+          </div>
+          <button class="close-btn" onclick="closeModal()">×</button>
+        </div>
+
+        <div class="modal-error" id="modalError"></div>
+
+
+        <div class="form-section-label">Meeting Info</div>
+
+        <div class="form-group">
+          <label class="form-label">Meeting Title</label>
+          <input class="form-input prefilled" id="fieldEventTitle" type="text" placeholder="e.g. Partnership Discussion"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date &amp; Time</label>
+          <input class="form-input prefilled" id="fieldEventDate" type="text" placeholder="e.g. 1 July 2026, 10:00 AM"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Attendees</label>
+          <input class="form-input prefilled" id="fieldAttendees" type="text" placeholder="e.g. alice@company.com, bob@company.com"/>
+        </div>
+
+        <div class="form-divider"></div>
+        <div class="form-section-label">Contact Details</div>
+
+        <div class="contact-method-grid">
+          <label class="contact-method">
+            <input type="radio" name="contactInputMethod" id="methodBusinessCard" value="businessCard" checked onchange="setContactInputMethod('businessCard')"/>
+            <span>
+              <span class="contact-method-title">Upload business card</span>
+              <span class="contact-method-desc">Use OCR to extract contact details</span>
+            </span>
+          </label>
+
+          <label class="contact-method">
+            <input type="radio" name="contactInputMethod" id="methodManual" value="manual" onchange="setContactInputMethod('manual')"/>
+            <span>
+              <span class="contact-method-title">Enter manually</span>
+              <span class="contact-method-desc">No business card required</span>
+            </span>
+          </label>
+        </div>
+
+        <div id="businessCardSection">
+          <div class="form-group">
+            <label class="form-label">Upload Business Card <span class="req">*</span></label>
+            <input class="form-input" id="fieldBusinessCard" type="file" accept="image/*,.pdf"/>
+          </div>
+          <p class="helper-text">Upload an image or PDF of the business card. The system will extract the person, company and email.</p>
+        </div>
+
+        <div id="manualContactSection" class="hidden-section">
+          <div class="manual-contact-grid">
+            <div class="form-group">
+              <label class="form-label">Person Name <span class="req">*</span></label>
+              <input class="form-input" id="fieldManualPersonName" type="text" placeholder="e.g. Ms. Aina A. Rahman"/>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Company Name <span class="req">*</span></label>
+              <input class="form-input" id="fieldManualCompanyName" type="text" placeholder="e.g. MRANTI"/>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Email <span class="req">*</span></label>
+              <input class="form-input" id="fieldManualEmail" type="email" placeholder="e.g. name@company.com"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-divider"></div>
+        <div class="form-section-label">Meeting Details</div>
+
+        <div class="form-group">
+          <label class="form-label">Purpose of Meeting <span class="req">*</span></label>
+          <input class="form-input" id="fieldPurpose" type="text" placeholder="e.g. Partnership discussion, vendor intro"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Meeting Notes <span class="req">*</span></label>
+          <textarea class="form-textarea" id="fieldNotes" placeholder="Key discussion points, action items, follow-ups..."></textarea>
+        </div>
+
+        <button class="submit-btn" id="submitBtn" onclick="submitMeeting()">Save to CRM</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    console.log('MRANTI CRM graph sandbox index v2 loaded');
+    const firebaseConfig = {
+      apiKey: "AIzaSyDXz0gL67r9BafTg8nL6VdHYdw1tfcxhto",
+      authDomain: "mranticrm.firebaseapp.com",
+      projectId: "mranticrm",
+      storageBucket: "mranticrm.firebasestorage.app",
+      messagingSenderId: "314966643466",
+      appId: "1:314966643466:web:aff9ad95262d1df8f960f3"
+    };
+
+    const ALLOWED_DOMAIN = "mranti.my";
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function buildGoogleProvider(forceConsent = false) {
+      const p = new firebase.auth.GoogleAuthProvider();
+
+      p.addScope('email');
+      p.addScope('profile');
+      p.addScope('https://www.googleapis.com/auth/calendar.readonly');
+
+      const params = {
+        hd: ALLOWED_DOMAIN,
+        include_granted_scopes: 'true'
+      };
+
+      // Only force the permission screen when the user first signs in or when the token is missing.
+      // This avoids asking for Calendar access every time the user presses Sync.
+      if (forceConsent) {
+        params.prompt = 'consent';
+      }
+
+      p.setCustomParameters(params);
+      return p;
+    }
+
+    let provider = buildGoogleProvider(false);
+
+    function getAccessTokenFromResult(result) {
+      console.log('Full Firebase popup result:', result);
+
+      let token = null;
+
+      try {
+        const cred = firebase.auth.GoogleAuthProvider.credentialFromResult(result);
+        if (cred && cred.accessToken) {
+          token = cred.accessToken;
+        }
+      } catch (e) {
+        console.warn('credentialFromResult failed:', e);
+      }
+
+      if (!token && result.credential && result.credential.accessToken) {
+        token = result.credential.accessToken;
+      }
+
+      if (!token && result._tokenResponse && result._tokenResponse.oauthAccessToken) {
+        token = result._tokenResponse.oauthAccessToken;
+      }
+
+      if (!token && result.user && result.user.stsTokenManager && result.user.stsTokenManager.accessToken) {
+        console.warn('Firebase ID token exists, but this is not the Google Calendar OAuth token.');
+      }
+
+      return token;
+    }
+
+    // ── ACCESS TOKEN PERSISTENCE ──
+    // Firebase keeps the user signed in across reloads, but the Google Calendar
+    // access token it hands back is only ever held in a JS variable, so it is
+    // lost every time this page reloads.
+    //
+    // sessionStorage was tried first, but it's scoped to a single tab and only
+    // gets copied to a *new* tab when that tab is opened via a plain link click
+    // (no rel="noopener"). Closing tabs, reopening the browser, or any other
+    // navigation path loses it. Since this token is read-only Calendar access
+    // and already self-expires, localStorage is the better fit: it's shared
+    // across every tab for this origin and survives closing/reopening the
+    // browser. The same TOKEN_MAX_AGE_MS expiry still applies, so it never
+    // lives longer than ~50 minutes regardless of storage type - it just
+    // isn't artificially tied to one tab anymore.
+    const TOKEN_STORAGE_KEY = 'mranti_crm_gcal_token';
+    const TOKEN_MAX_AGE_MS = 50 * 60 * 1000; // 50 min safety buffer under Google's ~60 min token lifetime
+
+    function saveAccessToken(token) {
+      try {
+        localStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify({ token, savedAt: Date.now() }));
+      } catch (e) {
+        // storage unavailable (private browsing etc.) - falls back to manual sync, no big deal
+      }
+    }
+
+    function loadSavedAccessToken() {
+      try {
+        const raw = localStorage.getItem(TOKEN_STORAGE_KEY);
+        if (!raw) return null;
+        const { token, savedAt } = JSON.parse(raw);
+        if (!token || !savedAt) return null;
+        if (Date.now() - savedAt > TOKEN_MAX_AGE_MS) return null;
+        return token;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function clearSavedAccessToken() {
+      try { localStorage.removeItem(TOKEN_STORAGE_KEY); } catch (e) {}
+    }
+
+    let currentUser = null;
+    let googleAccessToken = null;
+    let calendarViewDate = new Date();
+    calendarViewDate.setDate(1);
+    let calendarEventsByDate = {};
+    let selectedDateKey = null;
+    let monthCache = {};
+    let currentEvent = null;
+    window._eventsCache = {};
+
+    // ── AVATAR (initials fallback, colored per person like Google/Slack do) ──
+    // Every user gets a consistent color derived from their email, not just
+    // one flat blue for everyone - makes it easier to tell people apart at
+    // a glance, same idea as Google's account avatars.
+    const AVATAR_PALETTE = [
+      { bg: '#dbeafe', text: '#2563eb' }, // blue
+      { bg: '#ede9fe', text: '#7c3aed' }, // violet
+      { bg: '#cffafe', text: '#0891b2' }, // cyan
+      { bg: '#d1fae5', text: '#059669' }, // emerald
+      { bg: '#fef3c7', text: '#b45309' }, // amber
+      { bg: '#fee2e2', text: '#dc2626' }, // red
+      { bg: '#e0e7ff', text: '#4338ca' }, // indigo
+      { bg: '#ccfbf1', text: '#0d9488' }  // teal
+    ];
+
+    function getAvatarColor(seed) {
+      const s = String(seed || 'user');
+      let hash = 0;
+      for (let i = 0; i < s.length; i++) {
+        hash = (hash * 31 + s.charCodeAt(i)) >>> 0;
+      }
+      return AVATAR_PALETTE[hash % AVATAR_PALETTE.length];
+    }
+
+    function setUserAvatar(user, firstName) {
+      const initial = firstName ? firstName[0].toUpperCase() : '?';
+      const color = getAvatarColor(user.email || user.displayName || firstName);
+      const photoEl = document.getElementById('userPhoto');
+      const initialEl = document.getElementById('userInitial');
+
+      // Set the initial + color up front, regardless of whether a photo
+      // exists. If the photo fails to load later, the fallback that
+      // appears already has the right letter and color on it.
+      initialEl.textContent = initial;
+      initialEl.style.background = color.bg;
+      initialEl.style.color = color.text;
+
+      if (user.photoURL) {
+        photoEl.src = user.photoURL;
+        photoEl.style.display = 'block';
+        initialEl.style.display = 'none';
+      } else {
+        photoEl.style.display = 'none';
+        initialEl.style.display = 'flex';
+      }
+    }
+
+    // ── AUTH ──
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        const domain = user.email.split('@')[1];
+        if (domain !== ALLOWED_DOMAIN) {
+          auth.signOut();
+          showError('Access restricted to @mranti.my accounts only.');
+          return;
+        }
+        currentUser = user;
+        const firstName = user.displayName ? user.displayName.split(' ')[0] : 'there';
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('appScreen').style.display = 'flex';
+        document.getElementById('userName').textContent = user.displayName || '';
+        document.getElementById('userEmail').textContent = user.email || '';
+        document.getElementById('welcomeMsg').textContent = 'Welcome, ' + firstName;
+        setUserAvatar(user, firstName);
+        hideError();
+        renderCalendarGrid();
+        if (!googleAccessToken) {
+          const savedToken = loadSavedAccessToken();
+          if (savedToken) googleAccessToken = savedToken;
+        }
+        if (googleAccessToken) {
+          loadCalendar();
+        } else {
+          setCalendarStatus('Click Sync Calendar to load your meetings.');
+        }
+      } else {
+        currentUser = null;
+        googleAccessToken = null;
+        document.getElementById('loginScreen').style.display = 'flex';
+        document.getElementById('appScreen').style.display = 'none';
+      }
+    });
+
+    function signIn() {
+      // First sign-in requests Calendar permission once. After that, Sync reuses the token.
+      provider = buildGoogleProvider(true);
+
+      auth.signInWithPopup(provider).then(result => {
+        const token = getAccessTokenFromResult(result);
+
+        if (!token) {
+          throw new Error('Google login worked, but no Calendar access token was returned.');
+        }
+
+        googleAccessToken = token;
+        saveAccessToken(token);
+        loadCalendar();
+
+      }).catch(err => {
+        if (err.code === 'auth/popup-closed-by-user') return;
+
+        showError('Sign in failed: ' + (err.message || err.code || 'Please try again.'));
+        console.error('Sign-in error:', err);
+      });
+    }
+
+    function doSignOut() {
+      googleAccessToken = null;
+      clearSavedAccessToken();
+      calendarEventsByDate = {};
+      monthCache = {};
+      selectedDateKey = null;
+      closeDayDetail();
+      auth.signOut();
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('errorMsg');
+      el.textContent = msg; el.style.display = 'block';
+    }
+    function hideError() {
+      document.getElementById('errorMsg').style.display = 'none';
+    }
+
+    // ── CALENDAR ──
+    async function syncCalendar() {
+      try {
+        // If the user already granted Calendar permission during sign-in, reuse that token.
+        // This prevents the repeated Google Calendar permission popup.
+        if (googleAccessToken) {
+          await loadCalendar();
+          return;
+        }
+
+        setCalendarStatus('Connecting to Google Calendar...');
+
+        provider = buildGoogleProvider(true);
+        const result = auth.currentUser
+          ? await auth.currentUser.reauthenticateWithPopup(provider)
+          : await auth.signInWithPopup(provider);
+
+        const token = getAccessTokenFromResult(result);
+
+        if (!token) {
+          throw new Error('Google allowed Calendar access, but Firebase did not return the access token.');
+        }
+
+        googleAccessToken = token;
+        saveAccessToken(token);
+        console.log('Calendar access token received:', googleAccessToken ? 'YES' : 'NO');
+
+        await loadCalendar();
+
+      } catch (e) {
+        console.error('Calendar sync error:', e);
+        if (e.code !== 'auth/popup-closed-by-user') {
+          setCalendarStatus('⚠️ Calendar sync failed: ' + (e.message || e.code || 'Unknown error'));
+        }
+      }
+    }
+
+    async function loadCalendar() {
+      if (!googleAccessToken) {
+        setCalendarStatus('Click Sync to load your meetings.');
+        return;
+      }
+      await loadMonthEvents(calendarViewDate);
+    }
+
+    function setCalendarStatus(msg) {
+      const el = document.getElementById('calendarStatus');
+      if (!msg) { el.style.display = 'none'; return; }
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+
+    // ── MONTH CALENDAR ──
+    // A real navigable month view, same mental model as Google Calendar:
+    // prev/next arrows, a Today button, click a day to see its meetings.
+    // This also directly answers "how do I log a past meeting" - just
+    // navigate back to that month and click the day, no separate UI needed.
+
+    function getMonthKey(d) {
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+    }
+
+    function ymdKey(d) {
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+
+    // The grid always shows 6 full weeks (42 cells) so the layout never
+    // reflows in height between months, same as Google Calendar's month view.
+    function getGridRange(viewDate) {
+      const year = viewDate.getFullYear();
+      const month = viewDate.getMonth();
+      const firstOfMonth = new Date(year, month, 1);
+      const gridStart = new Date(year, month, 1 - firstOfMonth.getDay());
+      const gridEnd = new Date(gridStart);
+      gridEnd.setDate(gridStart.getDate() + 42);
+      return { gridStart, gridEnd };
+    }
+
+    // All-day events already carry a plain Y-M-D date. Timed events carry an
+    // instant (dateTime) that has to be converted to a calendar day using
+    // MRANTI's local timezone, matching how dates are displayed everywhere
+    // else in this app - otherwise an event at 11pm could land on the wrong
+    // day's cell for someone viewing from a different timezone.
+    function getEventDateKey(ev) {
+      if (ev.start?.date) return ev.start.date;
+      const dt = ev.start?.dateTime;
+      if (!dt) return null;
+      const d = new Date(dt);
+      const parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Kuala_Lumpur', year: 'numeric', month: '2-digit', day: '2-digit'
+      }).formatToParts(d);
+      const y = parts.find(p => p.type === 'year').value;
+      const m = parts.find(p => p.type === 'month').value;
+      const day = parts.find(p => p.type === 'day').value;
+      return `${y}-${m}-${day}`;
+    }
+
+    async function loadMonthEvents(viewDate) {
+      if (!googleAccessToken) {
+        setCalendarStatus('Click Sync to load your meetings.');
+        renderCalendarGrid();
+        return;
+      }
+
+      const monthKey = getMonthKey(viewDate);
+
+      if (monthCache[monthKey]) {
+        applyMonthEvents(monthCache[monthKey]);
+        setCalendarStatus('');
+        return;
+      }
+
+      setCalendarStatus('Loading your meetings...');
+
+      try {
+        const { gridStart, gridEnd } = getGridRange(viewDate);
+        const h = { Authorization: `Bearer ${googleAccessToken}` };
+        const base = 'https://www.googleapis.com/calendar/v3/calendars/primary/events';
+        const res = await fetch(
+          `${base}?timeMin=${gridStart.toISOString()}&timeMax=${gridEnd.toISOString()}&singleEvents=true&orderBy=startTime&maxResults=250`,
+          { headers: h }
+        );
+        const data = await res.json();
+        if (data.error) throw new Error(data.error.message);
+
+        monthCache[monthKey] = data.items || [];
+        applyMonthEvents(monthCache[monthKey]);
+        setCalendarStatus('');
+
+      } catch (e) {
+        if (String(e.message || '').includes('401') || String(e.message || '').toLowerCase().includes('invalid credentials')) {
+          googleAccessToken = null;
+          clearSavedAccessToken();
+          setCalendarStatus('⚠️ Calendar session expired. Click Sync once to reconnect.');
+        } else {
+          setCalendarStatus('⚠️ ' + (e.message || 'Failed to load. Click Sync to retry.'));
+        }
+        renderCalendarGrid();
+      }
+    }
+
+    function applyMonthEvents(events) {
+      calendarEventsByDate = {};
+      events.forEach(ev => {
+        const key = getEventDateKey(ev);
+        if (!key) return;
+        (calendarEventsByDate[key] ||= []).push(ev);
+      });
+      renderCalendarGrid();
+      renderTodayTimeline();
+      renderMonthHeatmap();
+      if (selectedDateKey) renderDayDetail(selectedDateKey);
+    }
+
+    // Distinct colors per meeting so the clock arcs and legend dots line up
+    // visually. Reused loosely from the same palette family as the avatar
+    // colors for consistency across the app.
+    const CHART_PALETTE = ['#2563eb', '#7c3aed', '#0891b2', '#d97706', '#dc2626', '#059669', '#4f46e5', '#0d9488'];
+
+    // Same KL-timezone approach as getEventDateKey() - a meeting's clock
+    // position must be based on Malaysia local time, not the browser's own
+    // timezone, or the arc would land in the wrong place for anyone viewing
+    // this from outside Malaysia.
+    function getKLHourFraction(d) {
+      const parts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Kuala_Lumpur', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+      }).formatToParts(d);
+      const h = Number(parts.find(p => p.type === 'hour').value);
+      const min = Number(parts.find(p => p.type === 'minute').value);
+      return h + min / 60;
+    }
+
+    function formatKLTime(d) {
+      return new Intl.DateTimeFormat('en-MY', {
+        hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'Asia/Kuala_Lumpur'
+      }).format(d);
+    }
+
+    // ── TODAY'S SCHEDULE TIMELINE ──
+    // A horizontal strip spanning a 12-hour working day (7am-7pm). Each
+    // timed meeting becomes a colored block positioned and sized by its
+    // actual start time and duration - reads left to right like a normal
+    // schedule, no decoding required. The legend below gives the exact
+    // title and time for each block, color-matched. All-day events can't
+    // be placed on a linear time strip, so they're counted in the total
+    // and noted separately in the legend.
+    //
+    // Overlapping meetings (e.g. two things booked at the same time) are
+    // assigned to separate stacked lanes within the strip, the same way
+    // Google Calendar's day view handles double-bookings - the strip only
+    // grows taller when an actual overlap exists; a normal non-overlapping
+    // day stays exactly as compact as before.
+    function assignTimelineLanes(placedEvents) {
+      const laneEndTimes = [];
+      return placedEvents.map(p => {
+        let laneIndex = laneEndTimes.findIndex(endTime => p.startMs >= endTime);
+        if (laneIndex === -1) {
+          laneIndex = laneEndTimes.length;
+          laneEndTimes.push(p.endMs);
+        } else {
+          laneEndTimes[laneIndex] = p.endMs;
+        }
+        return { ...p, laneIndex };
+      }).map(p => ({ ...p, laneCount: laneEndTimes.length }));
+    }
+
+    function renderTodayTimeline() {
+      const todayKey = ymdKey(new Date());
+      const allTodayEvents = calendarEventsByDate[todayKey] || [];
+      const timedEvents = allTodayEvents
+        .filter(ev => ev.start?.dateTime)
+        .slice()
+        .sort((a, b) => new Date(a.start.dateTime) - new Date(b.start.dateTime));
+      const allDayCount = allTodayEvents.length - timedEvents.length;
+
+      const countEl = document.getElementById('timelineCount');
+      const track = document.getElementById('timelineTrack');
+      const legend = document.getElementById('clockLegend');
+      if (!countEl || !track || !legend) return;
+
+      countEl.textContent = allTodayEvents.length;
+
+      const WINDOW_START = 7;
+      const WINDOW_HOURS = 12;
+      const LANE_HEIGHT = 22;
+      const LANE_GAP = 3;
+      const TRACK_PAD = 4;
+
+      const placements = timedEvents.map((ev, i) => {
+        const start = new Date(ev.start.dateTime);
+        const end = ev.end?.dateTime ? new Date(ev.end.dateTime) : new Date(start.getTime() + 30 * 60000);
+        const startHour = getKLHourFraction(start);
+        let durationHours = (end - start) / 3600000;
+        if (!(durationHours > 0)) durationHours = 0.5;
+        if (durationHours > WINDOW_HOURS) durationHours = WINDOW_HOURS;
+
+        let startFraction = (startHour - WINDOW_START) / WINDOW_HOURS;
+        startFraction = ((startFraction % 1) + 1) % 1;
+
+        return {
+          startMs: start.getTime(),
+          endMs: end.getTime(),
+          leftPct: startFraction * 100,
+          widthPct: Math.max((durationHours / WINDOW_HOURS) * 100, 2.5),
+          color: CHART_PALETTE[i % CHART_PALETTE.length]
+        };
+      });
+
+      const laned = assignTimelineLanes(placements);
+      const laneCount = Math.max(1, ...laned.map(p => p.laneCount));
+      track.style.height = (laneCount * LANE_HEIGHT + (laneCount - 1) * LANE_GAP + TRACK_PAD * 2) + 'px';
+
+      track.innerHTML = laned.map(p => {
+        const top = TRACK_PAD + p.laneIndex * (LANE_HEIGHT + LANE_GAP);
+        return `<div class="timeline-block" style="left:${p.leftPct}%;width:${p.widthPct}%;top:${top}px;height:${LANE_HEIGHT}px;background:${p.color}"></div>`;
+      }).join('');
+
+      if (allTodayEvents.length === 0) {
+        legend.innerHTML = `<div class="clock-empty">No meetings today</div>`;
+        return;
+      }
+
+      const legendItems = timedEvents.slice(0, 4).map((ev, i) => {
+        const color = CHART_PALETTE[i % CHART_PALETTE.length];
+        const timeLabel = formatKLTime(new Date(ev.start.dateTime));
+        return `<div class="clock-legend-item"><span class="clock-legend-dot" style="background:${color}"></span><span class="clock-legend-title">${esc(ev.summary || '(No title)')}</span><span class="clock-legend-time">${timeLabel}</span></div>`;
+      }).join('');
+
+      const remaining = timedEvents.length - 4;
+      const moreLine = remaining > 0
+        ? `<div class="clock-legend-item"><span class="clock-legend-title" style="color:#94a3b8;">+${remaining} more</span></div>`
+        : '';
+      const allDayLine = allDayCount > 0
+        ? `<div class="clock-legend-item"><span class="clock-legend-dot" style="background:#cbd5e1"></span><span class="clock-legend-title">${allDayCount} all-day</span></div>`
+        : '';
+
+      legend.innerHTML = legendItems + moreLine + allDayLine;
+    }
+
+    // ── THIS MONTH CALENDAR HEATMAP ──
+    // A GitHub-contributions-style grid: one small square per day of the
+    // currently-viewed month, aligned to the same weekday columns as the
+    // main calendar above, darker = busier. Same calendarEventsByDate data
+    // the grid uses - no extra fetch. Hovering a square shows the exact
+    // count via the native title tooltip.
+    function heatColor(count) {
+      if (count === 0) return 'rgba(226,232,240,0.55)';
+      if (count === 1) return '#bfdbfe';
+      if (count === 2) return '#60a5fa';
+      if (count <= 4) return '#2563eb';
+      return '#1e3a8a';
+    }
+
+    function renderMonthHeatmap() {
+      const y = calendarViewDate.getFullYear();
+      const m = calendarViewDate.getMonth() + 1;
+      const daysInMonth = new Date(y, m, 0).getDate();
+      const firstWeekday = new Date(y, m - 1, 1).getDay();
+
+      const counts = {};
+      let total = 0;
+
+      Object.keys(calendarEventsByDate).forEach(key => {
+        const [ky, km, kd] = key.split('-').map(Number);
+        if (ky !== y || km !== m) return;
+        const count = calendarEventsByDate[key].length;
+        counts[kd] = count;
+        total += count;
+      });
+
+      const totalEl = document.getElementById('monthHeatmapTotal');
+      const grid = document.getElementById('monthHeatmap');
+      if (!totalEl || !grid) return;
+      totalEl.textContent = total;
+
+      const todayKeyStr = ymdKey(new Date());
+      const cells = [];
+      for (let i = 0; i < firstWeekday; i++) {
+        cells.push('<div class="heatmap-cell empty"></div>');
+      }
+      for (let d = 1; d <= daysInMonth; d++) {
+        const count = counts[d] || 0;
+        const cellKey = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const isToday = cellKey === todayKeyStr ? ' today-cell' : '';
+        const label = `${d}: ${count} meeting${count === 1 ? '' : 's'}`;
+        cells.push(`<div class="heatmap-cell${isToday}" style="background:${heatColor(count)}" title="${esc(label)}"><span class="heatmap-day-num">${d}</span></div>`);
+      }
+
+      grid.innerHTML = cells.join('');
+    }
+
+    function renderCalendarGrid() {
+      const grid = document.getElementById('calGrid');
+      const label = document.getElementById('calMonthLabel');
+      const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      label.textContent = monthNames[calendarViewDate.getMonth()] + ' ' + calendarViewDate.getFullYear();
+
+      const { gridStart } = getGridRange(calendarViewDate);
+      const todayKey = ymdKey(new Date());
+      const cells = [];
+
+      for (let i = 0; i < 42; i++) {
+        const cellDate = new Date(gridStart);
+        cellDate.setDate(gridStart.getDate() + i);
+        const key = ymdKey(cellDate);
+        const isOutside = cellDate.getMonth() !== calendarViewDate.getMonth();
+        const isToday = key === todayKey;
+        const isSelected = key === selectedDateKey;
+        const dayEvents = calendarEventsByDate[key] || [];
+        const visibleChips = dayEvents.slice(0, 2);
+        const remaining = dayEvents.length - visibleChips.length;
+
+        cells.push(`
+          <button type="button" class="cal-day-cell${isOutside ? ' outside' : ''}${isToday ? ' today' : ''}${isSelected ? ' selected' : ''}" data-date="${key}" onclick="selectDay('${key}')">
+            <span class="cal-day-number">${cellDate.getDate()}</span>
+            <div class="cal-day-chips">
+              ${visibleChips.map(ev => `<div class="cal-chip">${esc(ev.summary || '(No title)')}</div>`).join('')}
+              ${remaining > 0 ? `<div class="cal-more">+${remaining} more</div>` : ''}
+            </div>
+            <div class="cal-day-dots">${dayEvents.slice(0, 4).map(() => '<span class="cal-dot"></span>').join('')}</div>
+          </button>
+        `);
+      }
+
+      grid.innerHTML = cells.join('');
+    }
+
+    function selectDay(key) {
+      selectedDateKey = key;
+      renderCalendarGrid();
+      renderDayDetail(key);
+    }
+
+    function renderDayDetail(key) {
+      const modal = document.getElementById('dayDetailModal');
+      const titleEl = document.getElementById('calDayDetailTitle');
+      const list = document.getElementById('calDayEvents');
+      const events = calendarEventsByDate[key] || [];
+
+      const d = new Date(key + 'T00:00:00');
+      titleEl.textContent = d.toLocaleDateString('en-MY', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+      window._eventsCache = {};
+
+      if (events.length === 0) {
+        list.innerHTML = `<div class="calendar-status">No meetings on this day.</div>`;
+      } else {
+        list.innerHTML = events.map((ev, i) => {
+          const dkey = `d${i}`;
+          window._eventsCache[dkey] = ev;
+          const start = ev.start?.dateTime || ev.start?.date || '';
+          const titleText = ev.summary || '(No title)';
+          const others = (ev.attendees || []).filter(a => !a.self).map(a => a.displayName || a.email);
+          return `
+            <div class="event-card" onclick="openEventModal('${dkey}')">
+              <div class="event-info">
+                <div class="event-title">${esc(titleText)}</div>
+                <div class="event-date">${fmtDate(start)}</div>
+                ${others.length ? `<div class="event-attendees">${esc(others.join(', '))}</div>` : ''}
+              </div>
+              <button class="event-log-btn" onclick="event.stopPropagation();openEventModal('${dkey}')">Log→</button>
+            </div>`;
+        }).join('');
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    function closeDayDetail() {
+      document.getElementById('dayDetailModal').style.display = 'none';
+    }
+
+    function changeMonth(delta) {
+      calendarViewDate.setMonth(calendarViewDate.getMonth() + delta);
+      calendarViewDate.setDate(1);
+      selectedDateKey = null;
+      closeDayDetail();
+      renderCalendarGrid();
+      loadMonthEvents(calendarViewDate);
+    }
+
+    async function goToToday() {
+      calendarViewDate = new Date();
+      calendarViewDate.setDate(1);
+      const todayKey = ymdKey(new Date());
+      renderCalendarGrid();
+      await loadMonthEvents(calendarViewDate);
+      selectDay(todayKey);
+    }
+
+    function esc(s) {
+      return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function fmtDate(d) {
+      if (!d) return '';
+      try {
+        return new Date(d).toLocaleString('en-MY', {
+          weekday:'short', day:'numeric', month:'short', year:'numeric',
+          hour: d.includes('T') ? '2-digit' : undefined,
+          minute: d.includes('T') ? '2-digit' : undefined
+        });
+      } catch { return d; }
+    }
+
+    // ── MODAL ──
+    function openEventModal(key) {
+      const ev = window._eventsCache[key];
+      currentEvent = ev;
+      const start = ev?.start?.dateTime || ev?.start?.date || '';
+      const others = (ev?.attendees || []).filter(a => !a.self).map(a => a.displayName || a.email).join(', ');
+      document.getElementById('fieldEventTitle').value = ev?.summary || '';
+      document.getElementById('fieldEventDate').value = start ? fmtDate(start) : '';
+      document.getElementById('fieldAttendees').value = others;
+      document.getElementById('modalSubtitle').textContent = ev?.summary || 'New Meeting Entry';
+      resetModal();
+      document.getElementById('dayDetailModal').style.display = 'none';
+      document.getElementById('meetingModal').style.display = 'flex';
+    }
+
+    function openManualModal() {
+      currentEvent = null;
+      document.getElementById('fieldEventTitle').value = '';
+      document.getElementById('fieldEventDate').value = '';
+      document.getElementById('fieldAttendees').value = '';
+      document.getElementById('modalSubtitle').textContent = 'Fill in the details below';
+      resetModal();
+      document.getElementById('meetingModal').style.display = 'flex';
+    }
+
+    function resetModal() {
+      document.getElementById('fieldPurpose').value = '';
+      document.getElementById('fieldNotes').value = '';
+      document.getElementById('fieldBusinessCard').value = '';
+      document.getElementById('fieldManualPersonName').value = '';
+      document.getElementById('fieldManualCompanyName').value = '';
+      document.getElementById('fieldManualEmail').value = '';
+      document.getElementById('methodBusinessCard').checked = true;
+      setContactInputMethod('businessCard');
+      document.getElementById('modalError').style.display = 'none';
+      document.getElementById('modalSuccess').style.display = 'none';
+      document.getElementById('modalForm').style.display = 'block';
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = false;
+      btn.textContent = 'Save to CRM';
+    }
+
+    function setContactInputMethod(method) {
+      const isManual = method === 'manual';
+      document.getElementById('businessCardSection').style.display = isManual ? 'none' : 'block';
+      document.getElementById('manualContactSection').style.display = isManual ? 'block' : 'none';
+
+      if (isManual) {
+        document.getElementById('fieldBusinessCard').value = '';
+      } else {
+        document.getElementById('fieldManualPersonName').value = '';
+        document.getElementById('fieldManualCompanyName').value = '';
+        document.getElementById('fieldManualEmail').value = '';
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('meetingModal').style.display = 'none';
+      currentEvent = null;
+    }
+
+    async function submitMeeting() {
+      const btn = document.getElementById('submitBtn');
+      const errDiv = document.getElementById('modalError');
+
+      const purpose = document.getElementById('fieldPurpose').value.trim();
+      const notes = document.getElementById('fieldNotes').value.trim();
+      const inputMethod = document.querySelector('input[name="contactInputMethod"]:checked')?.value || 'businessCard';
+
+      const file = document.getElementById('fieldBusinessCard').files[0];
+      const manualPersonName = document.getElementById('fieldManualPersonName').value.trim();
+      const manualCompanyName = document.getElementById('fieldManualCompanyName').value.trim();
+      const manualEmail = document.getElementById('fieldManualEmail').value.trim();
+
+      if (!purpose) { showModalErr('Please enter the purpose of meeting.'); return; }
+      if (!notes)   { showModalErr('Please enter meeting notes.'); return; }
+
+      if (inputMethod === 'businessCard') {
+        if (!file) { showModalErr('Please upload a business card, or choose Enter manually.'); return; }
+      }
+
+      if (inputMethod === 'manual') {
+        if (!manualPersonName) { showModalErr('Please enter the person name.'); return; }
+        if (!manualCompanyName) { showModalErr('Please enter the company name.'); return; }
+        if (!manualEmail) { showModalErr('Please enter the email address.'); return; }
+
+        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(manualEmail);
+        if (!emailOk) { showModalErr('Please enter a valid email address.'); return; }
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+      errDiv.style.display = 'none';
+
+      const fd = new FormData();
+      fd.append('uploaderName', currentUser.displayName || '');
+      fd.append('uploaderEmail', currentUser.email || '');
+      fd.append('purpose', purpose);
+      fd.append('meetingNotes', notes);
+      fd.append('eventTitle', currentEvent?.summary || document.getElementById('fieldEventTitle').value || '');
+      fd.append('eventDate', currentEvent?.start?.dateTime || currentEvent?.start?.date || document.getElementById('fieldEventDate').value || '');
+      fd.append('attendees', (currentEvent?.attendees || []).filter(a => !a.self).map(a => a.displayName || a.email).join(', ') || document.getElementById('fieldAttendees').value || '');
+
+      fd.append('inputMethod', inputMethod);
+
+      if (inputMethod === 'businessCard') {
+        fd.append('businessCard', file);
+        fd.append('manualPersonName', '');
+        fd.append('manualCompanyName', '');
+        fd.append('manualEmail', '');
+      } else {
+        fd.append('manualPersonName', manualPersonName);
+        fd.append('manualCompanyName', manualCompanyName);
+        fd.append('manualEmail', manualEmail);
+      }
+
+      try {
+        const res = await fetch('https://mrantidata.app.n8n.cloud/webhook/submit-meeting-ai-sandbox', {
+          method: 'POST',
+          body: fd
+        });
+        if (res.ok || res.status === 200) {
+          document.getElementById('modalForm').style.display = 'none';
+          document.getElementById('modalSuccess').style.display = 'block';
+        } else {
+          throw new Error(`Server error ${res.status}`);
+        }
+      } catch (e) {
+        showModalErr('Failed to save. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Save to CRM';
+        console.error(e);
+      }
+    }
+
+    function showModalErr(msg) {
+      const el = document.getElementById('modalError');
+      el.textContent = msg; el.style.display = 'block';
+    }
+
+    // Close modal on backdrop click
+    document.getElementById('meetingModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+    document.getElementById('dayDetailModal').addEventListener('click', function(e) {
+      if (e.target === this) closeDayDetail();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key !== 'Escape') return;
+      if (document.getElementById('meetingModal').style.display === 'flex') closeModal();
+      else if (document.getElementById('dayDetailModal').style.display === 'flex') closeDayDetail();
+    });
+  </script>
+</body>
+</html>
