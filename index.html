@@ -403,6 +403,24 @@
     .form-textarea { min-height: 80px; resize: vertical; }
     .form-divider { height: 1px; background: #e2e8f0; margin: 18px 0; }
 
+    .date-time-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 150px;
+      gap: 10px;
+    }
+    .date-time-grid .form-group { margin-bottom: 14px; }
+    .form-input[type="date"],
+    .form-input[type="time"] {
+      color-scheme: light;
+      min-height: 43px;
+    }
+    @media (max-width: 560px) {
+      .date-time-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+    }
+
     .contact-method-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1494,9 +1512,15 @@
           <label class="form-label">Meeting Title</label>
           <input class="form-input prefilled" id="fieldEventTitle" type="text" placeholder="e.g. Partnership Discussion"/>
         </div>
-        <div class="form-group">
-          <label class="form-label">Date &amp; Time</label>
-          <input class="form-input prefilled" id="fieldEventDate" type="text" placeholder="e.g. 1 July 2026, 10:00 AM"/>
+        <div class="date-time-grid">
+          <div class="form-group">
+            <label class="form-label">Meeting Date</label>
+            <input class="form-input prefilled" id="fieldEventDate" type="date"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Meeting Time</label>
+            <input class="form-input prefilled" id="fieldEventTime" type="time"/>
+          </div>
         </div>
         <div class="form-group">
           <label class="form-label">Attendees</label>
@@ -2258,6 +2282,68 @@
       } catch { return d; }
     }
 
+    // ── DATE/TIME FIELD HELPERS ──
+    // The UI now uses native date/time pickers, but the existing n8n webhook still
+    // receives the backward-compatible combined eventDate value.
+    function getKLDateTimeParts(input) {
+      if (!input) return { date: '', time: '' };
+
+      const raw = String(input);
+      if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
+        return { date: raw, time: '' };
+      }
+
+      const d = new Date(raw);
+      if (Number.isNaN(d.getTime())) return { date: '', time: '' };
+
+      const parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Kuala_Lumpur',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hourCycle: 'h23'
+      }).formatToParts(d);
+
+      const val = type => parts.find(p => p.type === type)?.value || '';
+      return {
+        date: `${val('year')}-${val('month')}-${val('day')}`,
+        time: `${val('hour')}:${val('minute')}`
+      };
+    }
+
+    function setMeetingDateTimeFields(rawStart) {
+      const parts = getKLDateTimeParts(rawStart);
+      document.getElementById('fieldEventDate').value = parts.date;
+      document.getElementById('fieldEventTime').value = parts.time;
+    }
+
+    function clearMeetingDateTimeFields() {
+      document.getElementById('fieldEventDate').value = '';
+      document.getElementById('fieldEventTime').value = '';
+    }
+
+    function getMeetingDateOnly() {
+      return document.getElementById('fieldEventDate').value.trim();
+    }
+
+    function getMeetingTimeOnly() {
+      return document.getElementById('fieldEventTime').value.trim();
+    }
+
+    function buildEventDateValueForSubmit() {
+      const dateOnly = getMeetingDateOnly();
+      const timeOnly = getMeetingTimeOnly();
+
+      if (dateOnly && timeOnly) {
+        return `${dateOnly}T${timeOnly}:00+08:00`;
+      }
+
+      if (dateOnly) return dateOnly;
+      return '';
+    }
+
     // ── MODAL ──
     function openEventModal(key) {
       const ev = window._eventsCache[key];
@@ -2265,7 +2351,7 @@
       const start = ev?.start?.dateTime || ev?.start?.date || '';
       const others = (ev?.attendees || []).filter(a => !a.self).map(a => a.displayName || a.email).join(', ');
       document.getElementById('fieldEventTitle').value = ev?.summary || '';
-      document.getElementById('fieldEventDate').value = start ? fmtDate(start) : '';
+      setMeetingDateTimeFields(start);
       document.getElementById('fieldAttendees').value = others;
       document.getElementById('modalSubtitle').textContent = ev?.summary || 'New Meeting Entry';
       resetModal();
@@ -2276,7 +2362,7 @@
     function openManualModal() {
       currentEvent = null;
       document.getElementById('fieldEventTitle').value = '';
-      document.getElementById('fieldEventDate').value = '';
+      clearMeetingDateTimeFields();
       document.getElementById('fieldAttendees').value = '';
       document.getElementById('modalSubtitle').textContent = 'Fill in the details below';
       resetModal();
@@ -2331,9 +2417,13 @@
       const manualPersonName = document.getElementById('fieldManualPersonName').value.trim();
       const manualCompanyName = document.getElementById('fieldManualCompanyName').value.trim();
       const manualEmail = document.getElementById('fieldManualEmail').value.trim();
+      const eventDateOnly = getMeetingDateOnly();
+      const eventTimeOnly = getMeetingTimeOnly();
+      const eventDateValue = buildEventDateValueForSubmit();
 
       if (!purpose) { showModalErr('Please enter the purpose of meeting.'); return; }
       if (!notes)   { showModalErr('Please enter meeting notes.'); return; }
+      if (eventTimeOnly && !eventDateOnly) { showModalErr('Please select the meeting date before entering the time.'); return; }
 
       if (inputMethod === 'businessCard') {
         if (!file) { showModalErr('Please upload a business card, or choose Enter manually.'); return; }
@@ -2358,7 +2448,9 @@
       fd.append('purpose', purpose);
       fd.append('meetingNotes', notes);
       fd.append('eventTitle', currentEvent?.summary || document.getElementById('fieldEventTitle').value || '');
-      fd.append('eventDate', currentEvent?.start?.dateTime || currentEvent?.start?.date || document.getElementById('fieldEventDate').value || '');
+      fd.append('eventDate', eventDateValue);
+      fd.append('eventDateOnly', eventDateOnly);
+      fd.append('eventTime', eventTimeOnly);
       fd.append('attendees', (currentEvent?.attendees || []).filter(a => !a.self).map(a => a.displayName || a.email).join(', ') || document.getElementById('fieldAttendees').value || '');
 
       fd.append('inputMethod', inputMethod);
