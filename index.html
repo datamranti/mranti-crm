@@ -10,10 +10,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="MRANTI CRM" />
   <link rel="manifest" href="site.webmanifest" />
-  <link rel="icon" type="image/png" sizes="32x32" href="app-icons/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="app-icons/favicon-16x16.png" />
-  <link rel="shortcut icon" href="app-icons/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="app-icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
@@ -1563,7 +1563,7 @@
             <label class="form-label">Upload Business Card <span class="req">*</span></label>
             <input class="form-input" id="fieldBusinessCard" type="file" accept="image/*,.pdf"/>
           </div>
-          <p class="helper-text">Upload an image or PDF of the business card. The system will extract the person, company and email.</p>
+          <p class="helper-text">Upload an image or PDF of the business card. The system will extract the person, company, email and contact number.</p>
         </div>
 
         <div id="manualContactSection" class="hidden-section">
@@ -1581,6 +1581,11 @@
             <div class="form-group">
               <label class="form-label">Email <span class="req">*</span></label>
               <input class="form-input" id="fieldManualEmail" type="email" placeholder="e.g. name@company.com"/>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Contact Number</label>
+              <input class="form-input" id="fieldManualPhone" type="tel" placeholder="e.g. +60 12-345 6789"/>
             </div>
           </div>
         </div>
@@ -2386,6 +2391,7 @@
       document.getElementById('fieldManualPersonName').value = '';
       document.getElementById('fieldManualCompanyName').value = '';
       document.getElementById('fieldManualEmail').value = '';
+      document.getElementById('fieldManualPhone').value = '';
       document.getElementById('methodBusinessCard').checked = true;
       setContactInputMethod('businessCard');
       document.getElementById('modalError').style.display = 'none';
@@ -2407,6 +2413,7 @@
         document.getElementById('fieldManualPersonName').value = '';
         document.getElementById('fieldManualCompanyName').value = '';
         document.getElementById('fieldManualEmail').value = '';
+        document.getElementById('fieldManualPhone').value = '';
       }
     }
 
@@ -2427,6 +2434,7 @@
       const manualPersonName = document.getElementById('fieldManualPersonName').value.trim();
       const manualCompanyName = document.getElementById('fieldManualCompanyName').value.trim();
       const manualEmail = document.getElementById('fieldManualEmail').value.trim();
+      const manualPhone = document.getElementById('fieldManualPhone').value.trim();
       const eventDateOnly = getMeetingDateOnly();
       const eventTimeOnly = getMeetingTimeOnly();
       const eventDateValue = buildEventDateValueForSubmit();
@@ -2464,6 +2472,7 @@
       fd.append('attendees', (currentEvent?.attendees || []).filter(a => !a.self).map(a => a.displayName || a.email).join(', ') || document.getElementById('fieldAttendees').value || '');
 
       fd.append('inputMethod', inputMethod);
+      fd.append('manualPhone', inputMethod === 'manual' ? manualPhone : '');
 
       if (inputMethod === 'businessCard') {
         fd.append('businessCard', file);
