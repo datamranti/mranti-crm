@@ -532,6 +532,124 @@
     .modal-success .close-success-btn:hover { background: #1d4ed8; }
 
 
+    /* ── TEMPORARY MEETING DRAFT ── */
+    .draft-status {
+      display: none;
+      align-items: flex-start;
+      gap: 10px;
+      margin: -4px 0 16px;
+      padding: 10px 12px;
+      border: 1px solid rgba(37,99,235,0.2);
+      border-radius: 10px;
+      background: rgba(239,246,255,0.82);
+      color: #1e3a8a;
+      font-size: 11.5px;
+      line-height: 1.45;
+    }
+    .draft-status.show { display: flex; }
+    .draft-status::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      margin-top: 4px;
+      flex-shrink: 0;
+      border-radius: 999px;
+      background: #2563eb;
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.1);
+    }
+    .draft-status.warning {
+      color: #92400e;
+      border-color: rgba(245,158,11,0.28);
+      background: rgba(255,251,235,0.94);
+    }
+    .draft-status.warning::before {
+      background: #d97706;
+      box-shadow: 0 0 0 4px rgba(217,119,6,0.1);
+    }
+
+    .draft-confirm-overlay { z-index: 1400; }
+    .draft-confirm-card {
+      width: 100%;
+      max-width: 470px;
+      padding: 28px;
+      border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 26px 72px rgba(15,23,42,0.22);
+      border: 1px solid rgba(147,197,253,0.36);
+    }
+    .draft-confirm-kicker {
+      color: #2563eb;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .draft-confirm-title {
+      margin-top: 8px;
+      color: #0f172a;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+    .draft-confirm-copy {
+      margin-top: 9px;
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .draft-confirm-note {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      font-size: 11.5px;
+      line-height: 1.45;
+    }
+    .draft-confirm-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .draft-action-btn {
+      min-height: 44px;
+      padding: 11px 14px;
+      border-radius: 11px;
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .draft-action-save {
+      color: #ffffff;
+      background: #2563eb;
+      border: 1px solid #2563eb;
+      box-shadow: 0 8px 20px rgba(37,99,235,0.2);
+    }
+    .draft-action-save:hover { background: #1d4ed8; border-color: #1d4ed8; }
+    .draft-action-discard {
+      color: #dc2626;
+      background: #ffffff;
+      border: 1.5px solid rgba(239,68,68,0.34);
+    }
+    .draft-action-discard:hover { background: #fef2f2; border-color: #ef4444; }
+    .draft-action-continue {
+      grid-column: 1 / -1;
+      color: #334155;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+    .draft-action-continue:hover { background: #f1f5f9; border-color: #cbd5e1; }
+
+    @media (max-width: 520px) {
+      .draft-confirm-actions { grid-template-columns: 1fr; }
+      .draft-action-continue { grid-column: auto; }
+    }
+
+
     /* ── PROFESSIONAL DESKTOP APP SHELL V4 ── */
     body {
       justify-content: flex-start;
@@ -1500,21 +1618,21 @@
         <span class="s-icon"></span>
         <h3>Saved Successfully!</h3>
         <p>Meeting details have been saved to the CRM.</p>
-        <button class="close-success-btn" onclick="closeModal()">Done</button>
+        <button class="close-success-btn" onclick="finishSuccessAndClose()">Done</button>
       </div>
 
       <!-- Form state -->
       <div id="modalForm">
         <div class="modal-header">
           <div>
-            <div class="modal-title">LogMeeting Details</div>
+            <div class="modal-title">Log Meeting Details</div>
             <div class="modal-subtitle" id="modalSubtitle">Fill in the details below</div>
           </div>
-          <button class="close-btn" onclick="closeModal()">×</button>
+          <button class="close-btn" onclick="requestCloseMeetingModal()" aria-label="Close meeting form">×</button>
         </div>
 
         <div class="modal-error" id="modalError"></div>
-
+        <div class="draft-status" id="draftStatus" aria-live="polite"></div>
 
         <div class="form-section-label">Meeting Info</div>
 
@@ -1603,6 +1721,21 @@
         </div>
 
         <button class="submit-btn" id="submitBtn" onclick="submitMeeting()">Save to CRM</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRAFT CLOSE CONFIRMATION -->
+  <div class="modal-overlay draft-confirm-overlay" id="draftCloseModal" role="dialog" aria-modal="true" aria-labelledby="draftCloseTitle">
+    <div class="draft-confirm-card">
+      <div class="draft-confirm-kicker">Unsaved meeting</div>
+      <div class="draft-confirm-title" id="draftCloseTitle">Keep this meeting as a temporary draft?</div>
+      <p class="draft-confirm-copy">Your entries are being saved temporarily in this browser tab. Choose what should happen before closing the form.</p>
+      <div class="draft-confirm-note" id="draftFileNotice" style="display:none;">Selected business-card files cannot be restored by the browser. The file will need to be selected again when the draft is reopened.</div>
+      <div class="draft-confirm-actions">
+        <button class="draft-action-btn draft-action-save" onclick="saveDraftAndClose()">Save Draft &amp; Close</button>
+        <button class="draft-action-btn draft-action-discard" onclick="discardDraftAndClose()">Discard Changes</button>
+        <button class="draft-action-btn draft-action-continue" onclick="continueEditingMeeting()">Continue Editing</button>
       </div>
     </div>
   </div>
@@ -1728,6 +1861,12 @@
     let currentEvent = null;
     window._eventsCache = {};
 
+    // Temporary meeting draft: scoped to this browser tab and cleared when the tab closes.
+    const MEETING_DRAFT_KEY = 'mranti_crm_meeting_draft_v1';
+    let meetingFormDirty = false;
+    let suppressDraftAutosave = false;
+    let draftSaveTimer = null;
+
     // ── AVATAR (initials fallback, colored per person like Google/Slack do) ──
     // Every user gets a consistent color derived from their email, not just
     // one flat blue for everyone - makes it easier to tell people apart at
@@ -1837,6 +1976,7 @@
     function doSignOut() {
       googleAccessToken = null;
       clearSavedAccessToken();
+      clearMeetingDraft();
       calendarEventsByDate = {};
       monthCache = {};
       selectedDateKey = null;
@@ -2359,32 +2499,219 @@
       return '';
     }
 
-    // ── MODAL ──
+    // ── MODAL + TEMPORARY DRAFT ──
+    function compactCalendarEvent(ev) {
+      if (!ev) return null;
+      return {
+        id: ev.id || '',
+        summary: ev.summary || '',
+        start: ev.start || null,
+        end: ev.end || null,
+        attendees: Array.isArray(ev.attendees) ? ev.attendees : [],
+        attachments: Array.isArray(ev.attachments) ? ev.attachments : [],
+        htmlLink: ev.htmlLink || ''
+      };
+    }
+
+    function readMeetingDraft() {
+      try {
+        const raw = sessionStorage.getItem(MEETING_DRAFT_KEY);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        return parsed && typeof parsed === 'object' ? parsed : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function clearMeetingDraft() {
+      try { sessionStorage.removeItem(MEETING_DRAFT_KEY); } catch (e) {}
+      if (draftSaveTimer) clearTimeout(draftSaveTimer);
+      draftSaveTimer = null;
+      meetingFormDirty = false;
+      hideDraftStatus();
+    }
+
+    function meetingDraftState() {
+      const inputMethod = document.querySelector('input[name="contactInputMethod"]:checked')?.value || 'businessCard';
+      const selectedFiles = Array.from(document.getElementById('fieldBusinessCard').files || []);
+
+      return {
+        version: 1,
+        savedAt: Date.now(),
+        currentEvent: compactCalendarEvent(currentEvent),
+        modalSubtitle: document.getElementById('modalSubtitle').textContent || '',
+        eventTitle: document.getElementById('fieldEventTitle').value || '',
+        eventDate: document.getElementById('fieldEventDate').value || '',
+        eventTime: document.getElementById('fieldEventTime').value || '',
+        attendees: document.getElementById('fieldAttendees').value || '',
+        inputMethod,
+        manualPersonName: document.getElementById('fieldManualPersonName').value || '',
+        manualCompanyName: document.getElementById('fieldManualCompanyName').value || '',
+        manualEmail: document.getElementById('fieldManualEmail').value || '',
+        manualPhone: document.getElementById('fieldManualPhone').value || '',
+        purpose: document.getElementById('fieldPurpose').value || '',
+        notes: document.getElementById('fieldNotes').value || '',
+        businessCardFileNames: selectedFiles.map(file => file.name)
+      };
+    }
+
+    function hasMeaningfulDraftData(state) {
+      if (!state) return false;
+      return Boolean([
+        state.eventTitle,
+        state.eventDate,
+        state.eventTime,
+        state.attendees,
+        state.manualPersonName,
+        state.manualCompanyName,
+        state.manualEmail,
+        state.manualPhone,
+        state.purpose,
+        state.notes
+      ].some(value => String(value || '').trim()) ||
+      (Array.isArray(state.businessCardFileNames) && state.businessCardFileNames.length));
+    }
+
+    function formatDraftTime(timestamp) {
+      try {
+        return new Date(timestamp).toLocaleTimeString('en-MY', {
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true
+        });
+      } catch (e) {
+        return '';
+      }
+    }
+
+    function showDraftStatus(message, warning = false) {
+      const el = document.getElementById('draftStatus');
+      el.textContent = message;
+      el.classList.toggle('warning', warning);
+      el.classList.add('show');
+    }
+
+    function hideDraftStatus() {
+      const el = document.getElementById('draftStatus');
+      if (!el) return;
+      el.textContent = '';
+      el.classList.remove('show', 'warning');
+    }
+
+    function saveMeetingDraft(options = {}) {
+      const state = meetingDraftState();
+      const shouldSave = meetingFormDirty || hasMeaningfulDraftData(state);
+      if (!shouldSave) return false;
+
+      try {
+        sessionStorage.setItem(MEETING_DRAFT_KEY, JSON.stringify(state));
+        if (!options.silent) {
+          const fileWarning = state.businessCardFileNames.length
+            ? ' Business-card files must be selected again after reopening.'
+            : '';
+          showDraftStatus('Temporary draft saved at ' + formatDraftTime(state.savedAt) + '.' + fileWarning, Boolean(fileWarning));
+        }
+        return true;
+      } catch (e) {
+        if (!options.silent) {
+          showDraftStatus('The browser could not save this temporary draft. Keep the form open until it is submitted.', true);
+        }
+        return false;
+      }
+    }
+
+    function scheduleDraftSave() {
+      if (suppressDraftAutosave) return;
+      meetingFormDirty = true;
+      if (draftSaveTimer) clearTimeout(draftSaveTimer);
+      draftSaveTimer = setTimeout(() => saveMeetingDraft({ silent: true }), 450);
+    }
+
+    function restoreMeetingDraft(draft) {
+      if (!draft) return false;
+
+      suppressDraftAutosave = true;
+      resetModal();
+      currentEvent = draft.currentEvent || null;
+
+      document.getElementById('fieldEventTitle').value = draft.eventTitle || draft.currentEvent?.summary || '';
+      document.getElementById('fieldEventDate').value = draft.eventDate || '';
+      document.getElementById('fieldEventTime').value = draft.eventTime || '';
+      document.getElementById('fieldAttendees').value = draft.attendees || '';
+      document.getElementById('modalSubtitle').textContent = draft.modalSubtitle || draft.eventTitle || 'Draft meeting entry';
+
+      const method = draft.inputMethod === 'manual' ? 'manual' : 'businessCard';
+      document.getElementById(method === 'manual' ? 'methodManual' : 'methodBusinessCard').checked = true;
+      setContactInputMethod(method, false);
+
+      document.getElementById('fieldManualPersonName').value = draft.manualPersonName || '';
+      document.getElementById('fieldManualCompanyName').value = draft.manualCompanyName || '';
+      document.getElementById('fieldManualEmail').value = draft.manualEmail || '';
+      document.getElementById('fieldManualPhone').value = draft.manualPhone || '';
+      document.getElementById('fieldPurpose').value = draft.purpose || '';
+      document.getElementById('fieldNotes').value = draft.notes || '';
+      document.getElementById('fieldBusinessCard').value = '';
+
+      suppressDraftAutosave = false;
+      meetingFormDirty = true;
+
+      const fileNames = Array.isArray(draft.businessCardFileNames) ? draft.businessCardFileNames : [];
+      if (fileNames.length) {
+        showDraftStatus(
+          'Draft restored. Please select the business card again: ' + fileNames.join(', '),
+          true
+        );
+      } else {
+        showDraftStatus('Temporary draft restored from this browser tab.');
+      }
+      return true;
+    }
+
+    function showMeetingModal() {
+      document.getElementById('modalSuccess').style.display = 'none';
+      document.getElementById('modalForm').style.display = 'block';
+      document.getElementById('meetingModal').style.display = 'flex';
+    }
+
     function openEventModal(key) {
+      const savedDraft = readMeetingDraft();
+      document.getElementById('dayDetailModal').style.display = 'none';
+      showMeetingModal();
+
+      if (savedDraft && restoreMeetingDraft(savedDraft)) return;
+
       const ev = window._eventsCache[key];
       currentEvent = ev;
+      resetModal();
       const start = ev?.start?.dateTime || ev?.start?.date || '';
       const others = (ev?.attendees || []).filter(a => !a.self).map(a => a.displayName || a.email).join(', ');
       document.getElementById('fieldEventTitle').value = ev?.summary || '';
       setMeetingDateTimeFields(start);
       document.getElementById('fieldAttendees').value = others;
       document.getElementById('modalSubtitle').textContent = ev?.summary || 'New Meeting Entry';
-      resetModal();
-      document.getElementById('dayDetailModal').style.display = 'none';
-      document.getElementById('meetingModal').style.display = 'flex';
+      meetingFormDirty = false;
     }
 
     function openManualModal() {
+      const savedDraft = readMeetingDraft();
+      showMeetingModal();
+
+      if (savedDraft && restoreMeetingDraft(savedDraft)) return;
+
       currentEvent = null;
+      resetModal();
       document.getElementById('fieldEventTitle').value = '';
       clearMeetingDateTimeFields();
       document.getElementById('fieldAttendees').value = '';
       document.getElementById('modalSubtitle').textContent = 'Fill in the details below';
-      resetModal();
-      document.getElementById('meetingModal').style.display = 'flex';
+      meetingFormDirty = false;
     }
 
     function resetModal() {
+      const previousSuppress = suppressDraftAutosave;
+      suppressDraftAutosave = true;
+
       document.getElementById('fieldPurpose').value = '';
       document.getElementById('fieldNotes').value = '';
       document.getElementById('fieldBusinessCard').value = '';
@@ -2393,33 +2720,83 @@
       document.getElementById('fieldManualEmail').value = '';
       document.getElementById('fieldManualPhone').value = '';
       document.getElementById('methodBusinessCard').checked = true;
-      setContactInputMethod('businessCard');
+      setContactInputMethod('businessCard', false);
       document.getElementById('modalError').style.display = 'none';
       document.getElementById('modalSuccess').style.display = 'none';
       document.getElementById('modalForm').style.display = 'block';
       const btn = document.getElementById('submitBtn');
       btn.disabled = false;
       btn.textContent = 'Save to CRM';
+      hideDraftStatus();
+      meetingFormDirty = false;
+
+      suppressDraftAutosave = previousSuppress;
     }
 
-    function setContactInputMethod(method) {
+    function setContactInputMethod(method, clearOpposite = true) {
       const isManual = method === 'manual';
       document.getElementById('businessCardSection').style.display = isManual ? 'none' : 'block';
       document.getElementById('manualContactSection').style.display = isManual ? 'block' : 'none';
 
-      if (isManual) {
-        document.getElementById('fieldBusinessCard').value = '';
-      } else {
-        document.getElementById('fieldManualPersonName').value = '';
-        document.getElementById('fieldManualCompanyName').value = '';
-        document.getElementById('fieldManualEmail').value = '';
-        document.getElementById('fieldManualPhone').value = '';
+      if (clearOpposite) {
+        if (isManual) {
+          document.getElementById('fieldBusinessCard').value = '';
+        } else {
+          document.getElementById('fieldManualPersonName').value = '';
+          document.getElementById('fieldManualCompanyName').value = '';
+          document.getElementById('fieldManualEmail').value = '';
+          document.getElementById('fieldManualPhone').value = '';
+        }
       }
+
+      if (!suppressDraftAutosave) scheduleDraftSave();
     }
 
-    function closeModal() {
+    function closeMeetingModalOnly() {
       document.getElementById('meetingModal').style.display = 'none';
+      document.getElementById('draftCloseModal').style.display = 'none';
       currentEvent = null;
+    }
+
+    function requestCloseMeetingModal() {
+      if (document.getElementById('modalSuccess').style.display === 'block') {
+        finishSuccessAndClose();
+        return;
+      }
+
+      const draft = meetingDraftState();
+      const hasData = meetingFormDirty || hasMeaningfulDraftData(draft) || Boolean(readMeetingDraft());
+
+      if (!hasData) {
+        closeMeetingModalOnly();
+        return;
+      }
+
+      const hasSelectedFiles = Array.from(document.getElementById('fieldBusinessCard').files || []).length > 0 ||
+        (Array.isArray(draft.businessCardFileNames) && draft.businessCardFileNames.length > 0);
+      document.getElementById('draftFileNotice').style.display = hasSelectedFiles ? 'block' : 'none';
+      document.getElementById('draftCloseModal').style.display = 'flex';
+    }
+
+    function saveDraftAndClose() {
+      saveMeetingDraft({ silent: false });
+      closeMeetingModalOnly();
+    }
+
+    function discardDraftAndClose() {
+      clearMeetingDraft();
+      resetModal();
+      closeMeetingModalOnly();
+    }
+
+    function continueEditingMeeting() {
+      document.getElementById('draftCloseModal').style.display = 'none';
+    }
+
+    function finishSuccessAndClose() {
+      clearMeetingDraft();
+      resetModal();
+      closeMeetingModalOnly();
     }
 
     async function submitMeeting() {
@@ -2460,6 +2837,9 @@
       btn.textContent = 'Saving...';
       errDiv.style.display = 'none';
 
+      // Save the latest text state before the request, so a network failure does not lose work.
+      saveMeetingDraft({ silent: true });
+
       const fd = new FormData();
       fd.append('uploaderName', currentUser.displayName || '');
       fd.append('uploaderEmail', currentUser.email || '');
@@ -2491,13 +2871,15 @@
           body: fd
         });
         if (res.ok || res.status === 200) {
+          clearMeetingDraft();
           document.getElementById('modalForm').style.display = 'none';
           document.getElementById('modalSuccess').style.display = 'block';
         } else {
           throw new Error(`Server error ${res.status}`);
         }
       } catch (e) {
-        showModalErr('Failed to save. Please try again.');
+        showModalErr('Failed to save. Your temporary draft is still available. Please try again.');
+        showDraftStatus('Temporary draft retained after the failed submission.', true);
         btn.disabled = false;
         btn.textContent = 'Save to CRM';
         console.error(e);
@@ -2509,17 +2891,33 @@
       el.textContent = msg; el.style.display = 'block';
     }
 
-    // Close modal on backdrop click
-    document.getElementById('meetingModal').addEventListener('click', function(e) {
-      if (e.target === this) closeModal();
-    });
+    // Auto-save all typed meeting fields after a short pause.
+    const meetingForm = document.getElementById('modalForm');
+    meetingForm.addEventListener('input', scheduleDraftSave);
+    meetingForm.addEventListener('change', scheduleDraftSave);
+
+    // Clicking outside the meeting form does nothing, preventing accidental closure.
+    // The calendar day-detail popup may still be dismissed by clicking its backdrop.
     document.getElementById('dayDetailModal').addEventListener('click', function(e) {
       if (e.target === this) closeDayDetail();
     });
+
     document.addEventListener('keydown', function(e) {
       if (e.key !== 'Escape') return;
-      if (document.getElementById('meetingModal').style.display === 'flex') closeModal();
-      else if (document.getElementById('dayDetailModal').style.display === 'flex') closeDayDetail();
+
+      if (document.getElementById('draftCloseModal').style.display === 'flex') {
+        continueEditingMeeting();
+        return;
+      }
+
+      if (document.getElementById('meetingModal').style.display === 'flex') {
+        requestCloseMeetingModal();
+        return;
+      }
+
+      if (document.getElementById('dayDetailModal').style.display === 'flex') {
+        closeDayDetail();
+      }
     });
   </script>
 </body>
