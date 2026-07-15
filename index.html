@@ -491,11 +491,73 @@
     }
 
     .helper-text {
-      font-size: 11.5px;
-      line-height: 1.45;
+      margin-top: -4px;
       color: #64748b;
-      margin: -4px 0 12px;
+      font-size: 11.5px;
+      line-height: 1.5;
     }
+
+    .optional-tag {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 6px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #2563eb;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      vertical-align: middle;
+    }
+
+    .pdf-file-state {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 10px;
+      padding: 11px 12px;
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #eff6ff, #ffffff);
+    }
+
+    .pdf-file-state.show { display: flex; }
+    .pdf-file-copy { min-width: 0; }
+    .pdf-file-label {
+      color: #1e3a8a;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .pdf-file-name {
+      margin-top: 3px;
+      color: #0f172a;
+      font-size: 11.5px;
+      font-weight: 750;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .pdf-file-actions { display: flex; gap: 7px; flex-shrink: 0; }
+    .pdf-mini-btn {
+      border: 1px solid #bfdbfe;
+      border-radius: 9px;
+      padding: 7px 10px;
+      background: #ffffff;
+      color: #2563eb;
+      font: inherit;
+      font-size: 10px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .pdf-mini-btn:hover { border-color: #2563eb; background: #eff6ff; }
+    .pdf-mini-btn.remove { color: #dc2626; border-color: #fecaca; }
+    .pdf-mini-btn.remove:hover { background: #fef2f2; border-color: #dc2626; }
 
     .hidden-section {
       display: none;
@@ -1617,7 +1679,7 @@
       <div class="modal-success" id="modalSuccess">
         <span class="s-icon"></span>
         <h3>Saved Successfully!</h3>
-        <p>Meeting details have been saved to the CRM.</p>
+        <p>Meeting details and any uploaded PDF have been saved to the CRM.</p>
         <button class="close-success-btn" onclick="finishSuccessAndClose()">Done</button>
       </div>
 
@@ -1720,6 +1782,24 @@
           <textarea class="form-textarea" id="fieldNotes" placeholder="Key discussion points, action items, follow-ups..."></textarea>
         </div>
 
+        <div class="form-divider"></div>
+        <div class="form-section-label">Meeting Document</div>
+        <div class="form-group">
+          <label class="form-label">Supporting PDF <span class="optional-tag">Optional</span></label>
+          <input class="form-input" id="fieldMeetingDocument" type="file" accept="application/pdf,.pdf" onchange="handleMeetingDocumentChange()"/>
+          <p class="helper-text">Attach one supporting PDF such as a proposal, deck, minutes, quotation or background document. Maximum file size: 10 MB.</p>
+          <div class="pdf-file-state" id="meetingDocumentState">
+            <div class="pdf-file-copy">
+              <div class="pdf-file-label">Selected PDF</div>
+              <div class="pdf-file-name" id="meetingDocumentName">No file selected</div>
+            </div>
+            <div class="pdf-file-actions">
+              <button class="pdf-mini-btn" type="button" onclick="previewMeetingDocument()">Preview</button>
+              <button class="pdf-mini-btn remove" type="button" onclick="removeMeetingDocument()">Remove</button>
+            </div>
+          </div>
+        </div>
+
         <button class="submit-btn" id="submitBtn" onclick="submitMeeting()">Save to CRM</button>
       </div>
     </div>
@@ -1731,7 +1811,7 @@
       <div class="draft-confirm-kicker">Unsaved meeting</div>
       <div class="draft-confirm-title" id="draftCloseTitle">Keep this meeting as a temporary draft?</div>
       <p class="draft-confirm-copy">Your entries are being saved temporarily in this browser tab. Choose what should happen before closing the form.</p>
-      <div class="draft-confirm-note" id="draftFileNotice" style="display:none;">Selected business-card files cannot be restored by the browser. The file will need to be selected again when the draft is reopened.</div>
+      <div class="draft-confirm-note" id="draftFileNotice" style="display:none;">Selected business-card and supporting PDF files cannot be restored by the browser. The files will need to be selected again when the draft is reopened.</div>
       <div class="draft-confirm-actions">
         <button class="draft-action-btn draft-action-save" onclick="saveDraftAndClose()">Save Draft &amp; Close</button>
         <button class="draft-action-btn draft-action-discard" onclick="discardDraftAndClose()">Discard Changes</button>
@@ -1866,6 +1946,7 @@
     let meetingFormDirty = false;
     let suppressDraftAutosave = false;
     let draftSaveTimer = null;
+    let meetingDocumentPreviewUrl = '';
 
     // ── AVATAR (initials fallback, colored per person like Google/Slack do) ──
     // Every user gets a consistent color derived from their email, not just
@@ -2500,6 +2581,55 @@
     }
 
     // ── MODAL + TEMPORARY DRAFT ──
+    function revokeMeetingDocumentPreview() {
+      if (meetingDocumentPreviewUrl) {
+        try { URL.revokeObjectURL(meetingDocumentPreviewUrl); } catch (e) {}
+        meetingDocumentPreviewUrl = '';
+      }
+    }
+
+    function updateMeetingDocumentState() {
+      const input = document.getElementById('fieldMeetingDocument');
+      const state = document.getElementById('meetingDocumentState');
+      const name = document.getElementById('meetingDocumentName');
+      const file = input?.files?.[0] || null;
+
+      if (!state || !name) return;
+      if (!file) {
+        state.classList.remove('show');
+        name.textContent = 'No file selected';
+        revokeMeetingDocumentPreview();
+        return;
+      }
+
+      name.textContent = file.name;
+      state.classList.add('show');
+    }
+
+    function handleMeetingDocumentChange() {
+      revokeMeetingDocumentPreview();
+      updateMeetingDocumentState();
+      scheduleDraftSave();
+    }
+
+    function previewMeetingDocument() {
+      const file = document.getElementById('fieldMeetingDocument')?.files?.[0] || null;
+      if (!file) {
+        showModalErr('Please select a PDF before previewing it.');
+        return;
+      }
+
+      revokeMeetingDocumentPreview();
+      meetingDocumentPreviewUrl = URL.createObjectURL(file);
+      window.open(meetingDocumentPreviewUrl, '_blank', 'noopener,noreferrer');
+    }
+
+    function removeMeetingDocument() {
+      document.getElementById('fieldMeetingDocument').value = '';
+      updateMeetingDocumentState();
+      scheduleDraftSave();
+    }
+
     function compactCalendarEvent(ev) {
       if (!ev) return null;
       return {
@@ -2535,9 +2665,10 @@
     function meetingDraftState() {
       const inputMethod = document.querySelector('input[name="contactInputMethod"]:checked')?.value || 'businessCard';
       const selectedFiles = Array.from(document.getElementById('fieldBusinessCard').files || []);
+      const meetingDocumentFile = document.getElementById('fieldMeetingDocument')?.files?.[0] || null;
 
       return {
-        version: 1,
+        version: 2,
         savedAt: Date.now(),
         currentEvent: compactCalendarEvent(currentEvent),
         modalSubtitle: document.getElementById('modalSubtitle').textContent || '',
@@ -2552,7 +2683,8 @@
         manualPhone: document.getElementById('fieldManualPhone').value || '',
         purpose: document.getElementById('fieldPurpose').value || '',
         notes: document.getElementById('fieldNotes').value || '',
-        businessCardFileNames: selectedFiles.map(file => file.name)
+        businessCardFileNames: selectedFiles.map(file => file.name),
+        meetingDocumentFileName: meetingDocumentFile ? meetingDocumentFile.name : ''
       };
     }
 
@@ -2570,7 +2702,8 @@
         state.purpose,
         state.notes
       ].some(value => String(value || '').trim()) ||
-      (Array.isArray(state.businessCardFileNames) && state.businessCardFileNames.length));
+      (Array.isArray(state.businessCardFileNames) && state.businessCardFileNames.length) ||
+      String(state.meetingDocumentFileName || '').trim());
     }
 
     function formatDraftTime(timestamp) {
@@ -2607,8 +2740,11 @@
       try {
         sessionStorage.setItem(MEETING_DRAFT_KEY, JSON.stringify(state));
         if (!options.silent) {
-          const fileWarning = state.businessCardFileNames.length
-            ? ' Business-card files must be selected again after reopening.'
+          const warnings = [];
+          if (state.businessCardFileNames.length) warnings.push('business card');
+          if (state.meetingDocumentFileName) warnings.push('supporting PDF');
+          const fileWarning = warnings.length
+            ? ' Please select the ' + warnings.join(' and ') + ' again after reopening.'
             : '';
           showDraftStatus('Temporary draft saved at ' + formatDraftTime(state.savedAt) + '.' + fileWarning, Boolean(fileWarning));
         }
@@ -2652,14 +2788,20 @@
       document.getElementById('fieldPurpose').value = draft.purpose || '';
       document.getElementById('fieldNotes').value = draft.notes || '';
       document.getElementById('fieldBusinessCard').value = '';
+      document.getElementById('fieldMeetingDocument').value = '';
+      updateMeetingDocumentState();
 
       suppressDraftAutosave = false;
       meetingFormDirty = true;
 
       const fileNames = Array.isArray(draft.businessCardFileNames) ? draft.businessCardFileNames : [];
-      if (fileNames.length) {
+      const restoreMessages = [];
+      if (fileNames.length) restoreMessages.push('business card: ' + fileNames.join(', '));
+      if (draft.meetingDocumentFileName) restoreMessages.push('supporting PDF: ' + draft.meetingDocumentFileName);
+
+      if (restoreMessages.length) {
         showDraftStatus(
-          'Draft restored. Please select the business card again: ' + fileNames.join(', '),
+          'Draft restored. Please select the ' + restoreMessages.join(' and ') + ' again.',
           true
         );
       } else {
@@ -2715,6 +2857,8 @@
       document.getElementById('fieldPurpose').value = '';
       document.getElementById('fieldNotes').value = '';
       document.getElementById('fieldBusinessCard').value = '';
+      document.getElementById('fieldMeetingDocument').value = '';
+      updateMeetingDocumentState();
       document.getElementById('fieldManualPersonName').value = '';
       document.getElementById('fieldManualCompanyName').value = '';
       document.getElementById('fieldManualEmail').value = '';
@@ -2773,7 +2917,9 @@
       }
 
       const hasSelectedFiles = Array.from(document.getElementById('fieldBusinessCard').files || []).length > 0 ||
-        (Array.isArray(draft.businessCardFileNames) && draft.businessCardFileNames.length > 0);
+        Boolean(document.getElementById('fieldMeetingDocument')?.files?.length) ||
+        (Array.isArray(draft.businessCardFileNames) && draft.businessCardFileNames.length > 0) ||
+        Boolean(draft.meetingDocumentFileName);
       document.getElementById('draftFileNotice').style.display = hasSelectedFiles ? 'block' : 'none';
       document.getElementById('draftCloseModal').style.display = 'flex';
     }
@@ -2808,6 +2954,7 @@
       const inputMethod = document.querySelector('input[name="contactInputMethod"]:checked')?.value || 'businessCard';
 
       const file = document.getElementById('fieldBusinessCard').files[0];
+      const meetingDocument = document.getElementById('fieldMeetingDocument')?.files?.[0] || null;
       const manualPersonName = document.getElementById('fieldManualPersonName').value.trim();
       const manualCompanyName = document.getElementById('fieldManualCompanyName').value.trim();
       const manualEmail = document.getElementById('fieldManualEmail').value.trim();
@@ -2833,6 +2980,12 @@
         if (!emailOk) { showModalErr('Please enter a valid email address.'); return; }
       }
 
+      if (meetingDocument) {
+        const isPdf = meetingDocument.type === 'application/pdf' || /\.pdf$/i.test(meetingDocument.name || '');
+        if (!isPdf) { showModalErr('The supporting document must be a PDF file.'); return; }
+        if (meetingDocument.size > 10 * 1024 * 1024) { showModalErr('The supporting PDF must be 10 MB or smaller.'); return; }
+      }
+
       btn.disabled = true;
       btn.textContent = 'Saving...';
       errDiv.style.display = 'none';
@@ -2853,6 +3006,7 @@
 
       fd.append('inputMethod', inputMethod);
       fd.append('manualPhone', inputMethod === 'manual' ? manualPhone : '');
+      if (meetingDocument) fd.append('meetingDocument', meetingDocument);
 
       if (inputMethod === 'businessCard') {
         fd.append('businessCard', file);
