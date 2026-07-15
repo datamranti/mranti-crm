@@ -584,6 +584,77 @@
     .pdf-mini-btn.remove { color: #dc2626; border-color: #fecaca; }
     .pdf-mini-btn.remove:hover { background: #fef2f2; border-color: #dc2626; }
 
+
+    .calendar-attachment-state {
+      display: none;
+      margin: 8px 0 14px;
+      border: 1px solid #c7d2fe;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #eef2ff, #ffffff);
+      overflow: hidden;
+    }
+    .calendar-attachment-state.show { display: block; }
+    .calendar-attachment-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(199, 210, 254, .9);
+    }
+    .calendar-attachment-label {
+      color: #3730a3;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .calendar-attachment-count {
+      color: #4f46e5;
+      font-size: 10.5px;
+      font-weight: 800;
+    }
+    .calendar-attachment-list { display: flex; flex-direction: column; }
+    .calendar-attachment-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-top: 1px solid rgba(224, 231, 255, .95);
+    }
+    .calendar-attachment-row:first-child { border-top: none; }
+    .calendar-attachment-copy { min-width: 0; }
+    .calendar-attachment-name {
+      color: #0f172a;
+      font-size: 11.5px;
+      font-weight: 750;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .calendar-attachment-type {
+      margin-top: 3px;
+      color: #64748b;
+      font-size: 9.5px;
+      font-weight: 650;
+    }
+    .calendar-open-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #c7d2fe;
+      border-radius: 9px;
+      padding: 7px 10px;
+      background: #ffffff;
+      color: #4f46e5;
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .calendar-open-btn:hover { border-color: #4f46e5; background: #eef2ff; }
+
     .hidden-section {
       display: none;
     }
@@ -1809,10 +1880,23 @@
 
         <div class="form-divider"></div>
         <div class="form-section-label">Meeting Documents</div>
+
+        <div class="form-group" id="calendarAttachmentSection" style="display:none;">
+          <label class="form-label">Calendar Attachments</label>
+          <p class="helper-text">These files are linked from the selected Google Calendar event. They stay in their original Google Drive location and are not copied into the CRM folder.</p>
+          <div class="calendar-attachment-state" id="calendarAttachmentState">
+            <div class="calendar-attachment-summary">
+              <div class="calendar-attachment-label">Linked from Calendar</div>
+              <div class="calendar-attachment-count" id="calendarAttachmentCount">0 linked files</div>
+            </div>
+            <div class="calendar-attachment-list" id="calendarAttachmentList"></div>
+          </div>
+        </div>
+
         <div class="form-group">
-          <label class="form-label">Supporting PDFs <span class="optional-tag">Optional</span></label>
+          <label class="form-label">Upload Additional PDFs <span class="optional-tag">Optional</span></label>
           <input class="form-input" id="fieldMeetingDocument" type="file" accept="application/pdf,.pdf" multiple onchange="handleMeetingDocumentChange()"/>
-          <p class="helper-text">Attach up to 5 supporting PDFs such as proposals, decks, minutes, quotations or background documents. Maximum file size: 10 MB per PDF.</p>
+          <p class="helper-text">Attach up to 5 additional PDFs that are not already linked to the Calendar event. Maximum file size: 10 MB per PDF.</p>
           <div class="pdf-file-state" id="meetingDocumentState">
             <div class="pdf-file-summary">
               <div class="pdf-file-label">Selected PDFs</div>
@@ -2606,6 +2690,59 @@
       return Array.from(document.getElementById('fieldMeetingDocument')?.files || []);
     }
 
+    function normalizeCalendarAttachments(attachments) {
+      return (Array.isArray(attachments) ? attachments : [])
+        .map((attachment, index) => {
+          const url = String(attachment?.fileUrl || attachment?.url || '').trim();
+          const name = String(attachment?.title || attachment?.name || `Calendar attachment ${index + 1}`).trim();
+          const mimeType = String(attachment?.mimeType || '').trim();
+          if (!/^https:\/\//i.test(url)) return null;
+          return {
+            name: name || `Calendar attachment ${index + 1}`,
+            url,
+            mimeType,
+            source: 'calendar'
+          };
+        })
+        .filter(Boolean);
+    }
+
+    function getCalendarAttachments() {
+      return normalizeCalendarAttachments(currentEvent?.attachments || []);
+    }
+
+    function renderCalendarAttachments(explicitAttachments = null) {
+      const attachments = explicitAttachments === null
+        ? getCalendarAttachments()
+        : normalizeCalendarAttachments(explicitAttachments);
+      const section = document.getElementById('calendarAttachmentSection');
+      const state = document.getElementById('calendarAttachmentState');
+      const count = document.getElementById('calendarAttachmentCount');
+      const list = document.getElementById('calendarAttachmentList');
+      if (!section || !state || !count || !list) return;
+
+      if (!attachments.length) {
+        section.style.display = 'none';
+        state.classList.remove('show');
+        count.textContent = '0 linked files';
+        list.innerHTML = '';
+        return;
+      }
+
+      section.style.display = 'block';
+      state.classList.add('show');
+      count.textContent = attachments.length + (attachments.length === 1 ? ' linked file' : ' linked files');
+      list.innerHTML = attachments.map((attachment) => `
+        <div class="calendar-attachment-row">
+          <div class="calendar-attachment-copy">
+            <div class="calendar-attachment-name">${escapeFileName(attachment.name)}</div>
+            <div class="calendar-attachment-type">${escapeFileName(attachment.mimeType || 'Google Drive attachment')}</div>
+          </div>
+          <a class="calendar-open-btn" href="${escapeFileName(attachment.url)}" target="_blank" rel="noopener noreferrer">View</a>
+        </div>
+      `).join('');
+    }
+
     function formatFileSize(bytes) {
       const value = Number(bytes || 0);
       if (value < 1024 * 1024) return Math.max(1, Math.round(value / 1024)) + ' KB';
@@ -2729,7 +2866,7 @@
       const meetingDocumentFiles = getMeetingDocuments();
 
       return {
-        version: 3,
+        version: 4,
         savedAt: Date.now(),
         currentEvent: compactCalendarEvent(currentEvent),
         modalSubtitle: document.getElementById('modalSubtitle').textContent || '',
@@ -2831,6 +2968,7 @@
       suppressDraftAutosave = true;
       resetModal();
       currentEvent = draft.currentEvent || null;
+      renderCalendarAttachments();
 
       document.getElementById('fieldEventTitle').value = draft.eventTitle || draft.currentEvent?.summary || '';
       document.getElementById('fieldEventDate').value = draft.eventDate || '';
@@ -2889,6 +3027,7 @@
       const ev = window._eventsCache[key];
       currentEvent = ev;
       resetModal();
+      renderCalendarAttachments();
       const start = ev?.start?.dateTime || ev?.start?.date || '';
       const others = (ev?.attendees || []).filter(a => !a.self).map(a => a.displayName || a.email).join(', ');
       document.getElementById('fieldEventTitle').value = ev?.summary || '';
@@ -2922,6 +3061,7 @@
       document.getElementById('fieldBusinessCard').value = '';
       document.getElementById('fieldMeetingDocument').value = '';
       updateMeetingDocumentState();
+      renderCalendarAttachments([]);
       document.getElementById('fieldManualPersonName').value = '';
       document.getElementById('fieldManualCompanyName').value = '';
       document.getElementById('fieldManualEmail').value = '';
@@ -3019,6 +3159,7 @@
 
       const file = document.getElementById('fieldBusinessCard').files[0];
       const meetingDocuments = getMeetingDocuments();
+      const calendarAttachments = getCalendarAttachments();
       const manualPersonName = document.getElementById('fieldManualPersonName').value.trim();
       const manualCompanyName = document.getElementById('fieldManualCompanyName').value.trim();
       const manualEmail = document.getElementById('fieldManualEmail').value.trim();
@@ -3075,6 +3216,8 @@
       fd.append('eventDateOnly', eventDateOnly);
       fd.append('eventTime', eventTimeOnly);
       fd.append('attendees', (currentEvent?.attendees || []).filter(a => !a.self).map(a => a.displayName || a.email).join(', ') || document.getElementById('fieldAttendees').value || '');
+      fd.append('calendarAttachments', JSON.stringify(calendarAttachments));
+      fd.append('calendarAttachmentCount', String(calendarAttachments.length));
 
       fd.append('inputMethod', inputMethod);
       fd.append('manualPhone', inputMethod === 'manual' ? manualPhone : '');
@@ -3107,9 +3250,14 @@
           clearMeetingDraft();
 
           const uploaded = Number(responseData.uploadedDocuments || 0);
+          const linkedCalendarAttachments = Number(responseData.linkedCalendarAttachments || calendarAttachments.length || 0);
           const failed = Number(responseData.failedDocuments || 0);
           const failedNames = Array.isArray(responseData.failedFileNames) ? responseData.failedFileNames : [];
           let successMessage = 'Meeting details have been saved to the CRM.';
+
+          if (linkedCalendarAttachments > 0) {
+            successMessage += ' ' + linkedCalendarAttachments + (linkedCalendarAttachments === 1 ? ' Calendar attachment was linked.' : ' Calendar attachments were linked.');
+          }
 
           if (meetingDocuments.length && failed === 0) {
             successMessage += ' ' + uploaded + (uploaded === 1 ? ' PDF was' : ' PDFs were') + ' uploaded successfully.';
