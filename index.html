@@ -1230,7 +1230,7 @@
     }
 
     .choices-row {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px;
     }
 
     .welcome-band .choice-btn {
@@ -1306,6 +1306,10 @@
     @media (max-width: 1180px) {
       .dashboard-grid {
         grid-template-columns: minmax(240px, 280px) minmax(480px, 1fr);
+      }
+
+      .choices-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .user-bar {
@@ -1673,6 +1677,17 @@
           <div class="choice-text">
             <span class="choice-title">Relationship Graph</span>
             <span class="choice-desc">Open the CRM network graph sandbox</span>
+          </div>
+        </a>
+
+        <a class="choice-btn" href="https://mrantidata.app.n8n.cloud/webhook/staff-directory-test" target="_blank">
+          <div class="choice-btn-top">
+            <div class="choice-icon icon-blue"><span class="tech-icon">TEAM</span></div>
+            <span class="choice-arrow">›</span>
+          </div>
+          <div class="choice-text">
+            <span class="choice-title">Staff Directory</span>
+            <span class="choice-desc">Find MRANTI colleagues, roles and contact details</span>
           </div>
         </a>
       </div>
