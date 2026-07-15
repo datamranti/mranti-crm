@@ -515,18 +515,22 @@
 
     .pdf-file-state {
       display: none;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
       margin-top: 10px;
-      padding: 11px 12px;
       border: 1px solid #bfdbfe;
       border-radius: 12px;
       background: linear-gradient(135deg, #eff6ff, #ffffff);
+      overflow: hidden;
     }
 
-    .pdf-file-state.show { display: flex; }
-    .pdf-file-copy { min-width: 0; }
+    .pdf-file-state.show { display: block; }
+    .pdf-file-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(191, 219, 254, .85);
+    }
     .pdf-file-label {
       color: #1e3a8a;
       font-size: 9px;
@@ -534,14 +538,35 @@
       letter-spacing: 1px;
       text-transform: uppercase;
     }
+    .pdf-file-count {
+      color: #2563eb;
+      font-size: 10.5px;
+      font-weight: 800;
+    }
+    .pdf-file-list { display: flex; flex-direction: column; }
+    .pdf-file-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-top: 1px solid rgba(219, 234, 254, .95);
+    }
+    .pdf-file-row:first-child { border-top: none; }
+    .pdf-file-copy { min-width: 0; }
     .pdf-file-name {
-      margin-top: 3px;
       color: #0f172a;
       font-size: 11.5px;
       font-weight: 750;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+    .pdf-file-size {
+      margin-top: 3px;
+      color: #64748b;
+      font-size: 9.5px;
+      font-weight: 650;
     }
     .pdf-file-actions { display: flex; gap: 7px; flex-shrink: 0; }
     .pdf-mini-btn {
@@ -1679,7 +1704,7 @@
       <div class="modal-success" id="modalSuccess">
         <span class="s-icon"></span>
         <h3>Saved Successfully!</h3>
-        <p>Meeting details and any uploaded PDF have been saved to the CRM.</p>
+        <p id="modalSuccessMessage">Meeting details have been saved to the CRM.</p>
         <button class="close-success-btn" onclick="finishSuccessAndClose()">Done</button>
       </div>
 
@@ -1783,20 +1808,17 @@
         </div>
 
         <div class="form-divider"></div>
-        <div class="form-section-label">Meeting Document</div>
+        <div class="form-section-label">Meeting Documents</div>
         <div class="form-group">
-          <label class="form-label">Supporting PDF <span class="optional-tag">Optional</span></label>
-          <input class="form-input" id="fieldMeetingDocument" type="file" accept="application/pdf,.pdf" onchange="handleMeetingDocumentChange()"/>
-          <p class="helper-text">Attach one supporting PDF such as a proposal, deck, minutes, quotation or background document. Maximum file size: 10 MB.</p>
+          <label class="form-label">Supporting PDFs <span class="optional-tag">Optional</span></label>
+          <input class="form-input" id="fieldMeetingDocument" type="file" accept="application/pdf,.pdf" multiple onchange="handleMeetingDocumentChange()"/>
+          <p class="helper-text">Attach up to 5 supporting PDFs such as proposals, decks, minutes, quotations or background documents. Maximum file size: 10 MB per PDF.</p>
           <div class="pdf-file-state" id="meetingDocumentState">
-            <div class="pdf-file-copy">
-              <div class="pdf-file-label">Selected PDF</div>
-              <div class="pdf-file-name" id="meetingDocumentName">No file selected</div>
+            <div class="pdf-file-summary">
+              <div class="pdf-file-label">Selected PDFs</div>
+              <div class="pdf-file-count" id="meetingDocumentCount">0 documents selected</div>
             </div>
-            <div class="pdf-file-actions">
-              <button class="pdf-mini-btn" type="button" onclick="previewMeetingDocument()">Preview</button>
-              <button class="pdf-mini-btn remove" type="button" onclick="removeMeetingDocument()">Remove</button>
-            </div>
+            <div class="pdf-file-list" id="meetingDocumentList"></div>
           </div>
         </div>
 
@@ -1942,11 +1964,10 @@
     window._eventsCache = {};
 
     // Temporary meeting draft: scoped to this browser tab and cleared when the tab closes.
-    const MEETING_DRAFT_KEY = 'mranti_crm_meeting_draft_v1';
+    const MEETING_DRAFT_KEY = 'mranti_crm_meeting_draft_v3';
     let meetingFormDirty = false;
     let suppressDraftAutosave = false;
     let draftSaveTimer = null;
-    let meetingDocumentPreviewUrl = '';
 
     // ── AVATAR (initials fallback, colored per person like Google/Slack do) ──
     // Every user gets a consistent color derived from their email, not just
@@ -2581,51 +2602,91 @@
     }
 
     // ── MODAL + TEMPORARY DRAFT ──
-    function revokeMeetingDocumentPreview() {
-      if (meetingDocumentPreviewUrl) {
-        try { URL.revokeObjectURL(meetingDocumentPreviewUrl); } catch (e) {}
-        meetingDocumentPreviewUrl = '';
-      }
+    function getMeetingDocuments() {
+      return Array.from(document.getElementById('fieldMeetingDocument')?.files || []);
+    }
+
+    function formatFileSize(bytes) {
+      const value = Number(bytes || 0);
+      if (value < 1024 * 1024) return Math.max(1, Math.round(value / 1024)) + ' KB';
+      return (value / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    function escapeFileName(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function setMeetingDocumentFiles(files) {
+      const input = document.getElementById('fieldMeetingDocument');
+      const transfer = new DataTransfer();
+      files.slice(0, 5).forEach(file => transfer.items.add(file));
+      input.files = transfer.files;
     }
 
     function updateMeetingDocumentState() {
-      const input = document.getElementById('fieldMeetingDocument');
       const state = document.getElementById('meetingDocumentState');
-      const name = document.getElementById('meetingDocumentName');
-      const file = input?.files?.[0] || null;
+      const list = document.getElementById('meetingDocumentList');
+      const count = document.getElementById('meetingDocumentCount');
+      const files = getMeetingDocuments();
 
-      if (!state || !name) return;
-      if (!file) {
+      if (!state || !list || !count) return;
+
+      if (!files.length) {
         state.classList.remove('show');
-        name.textContent = 'No file selected';
-        revokeMeetingDocumentPreview();
+        list.innerHTML = '';
+        count.textContent = '0 documents selected';
         return;
       }
 
-      name.textContent = file.name;
+      count.textContent = files.length + (files.length === 1 ? ' document selected' : ' documents selected');
+      list.innerHTML = files.map((file, index) => `
+        <div class="pdf-file-row">
+          <div class="pdf-file-copy">
+            <div class="pdf-file-name">${escapeFileName(file.name)}</div>
+            <div class="pdf-file-size">${formatFileSize(file.size)}</div>
+          </div>
+          <div class="pdf-file-actions">
+            <button class="pdf-mini-btn" type="button" onclick="previewMeetingDocument(${index})">Preview</button>
+            <button class="pdf-mini-btn remove" type="button" onclick="removeMeetingDocument(${index})">Remove</button>
+          </div>
+        </div>
+      `).join('');
       state.classList.add('show');
     }
 
     function handleMeetingDocumentChange() {
-      revokeMeetingDocumentPreview();
+      const files = getMeetingDocuments();
+
+      if (files.length > 5) {
+        setMeetingDocumentFiles(files.slice(0, 5));
+        showModalErr('You can attach a maximum of 5 supporting PDFs. Only the first 5 files were kept.');
+      }
+
       updateMeetingDocumentState();
       scheduleDraftSave();
     }
 
-    function previewMeetingDocument() {
-      const file = document.getElementById('fieldMeetingDocument')?.files?.[0] || null;
+    function previewMeetingDocument(index) {
+      const file = getMeetingDocuments()[index] || null;
       if (!file) {
-        showModalErr('Please select a PDF before previewing it.');
+        showModalErr('This PDF is no longer selected. Please select it again.');
         return;
       }
 
-      revokeMeetingDocumentPreview();
-      meetingDocumentPreviewUrl = URL.createObjectURL(file);
-      window.open(meetingDocumentPreviewUrl, '_blank', 'noopener,noreferrer');
+      const previewUrl = URL.createObjectURL(file);
+      window.open(previewUrl, '_blank', 'noopener,noreferrer');
+      setTimeout(() => {
+        try { URL.revokeObjectURL(previewUrl); } catch (e) {}
+      }, 60000);
     }
 
-    function removeMeetingDocument() {
-      document.getElementById('fieldMeetingDocument').value = '';
+    function removeMeetingDocument(index) {
+      const files = getMeetingDocuments().filter((file, fileIndex) => fileIndex !== index);
+      setMeetingDocumentFiles(files);
       updateMeetingDocumentState();
       scheduleDraftSave();
     }
@@ -2665,10 +2726,10 @@
     function meetingDraftState() {
       const inputMethod = document.querySelector('input[name="contactInputMethod"]:checked')?.value || 'businessCard';
       const selectedFiles = Array.from(document.getElementById('fieldBusinessCard').files || []);
-      const meetingDocumentFile = document.getElementById('fieldMeetingDocument')?.files?.[0] || null;
+      const meetingDocumentFiles = getMeetingDocuments();
 
       return {
-        version: 2,
+        version: 3,
         savedAt: Date.now(),
         currentEvent: compactCalendarEvent(currentEvent),
         modalSubtitle: document.getElementById('modalSubtitle').textContent || '',
@@ -2684,7 +2745,7 @@
         purpose: document.getElementById('fieldPurpose').value || '',
         notes: document.getElementById('fieldNotes').value || '',
         businessCardFileNames: selectedFiles.map(file => file.name),
-        meetingDocumentFileName: meetingDocumentFile ? meetingDocumentFile.name : ''
+        meetingDocumentFileNames: meetingDocumentFiles.map(file => file.name)
       };
     }
 
@@ -2703,7 +2764,7 @@
         state.notes
       ].some(value => String(value || '').trim()) ||
       (Array.isArray(state.businessCardFileNames) && state.businessCardFileNames.length) ||
-      String(state.meetingDocumentFileName || '').trim());
+      (Array.isArray(state.meetingDocumentFileNames) && state.meetingDocumentFileNames.length));
     }
 
     function formatDraftTime(timestamp) {
@@ -2742,7 +2803,7 @@
         if (!options.silent) {
           const warnings = [];
           if (state.businessCardFileNames.length) warnings.push('business card');
-          if (state.meetingDocumentFileName) warnings.push('supporting PDF');
+          if (Array.isArray(state.meetingDocumentFileNames) && state.meetingDocumentFileNames.length) warnings.push('supporting PDFs');
           const fileWarning = warnings.length
             ? ' Please select the ' + warnings.join(' and ') + ' again after reopening.'
             : '';
@@ -2797,7 +2858,8 @@
       const fileNames = Array.isArray(draft.businessCardFileNames) ? draft.businessCardFileNames : [];
       const restoreMessages = [];
       if (fileNames.length) restoreMessages.push('business card: ' + fileNames.join(', '));
-      if (draft.meetingDocumentFileName) restoreMessages.push('supporting PDF: ' + draft.meetingDocumentFileName);
+      const documentFileNames = Array.isArray(draft.meetingDocumentFileNames) ? draft.meetingDocumentFileNames : (draft.meetingDocumentFileName ? [draft.meetingDocumentFileName] : []);
+      if (documentFileNames.length) restoreMessages.push('supporting PDFs: ' + documentFileNames.join(', '));
 
       if (restoreMessages.length) {
         showDraftStatus(
@@ -2812,6 +2874,7 @@
 
     function showMeetingModal() {
       document.getElementById('modalSuccess').style.display = 'none';
+      document.getElementById('modalSuccessMessage').textContent = 'Meeting details have been saved to the CRM.';
       document.getElementById('modalForm').style.display = 'block';
       document.getElementById('meetingModal').style.display = 'flex';
     }
@@ -2919,6 +2982,7 @@
       const hasSelectedFiles = Array.from(document.getElementById('fieldBusinessCard').files || []).length > 0 ||
         Boolean(document.getElementById('fieldMeetingDocument')?.files?.length) ||
         (Array.isArray(draft.businessCardFileNames) && draft.businessCardFileNames.length > 0) ||
+        (Array.isArray(draft.meetingDocumentFileNames) && draft.meetingDocumentFileNames.length > 0) ||
         Boolean(draft.meetingDocumentFileName);
       document.getElementById('draftFileNotice').style.display = hasSelectedFiles ? 'block' : 'none';
       document.getElementById('draftCloseModal').style.display = 'flex';
@@ -2954,7 +3018,7 @@
       const inputMethod = document.querySelector('input[name="contactInputMethod"]:checked')?.value || 'businessCard';
 
       const file = document.getElementById('fieldBusinessCard').files[0];
-      const meetingDocument = document.getElementById('fieldMeetingDocument')?.files?.[0] || null;
+      const meetingDocuments = getMeetingDocuments();
       const manualPersonName = document.getElementById('fieldManualPersonName').value.trim();
       const manualCompanyName = document.getElementById('fieldManualCompanyName').value.trim();
       const manualEmail = document.getElementById('fieldManualEmail').value.trim();
@@ -2980,10 +3044,18 @@
         if (!emailOk) { showModalErr('Please enter a valid email address.'); return; }
       }
 
-      if (meetingDocument) {
-        const isPdf = meetingDocument.type === 'application/pdf' || /\.pdf$/i.test(meetingDocument.name || '');
-        if (!isPdf) { showModalErr('The supporting document must be a PDF file.'); return; }
-        if (meetingDocument.size > 10 * 1024 * 1024) { showModalErr('The supporting PDF must be 10 MB or smaller.'); return; }
+      if (meetingDocuments.length > 5) {
+        showModalErr('You can attach a maximum of 5 supporting PDFs.');
+        return;
+      }
+
+      for (const documentFile of meetingDocuments) {
+        const isPdf = documentFile.type === 'application/pdf' || /\.pdf$/i.test(documentFile.name || '');
+        if (!isPdf) { showModalErr(documentFile.name + ' is not a PDF file.'); return; }
+        if (documentFile.size > 10 * 1024 * 1024) {
+          showModalErr(documentFile.name + ' is larger than 10 MB. Please remove or replace it.');
+          return;
+        }
       }
 
       btn.disabled = true;
@@ -3006,7 +3078,10 @@
 
       fd.append('inputMethod', inputMethod);
       fd.append('manualPhone', inputMethod === 'manual' ? manualPhone : '');
-      if (meetingDocument) fd.append('meetingDocument', meetingDocument);
+      meetingDocuments.forEach((documentFile, index) => {
+        fd.append('meetingDocument_' + (index + 1), documentFile);
+      });
+      fd.append('meetingDocumentCount', String(meetingDocuments.length));
 
       if (inputMethod === 'businessCard') {
         fd.append('businessCard', file);
@@ -3024,8 +3099,26 @@
           method: 'POST',
           body: fd
         });
+        const responseText = await res.text();
+        let responseData = {};
+        try { responseData = responseText ? JSON.parse(responseText) : {}; } catch (e) {}
+
         if (res.ok || res.status === 200) {
           clearMeetingDraft();
+
+          const uploaded = Number(responseData.uploadedDocuments || 0);
+          const failed = Number(responseData.failedDocuments || 0);
+          const failedNames = Array.isArray(responseData.failedFileNames) ? responseData.failedFileNames : [];
+          let successMessage = 'Meeting details have been saved to the CRM.';
+
+          if (meetingDocuments.length && failed === 0) {
+            successMessage += ' ' + uploaded + (uploaded === 1 ? ' PDF was' : ' PDFs were') + ' uploaded successfully.';
+          } else if (meetingDocuments.length && failed > 0) {
+            successMessage += ' ' + uploaded + ' of ' + meetingDocuments.length + ' PDFs uploaded successfully.';
+            if (failedNames.length) successMessage += ' Could not upload: ' + failedNames.join(', ') + '.';
+          }
+
+          document.getElementById('modalSuccessMessage').textContent = successMessage;
           document.getElementById('modalForm').style.display = 'none';
           document.getElementById('modalSuccess').style.display = 'block';
         } else {
