@@ -2,26 +2,23 @@
   "name": "MRANTI CRM",
   "short_name": "MRANTI CRM",
   "description": "MRANTI CRM workspace for contacts, meetings and relationship intelligence.",
-  "start_url": ".",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#eef6ff",
+  "background_color": "#eaf3ff",
   "theme_color": "#0000ff",
   "icons": [
     {
-      "src": "app-icons/icon-192.png",
+      "src": "android-chrome-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "app-icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "app-icons/icon-512-maskable.png",
+      "src": "android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ]
 }
