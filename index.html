@@ -2624,6 +2624,233 @@
 
 </style>
 
+
+<style id="crmContactsInternalStyles">
+  #contactsScreen {
+    display: none;
+    width: 100%;
+    max-width: 1400px;
+    min-height: calc(100vh - 48px);
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .crm-contacts-nav,
+  .crm-contacts-list-panel,
+  .crm-contacts-detail-panel {
+    background: rgba(255,255,255,0.88);
+    border: 1px solid rgba(147,197,253,0.42);
+    box-shadow: 0 18px 54px rgba(37,99,235,0.11), 0 2px 8px rgba(15,23,42,0.04);
+    backdrop-filter: blur(16px);
+  }
+
+  .crm-contacts-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 16px 20px;
+    border-radius: 24px;
+  }
+
+  .crm-contacts-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  .crm-contacts-logo {
+    width: 150px;
+    height: 46px;
+    flex-shrink: 0;
+    background: url("https://cdn.prod.website-files.com/6719e3902a71ea8154ba371d/6996a2c470a01e3f32ffa080_M30.png") center/contain no-repeat;
+    filter: brightness(0) saturate(100%) invert(17%) sepia(80%) saturate(1200%) hue-rotate(210deg) brightness(90%);
+  }
+
+  .crm-contacts-divider { width: 1px; height: 34px; background: rgba(148,163,184,0.35); }
+  .crm-contacts-kicker { font-size: 11px; font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase; color: #2563eb; }
+  .crm-contacts-subtitle { margin-top: 5px; font-size: 12px; color: #64748b; }
+
+  .crm-contacts-nav-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  .crm-contacts-user { max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #64748b; font-size: 11px; font-weight: 700; }
+  .crm-contacts-btn {
+    border: 1.5px solid rgba(147,197,253,0.65);
+    background: #fff;
+    color: #2563eb;
+    border-radius: 11px;
+    padding: 10px 15px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all .2s ease;
+  }
+  .crm-contacts-btn:hover { border-color: #2563eb; background: #eff6ff; }
+  .crm-contacts-btn.primary { background: #2563eb; color: #fff; border-color: #2563eb; }
+  .crm-contacts-btn.primary:hover { background: #1d4ed8; }
+  .crm-contacts-btn.danger { color: #dc2626; border-color: #fecaca; }
+  .crm-contacts-btn.danger:hover { background: #fef2f2; border-color: #ef4444; }
+  .crm-contacts-btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+  .crm-contacts-head {
+    display: grid;
+    grid-template-columns: minmax(240px, 1fr) minmax(360px, 560px) 170px auto;
+    gap: 10px;
+    align-items: end;
+  }
+  .crm-contacts-title h1 { margin: 0; font-size: 26px; letter-spacing: -.6px; }
+  .crm-contacts-title p { margin: 6px 0 0; color: #64748b; font-size: 12px; }
+  .crm-contacts-input,
+  .crm-contacts-select,
+  .crm-edit-input,
+  .crm-edit-textarea {
+    width: 100%;
+    border: 1.5px solid #bfdbfe;
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px 14px;
+    color: #0f172a;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+  }
+  .crm-contacts-input:focus,
+  .crm-contacts-select:focus,
+  .crm-edit-input:focus,
+  .crm-edit-textarea:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.08); }
+
+  .crm-contacts-banner {
+    display: none;
+    padding: 11px 13px;
+    border-radius: 11px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .crm-contacts-banner.show { display: block; }
+  .crm-contacts-banner.info { color: #1e40af; background: #eff6ff; border: 1px solid #bfdbfe; }
+  .crm-contacts-banner.error { color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; }
+
+  .crm-contacts-workspace {
+    display: grid;
+    grid-template-columns: minmax(350px, .82fr) minmax(520px, 1.18fr);
+    gap: 16px;
+    align-items: start;
+  }
+  .crm-contacts-list-panel,
+  .crm-contacts-detail-panel { border-radius: 22px; overflow: hidden; }
+  .crm-contacts-list-head {
+    padding: 15px 18px;
+    border-bottom: 1px solid #dbeafe;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+  }
+  .crm-contacts-list-body { padding: 12px; display: flex; flex-direction: column; gap: 10px; max-height: calc(100vh - 270px); overflow: auto; }
+  .crm-contact-card {
+    text-align: left;
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid #dbeafe;
+    border-radius: 16px;
+    background: #fff;
+    cursor: pointer;
+    position: relative;
+    font-family: inherit;
+  }
+  .crm-contact-card:hover { border-color: #93c5fd; }
+  .crm-contact-card.active { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
+  .crm-contact-card-head { display: flex; justify-content: space-between; gap: 10px; }
+  .crm-contact-person { font-size: 13px; font-weight: 800; color: #0f172a; }
+  .crm-contact-date { font-size: 10px; color: #2563eb; font-weight: 800; text-align: right; }
+  .crm-contact-company,
+  .crm-contact-reason { font-size: 11px; color: #64748b; margin-top: 7px; line-height: 1.4; }
+  .crm-contact-meeting { font-size: 11.5px; color: #1e3a8a; font-weight: 800; margin-top: 7px; line-height: 1.4; }
+  .crm-contact-status { display: inline-flex; margin-top: 9px; padding: 3px 8px; border-radius: 999px; font-size: 9px; font-weight: 800; }
+  .crm-contact-status.active { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+  .crm-contact-status.archived { background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; }
+
+  .crm-contacts-empty { padding: 28px 18px; text-align: center; color: #64748b; font-size: 12px; line-height: 1.5; }
+  .crm-contacts-detail-panel { position: sticky; top: 22px; }
+  .crm-contact-detail-header { padding: 20px; border-bottom: 1px solid #dbeafe; display: flex; justify-content: space-between; gap: 15px; }
+  .crm-contact-detail-name { font-size: 22px; font-weight: 800; letter-spacing: -.4px; }
+  .crm-contact-detail-company { font-size: 12px; color: #64748b; margin-top: 5px; }
+  .crm-contact-detail-actions { display: flex; gap: 8px; align-items: flex-start; flex-wrap: wrap; justify-content: flex-end; }
+  .crm-contact-detail-body { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 15px; }
+  .crm-contact-section-title { font-size: 10px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: #1e3a5f; margin-bottom: 8px; }
+  .crm-contact-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 9px; }
+  .crm-contact-info { padding: 11px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; }
+  .crm-contact-info.full { grid-column: 1 / -1; }
+  .crm-contact-label { font-size: 8.5px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; }
+  .crm-contact-value { font-size: 11.8px; font-weight: 650; margin-top: 5px; white-space: pre-wrap; word-break: break-word; }
+  .crm-contact-value a { color: #2563eb; text-decoration: none; }
+  .crm-contact-notes { padding: 14px; border-radius: 13px; background: #eff6ff; border: 1px solid #bfdbfe; font-size: 12.5px; white-space: pre-wrap; line-height: 1.55; }
+  .crm-contact-doc-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .crm-contact-doc { padding: 9px 12px; border-radius: 10px; background: #2563eb; color: #fff; text-decoration: none; font-size: 11px; font-weight: 800; }
+  .crm-contact-legacy-note { color: #b45309; font-size: 10.5px; font-weight: 700; line-height: 1.4; text-align: right; max-width: 250px; }
+
+  .crm-edit-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1600;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(15,23,42,.56);
+    backdrop-filter: blur(5px);
+  }
+  .crm-edit-card {
+    width: min(800px, 96vw);
+    max-height: 92vh;
+    overflow: auto;
+    background: #fff;
+    border-radius: 22px;
+    padding: 28px;
+    box-shadow: 0 30px 80px rgba(15,23,42,.24);
+  }
+  .crm-edit-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+  .crm-edit-field.full { grid-column: 1 / -1; }
+  .crm-edit-field label { display: block; font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: .7px; margin-bottom: 5px; }
+  .crm-edit-textarea { min-height: 92px; resize: vertical; }
+  .crm-edit-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+  @media (max-width: 1040px) {
+    .crm-contacts-head { grid-template-columns: 1fr 1fr; }
+    .crm-contacts-workspace { grid-template-columns: 1fr; }
+    .crm-contacts-detail-panel { position: static; }
+    .crm-contacts-list-body { max-height: 520px; }
+  }
+
+  @media (max-width: 700px) {
+    #contactsScreen { padding-bottom: 12px; gap: 12px; }
+    .crm-contacts-nav { flex-direction: column; align-items: stretch; padding: 14px; border-radius: 18px; }
+    .crm-contacts-brand { justify-content: flex-start; }
+    .crm-contacts-logo { width: 128px; height: 40px; }
+    .crm-contacts-divider, .crm-contacts-brand-copy { display: none; }
+    .crm-contacts-nav-actions { justify-content: stretch; }
+    .crm-contacts-user { width: 100%; max-width: none; }
+    .crm-contacts-btn { flex: 1; text-align: center; }
+    .crm-contacts-head { grid-template-columns: 1fr; }
+    .crm-contacts-title h1 { font-size: 23px; }
+    .crm-contact-detail-header { flex-direction: column; }
+    .crm-contact-detail-actions { justify-content: flex-start; }
+    .crm-contact-grid, .crm-edit-grid { grid-template-columns: 1fr; }
+    .crm-contact-info.full, .crm-edit-field.full { grid-column: auto; }
+    .crm-edit-actions { flex-direction: column-reverse; }
+    .crm-edit-actions .crm-contacts-btn { width: 100%; }
+  }
+</style>
+
 </head>
 <body>
 
@@ -2756,7 +2983,7 @@
           </div>
         </a>
 
-        <a class="choice-btn" href="https://mrantidata.app.n8n.cloud/webhook/view-contacts-test" target="_blank">
+        <a class="choice-btn" href="#contacts" onclick="event.preventDefault();openContactsView()">
           <div class="choice-btn-top">
             <div class="choice-icon icon-purple"><span class="tech-icon">DB</span></div>
             <span class="choice-arrow">›</span>
@@ -2854,6 +3081,132 @@
     </div>
 
     <p class="footer">MRANTI · Malaysian Research Accelerator for Technology & Innovation</p>
+  </div>
+
+
+  <!-- CRM CONTACTS: rendered inside the authenticated GitHub app -->
+  <div id="contactsScreen" aria-hidden="true">
+    <header class="crm-contacts-nav">
+      <div class="crm-contacts-brand">
+        <div class="crm-contacts-logo"></div>
+        <div class="crm-contacts-divider"></div>
+        <div class="crm-contacts-brand-copy">
+          <div class="crm-contacts-kicker">CRM Workspace</div>
+          <div class="crm-contacts-subtitle">Search, review, edit and archive relationship records</div>
+        </div>
+      </div>
+      <div class="crm-contacts-nav-actions">
+        <span class="crm-contacts-user" id="crmContactsUser"></span>
+        <a class="crm-contacts-btn" href="https://mrantidata.app.n8n.cloud/webhook/relationship-graph-test" target="_blank" rel="noopener">Relationship Graph</a>
+        <button class="crm-contacts-btn primary" type="button" onclick="closeContactsView()">Back to Dashboard</button>
+      </div>
+    </header>
+
+    <section class="crm-contacts-head">
+      <div class="crm-contacts-title">
+        <h1>CRM Contacts</h1>
+        <p>Search contacts, review meeting context and manage records without signing in again.</p>
+      </div>
+      <input class="crm-contacts-input" id="crmContactsSearch" type="search" placeholder="Filter by name, company, email, phone, meeting, attendees, reason..." oninput="crmFilterRecords()" />
+      <select class="crm-contacts-select" id="crmContactsStatus" onchange="crmFilterRecords()">
+        <option value="Active">Active Records</option>
+        <option value="Archived">Archived Records</option>
+        <option value="All">All Records</option>
+      </select>
+      <button class="crm-contacts-btn" type="button" onclick="crmClearSearch()">Clear</button>
+    </section>
+
+    <div class="crm-contacts-banner info" id="crmContactsBanner"></div>
+
+    <main class="crm-contacts-workspace">
+      <section class="crm-contacts-list-panel">
+        <div class="crm-contacts-list-head">
+          <span>Records</span>
+          <span id="crmContactsCount">0 records</span>
+        </div>
+        <div class="crm-contacts-list-body" id="crmContactsList">
+          <div class="crm-contacts-empty">Loading CRM contacts…</div>
+        </div>
+      </section>
+
+      <section class="crm-contacts-detail-panel">
+        <div class="crm-contact-detail-header">
+          <div>
+            <div class="crm-contact-detail-name" id="crmDetailName">Select a record</div>
+            <div class="crm-contact-detail-company" id="crmDetailCompany"></div>
+          </div>
+          <div>
+            <div class="crm-contact-detail-actions">
+              <button class="crm-contacts-btn" id="crmEditBtn" type="button" onclick="crmOpenEditModal()" disabled>Edit Record</button>
+              <button class="crm-contacts-btn danger" id="crmArchiveBtn" type="button" onclick="crmArchiveSelectedRecord()" disabled>Archive Record</button>
+              <button class="crm-contacts-btn" type="button" onclick="crmLoadContacts(true)">Refresh</button>
+            </div>
+            <div class="crm-contact-legacy-note" id="crmLegacyNote"></div>
+          </div>
+        </div>
+
+        <div class="crm-contact-detail-body" id="crmContactDetailBody">
+          <section>
+            <div class="crm-contact-section-title">Contact</div>
+            <div class="crm-contact-grid">
+              <div class="crm-contact-info"><div class="crm-contact-label">Email</div><div class="crm-contact-value" id="crmDetailEmail"></div></div>
+              <div class="crm-contact-info"><div class="crm-contact-label">Contact Number</div><div class="crm-contact-value" id="crmDetailPhone"></div></div>
+              <div class="crm-contact-info full"><div class="crm-contact-label">Job Title</div><div class="crm-contact-value" id="crmDetailJobTitle"></div></div>
+            </div>
+          </section>
+
+          <section>
+            <div class="crm-contact-section-title">Meeting</div>
+            <div class="crm-contact-grid">
+              <div class="crm-contact-info full"><div class="crm-contact-label">Meeting Title</div><div class="crm-contact-value" id="crmDetailMeetingTitle"></div></div>
+              <div class="crm-contact-info"><div class="crm-contact-label">Meeting Date</div><div class="crm-contact-value" id="crmDetailMeetingDate"></div></div>
+              <div class="crm-contact-info"><div class="crm-contact-label">Purpose</div><div class="crm-contact-value" id="crmDetailReason"></div></div>
+              <div class="crm-contact-info full"><div class="crm-contact-label">Attendees</div><div class="crm-contact-value" id="crmDetailAttendees"></div></div>
+            </div>
+          </section>
+
+          <section>
+            <div class="crm-contact-section-title">Meeting Notes</div>
+            <div class="crm-contact-notes" id="crmDetailNotes">No meeting notes recorded.</div>
+          </section>
+
+          <section>
+            <div class="crm-contact-section-title">Action Items</div>
+            <div class="crm-contact-notes" id="crmDetailActionItems">No action items recorded.</div>
+          </section>
+
+          <section>
+            <div class="crm-contact-section-title">Internal Log</div>
+            <div class="crm-contact-grid">
+              <div class="crm-contact-info"><div class="crm-contact-label">Uploader</div><div class="crm-contact-value" id="crmDetailUploader"></div></div>
+              <div class="crm-contact-info"><div class="crm-contact-label">Uploader Email</div><div class="crm-contact-value" id="crmDetailUploaderEmail"></div></div>
+              <div class="crm-contact-info"><div class="crm-contact-label">Record Status</div><div class="crm-contact-value" id="crmDetailStatus"></div></div>
+              <div class="crm-contact-info"><div class="crm-contact-label">Last Updated</div><div class="crm-contact-value" id="crmDetailUpdated"></div></div>
+            </div>
+          </section>
+
+          <section id="crmDocumentSection" style="display:none;">
+            <div class="crm-contact-section-title">Meeting Documents</div>
+            <div class="crm-contact-doc-list" id="crmDetailDocuments"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <p class="footer">MRANTI · Malaysian Research Accelerator for Technology &amp; Innovation</p>
+  </div>
+
+  <div class="crm-edit-modal" id="crmEditModal" role="dialog" aria-modal="true" aria-labelledby="crmEditTitle">
+    <div class="crm-edit-card">
+      <h2 id="crmEditTitle" style="margin-top:0;">Edit CRM Record</h2>
+      <p style="color:#64748b;font-size:12px;line-height:1.5;">Changes are matched using the permanent Record ID and logged with your MRANTI email.</p>
+      <div class="crm-contacts-banner error" id="crmEditError"></div>
+      <div class="crm-edit-grid" id="crmEditFields"></div>
+      <div class="crm-edit-actions">
+        <button class="crm-contacts-btn" type="button" onclick="crmCloseEditModal()">Cancel</button>
+        <button class="crm-contacts-btn primary" id="crmSaveEditBtn" type="button" onclick="crmSaveRecordEdit()">Save Changes</button>
+      </div>
+    </div>
   </div>
 
   <!-- MEETING MODAL -->
@@ -3246,15 +3599,7 @@
         currentUser = user;
         const firstName = user.displayName ? user.displayName.split(' ')[0] : 'there';
         document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('appScreen').style.display = 'flex';
-
-        // Wait until the dashboard has been laid out, then force the page back
-        // to the true top so the navigation bar and MRANTI logo are never clipped.
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            resetDashboardScrollPosition();
-          });
-        });
+        showAuthenticatedRoute();
 
         document.getElementById('userName').textContent = user.displayName || '';
         document.getElementById('userEmail').textContent = user.email || '';
@@ -3276,6 +3621,8 @@
         googleAccessToken = null;
         document.getElementById('loginScreen').style.display = 'flex';
         document.getElementById('appScreen').style.display = 'none';
+        document.getElementById('contactsScreen').style.display = 'none';
+        document.getElementById('contactsScreen').setAttribute('aria-hidden', 'true');
       }
     });
 
@@ -4779,6 +5126,334 @@
         closeDayDetail();
       }
     });
+
+
+    // ── CRM CONTACTS INSIDE THE AUTHENTICATED MAIN APP ──
+    const CRM_CONTACTS_DATA_URL = 'https://mrantidata.app.n8n.cloud/webhook/crm-contacts-data-test';
+    const CRM_RECORD_MUTATION_URL = 'https://mrantidata.app.n8n.cloud/webhook/crm-record-mutation-test';
+    let crmRecords = [];
+    let crmSelectedIndex = -1;
+    let crmContactsLoaded = false;
+    let crmContactsLoading = false;
+
+    function showAuthenticatedRoute() {
+      const showContacts = window.location.hash === '#contacts';
+      const app = document.getElementById('appScreen');
+      const contacts = document.getElementById('contactsScreen');
+      app.style.display = showContacts ? 'none' : 'flex';
+      contacts.style.display = showContacts ? 'flex' : 'none';
+      contacts.setAttribute('aria-hidden', showContacts ? 'false' : 'true');
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => resetDashboardScrollPosition());
+      });
+
+      if (showContacts) {
+        document.getElementById('crmContactsUser').textContent = currentUser?.email || '';
+        crmLoadContacts(false);
+      }
+    }
+
+    function openContactsView() {
+      if (window.location.hash !== '#contacts') {
+        window.location.hash = 'contacts';
+      } else {
+        showAuthenticatedRoute();
+      }
+    }
+
+    function closeContactsView() {
+      if (window.location.hash) {
+        history.pushState(null, '', window.location.pathname + window.location.search);
+      }
+      showAuthenticatedRoute();
+    }
+
+    window.addEventListener('hashchange', () => {
+      if (currentUser) showAuthenticatedRoute();
+    });
+
+    function crmEscape(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function crmNormalize(value) {
+      return String(value || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, ' ')
+        .replace(/[^a-z0-9\s]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function crmSetBanner(message, type = 'info') {
+      const banner = document.getElementById('crmContactsBanner');
+      banner.textContent = message || '';
+      banner.className = 'crm-contacts-banner ' + type + (message ? ' show' : '');
+    }
+
+    async function crmPost(url, payload = {}) {
+      if (!currentUser) throw new Error('Your CRM session has expired. Please sign in again.');
+      const idToken = await currentUser.getIdToken(false);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+        body: JSON.stringify({ ...payload, idToken })
+      });
+      const text = await response.text();
+      let data = {};
+      try { data = JSON.parse(text); } catch (error) {
+        throw new Error(text || 'The CRM service returned an invalid response.');
+      }
+      if (!response.ok || data.success === false) {
+        throw new Error(data.error || data.message || 'The CRM request failed.');
+      }
+      return data;
+    }
+
+    async function crmLoadContacts(force = false) {
+      if (crmContactsLoading) return;
+      if (crmContactsLoaded && !force) {
+        crmFilterRecords();
+        return;
+      }
+
+      crmContactsLoading = true;
+      crmSetBanner('Loading CRM contacts…', 'info');
+      document.getElementById('crmContactsList').innerHTML = '<div class="crm-contacts-empty">Loading CRM contacts…</div>';
+      const previousRecordId = crmRecords[crmSelectedIndex]?.recordId || '';
+
+      try {
+        const data = await crmPost(CRM_CONTACTS_DATA_URL, { action: 'list' });
+        crmRecords = Array.isArray(data.records) ? data.records.map((record, index) => ({ ...record, _clientIndex: index })) : [];
+        crmContactsLoaded = true;
+        const legacyCount = crmRecords.filter(record => !record.recordId).length;
+        crmSetBanner(
+          legacyCount
+            ? `${legacyCount} legacy record${legacyCount === 1 ? ' is' : 's are'} view-only because Record ID is blank. New records remain editable and archivable.`
+            : '',
+          'info'
+        );
+        const previousIndex = previousRecordId ? crmRecords.findIndex(record => record.recordId === previousRecordId) : -1;
+        crmSelectedIndex = previousIndex >= 0 ? previousIndex : -1;
+        crmFilterRecords();
+      } catch (error) {
+        crmRecords = [];
+        crmSelectedIndex = -1;
+        crmSetBanner(error.message || 'Unable to load CRM contacts.', 'error');
+        document.getElementById('crmContactsList').innerHTML = '<div class="crm-contacts-empty">Unable to load CRM contacts. Use Refresh to try again.</div>';
+        crmClearDetail();
+      } finally {
+        crmContactsLoading = false;
+      }
+    }
+
+    function crmVisibleRecordIndices() {
+      const query = crmNormalize(document.getElementById('crmContactsSearch').value);
+      const status = document.getElementById('crmContactsStatus').value;
+      const visible = [];
+
+      crmRecords.forEach((record, index) => {
+        const recordStatus = String(record.recordStatus || 'Active').trim() || 'Active';
+        if (status !== 'All' && recordStatus.toLowerCase() !== status.toLowerCase()) return;
+        const documentText = (record.meetingDocuments || []).map(doc => doc.name).join(' ');
+        const haystack = crmNormalize([
+          record.personName, record.companyName, record.email, record.phone, record.jobTitle,
+          record.meetingTitle, record.meetingDate, record.attendees, record.reason,
+          record.meetingNotes, record.actionItems, record.uploaderName, record.uploaderEmail,
+          record.searchIndex, documentText
+        ].join(' '));
+        if (!query || haystack.includes(query)) visible.push(index);
+      });
+      return visible;
+    }
+
+    function crmFilterRecords() {
+      const indices = crmVisibleRecordIndices();
+      document.getElementById('crmContactsCount').textContent = `${indices.length} record${indices.length === 1 ? '' : 's'}`;
+
+      if (!indices.length) {
+        document.getElementById('crmContactsList').innerHTML = '<div class="crm-contacts-empty">No records match the current search and status filter.</div>';
+        crmSelectedIndex = -1;
+        crmClearDetail();
+        return;
+      }
+
+      if (!indices.includes(crmSelectedIndex)) crmSelectedIndex = indices[0];
+
+      document.getElementById('crmContactsList').innerHTML = indices.map(index => {
+        const record = crmRecords[index];
+        const status = String(record.recordStatus || 'Active');
+        const statusClass = status.toLowerCase() === 'archived' ? 'archived' : 'active';
+        return `
+          <button class="crm-contact-card ${index === crmSelectedIndex ? 'active' : ''}" type="button" data-index="${index}" onclick="crmSelectRecord(${index})">
+            <div class="crm-contact-card-head">
+              <div class="crm-contact-person">${crmEscape(record.personName || 'Unnamed contact')}</div>
+              <div class="crm-contact-date">${crmEscape(record.meetingDate || 'No date')}</div>
+            </div>
+            <div class="crm-contact-company">${crmEscape(record.companyName || 'No company')}</div>
+            <div class="crm-contact-meeting">${crmEscape(record.meetingTitle || 'No meeting title')}</div>
+            <div class="crm-contact-reason">${crmEscape(record.reason || 'No purpose recorded')}</div>
+            <span class="crm-contact-status ${statusClass}">${crmEscape(status)}</span>
+          </button>`;
+      }).join('');
+
+      crmRenderDetail();
+    }
+
+    function crmClearSearch() {
+      document.getElementById('crmContactsSearch').value = '';
+      document.getElementById('crmContactsStatus').value = 'Active';
+      crmFilterRecords();
+    }
+
+    function crmSelectRecord(index) {
+      if (!crmRecords[index]) return;
+      crmSelectedIndex = index;
+      document.querySelectorAll('.crm-contact-card').forEach(card => {
+        card.classList.toggle('active', Number(card.dataset.index) === index);
+      });
+      crmRenderDetail();
+    }
+
+    function crmClearDetail() {
+      document.getElementById('crmDetailName').textContent = 'Select a record';
+      document.getElementById('crmDetailCompany').textContent = '';
+      ['crmDetailEmail','crmDetailPhone','crmDetailJobTitle','crmDetailMeetingTitle','crmDetailMeetingDate','crmDetailReason','crmDetailAttendees','crmDetailUploader','crmDetailUploaderEmail','crmDetailStatus','crmDetailUpdated'].forEach(id => {
+        document.getElementById(id).textContent = '';
+      });
+      document.getElementById('crmDetailNotes').textContent = 'No meeting notes recorded.';
+      document.getElementById('crmDetailActionItems').textContent = 'No action items recorded.';
+      document.getElementById('crmDocumentSection').style.display = 'none';
+      document.getElementById('crmDetailDocuments').innerHTML = '';
+      document.getElementById('crmEditBtn').disabled = true;
+      document.getElementById('crmArchiveBtn').disabled = true;
+      document.getElementById('crmLegacyNote').textContent = '';
+    }
+
+    function crmRenderDetail() {
+      const record = crmRecords[crmSelectedIndex];
+      if (!record) {
+        crmClearDetail();
+        return;
+      }
+
+      document.getElementById('crmDetailName').textContent = record.personName || 'Unnamed contact';
+      document.getElementById('crmDetailCompany').textContent = record.companyName || '';
+      document.getElementById('crmDetailEmail').innerHTML = record.email
+        ? `<a href="mailto:${crmEscape(record.email)}">${crmEscape(record.email)}</a>`
+        : 'No email recorded';
+      document.getElementById('crmDetailPhone').textContent = record.phone || 'No contact number recorded';
+      document.getElementById('crmDetailJobTitle').textContent = record.jobTitle || 'No job title recorded';
+      document.getElementById('crmDetailMeetingTitle').textContent = record.meetingTitle || 'No meeting title recorded';
+      document.getElementById('crmDetailMeetingDate').textContent = record.meetingDate || 'No meeting date recorded';
+      document.getElementById('crmDetailReason').textContent = record.reason || 'No purpose recorded';
+      document.getElementById('crmDetailAttendees').textContent = record.attendees || 'No attendees recorded';
+      document.getElementById('crmDetailNotes').textContent = record.meetingNotes || 'No meeting notes recorded.';
+      document.getElementById('crmDetailActionItems').textContent = record.actionItems || 'No action items recorded.';
+      document.getElementById('crmDetailUploader').textContent = record.uploaderName || 'Not recorded';
+      document.getElementById('crmDetailUploaderEmail').textContent = record.uploaderEmail || 'Not recorded';
+      document.getElementById('crmDetailStatus').textContent = record.recordStatus || 'Active';
+      document.getElementById('crmDetailUpdated').textContent = [record.lastUpdated, record.updatedBy].filter(Boolean).join(' · ') || 'Not updated yet';
+
+      const documents = Array.isArray(record.meetingDocuments) ? record.meetingDocuments : [];
+      document.getElementById('crmDetailDocuments').innerHTML = documents.map((document, index) =>
+        `<a class="crm-contact-doc" target="_blank" rel="noopener" href="${crmEscape(document.url)}">View ${crmEscape(document.name || `Document ${index + 1}`)}</a>`
+      ).join('');
+      document.getElementById('crmDocumentSection').style.display = documents.length ? 'block' : 'none';
+
+      const legacy = !record.recordId;
+      document.getElementById('crmEditBtn').disabled = legacy;
+      document.getElementById('crmArchiveBtn').disabled = legacy || String(record.recordStatus).toLowerCase() === 'archived';
+      document.getElementById('crmLegacyNote').textContent = legacy
+        ? 'This legacy row is view-only until a unique Record ID is added in Google Sheets.'
+        : '';
+    }
+
+    function crmEditField(label, key, value, type = 'text', full = false) {
+      const control = type === 'textarea'
+        ? `<textarea class="crm-edit-textarea" data-key="${key}">${crmEscape(value)}</textarea>`
+        : `<input class="crm-edit-input" data-key="${key}" type="text" value="${crmEscape(value)}" />`;
+      return `<div class="crm-edit-field ${full ? 'full' : ''}"><label>${label}</label>${control}</div>`;
+    }
+
+    function crmOpenEditModal() {
+      const record = crmRecords[crmSelectedIndex];
+      if (!record?.recordId) return;
+      document.getElementById('crmEditError').className = 'crm-contacts-banner error';
+      document.getElementById('crmEditError').textContent = '';
+      document.getElementById('crmEditFields').innerHTML =
+        crmEditField('Person Name', 'personName', record.personName) +
+        crmEditField('Company Name', 'companyName', record.companyName) +
+        crmEditField('Email', 'email', record.email) +
+        crmEditField('Contact Number', 'phone', record.phone) +
+        crmEditField('Job Title', 'jobTitle', record.jobTitle, 'text', true) +
+        crmEditField('Meeting Title', 'meetingTitle', record.meetingTitle, 'text', true) +
+        crmEditField('Meeting Date', 'meetingDate', record.meetingDate) +
+        crmEditField('Purpose', 'reason', record.reason) +
+        crmEditField('Attendees', 'attendees', record.attendees, 'textarea', true) +
+        crmEditField('Meeting Notes', 'meetingNotes', record.meetingNotes, 'textarea', true) +
+        crmEditField('Action Items', 'actionItems', record.actionItems, 'textarea', true) +
+        crmEditField('Meeting Documents', 'meetingDocumentsRaw', record.meetingDocumentsRaw, 'textarea', true);
+      document.getElementById('crmEditModal').style.display = 'flex';
+    }
+
+    function crmCloseEditModal() {
+      document.getElementById('crmEditModal').style.display = 'none';
+    }
+
+    async function crmSaveRecordEdit() {
+      const record = crmRecords[crmSelectedIndex];
+      if (!record?.recordId) return;
+      const fields = {};
+      document.querySelectorAll('#crmEditFields [data-key]').forEach(element => {
+        fields[element.dataset.key] = element.value.trim();
+      });
+      const button = document.getElementById('crmSaveEditBtn');
+      const errorBox = document.getElementById('crmEditError');
+      button.disabled = true;
+      button.textContent = 'Saving…';
+      errorBox.className = 'crm-contacts-banner error';
+      errorBox.textContent = '';
+
+      try {
+        await crmPost(CRM_RECORD_MUTATION_URL, { action: 'edit', recordId: record.recordId, record: fields });
+        crmCloseEditModal();
+        crmContactsLoaded = false;
+        await crmLoadContacts(true);
+      } catch (error) {
+        errorBox.textContent = error.message || 'Unable to save the record.';
+        errorBox.className = 'crm-contacts-banner error show';
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Save Changes';
+      }
+    }
+
+    async function crmArchiveSelectedRecord() {
+      const record = crmRecords[crmSelectedIndex];
+      if (!record?.recordId || String(record.recordStatus).toLowerCase() === 'archived') return;
+      const confirmed = window.confirm('Archive this CRM record? It will be hidden from Active Records and the Relationship Graph.');
+      if (!confirmed) return;
+
+      try {
+        await crmPost(CRM_RECORD_MUTATION_URL, { action: 'archive', recordId: record.recordId });
+        crmContactsLoaded = false;
+        await crmLoadContacts(true);
+      } catch (error) {
+        crmSetBanner(error.message || 'Unable to archive the record.', 'error');
+      }
+    }
+
+    document.getElementById('crmEditModal').addEventListener('click', event => {
+      if (event.target.id === 'crmEditModal') crmCloseEditModal();
+    });
+
   </script>
 </body>
 </html>
