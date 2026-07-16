@@ -3985,6 +3985,304 @@
     #loginScreen .login-footer-logo { width:94px; height:26px; }
   }
 </style>
+
+<style id="mranti-dashboard-refinement-v15">
+  /* Shared signed-in navigation: two authentic brand assets, minimalist active state. */
+  body.crm-authenticated {
+    --primary:#2563eb;
+    --primary-hover:#1d4ed8;
+    --primary-light:#3b82f6;
+    --cyan:#06b6d4;
+    --purple:#7c3aed;
+    --page-background:#eff6ff;
+    --background-deep:#dbeafe;
+    --surface:#ffffff;
+    --text-primary:#0f172a;
+    --text-secondary:#475569;
+    --text-muted:#64748b;
+    --border-soft:rgba(147,197,253,.35);
+    --border-strong:rgba(59,130,246,.4);
+    background:linear-gradient(180deg,#f8fbff 0%,#eff6ff 100%)!important;
+  }
+  .system-sidebar.modern-navbar {
+    border-radius:20px!important;
+    box-shadow:0 12px 34px rgba(37,99,235,.08)!important;
+  }
+  .modern-navbar-inner { gap:16px!important; padding:9px 12px 9px 16px!important; }
+  .modern-brand { gap:12px!important; min-width:0; }
+  .system-sidebar.modern-navbar .system-brand-logo {
+    width:124px!important;
+    height:40px!important;
+    flex:0 0 124px!important;
+    filter:none!important;
+    background-size:contain!important;
+    background-position:left center!important;
+  }
+  .system-app-logo {
+    width:40px;
+    height:40px;
+    flex:0 0 40px;
+    display:block;
+    background:url("crm-network-mark.png?v=9") center/contain no-repeat;
+  }
+  .modern-brand-divider { height:30px!important; background:#dbeafe!important; }
+  .system-nav.modern-nav { gap:10px!important; }
+  .system-nav-item {
+    min-height:44px!important;
+    padding:10px 4px!important;
+    margin:0 8px!important;
+    border-radius:0!important;
+    color:#475569!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+  .system-nav-item::after {
+    content:"";
+    position:absolute;
+    left:4px;
+    right:4px;
+    bottom:-8px;
+    height:2px;
+    border-radius:999px;
+    background:#2563eb;
+    opacity:0;
+    transform:scaleX(.45);
+    transition:opacity .18s ease,transform .18s ease;
+  }
+  .system-nav-item:hover { color:#2563eb!important; background:transparent!important; }
+  .system-nav-item.active { color:#2563eb!important; background:transparent!important; box-shadow:none!important; }
+  .system-nav-item.active::after { opacity:1; transform:scaleX(1); }
+  .system-nav-item .system-nav-icon,
+  .system-nav-item.active .system-nav-icon { color:currentColor!important; background:transparent!important; border:0!important; }
+  .system-nav-item .system-nav-icon svg,
+  .system-nav-item.active .system-nav-icon svg { stroke:currentColor!important; }
+  .modern-nav-badge { background:#eff6ff!important; color:#2563eb!important; }
+  .modern-navbar-actions { gap:10px!important; }
+  .modern-log-button { border-radius:12px!important; background:#2563eb!important; box-shadow:0 8px 18px rgba(37,99,235,.18)!important; }
+  .modern-log-button:hover { background:#1d4ed8!important; }
+  .modern-user-button { border-color:#dbeafe!important; border-radius:12px!important; }
+
+  /* Open Dashboard welcome area. */
+  #pageDashboard .dashboard-hero {
+    display:block!important;
+    min-height:0!important;
+    padding:18px 2px 22px!important;
+    margin:0 0 18px!important;
+    border:0!important;
+    border-bottom:1px solid rgba(147,197,253,.34)!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    backdrop-filter:none!important;
+    overflow:visible!important;
+  }
+  #pageDashboard .dashboard-hero::after { display:none!important; }
+  #pageDashboard .dashboard-welcome-label { font-size:10px!important; letter-spacing:1.75px!important; }
+  #pageDashboard .dashboard-welcome-title { margin-top:8px!important; font-size:clamp(28px,2.5vw,38px)!important; line-height:1.12!important; letter-spacing:-1.1px!important; }
+  #pageDashboard .dashboard-welcome-copy { margin-top:8px!important; max-width:720px!important; color:#64748b!important; font-size:13px!important; line-height:1.55!important; }
+
+  /* Two compact summary cards. */
+  #pageDashboard .dashboard-summary-grid { grid-template-columns:repeat(2,minmax(0,1fr))!important; gap:16px!important; margin:0 0 18px!important; }
+  #pageDashboard .dashboard-visual-kpi {
+    min-height:156px!important;
+    height:156px;
+    padding:18px 20px 14px!important;
+    border-radius:18px!important;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  #pageDashboard .visual-kpi-heading { gap:14px!important; }
+  #pageDashboard .visual-kpi-title-row { gap:10px!important; }
+  #pageDashboard .visual-kpi-icon { width:38px!important; height:38px!important; flex-basis:38px!important; padding:9px!important; border-radius:12px!important; }
+  #pageDashboard .visual-kpi-label { font-size:12.5px!important; }
+  #pageDashboard .visual-kpi-context { margin-top:3px!important; font-size:9.5px!important; }
+  #pageDashboard .visual-kpi-value { font-size:34px!important; letter-spacing:-1.2px!important; }
+  #pageDashboard .weekly-bars {
+    height:61px!important;
+    margin-top:9px!important;
+    gap:9px!important;
+    flex:1;
+  }
+  #pageDashboard .weekly-bar {
+    appearance:none;
+    height:61px!important;
+    min-width:0;
+    display:grid;
+    grid-template-rows:12px 1fr 12px!important;
+    gap:2px!important;
+    padding:0;
+    border:0;
+    background:transparent;
+    color:inherit;
+    font:inherit;
+    cursor:pointer;
+    text-align:center;
+  }
+  #pageDashboard .weekly-bar:hover .weekly-bar-track { background:rgba(37,99,235,.10); }
+  #pageDashboard .weekly-bar:focus-visible { border-radius:8px; outline:3px solid rgba(59,130,246,.18); outline-offset:1px; }
+  #pageDashboard .weekly-bar-track { height:34px!important; border-radius:7px!important; }
+  #pageDashboard .weekly-bar-fill { width:min(28px,58%)!important; border-radius:7px 7px 2px 2px!important; background:linear-gradient(180deg,#3b82f6,#2563eb)!important; }
+  #pageDashboard .weekly-bar-value,#pageDashboard .weekly-bar-label { font-size:8.5px!important; }
+  #pageDashboard .visual-kpi-link {
+    align-self:flex-start;
+    margin-top:2px;
+    padding:0;
+    border:0;
+    background:transparent;
+    color:#2563eb;
+    font:inherit;
+    font-size:10px;
+    font-weight:800;
+    cursor:pointer;
+  }
+  #pageDashboard .visual-kpi-link:hover { color:#1d4ed8; text-decoration:underline; text-underline-offset:3px; }
+
+  #pageDashboard .organisation-progress { margin-top:14px; flex:1; }
+  #pageDashboard .organisation-progress-track {
+    width:100%;
+    height:13px;
+    display:flex;
+    overflow:hidden;
+    border-radius:999px;
+    background:#e8eef8;
+    box-shadow:inset 0 0 0 1px rgba(148,163,184,.08);
+  }
+  #pageDashboard .organisation-progress-segment { display:block; height:100%; width:0; transition:width .32s ease; }
+  #pageDashboard .organisation-progress-segment.new { background:#3b82f6; }
+  #pageDashboard .organisation-progress-segment.returning { background:#06b6d4; }
+  #pageDashboard .organisation-legend { margin-top:11px; display:grid!important; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px!important; }
+  #pageDashboard .organisation-legend>div { grid-template-columns:9px 1fr auto!important; gap:7px!important; font-size:10.5px!important; }
+  #pageDashboard .organisation-legend strong { font-size:12px!important; }
+  #pageDashboard .legend-dot.returning { background:#06b6d4!important; }
+
+  /* Main Dashboard hierarchy. */
+  #pageDashboard .dashboard-workspace { grid-template-columns:minmax(0,1.58fr) minmax(330px,.72fr)!important; gap:16px!important; align-items:start!important; }
+  #pageDashboard .dashboard-calendar-card { padding:20px!important; border-radius:20px!important; }
+  #pageDashboard .calendar-panel-top { align-items:flex-start!important; gap:18px!important; margin-bottom:14px!important; }
+  #pageDashboard .calendar-panel-actions { display:flex; align-items:center; gap:9px; flex-wrap:wrap; justify-content:flex-end; }
+  #pageDashboard .calendar-view-toggle { display:inline-flex; padding:3px; border:1px solid #dbeafe; border-radius:10px; background:#eff6ff; }
+  #pageDashboard .calendar-view-btn {
+    min-width:58px;
+    height:32px;
+    padding:0 12px;
+    border:0;
+    border-radius:8px;
+    background:transparent;
+    color:#64748b;
+    font:inherit;
+    font-size:10.5px;
+    font-weight:800;
+    cursor:pointer;
+  }
+  #pageDashboard .calendar-view-btn:hover { color:#2563eb; }
+  #pageDashboard .calendar-view-btn.active { background:#fff; color:#2563eb; box-shadow:0 3px 10px rgba(37,99,235,.10); }
+  #pageDashboard .sync-btn {
+    min-width:148px!important;
+    height:39px;
+    padding:0 13px!important;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    border-radius:11px!important;
+    font-size:10.5px!important;
+  }
+  #pageDashboard .sync-btn::before { display:none!important; }
+  #pageDashboard .sync-btn svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  #pageDashboard .cal-grid.week-mode { grid-template-columns:repeat(7,minmax(0,1fr))!important; grid-auto-rows:minmax(178px,auto)!important; }
+  #pageDashboard .cal-grid.week-mode .cal-day-cell { min-height:178px; }
+  #pageDashboard .cal-grid.week-mode .cal-day-chips { gap:5px; }
+  #pageDashboard .cal-grid.week-mode .cal-chip { padding:5px 7px; white-space:normal; line-height:1.3; }
+  #pageDashboard .cal-day-week-label { display:none; }
+
+  #pageDashboard .dashboard-side-stack { display:flex!important; flex-direction:column!important; gap:16px!important; min-width:0; }
+  #pageDashboard .dashboard-side-card { padding:17px!important; border-radius:18px!important; }
+  #pageDashboard .dashboard-card-head { align-items:flex-start!important; margin-bottom:12px!important; }
+  #pageDashboard .dashboard-card-title { font-size:12.5px!important; }
+  #pageDashboard .dashboard-card-subtitle { margin-top:4px; color:#64748b; font-size:9.5px; line-height:1.4; }
+  #pageDashboard .dashboard-card-link { padding:2px 0; white-space:nowrap; font-size:9.5px!important; }
+  #pageDashboard .dashboard-schedule-card { min-height:180px; }
+  #pageDashboard .timeline-track { min-height:30px!important; margin-top:5px!important; }
+  #pageDashboard .clock-legend { margin-top:8px!important; }
+
+  #pageDashboard .dashboard-recent-list { display:grid!important; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px!important; }
+  #pageDashboard .dashboard-meeting-card {
+    width:100%;
+    min-width:0;
+    padding:13px;
+    border:1px solid #dbeafe;
+    border-radius:14px;
+    background:#fff;
+    color:#0f172a;
+    font:inherit;
+    text-align:left;
+    cursor:pointer;
+    transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+  }
+  #pageDashboard .dashboard-meeting-card:hover { border-color:#93c5fd; box-shadow:0 10px 24px rgba(37,99,235,.09); transform:translateY(-1px); }
+  #pageDashboard .dashboard-meeting-title { font-size:11.5px; font-weight:850; line-height:1.35; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  #pageDashboard .dashboard-meeting-meta { margin-top:9px; display:grid; grid-template-columns:1fr 1fr; gap:6px 9px; }
+  #pageDashboard .dashboard-meeting-meta-line { min-width:0; display:flex; align-items:center; gap:6px; color:#64748b; font-size:9px; line-height:1.35; }
+  #pageDashboard .dashboard-meeting-meta-line svg { width:13px; height:13px; flex:0 0 13px; fill:none; stroke:#3b82f6; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  #pageDashboard .dashboard-meeting-meta-line span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  #pageDashboard .dashboard-meeting-company { margin-top:9px; color:#0f172a; font-size:10px; font-weight:800; }
+  #pageDashboard .dashboard-meeting-preview { margin-top:7px; color:#64748b; font-size:9.5px; line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  #pageDashboard .dashboard-meeting-footer { margin-top:10px; padding-top:9px; border-top:1px solid #eff6ff; display:flex; align-items:center; justify-content:space-between; gap:8px; color:#64748b; font-size:8.8px; }
+  #pageDashboard .dashboard-meeting-tag { max-width:58%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#2563eb; font-weight:800; }
+
+  @media (max-width:1180px) {
+    .system-nav.modern-nav { gap:3px!important; }
+    .system-nav-item { margin:0 4px!important; }
+    #pageDashboard .dashboard-workspace { grid-template-columns:minmax(0,1.5fr) minmax(300px,.72fr)!important; }
+  }
+  @media (max-width:1030px) {
+    .system-nav.modern-nav .system-nav-item { margin:0!important; padding:12px!important; }
+    .system-nav.modern-nav .system-nav-item::after { left:12px; right:auto; bottom:3px; width:30px; }
+    .system-sidebar.modern-navbar .system-brand-logo { width:112px!important; height:36px!important; flex-basis:112px!important; }
+    .system-app-logo { width:34px; height:34px; flex-basis:34px; }
+    .modern-brand-divider { display:block!important; height:26px!important; }
+    #pageDashboard .dashboard-workspace { grid-template-columns:1fr!important; }
+    #pageDashboard .dashboard-side-stack { display:grid!important; grid-template-columns:repeat(2,minmax(0,1fr))!important; }
+    #pageDashboard .dashboard-recent-card { grid-column:span 1; }
+  }
+  @media (max-width:760px) {
+    #pageDashboard .dashboard-summary-grid { grid-template-columns:1fr!important; }
+    #pageDashboard .dashboard-visual-kpi { height:auto; min-height:154px!important; }
+    #pageDashboard .calendar-panel-top { flex-direction:column!important; }
+    #pageDashboard .calendar-panel-actions { width:100%; justify-content:space-between; }
+    #pageDashboard .dashboard-side-stack { grid-template-columns:1fr!important; }
+  }
+  @media (max-width:620px) {
+    .modern-navbar-inner { gap:8px!important; padding:8px!important; }
+    .modern-brand { gap:7px!important; }
+    .system-sidebar.modern-navbar .system-brand-logo { width:92px!important; height:32px!important; flex-basis:92px!important; }
+    .system-app-logo { width:30px; height:30px; flex-basis:30px; }
+    .modern-brand-divider { height:23px!important; }
+    #pageDashboard .dashboard-hero { padding-top:12px!important; }
+    #pageDashboard .dashboard-welcome-title { font-size:27px!important; }
+    #pageDashboard .dashboard-calendar-card { padding:14px!important; }
+    #pageDashboard .calendar-panel-actions { align-items:stretch; flex-direction:column; }
+    #pageDashboard .calendar-view-toggle,#pageDashboard .sync-btn { width:100%; }
+    #pageDashboard .calendar-view-btn { flex:1; }
+    #pageDashboard .cal-grid.week-mode { grid-template-columns:1fr!important; grid-auto-rows:auto!important; gap:8px!important; }
+    #pageDashboard .calendar-section.calendar-week-active .cal-weekday-row { display:none!important; }
+    #pageDashboard .cal-grid.week-mode .cal-day-cell { min-height:86px; display:grid; grid-template-columns:auto 1fr; grid-template-rows:auto auto; column-gap:10px; align-items:start; }
+    #pageDashboard .cal-grid.week-mode .cal-day-week-label { display:block; grid-column:1; color:#64748b; font-size:9px; font-weight:800; text-transform:uppercase; }
+    #pageDashboard .cal-grid.week-mode .cal-day-number { grid-column:1; }
+    #pageDashboard .cal-grid.week-mode .cal-day-chips { grid-column:2; grid-row:1 / span 2; }
+    #pageDashboard .dashboard-meeting-meta { grid-template-columns:1fr; }
+  }
+  @media (max-width:430px) {
+    .modern-log-button { width:40px!important; height:40px!important; padding:11px!important; }
+    .modern-user-button { width:40px!important; min-width:40px!important; height:40px!important; }
+    .system-mobile-menu { width:40px!important; height:40px!important; }
+    #pageDashboard .cal-nav { gap:6px!important; }
+    #pageDashboard .cal-month-label { min-width:0!important; flex:1; font-size:12px!important; }
+    #pageDashboard .cal-today-btn { padding:6px 9px!important; }
+  }
+</style>
+
 </head>
 <body>
 <!-- Final standardised MRANTI CRM build: signed-out page redesigned; signed-in logic preserved. -->
@@ -4032,9 +4330,9 @@
 <div class="modern-navbar-inner">
 <button aria-label="Open navigation" class="system-mobile-menu" onclick="systemToggleSidebar()" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M4 17h16"></path></svg></button>
 <button aria-label="MRANTI CRM dashboard" class="system-brand modern-brand" onclick="systemNavigate('dashboard')" type="button">
-<span aria-label="MRANTI" class="system-brand-logo"></span>
-<span class="modern-brand-divider"></span>
-<span class="modern-brand-name">CRM WORKSPACE</span>
+<span aria-label="MRANTI 30 Years" class="system-brand-logo"></span>
+<span aria-hidden="true" class="modern-brand-divider"></span>
+<span aria-label="MRANTI CRM application" class="system-app-logo"></span>
 </button>
 <nav aria-label="MRANTI CRM navigation" class="system-nav modern-nav">
 <button class="system-nav-item" data-route="dashboard" onclick="systemNavigate('dashboard')"><span class="system-nav-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect height="7" rx="2" width="7" x="3" y="3"></rect><rect height="7" rx="2" width="7" x="14" y="3"></rect><rect height="7" rx="2" width="7" x="3" y="14"></rect><rect height="7" rx="2" width="7" x="14" y="14"></rect></svg></span><span class="system-nav-title">Dashboard</span></button>
@@ -4043,7 +4341,6 @@
 <button class="system-nav-item" data-route="relationships" onclick="systemNavigate('relationships')"><span class="system-nav-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="5" r="3"></circle><circle cx="5" cy="19" r="3"></circle><circle cx="19" cy="19" r="3"></circle><path d="M10.6 7.7 6.4 16.3"></path><path d="M13.4 7.7 17.6 16.3"></path><path d="M8 19h8"></path></svg></span><span class="system-nav-title">Relationships</span></button>
 </nav>
 <div class="modern-navbar-actions">
-<label aria-label="Search CRM contacts" class="modern-global-search"><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input id="systemGlobalSearch" onkeydown="systemGlobalSearchKey(event)" placeholder="Search CRM" type="search"/></label>
 <button class="modern-log-button" onclick="openManualModal()" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg><span>Log meeting</span></button>
 <button class="system-user-button modern-user-button" onclick="systemToggleUserMenu()" type="button">
 <img alt="" class="user-avatar" id="userPhoto" onerror="this.style.display='none';document.getElementById('userInitial').style.display='flex'" src=""/>
@@ -4067,79 +4364,83 @@
 <main class="system-content">
 <div class="system-content-inner">
 <section class="system-page" data-page="dashboard" id="pageDashboard">
-<div class="dashboard-hero system-card">
+<div class="dashboard-hero">
 <div>
 <div class="dashboard-welcome-label">MRANTI CRM Workspace</div>
 <h1 class="dashboard-welcome-title" id="welcomeMsg">Welcome</h1>
-<p class="dashboard-welcome-copy">A clear view of meetings, contacts, follow-ups and relationship activity across one connected workspace.</p>
+<p class="dashboard-welcome-copy">A clear view of meetings, contacts and relationship activity.</p>
 </div>
 </div>
-<div class="system-kpi-grid">
+<div class="system-kpi-grid dashboard-summary-grid">
 <article class="system-card dashboard-visual-kpi meetings-kpi-card">
 <div class="visual-kpi-heading">
 <div class="visual-kpi-title-row">
 <span aria-hidden="true" class="visual-kpi-icon"><svg viewbox="0 0 24 24"><rect height="16" rx="3" width="18" x="3" y="5"></rect><path d="M16 3v4"></path><path d="M8 3v4"></path><path d="M3 10h18"></path></svg></span>
-<div><div class="visual-kpi-label">Meetings this month</div><div class="visual-kpi-context" id="dashboardMeetingsTrend">Sync Calendar to populate activity</div></div>
+<div><div class="visual-kpi-label">Meetings this month</div><div class="visual-kpi-context" id="dashboardMeetingsTrend">Connect Calendar to populate activity</div></div>
 </div>
 <div class="visual-kpi-value" id="dashboardMeetingsMonth">0</div>
 </div>
-<div aria-label="Weekly meeting distribution" class="weekly-bars" id="dashboardMeetingsWeeklyBars" role="img"></div>
+<div aria-label="Weekly meeting distribution" class="weekly-bars" id="dashboardMeetingsWeeklyBars" role="group"></div>
+<button class="visual-kpi-link" onclick="dashboardViewMeetings()" type="button">View meetings <span aria-hidden="true">→</span></button>
 </article>
 <article class="system-card dashboard-visual-kpi organisations-kpi-card">
 <div class="visual-kpi-heading">
 <div class="visual-kpi-title-row">
 <span aria-hidden="true" class="visual-kpi-icon"><svg viewbox="0 0 24 24"><circle cx="7" cy="7" r="3"></circle><circle cx="17" cy="7" r="3"></circle><circle cx="12" cy="17" r="3"></circle><path d="m9.5 8.5 1.5 5.5"></path><path d="m14.5 8.5-1.5 5.5"></path><path d="M10 7h4"></path></svg></span>
-<div><div class="visual-kpi-label">Organisations engaged</div><div class="visual-kpi-context">New and returning relationships</div></div>
+<div><div class="visual-kpi-label">Organisations engaged</div><div class="visual-kpi-context">New and returning relationships this month</div></div>
 </div>
 <div class="visual-kpi-value" id="dashboardCompaniesCount">0</div>
 </div>
-<div class="organisation-visual">
-<div aria-label="New and returning organisations" class="organisation-donut" id="dashboardOrganisationDonut" role="img">
-<div class="organisation-donut-centre"><strong id="dashboardOrganisationDonutTotal">0</strong><span>Total</span></div>
+<div class="organisation-progress" id="dashboardOrganisationBar" role="img" aria-label="No organisations engaged this month">
+<div class="organisation-progress-track">
+<span class="organisation-progress-segment new" id="dashboardOrganisationNewSegment"></span>
+<span class="organisation-progress-segment returning" id="dashboardOrganisationReturningSegment"></span>
 </div>
 <div class="organisation-legend">
 <div><span class="legend-dot new"></span><span>New</span><strong id="dashboardOrgNewCount">0</strong></div>
 <div><span class="legend-dot returning"></span><span>Returning</span><strong id="dashboardOrgReturningCount">0</strong></div>
-<small>New = one recorded engagement. Returning = repeat engagement.</small>
 </div>
 </div>
+<button class="visual-kpi-link" onclick="dashboardViewOrganisations()" type="button">View organisations <span aria-hidden="true">→</span></button>
 </article>
 </div>
 <div class="dashboard-workspace">
-<section class="system-card dashboard-calendar-card">
+<section class="system-card dashboard-calendar-card" id="dashboardCalendarSection">
 <div class="calendar-panel">
 <div class="calendar-panel-top">
 <div><div class="section-eyebrow">Google Calendar</div><div class="section-title">Your Meetings</div><div class="section-subtitle">Select a day to review meetings and log relationship details.</div></div>
-<button class="sync-btn" onclick="syncCalendar()">Sync Calendar</button>
+<div class="calendar-panel-actions">
+<div aria-label="Calendar view" class="calendar-view-toggle" role="group">
+<button class="calendar-view-btn" id="calendarViewWeekBtn" onclick="setCalendarView('week')" type="button">Week</button>
+<button class="calendar-view-btn active" id="calendarViewMonthBtn" onclick="setCalendarView('month')" type="button">Month</button>
 </div>
-<div class="calendar-section">
+<button class="sync-btn" id="calendarSyncBtn" onclick="syncCalendar()" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect x="3" y="4" width="18" height="17" rx="3"></rect><path d="M3 10h18"></path><path d="M16.5 14.5a3.5 3.5 0 1 1-1 2.45"></path><path d="M16.5 12.5v2h-2"></path></svg><span id="calendarSyncLabel">Connect Calendar</span></button>
+</div>
+</div>
+<div class="calendar-section" id="dashboardCalendarView">
 <div class="cal-nav">
-<button aria-label="Previous month" class="cal-nav-btn" onclick="changeMonth(-1)">‹</button>
+<button aria-label="Previous month" class="cal-nav-btn" id="calendarPreviousBtn" onclick="changeMonth(-1)">‹</button>
 <div class="cal-month-label" id="calMonthLabel">Month</div>
-<button aria-label="Next month" class="cal-nav-btn" onclick="changeMonth(1)">›</button>
+<button aria-label="Next month" class="cal-nav-btn" id="calendarNextBtn" onclick="changeMonth(1)">›</button>
 <button class="cal-today-btn" onclick="goToToday()">Today</button>
 </div>
-<div class="calendar-status" id="calendarStatus">Click Sync Calendar to load your meetings.</div>
+<div class="calendar-status" id="calendarStatus">Connect Calendar to load your meetings.</div>
 <div class="cal-weekday-row"><div class="cal-weekday">Sun</div><div class="cal-weekday">Mon</div><div class="cal-weekday">Tue</div><div class="cal-weekday">Wed</div><div class="cal-weekday">Thu</div><div class="cal-weekday">Fri</div><div class="cal-weekday">Sat</div></div>
 <div class="cal-grid" id="calGrid"></div>
 </div>
 </div>
 </section>
 <aside class="dashboard-side-stack">
-<section class="system-card dashboard-side-card">
-<div class="dashboard-card-head"><div class="dashboard-card-title">Today's Schedule</div><span class="timeline-count" id="timelineCount">0</span></div>
+<section class="system-card dashboard-side-card dashboard-schedule-card">
+<div class="dashboard-card-head"><div><div class="dashboard-card-title">Today's Schedule</div><div class="dashboard-card-subtitle">Your meetings across the day</div></div><span class="timeline-count" id="timelineCount">0</span></div>
 <div class="timeline-track" id="timelineTrack"></div>
 <div class="timeline-ticks"><span class="timeline-tick">7am</span><span class="timeline-tick">10am</span><span class="timeline-tick">1pm</span><span class="timeline-tick">4pm</span><span class="timeline-tick">7pm</span></div>
 <div class="clock-legend" id="clockLegend"></div>
 <div hidden="" id="monthHeatmapTotal">0</div><div hidden="" id="monthHeatmap"></div>
 </section>
-<section class="system-card dashboard-side-card">
-<div class="dashboard-card-head"><div class="dashboard-card-title">Recent CRM Activity</div><button class="dashboard-card-link" onclick="systemNavigate('contacts')">View all</button></div>
-<div class="dashboard-activity-list" id="dashboardRecentActivity"><div class="dashboard-empty">Loading CRM activity…</div></div>
-</section>
-<section class="system-card dashboard-side-card">
-<div class="dashboard-card-head"><div class="dashboard-card-title">My Open Action Items</div><button class="dashboard-card-link" onclick="systemOpenActionItems()">Manage</button></div>
-<div class="dashboard-action-list" id="dashboardActionItems"><div class="dashboard-empty">Loading action items…</div></div>
+<section class="system-card dashboard-side-card dashboard-recent-card">
+<div class="dashboard-card-head"><div><div class="dashboard-card-title">Recent Meetings</div><div class="dashboard-card-subtitle">Your latest meetings and relationship updates</div></div><button class="dashboard-card-link" onclick="systemNavigate('contacts')" type="button">View all meetings →</button></div>
+<div class="dashboard-activity-list dashboard-recent-list" id="dashboardRecentActivity"><div class="dashboard-empty">Loading recent meetings…</div></div>
 </section>
 </aside>
 </div>
@@ -4592,6 +4893,8 @@
     let calendarEventsByDate = {};
     let selectedDateKey = null;
     let monthCache = {};
+    let calendarViewMode = 'month';
+    try { calendarViewMode = localStorage.getItem('mranti_crm_calendar_view_v1') === 'week' ? 'week' : 'month'; } catch (error) {}
     let currentEvent = null;
     window._eventsCache = {};
 
@@ -4782,8 +5085,17 @@
       await loadMonthEvents(calendarViewDate);
     }
 
+    function updateCalendarSyncButton() {
+      const label = document.getElementById('calendarSyncLabel');
+      const button = document.getElementById('calendarSyncBtn');
+      if (label) label.textContent = googleAccessToken ? 'Refresh Calendar' : 'Connect Calendar';
+      if (button) button.setAttribute('aria-label', googleAccessToken ? 'Refresh Google Calendar' : 'Connect Google Calendar');
+    }
+
     function setCalendarStatus(msg) {
+      updateCalendarSyncButton();
       const el = document.getElementById('calendarStatus');
+      if (!el) return;
       if (!msg) { el.style.display = 'none'; return; }
       el.textContent = msg;
       el.style.display = 'block';
@@ -4801,6 +5113,72 @@
 
     function ymdKey(d) {
       return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+
+    function getWeekStart(date) {
+      const start = new Date(date);
+      start.setHours(0, 0, 0, 0);
+      start.setDate(start.getDate() - start.getDay());
+      return start;
+    }
+
+    function updateCalendarViewControls() {
+      const weekButton = document.getElementById('calendarViewWeekBtn');
+      const monthButton = document.getElementById('calendarViewMonthBtn');
+      const previousButton = document.getElementById('calendarPreviousBtn');
+      const nextButton = document.getElementById('calendarNextBtn');
+      const calendarView = document.getElementById('dashboardCalendarView');
+      if (weekButton) {
+        const active = calendarViewMode === 'week';
+        weekButton.classList.toggle('active', active);
+        weekButton.setAttribute('aria-pressed', String(active));
+      }
+      if (monthButton) {
+        const active = calendarViewMode === 'month';
+        monthButton.classList.toggle('active', active);
+        monthButton.setAttribute('aria-pressed', String(active));
+      }
+      if (previousButton) previousButton.setAttribute('aria-label', calendarViewMode === 'week' ? 'Previous week' : 'Previous month');
+      if (nextButton) nextButton.setAttribute('aria-label', calendarViewMode === 'week' ? 'Next week' : 'Next month');
+      if (calendarView) calendarView.classList.toggle('calendar-week-active', calendarViewMode === 'week');
+    }
+
+    function setCalendarView(mode, focusDate = null) {
+      const nextMode = mode === 'week' ? 'week' : 'month';
+      let nextDate = focusDate instanceof Date && !Number.isNaN(focusDate.getTime()) ? new Date(focusDate) : null;
+      if (!nextDate && selectedDateKey) nextDate = new Date(selectedDateKey + 'T00:00:00');
+      if (!nextDate) {
+        const today = new Date();
+        const sameMonth = calendarViewDate.getFullYear() === today.getFullYear() && calendarViewDate.getMonth() === today.getMonth();
+        nextDate = nextMode === 'week' && sameMonth ? today : new Date(calendarViewDate);
+      }
+      calendarViewMode = nextMode;
+      calendarViewDate = nextMode === 'month'
+        ? new Date(nextDate.getFullYear(), nextDate.getMonth(), 1)
+        : new Date(nextDate);
+      try { localStorage.setItem('mranti_crm_calendar_view_v1', calendarViewMode); } catch (error) {}
+      updateCalendarViewControls();
+      renderCalendarGrid();
+      if (googleAccessToken) loadMonthEvents(calendarViewDate);
+    }
+
+    function dashboardScrollToCalendar() {
+      document.getElementById('dashboardCalendarSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function dashboardViewMeetings() {
+      dashboardScrollToCalendar();
+    }
+
+    function dashboardOpenMeetingWeek(index) {
+      const now = new Date();
+      const target = new Date(now.getFullYear(), now.getMonth(), 1 + (Number(index) * 7));
+      setCalendarView('week', target);
+      dashboardScrollToCalendar();
+    }
+
+    function dashboardViewOrganisations() {
+      systemNavigate('contacts');
     }
 
     // The grid always shows 6 full weeks (42 cells) so the layout never
@@ -5069,37 +5447,58 @@
       grid.innerHTML = cells.join('');
     }
 
+    function calendarDayCellMarkup(cellDate, isOutside, chipLimit) {
+      const key = ymdKey(cellDate);
+      const todayKey = ymdKey(new Date());
+      const isToday = key === todayKey;
+      const isSelected = key === selectedDateKey;
+      const dayEvents = calendarEventsByDate[key] || [];
+      const visibleChips = dayEvents.slice(0, chipLimit);
+      const remaining = dayEvents.length - visibleChips.length;
+      const weekName = cellDate.toLocaleDateString('en-MY', { weekday: 'short' });
+      return `
+        <button type="button" class="cal-day-cell${isOutside ? ' outside' : ''}${isToday ? ' today' : ''}${isSelected ? ' selected' : ''}" data-date="${key}" onclick="selectDay('${key}')">
+          <span class="cal-day-week-label">${weekName}</span>
+          <span class="cal-day-number">${cellDate.getDate()}</span>
+          <div class="cal-day-chips">
+            ${visibleChips.map(ev => `<div class="cal-chip">${esc(ev.summary || '(No title)')}</div>`).join('')}
+            ${remaining > 0 ? `<div class="cal-more">+${remaining} more</div>` : ''}
+          </div>
+          <div class="cal-day-dots">${dayEvents.slice(0, 4).map(() => '<span class="cal-dot"></span>').join('')}</div>
+        </button>`;
+    }
+
     function renderCalendarGrid() {
       const grid = document.getElementById('calGrid');
       const label = document.getElementById('calMonthLabel');
+      if (!grid || !label) return;
+      updateCalendarViewControls();
       const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-      label.textContent = monthNames[calendarViewDate.getMonth()] + ' ' + calendarViewDate.getFullYear();
-
-      const { gridStart } = getGridRange(calendarViewDate);
-      const todayKey = ymdKey(new Date());
       const cells = [];
 
-      for (let i = 0; i < 42; i++) {
-        const cellDate = new Date(gridStart);
-        cellDate.setDate(gridStart.getDate() + i);
-        const key = ymdKey(cellDate);
-        const isOutside = cellDate.getMonth() !== calendarViewDate.getMonth();
-        const isToday = key === todayKey;
-        const isSelected = key === selectedDateKey;
-        const dayEvents = calendarEventsByDate[key] || [];
-        const visibleChips = dayEvents.slice(0, 2);
-        const remaining = dayEvents.length - visibleChips.length;
-
-        cells.push(`
-          <button type="button" class="cal-day-cell${isOutside ? ' outside' : ''}${isToday ? ' today' : ''}${isSelected ? ' selected' : ''}" data-date="${key}" onclick="selectDay('${key}')">
-            <span class="cal-day-number">${cellDate.getDate()}</span>
-            <div class="cal-day-chips">
-              ${visibleChips.map(ev => `<div class="cal-chip">${esc(ev.summary || '(No title)')}</div>`).join('')}
-              ${remaining > 0 ? `<div class="cal-more">+${remaining} more</div>` : ''}
-            </div>
-            <div class="cal-day-dots">${dayEvents.slice(0, 4).map(() => '<span class="cal-dot"></span>').join('')}</div>
-          </button>
-        `);
+      if (calendarViewMode === 'week') {
+        const weekStart = getWeekStart(calendarViewDate);
+        const weekEnd = new Date(weekStart);
+        weekEnd.setDate(weekStart.getDate() + 6);
+        const sameMonth = weekStart.getMonth() === weekEnd.getMonth();
+        label.textContent = sameMonth
+          ? `${weekStart.getDate()}–${weekEnd.getDate()} ${monthNames[weekStart.getMonth()]} ${weekEnd.getFullYear()}`
+          : `${weekStart.getDate()} ${monthNames[weekStart.getMonth()]} – ${weekEnd.getDate()} ${monthNames[weekEnd.getMonth()]} ${weekEnd.getFullYear()}`;
+        grid.classList.add('week-mode');
+        for (let i = 0; i < 7; i++) {
+          const cellDate = new Date(weekStart);
+          cellDate.setDate(weekStart.getDate() + i);
+          cells.push(calendarDayCellMarkup(cellDate, false, 4));
+        }
+      } else {
+        label.textContent = monthNames[calendarViewDate.getMonth()] + ' ' + calendarViewDate.getFullYear();
+        grid.classList.remove('week-mode');
+        const { gridStart } = getGridRange(calendarViewDate);
+        for (let i = 0; i < 42; i++) {
+          const cellDate = new Date(gridStart);
+          cellDate.setDate(gridStart.getDate() + i);
+          cells.push(calendarDayCellMarkup(cellDate, cellDate.getMonth() !== calendarViewDate.getMonth(), 2));
+        }
       }
 
       grid.innerHTML = cells.join('');
@@ -5151,8 +5550,12 @@
     }
 
     function changeMonth(delta) {
-      calendarViewDate.setMonth(calendarViewDate.getMonth() + delta);
-      calendarViewDate.setDate(1);
+      if (calendarViewMode === 'week') {
+        calendarViewDate.setDate(calendarViewDate.getDate() + (delta * 7));
+      } else {
+        calendarViewDate.setMonth(calendarViewDate.getMonth() + delta);
+        calendarViewDate.setDate(1);
+      }
       selectedDateKey = null;
       closeDayDetail();
       renderCalendarGrid();
@@ -5160,9 +5563,11 @@
     }
 
     async function goToToday() {
-      calendarViewDate = new Date();
-      calendarViewDate.setDate(1);
-      const todayKey = ymdKey(new Date());
+      const today = new Date();
+      calendarViewDate = calendarViewMode === 'week'
+        ? new Date(today)
+        : new Date(today.getFullYear(), today.getMonth(), 1);
+      const todayKey = ymdKey(today);
       renderCalendarGrid();
       await loadMonthEvents(calendarViewDate);
       selectDay(todayKey);
@@ -6531,44 +6936,100 @@
       });
       const previousEvents=Array.isArray(monthCache?.[previousKey])?monthCache[previousKey]:null;
       const trend=document.getElementById('dashboardMeetingsTrend');
-      if(previousEvents){
-        const difference=currentTotal-previousEvents.length;
-        trend.textContent=difference===0?'Same as last month':difference>0?`+${difference} compared with last month`:`${Math.abs(difference)} fewer than last month`;
-      }else if(currentTotal){
-        const activeWeeks=weeks.filter(Boolean).length;
-        trend.textContent=`Activity across ${activeWeeks} calendar week${activeWeeks===1?'':'s'}`;
-      }else{
-        trend.textContent='Sync Calendar to populate activity';
+      if(trend){
+        if(previousEvents){
+          const difference=currentTotal-previousEvents.length;
+          trend.textContent=difference===0?'Same as last month':difference>0?`+${difference} compared with last month`:`${Math.abs(difference)} fewer than last month`;
+        }else if(currentTotal){
+          const activeWeeks=weeks.filter(Boolean).length;
+          trend.textContent=`Activity across ${activeWeeks} calendar week${activeWeeks===1?'':'s'}`;
+        }else{
+          trend.textContent=googleAccessToken?'No meetings recorded this month':'Connect Calendar to populate activity';
+        }
       }
-      document.getElementById('dashboardMeetingsMonth').textContent=currentTotal;
+      const totalElement=document.getElementById('dashboardMeetingsMonth');
+      if(totalElement)totalElement.textContent=currentTotal;
       const max=Math.max(1,...weeks);
       const bars=document.getElementById('dashboardMeetingsWeeklyBars');
-      bars.innerHTML=weeks.map((count,index)=>`<div class="weekly-bar"><span class="weekly-bar-value">${count}</span><div class="weekly-bar-track"><span class="weekly-bar-fill" style="height:${count?Math.max(10,Math.round(count/max*100)):4}%"></span></div><span class="weekly-bar-label">W${index+1}</span></div>`).join('');
+      if(!bars)return;
+      bars.innerHTML=weeks.map((count,index)=>`<button class="weekly-bar" type="button" onclick="dashboardOpenMeetingWeek(${index})" aria-label="Open week ${index+1}, ${count} meeting${count===1?'':'s'}"><span class="weekly-bar-value">${count}</span><span class="weekly-bar-track"><span class="weekly-bar-fill" style="height:${count?Math.max(10,Math.round(count/max*100)):4}%"></span></span><span class="weekly-bar-label">W${index+1}</span></button>`).join('');
       bars.setAttribute('aria-label',`Weekly meeting distribution: ${weeks.map((count,index)=>`week ${index+1}, ${count}`).join('; ')}`);
     }
+
     function dashboardRenderOrganisationVisual(active){
-      const byOrganisation=new Map();
+      const now=new Date();
+      const currentMonthStart=new Date(now.getFullYear(),now.getMonth(),1);
+      const nextMonthStart=new Date(now.getFullYear(),now.getMonth()+1,1);
+      const historyByOrganisation=new Map();
       active.forEach(record=>{
         const name=String(record.companyName||'').trim();
-        if(!name)return;
+        const date=dashboardParseRecordDate(record.meetingDate);
+        if(!name||!date)return;
         const key=name.toLowerCase();
-        const entry=byOrganisation.get(key)||{name,count:0};
-        entry.count+=1;byOrganisation.set(key,entry);
+        const entry=historyByOrganisation.get(key)||{name,dates:[]};
+        entry.dates.push(date);
+        historyByOrganisation.set(key,entry);
       });
-      const total=byOrganisation.size;
+      let fresh=0;
       let returning=0;
-      byOrganisation.forEach(entry=>{if(entry.count>1)returning+=1;});
-      const fresh=Math.max(0,total-returning);
-      const newAngle=total?Math.round(fresh/total*360):0;
-      document.getElementById('dashboardCompaniesCount').textContent=total;
-      document.getElementById('dashboardOrganisationDonutTotal').textContent=total;
-      document.getElementById('dashboardOrgNewCount').textContent=fresh;
-      document.getElementById('dashboardOrgReturningCount').textContent=returning;
-      const donut=document.getElementById('dashboardOrganisationDonut');
-      donut.style.setProperty('--new-angle',`${newAngle}deg`);
-      donut.style.background=total?'': 'conic-gradient(#e8eef8 0 360deg)';
-      donut.setAttribute('aria-label',`${total} organisations engaged: ${fresh} new and ${returning} returning`);
+      historyByOrganisation.forEach(entry=>{
+        const engagedThisMonth=entry.dates.some(date=>date>=currentMonthStart&&date<nextMonthStart);
+        if(!engagedThisMonth)return;
+        const hadEarlierEngagement=entry.dates.some(date=>date<currentMonthStart);
+        if(hadEarlierEngagement)returning+=1;else fresh+=1;
+      });
+      const total=fresh+returning;
+      const freshPercent=total?fresh/total*100:0;
+      const returningPercent=total?returning/total*100:0;
+      const totalElement=document.getElementById('dashboardCompaniesCount');
+      const freshElement=document.getElementById('dashboardOrgNewCount');
+      const returningElement=document.getElementById('dashboardOrgReturningCount');
+      const freshSegment=document.getElementById('dashboardOrganisationNewSegment');
+      const returningSegment=document.getElementById('dashboardOrganisationReturningSegment');
+      const bar=document.getElementById('dashboardOrganisationBar');
+      if(totalElement)totalElement.textContent=total;
+      if(freshElement)freshElement.textContent=fresh;
+      if(returningElement)returningElement.textContent=returning;
+      if(freshSegment)freshSegment.style.width=`${freshPercent}%`;
+      if(returningSegment)returningSegment.style.width=`${returningPercent}%`;
+      if(bar)bar.setAttribute('aria-label',`${total} organisations engaged this month: ${fresh} new and ${returning} returning`);
     }
+
+    function dashboardAttendeeCount(value){
+      if(Array.isArray(value))return value.filter(Boolean).length;
+      const raw=String(value||'').trim();
+      if(!raw)return 0;
+      return raw.split(/[,;\n]+/).map(item=>item.trim()).filter(Boolean).length;
+    }
+
+    function dashboardMeetingDateParts(value){
+      const parsed=dashboardParseRecordDate(value);
+      if(!parsed)return{date:'Date not recorded',time:'Time not recorded'};
+      const date=parsed.toLocaleDateString('en-MY',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+      const raw=String(value||'');
+      const hasTime=/T\d{2}:\d{2}|\d{1,2}:\d{2}|\d{1,2}\s*(?:am|pm)/i.test(raw);
+      const time=hasTime?parsed.toLocaleTimeString('en-MY',{hour:'numeric',minute:'2-digit',hour12:true}):'Time not recorded';
+      return{date,time};
+    }
+
+    function dashboardRecentMeetingCard(record){
+      const parts=dashboardMeetingDateParts(record.meetingDate);
+      const organisation=record.companyName||'Organisation not recorded';
+      const preview=record.meetingNotes||record.actionItems||record.reason||'No meeting notes recorded.';
+      const category=record.reason||'Meeting';
+      const attendeeCount=dashboardAttendeeCount(record.attendees);
+      return `<button class="dashboard-meeting-card" type="button" onclick="systemOpenRecordFromDashboard('${crmEscape(record.recordId||'')}')">
+        <div class="dashboard-meeting-title">${crmEscape(record.meetingTitle||'Untitled meeting')}</div>
+        <div class="dashboard-meeting-meta">
+          <div class="dashboard-meeting-meta-line"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg><span>${crmEscape(parts.date)}</span></div>
+          <div class="dashboard-meeting-meta-line"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span>${crmEscape(parts.time)}</span></div>
+        </div>
+        <div class="dashboard-meeting-company">${crmEscape(organisation)}</div>
+        <div class="dashboard-meeting-preview">${crmEscape(preview)}</div>
+        <div class="dashboard-meeting-footer"><span class="dashboard-meeting-tag">${crmEscape(category)}</span><span>${attendeeCount} attendee${attendeeCount===1?'':'s'}</span></div>
+      </button>`;
+    }
+
     function systemRenderDashboardCRM(){
       const active=crmRecords.filter(record=>crmStatus(record).toLowerCase()!=='archived');
       const my=active.filter(crmIsOwned);
@@ -6577,9 +7038,9 @@
       if(actionBadge){actionBadge.textContent=actions.length;actionBadge.classList.toggle('show',actions.length>0);}
       dashboardRenderMeetingVisual();
       dashboardRenderOrganisationVisual(active);
-      const recent=crmSortRecords(active).slice(0,5);
-      document.getElementById('dashboardRecentActivity').innerHTML=recent.length?recent.map(record=>`<button class="dashboard-activity-item" onclick="systemOpenRecordFromDashboard('${crmEscape(record.recordId||'')}')"><div class="dashboard-list-title">${crmEscape(record.personName||'Unnamed contact')} · ${crmEscape(record.companyName||'No company')}</div><div class="dashboard-list-meta">${crmEscape(record.meetingTitle||'Meeting')} · ${crmEscape(record.meetingDate||'No date')}</div></button>`).join(''):'<div class="dashboard-empty">No CRM activity recorded yet.</div>';
-      document.getElementById('dashboardActionItems').innerHTML=actions.length?actions.slice(0,5).map(record=>`<button class="dashboard-action-item" onclick="systemOpenMyRecord('${crmEscape(record.recordId||'')}')"><div class="dashboard-list-title">${crmEscape(record.actionItems)}</div><div class="dashboard-list-meta">${crmEscape(record.personName||'Contact')} · ${crmEscape(record.meetingTitle||'Meeting')}</div></button>`).join(''):'<div class="dashboard-empty">No open action items in your records.</div>';
+      const recent=crmSortRecords(active).slice(0,4);
+      const recentContainer=document.getElementById('dashboardRecentActivity');
+      if(recentContainer)recentContainer.innerHTML=recent.length?recent.map(dashboardRecentMeetingCard).join(''):'<div class="dashboard-empty">No meetings recorded yet.</div>';
     }
     function systemOpenRecordFromDashboard(recordId){const index=crmRecords.findIndex(record=>record.recordId===recordId);if(index>=0)crmSelectedIndex=index;systemNavigate('contacts');setTimeout(crmFilterRecords,50);}
     function systemOpenMyRecord(recordId){const index=crmRecords.findIndex(record=>record.recordId===recordId);if(index>=0)mySelectedIndex=index;systemNavigate('my-records');setTimeout(myFilterRecords,50);}
