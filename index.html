@@ -1764,6 +1764,96 @@
     body { zoom: 0.9; }
   }
 </style>
+
+<style id="crm-step6-styles">
+  #meetingModal { padding: 18px; }
+  #meetingModal .meeting-workspace-card {
+    width: min(980px, 96vw);
+    max-width: 980px;
+    height: min(94vh, 980px);
+    max-height: 94vh;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-radius: 24px;
+  }
+  #meetingModal .meeting-form-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+  }
+  #meetingModal .meeting-form-scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 30px 34px 26px;
+    scrollbar-gutter: stable;
+  }
+  #meetingModal .meeting-submit-dock {
+    flex: 0 0 auto;
+    padding: 15px 34px 17px;
+    border-top: 1px solid #dbeafe;
+    background: rgba(255,255,255,.97);
+    box-shadow: 0 -14px 34px rgba(15,23,42,.08);
+    backdrop-filter: blur(16px);
+    z-index: 4;
+  }
+  #meetingModal .meeting-submit-dock .submit-btn { margin-top: 0; }
+  #meetingModal .modal-success { padding: 54px 34px; overflow-y: auto; }
+  .analysis-inline-state {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0 2px;
+    padding: 11px 13px;
+    border-radius: 11px;
+    border: 1px solid #bfdbfe;
+    background: #eff6ff;
+    color: #1e3a8a;
+    font-size: 12px;
+    font-weight: 750;
+  }
+  .analysis-inline-state.show { display: flex; }
+  .analysis-inline-state.error { border-color:#fecaca; background:#fef2f2; color:#b91c1c; }
+  .analysis-spinner {
+    width: 15px; height: 15px; border-radius: 50%; flex-shrink: 0;
+    border: 2px solid rgba(37,99,235,.24); border-top-color:#2563eb;
+    animation: crmSpin .8s linear infinite;
+  }
+  .analysis-inline-state.error .analysis-spinner,
+  .analysis-inline-state.done .analysis-spinner { display:none; }
+  @keyframes crmSpin { to { transform: rotate(360deg); } }
+  .manual-contact-state {
+    display:block;
+    border:1px solid #bfdbfe;
+    border-radius:16px;
+    background:linear-gradient(145deg,#eff6ff,#fff);
+    overflow:hidden;
+  }
+  .manual-contact-summary {
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:13px 15px; border-bottom:1px solid #dbeafe;
+  }
+  .manual-contact-title { color:#1e3a8a; font-size:11px; font-weight:850; letter-spacing:1px; text-transform:uppercase; }
+  .manual-contact-count { color:#2563eb; font-size:11px; font-weight:850; }
+  .manual-contact-list { padding:14px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+  .manual-contact-actions { padding:0 14px 14px; }
+  .action-items-box { min-height:100px; }
+  @media (min-width: 760px) {
+    #meetingModal .business-card-review-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    #meetingModal .business-card-review-card { margin:0; }
+  }
+  @media (max-width: 760px) {
+    #meetingModal { padding: 8px; }
+    #meetingModal .meeting-workspace-card { width:100%; height:96vh; max-height:96vh; border-radius:18px; }
+    #meetingModal .meeting-form-scroll { padding:22px 18px 20px; }
+    #meetingModal .meeting-submit-dock { padding:13px 18px 15px; }
+    .manual-contact-list { grid-template-columns:1fr; }
+  }
+</style>
+
 </head>
 <body>
 
@@ -1946,7 +2036,7 @@
   </div>
 
   <div class="modal-overlay" id="meetingModal">
-    <div class="modal-card">
+    <div class="modal-card meeting-workspace-card">
 
       <!-- Success state -->
       <div class="modal-success" id="modalSuccess">
@@ -1957,7 +2047,8 @@
       </div>
 
       <!-- Form state -->
-      <div id="modalForm">
+      <div id="modalForm" class="meeting-form-shell">
+        <div class="meeting-form-scroll">
         <div class="modal-header">
           <div>
             <div class="modal-title">Log Meeting Details</div>
@@ -2016,7 +2107,8 @@
             <label class="form-label">Upload One Business-Card Photo <span class="req">*</span></label>
             <input class="form-input" id="fieldBusinessCard" type="file" accept="image/*,.pdf" onchange="handleBusinessCardChange()"/>
           </div>
-          <p class="helper-text">Upload one photo or PDF. It may contain one business card or several business cards placed together. The system will detect each card separately and let you review every contact before saving.</p>
+          <p class="helper-text">Upload one photo or PDF containing one or several business cards. Analysis starts automatically, then every detected contact appears below for review before saving.</p>
+          <div class="analysis-inline-state" id="businessCardAnalysisState" aria-live="polite"><span class="analysis-spinner"></span><span id="businessCardAnalysisMessage">Analyzing business cards...</span></div>
 
           <div class="business-card-review-state" id="businessCardReviewState">
             <div class="business-card-review-summary">
@@ -2032,25 +2124,14 @@
         </div>
 
         <div id="manualContactSection" class="hidden-section">
-          <div class="manual-contact-grid">
-            <div class="form-group">
-              <label class="form-label">Person Name <span class="req">*</span></label>
-              <input class="form-input" id="fieldManualPersonName" type="text" placeholder="e.g. Ms. Aina A. Rahman"/>
+          <div class="manual-contact-state">
+            <div class="manual-contact-summary">
+              <div class="manual-contact-title">Manual Contacts</div>
+              <div class="manual-contact-count" id="manualContactCount">1 contact</div>
             </div>
-
-            <div class="form-group">
-              <label class="form-label">Company Name <span class="req">*</span></label>
-              <input class="form-input" id="fieldManualCompanyName" type="text" placeholder="e.g. MRANTI"/>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Email <span class="req">*</span></label>
-              <input class="form-input" id="fieldManualEmail" type="email" placeholder="e.g. name@company.com"/>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Contact Number</label>
-              <input class="form-input" id="fieldManualPhone" type="tel" placeholder="e.g. +60 12-345 6789"/>
+            <div class="manual-contact-list" id="manualContactList"></div>
+            <div class="manual-contact-actions">
+              <button type="button" class="business-card-review-btn" onclick="addManualContact()">+ Add Another Contact</button>
             </div>
           </div>
         </div>
@@ -2064,7 +2145,11 @@
         </div>
         <div class="form-group">
           <label class="form-label">Meeting Notes <span class="req">*</span></label>
-          <textarea class="form-textarea" id="fieldNotes" placeholder="Key discussion points, action items, follow-ups..."></textarea>
+          <textarea class="form-textarea" id="fieldNotes" placeholder="Key discussion points and decisions..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Action Items <span class="optional-tag">Optional</span></label>
+          <textarea class="form-textarea action-items-box" id="fieldActionItems" placeholder="Owner, next step and due date, one item per line..."></textarea>
         </div>
 
         <div class="form-divider"></div>
@@ -2095,7 +2180,10 @@
           </div>
         </div>
 
-        <button class="submit-btn" id="submitBtn" onclick="submitMeeting()">Analyze Business Cards</button>
+        </div>
+        <div class="meeting-submit-dock">
+          <button class="submit-btn" id="submitBtn" onclick="submitMeeting()">Save Contacts to CRM</button>
+        </div>
       </div>
     </div>
   </div>
@@ -2237,13 +2325,14 @@
     window._eventsCache = {};
 
     // Temporary meeting draft: scoped to this browser tab and cleared when the tab closes.
-    const MEETING_DRAFT_KEY = 'mranti_crm_meeting_draft_v3';
+    const MEETING_DRAFT_KEY = 'mranti_crm_meeting_draft_v6';
     let meetingFormDirty = false;
     let suppressDraftAutosave = false;
     let draftSaveTimer = null;
 
     const BUSINESS_CARD_ANALYSIS_URL = 'https://mrantidata.app.n8n.cloud/webhook/analyze-business-cards-test';
     let reviewedBusinessCardContacts = [];
+    let manualContacts = [];
     let businessCardAnalysisFileSignature = '';
     let businessCardAnalysisInProgress = false;
 
@@ -3061,18 +3150,134 @@
       };
     }
 
-    function updateSubmitButtonLabel() {
-      const btn = document.getElementById('submitBtn');
-      if (!btn || btn.disabled || businessCardAnalysisInProgress) return;
-      const inputMethod = document.querySelector('input[name="contactInputMethod"]:checked')?.value || 'businessCard';
-      if (inputMethod === 'manual') {
-        btn.textContent = 'Save to CRM';
+
+    function setBusinessCardAnalysisState(message = '', mode = 'hidden') {
+      const state = document.getElementById('businessCardAnalysisState');
+      const messageEl = document.getElementById('businessCardAnalysisMessage');
+      if (!state || !messageEl) return;
+      state.classList.remove('show', 'error', 'done');
+      if (mode === 'hidden') {
+        messageEl.textContent = '';
         return;
       }
-      const count = reviewedBusinessCardContacts.length;
+      messageEl.textContent = message;
+      state.classList.add('show');
+      if (mode === 'error') state.classList.add('error');
+      if (mode === 'done') state.classList.add('done');
+    }
+
+    function normalizeManualContact(contact = {}, index = 0) {
+      return normalizeReviewedContact({ ...contact, cardNumber: index + 1, confidence: 'manual' }, index);
+    }
+
+    function updateManualContact(index, field, value) {
+      if (!manualContacts[index]) return;
+      manualContacts[index][field] = String(value || '');
+      renderManualContacts();
+      scheduleDraftSave();
+    }
+
+    function addManualContact() {
+      if (manualContacts.length >= 10) {
+        showModalErr('You can add a maximum of 10 contacts to one meeting.');
+        return;
+      }
+      manualContacts.push(normalizeManualContact({}, manualContacts.length));
+      renderManualContacts();
+      scheduleDraftSave();
+    }
+
+    function removeManualContact(index) {
+      if (manualContacts.length <= 1) {
+        manualContacts = [normalizeManualContact({}, 0)];
+      } else {
+        manualContacts.splice(index, 1);
+        manualContacts = manualContacts.map((contact, contactIndex) => normalizeManualContact(contact, contactIndex));
+      }
+      renderManualContacts();
+      scheduleDraftSave();
+    }
+
+    function renderManualContacts() {
+      const list = document.getElementById('manualContactList');
+      const count = document.getElementById('manualContactCount');
+      if (!list || !count) return;
+      if (!manualContacts.length) manualContacts = [normalizeManualContact({}, 0)];
+      count.textContent = manualContacts.length + (manualContacts.length === 1 ? ' contact' : ' contacts');
+      list.innerHTML = manualContacts.map((contact, index) => {
+        const status = reviewedContactStatus(contact);
+        const reasonText = status.ready ? 'Ready to save as a separate CRM contact.' : status.reasons.join(' · ');
+        return `
+          <div class="business-card-review-card" data-manual-index="${index}">
+            <div class="business-card-review-head">
+              <div class="business-card-review-contact">Contact ${index + 1}</div>
+              <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end;">
+                <span class="business-card-status ${status.ready ? 'ready' : 'review'}" id="manualContactStatus_${index}">${status.ready ? 'Ready' : 'Incomplete'}</span>
+                <button type="button" class="business-card-review-remove" onclick="removeManualContact(${index})">${manualContacts.length === 1 ? 'Clear' : 'Remove'}</button>
+              </div>
+            </div>
+            <div class="business-card-review-grid">
+              <div class="business-card-review-field">
+                <label>Person Name</label>
+                <input class="business-card-review-input" value="${esc(contact.personName)}" oninput="manualContacts[${index}].personName=this.value;refreshManualContactStatus(${index});scheduleDraftSave()" placeholder="Person name"/>
+              </div>
+              <div class="business-card-review-field">
+                <label>Company Name</label>
+                <input class="business-card-review-input" value="${esc(contact.companyName)}" oninput="manualContacts[${index}].companyName=this.value;refreshManualContactStatus(${index});scheduleDraftSave()" placeholder="Company name"/>
+              </div>
+              <div class="business-card-review-field">
+                <label>Email</label>
+                <input class="business-card-review-input" type="email" value="${esc(contact.email)}" oninput="manualContacts[${index}].email=this.value;refreshManualContactStatus(${index});scheduleDraftSave()" placeholder="name@company.com"/>
+              </div>
+              <div class="business-card-review-field">
+                <label>Contact Number</label>
+                <input class="business-card-review-input" type="tel" value="${esc(contact.contactNumber)}" oninput="manualContacts[${index}].contactNumber=this.value;refreshManualContactStatus(${index});scheduleDraftSave()" placeholder="+60..."/>
+              </div>
+              <div class="business-card-review-field full">
+                <label>Job Title <span style="text-transform:none;letter-spacing:0;font-weight:650;">(optional)</span></label>
+                <input class="business-card-review-input" value="${esc(contact.jobTitle)}" oninput="manualContacts[${index}].jobTitle=this.value;scheduleDraftSave()" placeholder="Designation or role"/>
+              </div>
+            </div>
+            <div class="business-card-review-reason${status.ready ? ' ready' : ''}" id="manualContactReason_${index}">${esc(reasonText)}</div>
+          </div>`;
+      }).join('');
+      updateSubmitButtonLabel();
+    }
+
+    function refreshManualContactStatus(index) {
+      const contact = manualContacts[index];
+      const reason = document.getElementById('manualContactReason_' + index);
+      const badge = document.getElementById('manualContactStatus_' + index);
+      if (!contact || !reason) return;
+      const status = reviewedContactStatus(contact);
+      if (badge) {
+        badge.className = 'business-card-status ' + (status.ready ? 'ready' : 'review');
+        badge.textContent = status.ready ? 'Ready' : 'Incomplete';
+      }
+      reason.className = 'business-card-review-reason' + (status.ready ? ' ready' : '');
+      reason.textContent = status.ready ? 'Ready to save as a separate CRM contact.' : status.reasons.join(' · ');
+      updateSubmitButtonLabel();
+    }
+
+    function validateManualContacts() {
+      if (!manualContacts.length) return { ok:false, message:'Add at least one contact.' };
+      const invalid = manualContacts.map((contact,index)=>({index,status:reviewedContactStatus(contact)})).filter(entry=>!entry.status.ready);
+      if (invalid.length) {
+        const first = invalid[0];
+        return { ok:false, message:'Manual Contact ' + (first.index + 1) + ' is incomplete: ' + first.status.reasons.join(', ') + '.' };
+      }
+      return { ok:true, message:'' };
+    }
+
+        function updateSubmitButtonLabel() {
+      const btn = document.getElementById('submitBtn');
+      if (!btn) return;
+      const inputMethod = document.querySelector('input[name="contactInputMethod"]:checked')?.value || 'businessCard';
+      const count = inputMethod === 'manual' ? manualContacts.length : reviewedBusinessCardContacts.length;
       btn.textContent = count
         ? `Save ${count} Contact${count === 1 ? '' : 's'} to CRM`
-        : 'Analyze Business Cards';
+        : 'Save Contacts to CRM';
+      if (!businessCardAnalysisInProgress) btn.disabled = false;
     }
 
     function refreshBusinessCardReviewRowStatus(index) {
@@ -3166,16 +3371,18 @@
       if (!options.silent && !suppressDraftAutosave) scheduleDraftSave();
     }
 
-    function handleBusinessCardChange() {
+        async function handleBusinessCardChange() {
       clearBusinessCardReview({ silent: true });
       const file = document.getElementById('fieldBusinessCard').files[0] || null;
-      if (file) {
-        showDraftStatus('Business-card photo selected. Click Analyze Business Cards to detect every card in the image.');
-      } else {
-        hideDraftStatus();
-      }
+      setBusinessCardAnalysisState('', 'hidden');
       updateSubmitButtonLabel();
       scheduleDraftSave();
+      if (!file) {
+        hideDraftStatus();
+        return;
+      }
+      showDraftStatus('Business-card photo selected. Automatic analysis has started.');
+      await analyzeBusinessCardImage(file, true);
     }
 
     function removeBusinessCardReviewContact(index) {
@@ -3204,12 +3411,11 @@
       await analyzeBusinessCardImage(file, true);
     }
 
-    async function analyzeBusinessCardImage(file, force = false) {
+        async function analyzeBusinessCardImage(file, force = false) {
       if (!file) {
         showModalErr('Please upload one photo or PDF containing the business card or cards.');
         return false;
       }
-
       const isSupported = String(file.type || '').startsWith('image/') || file.type === 'application/pdf' || /\.pdf$/i.test(file.name || '');
       if (!isSupported) {
         showModalErr('Please upload an image or PDF file.');
@@ -3219,49 +3425,40 @@
         showModalErr('The business-card file is larger than 20 MB. Please use a smaller image or PDF.');
         return false;
       }
-
       const signature = businessCardFileSignature(file);
       if (!force && signature === businessCardAnalysisFileSignature && reviewedBusinessCardContacts.length) {
         renderBusinessCardReview();
         return true;
       }
-
       const btn = document.getElementById('submitBtn');
       const errDiv = document.getElementById('modalError');
       businessCardAnalysisInProgress = true;
       btn.disabled = true;
-      btn.textContent = 'Analyzing Business Cards...';
+      updateSubmitButtonLabel();
       errDiv.style.display = 'none';
-
+      setBusinessCardAnalysisState('Analyzing the uploaded photo and separating each business card...', 'loading');
       try {
         const fd = new FormData();
         fd.append('businessCard', file);
         fd.append('fileName', file.name || 'business-cards');
-
-        const response = await fetch(BUSINESS_CARD_ANALYSIS_URL, {
-          method: 'POST',
-          body: fd
-        });
+        const response = await fetch(BUSINESS_CARD_ANALYSIS_URL, { method: 'POST', body: fd });
         const responseText = await response.text();
         let data = {};
         try { data = responseText ? JSON.parse(responseText) : {}; } catch (e) {}
-
-        if (!response.ok || data.success === false) {
-          throw new Error(data.error || data.message || ('Analysis failed with status ' + response.status));
-        }
-
+        if (!response.ok || data.success === false) throw new Error(data.error || data.message || ('Analysis failed with status ' + response.status));
         const contacts = Array.isArray(data.contacts) ? data.contacts.slice(0, 10) : [];
-        if (!contacts.length) {
-          throw new Error('No business card could be detected clearly. Try a sharper photo with every card fully visible.');
-        }
-
+        if (!contacts.length) throw new Error('No business card could be detected clearly. Try a sharper photo with every card fully visible.');
         reviewedBusinessCardContacts = contacts.map((contact, index) => normalizeReviewedContact(contact, index));
         businessCardAnalysisFileSignature = signature;
         renderBusinessCardReview();
         meetingFormDirty = true;
         saveMeetingDraft({ silent: true });
-
         const reviewCount = reviewedBusinessCardContacts.filter(contact => !reviewedContactStatus(contact).ready).length;
+        setBusinessCardAnalysisState(
+          reviewedBusinessCardContacts.length + (reviewedBusinessCardContacts.length === 1 ? ' contact detected.' : ' contacts detected.') +
+          (reviewCount ? ' Review the highlighted incomplete contacts.' : ' All detected contacts are ready for review and saving.'),
+          'done'
+        );
         showDraftStatus(
           reviewedBusinessCardContacts.length + (reviewedBusinessCardContacts.length === 1 ? ' business card detected.' : ' business cards detected.') +
           (reviewCount ? ' ' + reviewCount + (reviewCount === 1 ? ' contact requires' : ' contacts require') + ' manual review before saving.' : ' All contacts are ready to save.'),
@@ -3270,6 +3467,7 @@
         return true;
       } catch (error) {
         clearBusinessCardReview({ silent: true });
+        setBusinessCardAnalysisState(error.message || 'The business-card photo could not be analyzed.', 'error');
         showModalErr(error.message || 'The business-card photo could not be analyzed. Please try again.');
         console.error('Business card analysis error:', error);
         return false;
@@ -3329,13 +3527,12 @@
       hideDraftStatus();
     }
 
-    function meetingDraftState() {
+        function meetingDraftState() {
       const inputMethod = document.querySelector('input[name="contactInputMethod"]:checked')?.value || 'businessCard';
       const selectedFiles = Array.from(document.getElementById('fieldBusinessCard').files || []);
       const meetingDocumentFiles = getMeetingDocuments();
-
       return {
-        version: 5,
+        version: 6,
         savedAt: Date.now(),
         currentEvent: compactCalendarEvent(currentEvent),
         modalSubtitle: document.getElementById('modalSubtitle').textContent || '',
@@ -3344,32 +3541,23 @@
         eventTime: document.getElementById('fieldEventTime').value || '',
         attendees: document.getElementById('fieldAttendees').value || '',
         inputMethod,
-        manualPersonName: document.getElementById('fieldManualPersonName').value || '',
-        manualCompanyName: document.getElementById('fieldManualCompanyName').value || '',
-        manualEmail: document.getElementById('fieldManualEmail').value || '',
-        manualPhone: document.getElementById('fieldManualPhone').value || '',
+        manualContacts: manualContacts.map((contact,index)=>normalizeManualContact(contact,index)),
         purpose: document.getElementById('fieldPurpose').value || '',
         notes: document.getElementById('fieldNotes').value || '',
+        actionItems: document.getElementById('fieldActionItems').value || '',
         reviewedBusinessCardContacts: reviewedBusinessCardContacts.map((contact, index) => normalizeReviewedContact(contact, index)),
         businessCardFileNames: selectedFiles.map(file => file.name),
         meetingDocumentFileNames: meetingDocumentFiles.map(file => file.name)
       };
     }
 
-    function hasMeaningfulDraftData(state) {
+        function hasMeaningfulDraftData(state) {
       if (!state) return false;
       return Boolean([
-        state.eventTitle,
-        state.eventDate,
-        state.eventTime,
-        state.attendees,
-        state.manualPersonName,
-        state.manualCompanyName,
-        state.manualEmail,
-        state.manualPhone,
-        state.purpose,
-        state.notes
+        state.eventTitle, state.eventDate, state.eventTime, state.attendees,
+        state.purpose, state.notes, state.actionItems
       ].some(value => String(value || '').trim()) ||
+      (Array.isArray(state.manualContacts) && state.manualContacts.some(contact => Object.values(contact || {}).some(value => String(value || '').trim()))) ||
       (Array.isArray(state.reviewedBusinessCardContacts) && state.reviewedBusinessCardContacts.length) ||
       (Array.isArray(state.businessCardFileNames) && state.businessCardFileNames.length) ||
       (Array.isArray(state.meetingDocumentFileNames) && state.meetingDocumentFileNames.length));
@@ -3433,58 +3621,47 @@
       draftSaveTimer = setTimeout(() => saveMeetingDraft({ silent: true }), 450);
     }
 
-    function restoreMeetingDraft(draft) {
+        function restoreMeetingDraft(draft) {
       if (!draft) return false;
-
       suppressDraftAutosave = true;
       resetModal();
       currentEvent = draft.currentEvent || null;
       renderCalendarAttachments();
-
       document.getElementById('fieldEventTitle').value = draft.eventTitle || draft.currentEvent?.summary || '';
       document.getElementById('fieldEventDate').value = draft.eventDate || '';
       document.getElementById('fieldEventTime').value = draft.eventTime || '';
       document.getElementById('fieldAttendees').value = draft.attendees || '';
       document.getElementById('modalSubtitle').textContent = draft.modalSubtitle || draft.eventTitle || 'Draft meeting entry';
-
       const method = draft.inputMethod === 'manual' ? 'manual' : 'businessCard';
       document.getElementById(method === 'manual' ? 'methodManual' : 'methodBusinessCard').checked = true;
-      setContactInputMethod(method, false);
-
-      document.getElementById('fieldManualPersonName').value = draft.manualPersonName || '';
-      document.getElementById('fieldManualCompanyName').value = draft.manualCompanyName || '';
-      document.getElementById('fieldManualEmail').value = draft.manualEmail || '';
-      document.getElementById('fieldManualPhone').value = draft.manualPhone || '';
       document.getElementById('fieldPurpose').value = draft.purpose || '';
       document.getElementById('fieldNotes').value = draft.notes || '';
+      document.getElementById('fieldActionItems').value = draft.actionItems || '';
+      manualContacts = Array.isArray(draft.manualContacts) && draft.manualContacts.length
+        ? draft.manualContacts.slice(0,10).map((contact,index)=>normalizeManualContact(contact,index))
+        : [normalizeManualContact({},0)];
       reviewedBusinessCardContacts = Array.isArray(draft.reviewedBusinessCardContacts)
         ? draft.reviewedBusinessCardContacts.slice(0, 10).map((contact, index) => normalizeReviewedContact(contact, index))
         : [];
       businessCardAnalysisFileSignature = '';
+      setContactInputMethod(method, false);
+      renderManualContacts();
       renderBusinessCardReview();
       document.getElementById('fieldBusinessCard').value = '';
       document.getElementById('fieldMeetingDocument').value = '';
       updateMeetingDocumentState();
-
+      setBusinessCardAnalysisState('', 'hidden');
       suppressDraftAutosave = false;
       meetingFormDirty = true;
-
       const fileNames = Array.isArray(draft.businessCardFileNames) ? draft.businessCardFileNames : [];
       const restoreMessages = [];
       if (fileNames.length && !reviewedBusinessCardContacts.length) restoreMessages.push('business card: ' + fileNames.join(', '));
       const documentFileNames = Array.isArray(draft.meetingDocumentFileNames) ? draft.meetingDocumentFileNames : (draft.meetingDocumentFileName ? [draft.meetingDocumentFileName] : []);
       if (documentFileNames.length) restoreMessages.push('supporting PDFs: ' + documentFileNames.join(', '));
-
-      if (restoreMessages.length) {
-        showDraftStatus(
-          'Draft restored. Please select the ' + restoreMessages.join(' and ') + ' again.',
-          true
-        );
-      } else if (reviewedBusinessCardContacts.length) {
-        showDraftStatus(reviewedBusinessCardContacts.length + (reviewedBusinessCardContacts.length === 1 ? ' reviewed contact restored.' : ' reviewed contacts restored.'));
-      } else {
-        showDraftStatus('Temporary draft restored from this browser tab.');
-      }
+      if (restoreMessages.length) showDraftStatus('Draft restored. Please select the ' + restoreMessages.join(' and ') + ' again.', true);
+      else if (method === 'manual') showDraftStatus(manualContacts.length + (manualContacts.length === 1 ? ' manual contact restored.' : ' manual contacts restored.'));
+      else if (reviewedBusinessCardContacts.length) showDraftStatus(reviewedBusinessCardContacts.length + (reviewedBusinessCardContacts.length === 1 ? ' reviewed contact restored.' : ' reviewed contacts restored.'));
+      else showDraftStatus('Temporary draft restored from this browser tab.');
       updateSubmitButtonLabel();
       return true;
     }
@@ -3492,7 +3669,7 @@
     function showMeetingModal() {
       document.getElementById('modalSuccess').style.display = 'none';
       document.getElementById('modalSuccessMessage').textContent = 'Meeting details have been saved to the CRM.';
-      document.getElementById('modalForm').style.display = 'block';
+      document.getElementById('modalForm').style.display = 'flex';
       document.getElementById('meetingModal').style.display = 'flex';
     }
 
@@ -3531,52 +3708,39 @@
       meetingFormDirty = false;
     }
 
-    function resetModal() {
+        function resetModal() {
       const previousSuppress = suppressDraftAutosave;
       suppressDraftAutosave = true;
-
       document.getElementById('fieldPurpose').value = '';
       document.getElementById('fieldNotes').value = '';
+      document.getElementById('fieldActionItems').value = '';
       document.getElementById('fieldBusinessCard').value = '';
       clearBusinessCardReview({ silent: true });
+      setBusinessCardAnalysisState('', 'hidden');
       document.getElementById('fieldMeetingDocument').value = '';
       updateMeetingDocumentState();
       renderCalendarAttachments([]);
-      document.getElementById('fieldManualPersonName').value = '';
-      document.getElementById('fieldManualCompanyName').value = '';
-      document.getElementById('fieldManualEmail').value = '';
-      document.getElementById('fieldManualPhone').value = '';
+      manualContacts = [normalizeManualContact({},0)];
+      renderManualContacts();
       document.getElementById('methodBusinessCard').checked = true;
       setContactInputMethod('businessCard', false);
       document.getElementById('modalError').style.display = 'none';
       document.getElementById('modalSuccess').style.display = 'none';
-      document.getElementById('modalForm').style.display = 'block';
+      document.getElementById('modalForm').style.display = 'flex';
       const btn = document.getElementById('submitBtn');
       btn.disabled = false;
-      btn.textContent = 'Analyze Business Cards';
+      btn.textContent = 'Save Contacts to CRM';
       hideDraftStatus();
       meetingFormDirty = false;
-
       suppressDraftAutosave = previousSuppress;
     }
 
-    function setContactInputMethod(method, clearOpposite = true) {
+        function setContactInputMethod(method, clearOpposite = true) {
       const isManual = method === 'manual';
       document.getElementById('businessCardSection').style.display = isManual ? 'none' : 'block';
       document.getElementById('manualContactSection').style.display = isManual ? 'block' : 'none';
-
-      if (clearOpposite) {
-        if (isManual) {
-          document.getElementById('fieldBusinessCard').value = '';
-          clearBusinessCardReview({ silent: true });
-        } else {
-          document.getElementById('fieldManualPersonName').value = '';
-          document.getElementById('fieldManualCompanyName').value = '';
-          document.getElementById('fieldManualEmail').value = '';
-          document.getElementById('fieldManualPhone').value = '';
-        }
-      }
-
+      if (isManual && !manualContacts.length) manualContacts = [normalizeManualContact({},0)];
+      renderManualContacts();
       updateSubmitButtonLabel();
       if (!suppressDraftAutosave) scheduleDraftSave();
     }
@@ -3631,79 +3795,45 @@
       closeMeetingModalOnly();
     }
 
-    async function submitMeeting() {
+        async function submitMeeting() {
       const btn = document.getElementById('submitBtn');
       const errDiv = document.getElementById('modalError');
-
       const inputMethod = document.querySelector('input[name="contactInputMethod"]:checked')?.value || 'businessCard';
-      const file = document.getElementById('fieldBusinessCard').files[0] || null;
-
-      if (inputMethod === 'businessCard' && !reviewedBusinessCardContacts.length) {
-        if (!file) {
-          showModalErr('Please upload one photo or PDF containing the business card or cards.');
-          return;
-        }
-        await analyzeBusinessCardImage(file);
+      if (businessCardAnalysisInProgress) {
+        showModalErr('Business-card analysis is still running. Please wait a moment.');
         return;
       }
-
       const purpose = document.getElementById('fieldPurpose').value.trim();
       const notes = document.getElementById('fieldNotes').value.trim();
+      const actionItems = document.getElementById('fieldActionItems').value.trim();
       const meetingDocuments = getMeetingDocuments();
       const calendarAttachments = getCalendarAttachments();
-      const manualPersonName = document.getElementById('fieldManualPersonName').value.trim();
-      const manualCompanyName = document.getElementById('fieldManualCompanyName').value.trim();
-      const manualEmail = document.getElementById('fieldManualEmail').value.trim();
-      const manualPhone = document.getElementById('fieldManualPhone').value.trim();
       const eventDateOnly = getMeetingDateOnly();
       const eventTimeOnly = getMeetingTimeOnly();
       const eventDateValue = buildEventDateValueForSubmit();
-
       if (!purpose) { showModalErr('Please enter the purpose of meeting.'); return; }
       if (!notes) { showModalErr('Please enter meeting notes.'); return; }
       if (eventTimeOnly && !eventDateOnly) { showModalErr('Please select the meeting date before entering the time.'); return; }
-
-      if (inputMethod === 'businessCard') {
-        const reviewValidation = validateReviewedBusinessCardContacts();
-        if (!reviewValidation.ok) {
-          showModalErr(reviewValidation.message);
-          return;
-        }
-      }
-
-      if (inputMethod === 'manual') {
-        if (!manualPersonName) { showModalErr('Please enter the person name.'); return; }
-        if (!manualCompanyName) { showModalErr('Please enter the company name.'); return; }
-        if (!manualEmail) { showModalErr('Please enter the email address.'); return; }
-        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(manualEmail);
-        if (!emailOk) { showModalErr('Please enter a valid email address.'); return; }
-      }
-
-      if (meetingDocuments.length > 5) {
-        showModalErr('You can attach a maximum of 5 supporting PDFs.');
-        return;
-      }
-
+      const validation = inputMethod === 'manual' ? validateManualContacts() : validateReviewedBusinessCardContacts();
+      if (!validation.ok) { showModalErr(validation.message); return; }
+      if (meetingDocuments.length > 5) { showModalErr('You can attach a maximum of 5 supporting PDFs.'); return; }
       for (const documentFile of meetingDocuments) {
         const isPdf = documentFile.type === 'application/pdf' || /\.pdf$/i.test(documentFile.name || '');
         if (!isPdf) { showModalErr(documentFile.name + ' is not a PDF file.'); return; }
-        if (documentFile.size > 10 * 1024 * 1024) {
-          showModalErr(documentFile.name + ' is larger than 10 MB. Please remove or replace it.');
-          return;
-        }
+        if (documentFile.size > 10 * 1024 * 1024) { showModalErr(documentFile.name + ' is larger than 10 MB. Please remove or replace it.'); return; }
       }
-
+      const contactsToSave = (inputMethod === 'manual' ? manualContacts : reviewedBusinessCardContacts)
+        .map((contact,index)=>normalizeReviewedContact({ ...contact, source: inputMethod },index));
       btn.disabled = true;
-      btn.textContent = inputMethod === 'businessCard' ? 'Saving Contacts...' : 'Saving...';
+      btn.textContent = 'Saving ' + contactsToSave.length + (contactsToSave.length === 1 ? ' Contact...' : ' Contacts...');
       errDiv.style.display = 'none';
-
       saveMeetingDraft({ silent: true });
-
       const fd = new FormData();
       fd.append('uploaderName', currentUser.displayName || '');
       fd.append('uploaderEmail', currentUser.email || '');
       fd.append('purpose', purpose);
       fd.append('meetingNotes', notes);
+      fd.append('actionItems', actionItems);
       fd.append('eventTitle', currentEvent?.summary || document.getElementById('fieldEventTitle').value || '');
       fd.append('eventDate', eventDateValue);
       fd.append('eventDateOnly', eventDateOnly);
@@ -3711,66 +3841,39 @@
       fd.append('attendees', (currentEvent?.attendees || []).filter(a => !a.self).map(a => a.displayName || a.email).join(', ') || document.getElementById('fieldAttendees').value || '');
       fd.append('calendarAttachments', JSON.stringify(calendarAttachments));
       fd.append('calendarAttachmentCount', String(calendarAttachments.length));
-
-      const finalInputMethod = inputMethod === 'businessCard' ? 'reviewedContacts' : 'manual';
-      fd.append('inputMethod', finalInputMethod);
-      fd.append('manualPhone', inputMethod === 'manual' ? manualPhone : '');
-      meetingDocuments.forEach((documentFile, index) => {
-        fd.append('meetingDocument_' + (index + 1), documentFile);
-      });
+      fd.append('inputMethod', 'reviewedContacts');
+      fd.append('contactSource', inputMethod);
+      meetingDocuments.forEach((documentFile, index) => fd.append('meetingDocument_' + (index + 1), documentFile));
       fd.append('meetingDocumentCount', String(meetingDocuments.length));
-
-      if (inputMethod === 'businessCard') {
-        const contactsToSave = reviewedBusinessCardContacts.map((contact, index) => normalizeReviewedContact(contact, index));
-        fd.append('reviewedContacts', JSON.stringify(contactsToSave));
-        fd.append('reviewedContactCount', String(contactsToSave.length));
-        fd.append('manualPersonName', '');
-        fd.append('manualCompanyName', '');
-        fd.append('manualEmail', '');
-      } else {
-        fd.append('reviewedContacts', '[]');
-        fd.append('reviewedContactCount', '0');
-        fd.append('manualPersonName', manualPersonName);
-        fd.append('manualCompanyName', manualCompanyName);
-        fd.append('manualEmail', manualEmail);
-      }
-
+      fd.append('reviewedContacts', JSON.stringify(contactsToSave));
+      fd.append('reviewedContactCount', String(contactsToSave.length));
+      fd.append('manualPersonName', '');
+      fd.append('manualCompanyName', '');
+      fd.append('manualEmail', '');
+      fd.append('manualPhone', '');
       try {
-        const res = await fetch('https://mrantidata.app.n8n.cloud/webhook/submit-meeting-test', {
-          method: 'POST',
-          body: fd
-        });
+        const res = await fetch('https://mrantidata.app.n8n.cloud/webhook/submit-meeting-test', { method: 'POST', body: fd });
         const responseText = await res.text();
         let responseData = {};
         try { responseData = responseText ? JSON.parse(responseText) : {}; } catch (e) {}
-
         if (res.ok || res.status === 200) {
           clearMeetingDraft();
-
           const uploaded = Number(responseData.uploadedDocuments || 0);
           const linkedCalendarAttachments = Number(responseData.linkedCalendarAttachments || calendarAttachments.length || 0);
           const failed = Number(responseData.failedDocuments || 0);
           const failedNames = Array.isArray(responseData.failedFileNames) ? responseData.failedFileNames : [];
-          const savedContacts = Number(responseData.savedContacts || (inputMethod === 'businessCard' ? reviewedBusinessCardContacts.length : 1));
+          const savedContacts = Number(responseData.savedContacts || contactsToSave.length);
           let successMessage = savedContacts + (savedContacts === 1 ? ' contact was' : ' contacts were') + ' saved to the CRM.';
-
-          if (linkedCalendarAttachments > 0) {
-            successMessage += ' ' + linkedCalendarAttachments + (linkedCalendarAttachments === 1 ? ' Calendar attachment was linked.' : ' Calendar attachments were linked.');
-          }
-
-          if (meetingDocuments.length && failed === 0) {
-            successMessage += ' ' + uploaded + (uploaded === 1 ? ' PDF was' : ' PDFs were') + ' uploaded successfully.';
-          } else if (meetingDocuments.length && failed > 0) {
+          if (linkedCalendarAttachments > 0) successMessage += ' ' + linkedCalendarAttachments + (linkedCalendarAttachments === 1 ? ' Calendar attachment was linked.' : ' Calendar attachments were linked.');
+          if (meetingDocuments.length && failed === 0) successMessage += ' ' + uploaded + (uploaded === 1 ? ' PDF was' : ' PDFs were') + ' uploaded successfully.';
+          else if (meetingDocuments.length && failed > 0) {
             successMessage += ' ' + uploaded + ' of ' + meetingDocuments.length + ' PDFs uploaded successfully.';
             if (failedNames.length) successMessage += ' Could not upload: ' + failedNames.join(', ') + '.';
           }
-
           document.getElementById('modalSuccessMessage').textContent = successMessage;
           document.getElementById('modalForm').style.display = 'none';
           document.getElementById('modalSuccess').style.display = 'block';
-        } else {
-          throw new Error(responseData.error || responseData.message || `Server error ${res.status}`);
-        }
+        } else throw new Error(responseData.error || responseData.message || `Server error ${res.status}`);
       } catch (e) {
         showModalErr('Failed to save. Your temporary draft is still available. ' + (e.message || 'Please try again.'));
         showDraftStatus('Temporary draft retained after the failed submission.', true);
@@ -3784,6 +3887,9 @@
       const el = document.getElementById('modalError');
       el.textContent = msg; el.style.display = 'block';
     }
+
+    manualContacts = [normalizeManualContact({},0)];
+    renderManualContacts();
 
     // Auto-save all typed meeting fields after a short pause.
     const meetingForm = document.getElementById('modalForm');
