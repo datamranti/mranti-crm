@@ -3402,6 +3402,103 @@
   }
 </style>
 
+
+<style id="mrantiStep13FourFixes">
+  /* Fix 1: signed-out MRANTI logo and headline must never clip. */
+  #loginScreen .login-brand-lockup { overflow: visible !important; }
+  #loginScreen .login-logo {
+    display: block !important;
+    width: 190px !important;
+    height: 64px !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+    background: none !important;
+    filter: brightness(0) saturate(100%) invert(17%) sepia(80%) saturate(1200%) hue-rotate(210deg) brightness(90%);
+    flex: 0 0 190px !important;
+  }
+  #loginScreen .login-hero-copy { overflow: visible !important; padding-right: 34px !important; }
+  #loginScreen .login-hero-title {
+    max-width: 560px !important;
+    font-size: clamp(42px, 3.85vw, 58px) !important;
+    line-height: 1.01 !important;
+    letter-spacing: -2px !important;
+    overflow: visible !important;
+  }
+  #loginScreen .login-hero-title .title-line,
+  #loginScreen .login-hero-title .title-accent {
+    width: fit-content !important;
+    max-width: calc(100% - 12px) !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    padding-right: 12px !important;
+  }
+  #loginScreen .login-hero-title .title-accent {
+    display: inline-block !important;
+    padding-bottom: .08em !important;
+  }
+
+  /* Fix 2: desktop navigation is one horizontal bar, never a vertical stack. */
+  .system-nav.modern-nav {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .system-sidebar.modern-navbar,
+  .modern-navbar-inner { height: auto !important; }
+  @media (min-width: 1031px) {
+    .system-sidebar.modern-navbar { min-height: 68px !important; }
+    .modern-navbar-inner { min-height: 68px !important; }
+  }
+
+  /* Fix 4: Relationship Intelligence consumes the available application viewport automatically. */
+  body.crm-relationship-mode { overflow: hidden !important; }
+  body.crm-relationship-mode #appScreen { zoom: 1 !important; min-height: 100vh !important; }
+  body.crm-relationship-mode .system-sidebar.modern-navbar { top: 10px !important; margin-top: 10px !important; }
+  body.crm-relationship-mode .system-content {
+    height: calc(100vh - 96px) !important;
+    padding: 10px 16px 16px !important;
+    overflow: hidden !important;
+  }
+  body.crm-relationship-mode .system-content-inner,
+  body.crm-relationship-mode #pageRelationships,
+  body.crm-relationship-mode .relationship-embedded-card {
+    width: 100% !important;
+    max-width: none !important;
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+  body.crm-relationship-mode .relationship-embedded-card {
+    padding: 0 !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+  }
+  body.crm-relationship-mode #relationshipFrame {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    border-radius: 20px !important;
+  }
+  body.crm-relationship-mode #relationshipLoading { height: 100% !important; min-height: 0 !important; }
+
+  @media (max-width: 1030px) {
+    #loginScreen .login-logo { width: 170px !important; flex-basis: 170px !important; height: 58px !important; }
+    #loginScreen .login-hero-copy { padding-right: 0 !important; }
+    #loginScreen .login-hero-title { max-width: 100% !important; }
+    #loginScreen .login-hero-title .title-line,
+    #loginScreen .login-hero-title .title-accent { white-space: normal !important; max-width: 100% !important; }
+    body.crm-relationship-mode { overflow: auto !important; }
+    body.crm-relationship-mode .system-content { height: auto !important; overflow: visible !important; }
+    body.crm-relationship-mode #pageRelationships,
+    body.crm-relationship-mode .relationship-embedded-card,
+    body.crm-relationship-mode #relationshipFrame { min-height: 820px !important; height: 820px !important; }
+  }
+  @media (max-width: 520px) {
+    #loginScreen .login-logo { width: 148px !important; flex-basis: 148px !important; height: 50px !important; }
+    #loginScreen .login-hero-title { font-size: clamp(34px, 10.2vw, 43px) !important; letter-spacing: -1.4px !important; }
+  }
+</style>
+
 </head>
 <body>
 
@@ -3411,7 +3508,7 @@
       <section class="login-story-panel">
         <div class="login-brand-row">
           <div class="login-brand-lockup">
-            <div class="login-logo" aria-label="MRANTI 30 Years"></div>
+            <img class="login-logo" src="https://cdn.prod.website-files.com/6719e3902a71ea8154ba371d/6996a2c470a01e3f32ffa080_M30.png" alt="MRANTI 30 Years" />
             <div class="login-brand-divider" aria-hidden="true"></div>
             <div class="login-brand-product">CRM Workspace</div>
           </div>
@@ -3503,7 +3600,6 @@
       <button class="system-nav-item" data-route="contacts" onclick="systemNavigate('contacts')"><span class="system-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span><span class="system-nav-title">Contacts</span></button>
       <button class="system-nav-item" data-route="my-records" onclick="systemNavigate('my-records')"><span class="system-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="m9 15 2 2 4-4"></path></svg></span><span class="system-nav-title">My Entries</span><span class="modern-nav-badge" id="systemActionBadge">0</span></button>
       <button class="system-nav-item" data-route="relationships" onclick="systemNavigate('relationships')"><span class="system-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="3"></circle><circle cx="5" cy="19" r="3"></circle><circle cx="19" cy="19" r="3"></circle><path d="M10.6 7.7 6.4 16.3"></path><path d="M13.4 7.7 17.6 16.3"></path><path d="M8 19h8"></path></svg></span><span class="system-nav-title">Relationships</span></button>
-      <button class="system-nav-item" data-route="staff" onclick="systemNavigate('staff')"><span class="system-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M8 7h8"></path><path d="M8 11h8"></path><path d="M8 15h5"></path><circle cx="17" cy="17" r="2"></circle></svg></span><span class="system-nav-title">Directory</span></button>
     </nav>
     <div class="modern-navbar-actions">
       <label class="modern-global-search" aria-label="Search CRM contacts"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input id="systemGlobalSearch" type="search" placeholder="Search CRM" onkeydown="systemGlobalSearchKey(event)" /></label>
@@ -3690,14 +3786,11 @@
               </div>
             </section>
 
-            <section class="system-page" id="pageRelationships" data-page="relationships">
-              <div class="system-page-toolbar"><div><h1>Relationship Intelligence</h1><p>Explore who MRANTI has engaged, why meetings happened and how relationships connect.</p></div><div class="system-toolbar-actions"><button class="system-btn icon-only" onclick="systemOpenEmbeddedFullscreen('relationshipFrame')" title="Open full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M16 3h3a2 2 0 0 1 2 2v3"></path><path d="M8 21H5a2 2 0 0 1-2-2v-3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path></svg></button></div></div>
-              <div class="system-card embedded-page-card"><div class="embedded-page-loading" id="relationshipLoading">Loading Relationship Intelligence…</div><iframe class="embedded-page-frame" id="relationshipFrame" title="MRANTI Relationship Intelligence" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads" style="display:none"></iframe></div>
-            </section>
-
-            <section class="system-page" id="pageStaff" data-page="staff">
-              <div class="system-page-toolbar"><div><h1>Staff Directory</h1><p>Search active MRANTI Workspace staff, departments, roles and contact details.</p></div><div class="system-toolbar-actions"><button class="system-btn icon-only" onclick="systemOpenEmbeddedFullscreen('staffFrame')" title="Open full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M16 3h3a2 2 0 0 1 2 2v3"></path><path d="M8 21H5a2 2 0 0 1-2-2v-3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path></svg></button></div></div>
-              <div class="system-card embedded-page-card"><div class="embedded-page-loading" id="staffLoading">Loading MRANTI Staff Directory…</div><iframe class="embedded-page-frame" id="staffFrame" title="MRANTI Staff Directory" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads" style="display:none"></iframe></div>
+            <section class="system-page relationship-page" id="pageRelationships" data-page="relationships">
+              <div class="system-card embedded-page-card relationship-embedded-card">
+                <div class="embedded-page-loading" id="relationshipLoading">Loading Relationship Intelligence…</div>
+                <iframe class="embedded-page-frame" id="relationshipFrame" title="MRANTI Relationship Intelligence" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads" style="display:none"></iframe>
+              </div>
             </section>
 
             <section class="system-page" id="pageProfile" data-page="profile">
@@ -3935,7 +4028,7 @@
   </div>
 
   <script>
-    console.log('MRANTI CRM modern top-navigation release v12 loaded');
+    console.log('MRANTI CRM Step 13 four approved fixes loaded');
     const firebaseConfig = {
       apiKey: "AIzaSyDXz0gL67r9BafTg8nL6VdHYdw1tfcxhto",
       authDomain: "mranticrm.firebaseapp.com",
@@ -5678,7 +5771,6 @@
     const CRM_CONTACTS_DATA_URL = 'https://mrantidata.app.n8n.cloud/webhook/crm-contacts-data-test';
     const CRM_RECORD_MUTATION_URL = 'https://mrantidata.app.n8n.cloud/webhook/crm-record-mutation-test';
     const CRM_RELATIONSHIP_PAGE_URL = 'https://mrantidata.app.n8n.cloud/webhook/crm-relationships-page-test';
-    const CRM_STAFF_PAGE_URL = 'https://mrantidata.app.n8n.cloud/webhook/crm-staff-directory-page-test';
     const CRM_PREFERENCES_KEY = 'mranti_crm_preferences_v1';
 
     const SYSTEM_ROUTES = {
@@ -5686,7 +5778,6 @@
       contacts: { title: 'CRM Contacts', subtitle: 'Organisation-wide relationship records and meeting history' },
       'my-records': { title: 'My CRM Entries', subtitle: 'Edit, archive and restore records uploaded using your account' },
       relationships: { title: 'Relationship Intelligence', subtitle: 'Explore MRANTI relationship context and network connections' },
-      staff: { title: 'Staff Directory', subtitle: 'Search MRANTI Workspace staff, roles and departments' },
       profile: { title: 'My Profile', subtitle: 'Account information and CRM workspace preferences' },
       help: { title: 'Help & Support', subtitle: 'Guidance for common MRANTI CRM tasks' }
     };
@@ -5697,7 +5788,7 @@
     let crmEditingRecordIndex = -1;
     let crmContactsLoaded = false;
     let crmContactsLoading = false;
-    let systemEmbeddedLoaded = { relationships: false, staff: false };
+    let systemEmbeddedLoaded = { relationships: false };
 
     function systemRouteFromHash() {
       const raw = String(window.location.hash || '').replace(/^#/, '').trim().toLowerCase();
@@ -5717,6 +5808,7 @@
     function showAuthenticatedRoute() {
       if (!currentUser) return;
       const route = systemRouteFromHash();
+      document.body.classList.toggle('crm-relationship-mode', route === 'relationships');
       const app = document.getElementById('appScreen');
       app.style.display = 'block';
       app.setAttribute('aria-hidden', 'false');
@@ -5730,7 +5822,6 @@
       systemApplyPreferences();
       crmLoadContacts(false);
       if (route === 'relationships') systemLoadEmbeddedPage('relationships');
-      if (route === 'staff') systemLoadEmbeddedPage('staff');
       if (route === 'profile') systemRenderProfile();
     }
 
@@ -5989,10 +6080,47 @@
     function systemOpenRecordFromDashboard(recordId){const index=crmRecords.findIndex(record=>record.recordId===recordId);if(index>=0)crmSelectedIndex=index;systemNavigate('contacts');setTimeout(crmFilterRecords,50);}
     function systemOpenMyRecord(recordId){const index=crmRecords.findIndex(record=>record.recordId===recordId);if(index>=0)mySelectedIndex=index;systemNavigate('my-records');setTimeout(myFilterRecords,50);}
 
-    async function systemLoadEmbeddedPage(type, force=false){
-      if(systemEmbeddedLoaded[type]&&!force)return;const isRelationship=type==='relationships';const frame=document.getElementById(isRelationship?'relationshipFrame':'staffFrame');const loading=document.getElementById(isRelationship?'relationshipLoading':'staffLoading');frame.style.display='none';loading.style.display='flex';loading.textContent=isRelationship?'Loading Relationship Intelligence…':'Loading MRANTI Staff Directory…';try{const html=await crmFetchHtml(isRelationship?CRM_RELATIONSHIP_PAGE_URL:CRM_STAFF_PAGE_URL);frame.srcdoc=html;frame.style.display='block';loading.style.display='none';systemEmbeddedLoaded[type]=true;}catch(error){loading.textContent=error.message||'Unable to load this module.';}}
-    function systemReloadEmbeddedPage(type){systemEmbeddedLoaded[type]=false;systemLoadEmbeddedPage(type,true);}
-    function systemOpenEmbeddedFullscreen(frameId){const frame=document.getElementById(frameId);if(frame?.requestFullscreen)frame.requestFullscreen();}
+    async function systemLoadEmbeddedPage(type, force=false) {
+      if (type !== 'relationships') return;
+      if (systemEmbeddedLoaded.relationships && !force) return;
+
+      const frame = document.getElementById('relationshipFrame');
+      const loading = document.getElementById('relationshipLoading');
+      if (!frame || !loading) return;
+
+      frame.style.display = 'none';
+      loading.style.display = 'flex';
+      loading.textContent = 'Loading Relationship Intelligence…';
+
+      try {
+        let html = await crmFetchHtml(CRM_RELATIONSHIP_PAGE_URL);
+        const integratedStyles = `<style id="mrantiIntegratedRelationshipStyles">
+          html,body{height:100%!important;min-height:100%!important;overflow:hidden!important;background:transparent!important}
+          body{padding:0!important}
+          .top-nav,.page-head{display:none!important}
+          .shell{width:100%!important;max-width:none!important;height:100%!important;min-height:0!important;margin:0!important;padding:0!important;gap:10px!important;display:flex!important;flex-direction:column!important}
+          .filter-row{flex:0 0 auto!important;gap:10px!important}
+          .legend-row{flex:0 0 auto!important}
+          .main-workspace{flex:1 1 auto!important;min-height:0!important;height:auto!important;grid-template-columns:minmax(0,1fr) 340px!important;gap:12px!important}
+          .graph-panel,.detail-panel{height:100%!important;min-height:0!important}
+          .detail-panel{overflow:auto!important}
+          #graphSvg{width:100%!important;height:100%!important}
+          @media(max-width:1000px){html,body{overflow:auto!important}.main-workspace{height:auto!important;grid-template-columns:1fr!important}.graph-panel{min-height:680px!important}.detail-panel{min-height:520px!important}}
+        </style>`;
+        html = html.replace('</head>', integratedStyles + '</head>');
+        frame.srcdoc = html;
+        frame.style.display = 'block';
+        loading.style.display = 'none';
+        systemEmbeddedLoaded.relationships = true;
+      } catch (error) {
+        loading.textContent = error.message || 'Unable to load Relationship Intelligence.';
+      }
+    }
+    function systemReloadEmbeddedPage(type) {
+      if (type !== 'relationships') return;
+      systemEmbeddedLoaded.relationships = false;
+      systemLoadEmbeddedPage('relationships', true);
+    }
 
     function systemGetPreferences(){try{return JSON.parse(localStorage.getItem(CRM_PREFERENCES_KEY)||'{}');}catch(error){return {};}}
     function systemApplyPreferences(){const prefs=systemGetPreferences();document.body.classList.toggle('crm-density-compact',prefs.density==='compact');const density=document.getElementById('profileDensity');const defaultPage=document.getElementById('profileDefaultPage');if(density)density.value=prefs.density||'comfortable';if(defaultPage)defaultPage.value=prefs.defaultPage||'dashboard';}
