@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>MRANTI CRM</title>
-<meta content="#0000ff" name="theme-color"/>
+<meta content="#2563eb" name="theme-color"/>
 <meta content="MRANTI CRM workspace for contacts, meetings and relationship intelligence." name="description"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
@@ -345,7 +345,7 @@
       font-weight: 800; color: #0f172a; flex-shrink: 0; transition: all 0.15s ease;
     }
     .cal-day-cell.today .cal-day-number {
-      background: linear-gradient(135deg, #2563eb, #06b6d4); color: #ffffff;
+      background: linear-gradient(135deg, #2563eb, #0891b2); color: #ffffff;
       box-shadow: 0 3px 10px rgba(37,99,235,0.35);
     }
     .cal-day-chips { display: flex; flex-direction: column; gap: 3px; min-width: 0; width: 100%; overflow: hidden; }
@@ -357,9 +357,9 @@
     .cal-more { font-size: 9.5px; font-weight: 700; color: #64748b; padding: 0 7px; }
     .cal-day-dots { display: none; gap: 3px; flex-wrap: wrap; }
     .cal-dot { width: 6px; height: 6px; border-radius: 999px; background: #2563eb; flex-shrink: 0; }
-    .cal-dot:nth-child(2) { background: #06b6d4; }
+    .cal-dot:nth-child(2) { background: #0891b2; }
     .cal-dot:nth-child(3) { background: #7c3aed; }
-    .cal-dot:nth-child(4) { background: #ea580c; }
+    .cal-dot:nth-child(4) { background: #7c3aed; }
 
     .day-detail-card .events-list { margin-top: 4px; }
 
@@ -735,9 +735,9 @@
     }
 
     .business-card-status.ready {
-      color: #047857;
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
+      color: #1d4ed8;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
     }
 
     .business-card-status.review {
@@ -806,7 +806,7 @@
       line-height: 1.45;
     }
 
-    .business-card-review-reason.ready { color: #047857; }
+    .business-card-review-reason.ready { color: #1d4ed8; }
 
     .business-card-review-actions {
       display: flex;
@@ -994,7 +994,7 @@
       padding: 24px;
       background:
         radial-gradient(circle at top left, rgba(37,99,235,0.14), transparent 30%),
-        radial-gradient(circle at bottom right, rgba(0,214,255,0.16), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(8,145,178,0.16), transparent 34%),
         linear-gradient(145deg, #eef6ff 0%, #dbeafe 42%, #eff6ff 100%);
     }
 
@@ -1721,7 +1721,7 @@
       width: 42px;
       height: 3px;
       border-radius: 999px;
-      background: linear-gradient(90deg, #2563eb, #00d6ff);
+      background: linear-gradient(90deg, #2563eb, #0891b2);
       margin-top: 14px;
     }
 
@@ -1763,8 +1763,8 @@
   </style>
 <style>
   @media (min-width: 901px) {
-    body { zoom: 1; }
-    #appScreen { zoom: 0.9; }
+    body { }
+    #appScreen { }
   }
 </style>
 <style id="crm-step6-styles">
@@ -1875,7 +1875,7 @@
       isolation: isolate;
       background:
         radial-gradient(circle at 10% 12%, rgba(37,99,235,.18), transparent 32%),
-        radial-gradient(circle at 90% 88%, rgba(0,214,255,.16), transparent 34%),
+        radial-gradient(circle at 90% 88%, rgba(8,145,178,.16), transparent 34%),
         linear-gradient(145deg, #edf6ff 0%, #dbeafe 48%, #eff8ff 100%);
     }
 
@@ -1903,7 +1903,7 @@
       height: 360px;
       bottom: -175px;
       left: -110px;
-      background: radial-gradient(circle, rgba(0,214,255,.24), rgba(0,214,255,0) 70%);
+      background: radial-gradient(circle, rgba(8,145,178,.24), rgba(8,145,178,0) 70%);
       animation-delay: -8s;
     }
 
@@ -1938,7 +1938,7 @@
       overflow: hidden;
       background:
         radial-gradient(circle at 86% 40%, rgba(37,99,235,.12), transparent 34%),
-        radial-gradient(circle at 14% 94%, rgba(0,214,255,.12), transparent 30%),
+        radial-gradient(circle at 14% 94%, rgba(8,145,178,.12), transparent 30%),
         linear-gradient(145deg, rgba(249,252,255,.99), rgba(232,243,255,.92));
       border-right: 1px solid rgba(147,197,253,.38);
     }
@@ -2016,8 +2016,8 @@
       width: 8px;
       height: 8px;
       border-radius: 999px;
-      background: #10b981;
-      box-shadow: 0 0 0 5px rgba(16,185,129,.1);
+      background: #3b82f6;
+      box-shadow: 0 0 0 5px rgba(59,130,246,.1);
     }
 
     .login-hero-copy {
@@ -2046,7 +2046,7 @@
       width: 29px;
       height: 2px;
       border-radius: 999px;
-      background: linear-gradient(90deg, #2563eb, #00d6ff);
+      background: linear-gradient(90deg, #2563eb, #0891b2);
     }
 
     .login-hero-title {
@@ -2070,7 +2070,7 @@
     .login-hero-title .title-accent {
       margin-top: 8px;
       color: #2563eb;
-      background: linear-gradient(90deg, #0000ff 0%, #2563eb 52%, #00a8d6 100%);
+      background: linear-gradient(90deg, #2563eb 0%, #2563eb 52%, #00a8d6 100%);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -2109,7 +2109,7 @@
       bottom: -125px;
       pointer-events: none;
       opacity: .16;
-      background: linear-gradient(115deg, transparent 26%, rgba(255,255,255,.95) 47%, rgba(0,214,255,.3) 52%, transparent 72%);
+      background: linear-gradient(115deg, transparent 26%, rgba(255,255,255,.95) 47%, rgba(8,145,178,.3) 52%, transparent 72%);
       background-size: 220% 100%;
       -webkit-mask: url("crm-network-mark.png?v=9") center/contain no-repeat;
       mask: url("crm-network-mark.png?v=9") center/contain no-repeat;
@@ -2142,7 +2142,7 @@
       height: 9px;
       flex: 0 0 auto;
       border-radius: 999px;
-      background: linear-gradient(135deg, #0000ff, #00d6ff);
+      background: linear-gradient(135deg, #2563eb, #0891b2);
       box-shadow: 0 0 0 5px rgba(37,99,235,.08);
     }
 
@@ -2773,7 +2773,7 @@
   .crm-contact-reason { font-size: 11px; color: #64748b; margin-top: 7px; line-height: 1.4; }
   .crm-contact-meeting { font-size: 11.5px; color: #1e3a8a; font-weight: 800; margin-top: 7px; line-height: 1.4; }
   .crm-contact-status { display: inline-flex; margin-top: 9px; padding: 3px 8px; border-radius: 999px; font-size: 9px; font-weight: 800; }
-  .crm-contact-status.active { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+  .crm-contact-status.active { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
   .crm-contact-status.archived { background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; }
 
   .crm-contacts-empty { padding: 28px 18px; text-align: center; color: #64748b; font-size: 12px; line-height: 1.5; }
@@ -2852,7 +2852,7 @@
     --crm-blue: #2563eb;
     --crm-blue-dark: #1d4ed8;
     --crm-navy: #0f172a;
-    --crm-cyan: #06b6d4;
+    --crm-cyan: #0891b2;
     --crm-purple: #7c3aed;
     --crm-muted: #64748b;
     --crm-muted-2: #94a3b8;
@@ -2886,7 +2886,6 @@
     padding: 0 !important;
     margin: 0;
     gap: 0;
-    zoom: 1 !important;
     align-items: stretch;
   }
 
@@ -2912,7 +2911,7 @@
     background: url("https://cdn.prod.website-files.com/6719e3902a71ea8154ba371d/6996a2c470a01e3f32ffa080_M30.png") center/contain no-repeat;
     filter: brightness(0) saturate(100%) invert(17%) sepia(80%) saturate(1200%) hue-rotate(210deg) brightness(90%);
   }
-  .system-brand-badge { width: 9px; height: 9px; border-radius: 999px; background: #10b981; box-shadow: 0 0 0 5px rgba(16,185,129,.10); }
+  .system-brand-badge { width: 9px; height: 9px; border-radius: 999px; background: #3b82f6; box-shadow: 0 0 0 5px rgba(59,130,246,.10); }
 
   .system-nav-label { padding: 13px 12px 7px; color: var(--crm-muted-2); font-size: 9px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; }
   .system-nav { display: flex; flex-direction: column; gap: 5px; }
@@ -2923,7 +2922,7 @@
     font: inherit; text-align: left; transition: all .18s ease;
   }
   .system-nav-item:hover { color: var(--crm-blue); background: rgba(239,246,255,.86); border-color: rgba(147,197,253,.34); }
-  .system-nav-item.active { color: #fff; background: linear-gradient(135deg, var(--crm-blue), #315be8); border-color: var(--crm-blue); box-shadow: 0 9px 20px rgba(37,99,235,.23); }
+  .system-nav-item.active { color: #fff; background: linear-gradient(135deg, var(--crm-blue), #3b82f6); border-color: var(--crm-blue); box-shadow: 0 9px 20px rgba(37,99,235,.23); }
   .system-nav-icon {
     width: 29px; height: 29px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center;
     flex-shrink: 0; border: 1px solid rgba(147,197,253,.44); background: #fff; color: var(--crm-blue);
@@ -3013,8 +3012,8 @@
   .system-btn.primary:hover { background: var(--crm-blue-dark); }
   .system-btn.danger { color: #dc2626; border-color: #fecaca; }
   .system-btn.danger:hover { background: #fef2f2; border-color: #ef4444; }
-  .system-btn.success { color: #047857; border-color: #a7f3d0; }
-  .system-btn.success:hover { background: #ecfdf5; border-color: #34d399; }
+  .system-btn.success { color: #1d4ed8; border-color: #bfdbfe; }
+  .system-btn.success:hover { background: #eff6ff; border-color: #34d399; }
   .system-btn:disabled { opacity: .45; cursor: not-allowed; }
 
   .system-card { border: 1px solid rgba(147,197,253,.40); border-radius: 20px; background: var(--crm-surface); box-shadow: var(--crm-shadow); backdrop-filter: blur(14px); }
@@ -3074,7 +3073,7 @@
   .record-card-date { max-width: 145px; color: var(--crm-blue); font-size: 9px; font-weight: 850; line-height: 1.35; text-align: right; }
   .record-card-badges { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 9px; }
   .record-badge { display: inline-flex; align-items: center; padding: 3px 7px; border-radius: 999px; font-size: 8px; font-weight: 850; }
-  .record-badge.active { color: #047857; background: #ecfdf5; border: 1px solid #a7f3d0; }
+  .record-badge.active { color: #1d4ed8; background: #eff6ff; border: 1px solid #bfdbfe; }
   .record-badge.archived { color: #64748b; background: #f1f5f9; border: 1px solid #cbd5e1; }
   .record-badge.action { color: #9a3412; background: #fff7ed; border: 1px solid #fed7aa; }
   .record-badge.docs { color: #5b21b6; background: #f5f3ff; border: 1px solid #ddd6fe; }
@@ -3228,8 +3227,8 @@
 </style>
 <style id="step12-modern-design">
   :root {
-    --crm-blue:#1f5eff;
-    --crm-blue-dark:#1646c8;
+    --crm-blue:#2563eb;
+    --crm-blue-dark:#1d4ed8;
     --crm-blue-soft:#edf4ff;
     --crm-ink:#101828;
     --crm-muted:#667085;
@@ -3275,7 +3274,7 @@
   .modern-global-search:focus-within { width:260px; background:#fff; border-color:#8cb5ff; box-shadow:0 0 0 4px rgba(31,94,255,.08); }
   .modern-global-search svg { width:18px; height:18px; flex-shrink:0; }
   .modern-global-search input { width:100%; border:0; outline:0; background:transparent; color:var(--crm-ink); font:inherit; font-size:12px; }
-  .modern-log-button { height:42px; display:inline-flex; align-items:center; gap:8px; padding:0 15px; border:0; border-radius:13px; background:linear-gradient(135deg,var(--crm-blue),#2e76ff); color:#fff; font:inherit; font-size:12px; font-weight:800; cursor:pointer; box-shadow:0 8px 20px rgba(31,94,255,.23); }
+  .modern-log-button { height:42px; display:inline-flex; align-items:center; gap:8px; padding:0 15px; border:0; border-radius:13px; background:linear-gradient(135deg,var(--crm-blue),#3b82f6); color:#fff; font:inherit; font-size:12px; font-weight:800; cursor:pointer; box-shadow:0 8px 20px rgba(31,94,255,.23); }
   .modern-log-button:hover { transform:translateY(-1px); box-shadow:0 11px 24px rgba(31,94,255,.29); }
   .modern-log-button svg { width:18px; height:18px; }
   .modern-user-button { min-width:42px; height:42px; padding:4px; border:1px solid #dce6f4; border-radius:13px; background:#fff; display:flex; align-items:center; gap:8px; }
@@ -3444,7 +3443,7 @@
 
   /* Fix 4: Relationship Intelligence consumes the available application viewport automatically. */
   body.crm-relationship-mode { overflow: hidden !important; }
-  body.crm-relationship-mode #appScreen { zoom: 1 !important; min-height: 100vh !important; }
+  body.crm-relationship-mode #appScreen { min-height: 100vh !important; }
   body.crm-relationship-mode .system-sidebar.modern-navbar { top: 10px !important; margin-top: 10px !important; }
   body.crm-relationship-mode .system-content {
     height: calc(100vh - 96px) !important;
@@ -3491,21 +3490,21 @@
 </style>
 <style id="mrantiStep14BrandGlassKpi">
   :root {
-    --crm-blue:#0000ff;
-    --crm-cyan:#00d6ff;
-    --crm-magenta:#c000d6;
+    --crm-blue:#2563eb;
+    --crm-cyan:#0891b2;
+    --crm-magenta:#7c3aed;
   }
 
   /* Signed-out brand: preserve MRANTI palette only. */
-  #loginScreen .workspace-secure-pill::before { background:var(--crm-cyan)!important; box-shadow:0 0 0 5px rgba(0,214,255,.12)!important; }
+  #loginScreen .workspace-secure-pill::before { background:var(--crm-cyan)!important; box-shadow:0 0 0 5px rgba(8,145,178,.12)!important; }
   #loginScreen .login-card-brand {
     display:flex; align-items:center; gap:11px; width:max-content; max-width:100%; margin:0 auto 22px;
-    padding:9px 14px; border:1px solid rgba(0,0,255,.12); border-radius:14px;
+    padding:9px 14px; border:1px solid rgba(37,99,235,.12); border-radius:14px;
     background:rgba(247,250,255,.74); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
   }
   #loginScreen .login-card-brand img { display:block; width:112px; height:34px; object-fit:contain; object-position:left center; filter:brightness(0) saturate(100%) invert(17%) sepia(80%) saturate(1200%) hue-rotate(210deg) brightness(90%); }
-  #loginScreen .login-card-brand span { padding-left:11px; border-left:1px solid rgba(0,0,255,.13); color:var(--crm-blue); font-size:10px; font-weight:850; letter-spacing:1.5px; text-transform:uppercase; white-space:nowrap; }
-  #loginScreen .login-trust-icon { width:30px!important; height:30px!important; padding:7px!important; border-radius:10px!important; color:var(--crm-blue)!important; background:rgba(0,0,255,.055)!important; border:1px solid rgba(0,0,255,.13)!important; }
+  #loginScreen .login-card-brand span { padding-left:11px; border-left:1px solid rgba(37,99,235,.13); color:var(--crm-blue); font-size:10px; font-weight:850; letter-spacing:1.5px; text-transform:uppercase; white-space:nowrap; }
+  #loginScreen .login-trust-icon { width:30px!important; height:30px!important; padding:7px!important; border-radius:10px!important; color:var(--crm-blue)!important; background:rgba(37,99,235,.055)!important; border:1px solid rgba(37,99,235,.13)!important; }
   #loginScreen .login-trust-icon svg { width:100%; height:100%; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
 
   /* Premium frosted-glass capability cards using MRANTI blue/cyan/magenta only. */
@@ -3516,17 +3515,17 @@
     border:1px solid rgba(255,255,255,.72)!important;
     background:linear-gradient(145deg,rgba(255,255,255,.62),rgba(228,240,255,.34))!important;
     backdrop-filter:blur(22px) saturate(135%)!important; -webkit-backdrop-filter:blur(22px) saturate(135%)!important;
-    box-shadow:0 16px 38px rgba(31,78,158,.12),inset 0 1px 0 rgba(255,255,255,.94),inset 0 -1px 0 rgba(0,0,255,.055)!important;
+    box-shadow:0 16px 38px rgba(31,78,158,.12),inset 0 1px 0 rgba(255,255,255,.94),inset 0 -1px 0 rgba(37,99,235,.055)!important;
   }
-  #loginScreen .login-benefit-card::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 10% 0%,rgba(0,214,255,.13),transparent 42%),radial-gradient(circle at 100% 100%,rgba(192,0,214,.07),transparent 42%); }
-  #loginScreen .login-benefit-card:hover { transform:translateY(-3px)!important; border-color:rgba(0,0,255,.18)!important; box-shadow:0 20px 44px rgba(31,78,158,.16),inset 0 1px 0 #fff!important; }
-  #loginScreen .login-benefit-icon { position:relative; width:38px!important; height:38px!important; padding:9px!important; margin-bottom:13px!important; border-radius:13px!important; color:var(--crm-blue)!important; background:rgba(255,255,255,.68)!important; border:1px solid rgba(0,0,255,.13)!important; box-shadow:0 8px 20px rgba(0,0,255,.08)!important; }
+  #loginScreen .login-benefit-card::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 10% 0%,rgba(8,145,178,.13),transparent 42%),radial-gradient(circle at 100% 100%,rgba(124,58,237,.07),transparent 42%); }
+  #loginScreen .login-benefit-card:hover { transform:translateY(-3px)!important; border-color:rgba(37,99,235,.18)!important; box-shadow:0 20px 44px rgba(31,78,158,.16),inset 0 1px 0 #fff!important; }
+  #loginScreen .login-benefit-icon { position:relative; width:38px!important; height:38px!important; padding:9px!important; margin-bottom:13px!important; border-radius:13px!important; color:var(--crm-blue)!important; background:rgba(255,255,255,.68)!important; border:1px solid rgba(37,99,235,.13)!important; box-shadow:0 8px 20px rgba(37,99,235,.08)!important; }
   #loginScreen .login-benefit-icon svg { width:100%; height:100%; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
   #loginScreen .login-benefit-title,#loginScreen .login-benefit-copy { position:relative; }
 
   /* Top navigation brand and active-state contrast. */
   .modern-brand-name { font-size:11px!important; letter-spacing:1.55px!important; white-space:nowrap!important; }
-  .system-nav-item.active { color:var(--crm-blue)!important; background:rgba(0,0,255,.065)!important; box-shadow:inset 0 0 0 1px rgba(0,0,255,.08)!important; }
+  .system-nav-item.active { color:var(--crm-blue)!important; background:rgba(37,99,235,.065)!important; box-shadow:inset 0 0 0 1px rgba(37,99,235,.08)!important; }
   .system-nav-item.active .system-nav-icon { color:var(--crm-blue)!important; opacity:1!important; }
   .system-nav-item.active .system-nav-icon svg { stroke:var(--crm-blue)!important; }
 
@@ -3535,7 +3534,7 @@
   .dashboard-visual-kpi { min-height:210px; padding:22px 24px; overflow:hidden; }
   .visual-kpi-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; }
   .visual-kpi-title-row { display:flex; align-items:center; gap:12px; min-width:0; }
-  .visual-kpi-icon { width:43px; height:43px; flex:0 0 43px; display:grid; place-items:center; padding:10px; border:1px solid rgba(0,0,255,.12); border-radius:14px; color:var(--crm-blue); background:rgba(0,0,255,.05); }
+  .visual-kpi-icon { width:43px; height:43px; flex:0 0 43px; display:grid; place-items:center; padding:10px; border:1px solid rgba(37,99,235,.12); border-radius:14px; color:var(--crm-blue); background:rgba(37,99,235,.05); }
   .visual-kpi-icon svg { width:100%; height:100%; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
   .visual-kpi-label { color:var(--crm-ink); font-size:13px; font-weight:820; }
   .visual-kpi-context { margin-top:4px; color:var(--crm-muted); font-size:10px; line-height:1.4; }
@@ -3544,13 +3543,13 @@
   .weekly-bars { height:112px; margin-top:16px; display:grid; grid-template-columns:repeat(5,1fr); gap:12px; align-items:end; }
   .weekly-bar { height:100%; min-width:0; display:grid; grid-template-rows:16px 1fr 16px; gap:5px; align-items:end; text-align:center; }
   .weekly-bar-value { color:var(--crm-muted); font-size:9px; font-weight:800; }
-  .weekly-bar-track { height:70px; display:flex; align-items:flex-end; justify-content:center; border-radius:10px; background:linear-gradient(180deg,rgba(0,0,255,.025),rgba(0,0,255,.06)); overflow:hidden; }
-  .weekly-bar-fill { width:min(34px,62%); min-height:4px; border-radius:9px 9px 3px 3px; background:linear-gradient(180deg,var(--crm-cyan),var(--crm-blue)); box-shadow:0 7px 18px rgba(0,0,255,.15); transition:height .35s ease; }
+  .weekly-bar-track { height:70px; display:flex; align-items:flex-end; justify-content:center; border-radius:10px; background:linear-gradient(180deg,rgba(37,99,235,.025),rgba(37,99,235,.06)); overflow:hidden; }
+  .weekly-bar-fill { width:min(34px,62%); min-height:4px; border-radius:9px 9px 3px 3px; background:linear-gradient(180deg,var(--crm-cyan),var(--crm-blue)); box-shadow:0 7px 18px rgba(37,99,235,.15); transition:height .35s ease; }
   .weekly-bar-label { color:#7b8da8; font-size:9px; font-weight:750; }
 
   .organisation-visual { margin-top:15px; display:grid; grid-template-columns:122px 1fr; align-items:center; gap:20px; }
-  .organisation-donut { --new-angle:0deg; width:118px; height:118px; position:relative; border-radius:50%; background:conic-gradient(var(--crm-blue) 0 var(--new-angle),var(--crm-cyan) var(--new-angle) 360deg); box-shadow:0 14px 30px rgba(0,0,255,.11); }
-  .organisation-donut::after { content:""; position:absolute; inset:17px; border-radius:50%; background:rgba(255,255,255,.94); box-shadow:inset 0 0 0 1px rgba(0,0,255,.06); }
+  .organisation-donut { --new-angle:0deg; width:118px; height:118px; position:relative; border-radius:50%; background:conic-gradient(var(--crm-blue) 0 var(--new-angle),var(--crm-cyan) var(--new-angle) 360deg); box-shadow:0 14px 30px rgba(37,99,235,.11); }
+  .organisation-donut::after { content:""; position:absolute; inset:17px; border-radius:50%; background:rgba(255,255,255,.94); box-shadow:inset 0 0 0 1px rgba(37,99,235,.06); }
   .organisation-donut-centre { position:absolute; inset:0; z-index:1; display:grid; place-content:center; text-align:center; }
   .organisation-donut-centre strong { color:var(--crm-ink); font-size:25px; line-height:1; }
   .organisation-donut-centre span { margin-top:4px; color:var(--crm-muted); font-size:9px; font-weight:750; text-transform:uppercase; letter-spacing:.8px; }
@@ -3560,7 +3559,7 @@
   .organisation-legend small { margin-top:3px; color:#8292aa; font-size:9px; line-height:1.45; }
   .legend-dot { width:9px; height:9px; border-radius:50%; }
   .legend-dot.new { background:var(--crm-blue); }
-  .legend-dot.returning { background:var(--crm-cyan); box-shadow:inset 0 0 0 1px rgba(0,0,255,.08); }
+  .legend-dot.returning { background:var(--crm-cyan); box-shadow:inset 0 0 0 1px rgba(37,99,235,.08); }
 
   /* Relationship page uses exactly the same width as the navigation and fits the viewport. */
   body.crm-relationship-mode .system-content { height:calc(100vh - 100px)!important; padding:8px 0 12px!important; overflow:hidden!important; }
@@ -3582,79 +3581,256 @@
     .organisation-visual { grid-template-columns:104px 1fr; gap:15px; }
     .organisation-donut { width:102px; height:102px; }
   }
-</style></head>
+</style>
+<style id="mranti-crm-final-standardisation">
+  :root {
+    --crm-blue:#2563eb;
+    --crm-blue-dark:#1d4ed8;
+    --crm-blue-soft:#eff6ff;
+    --crm-secondary:#3b82f6;
+    --crm-cyan:#0891b2;
+    --crm-purple:#7c3aed;
+    --crm-navy:#0f172a;
+    --crm-ink:#0f172a;
+    --crm-muted:#64748b;
+    --crm-muted-2:#94a3b8;
+    --crm-line:#dbeafe;
+    --crm-surface:#ffffff;
+    --crm-surface-solid:#ffffff;
+    --crm-canvas:#eff6ff;
+    --crm-soft:#f8fafc;
+    --crm-radius:20px;
+    --crm-shadow:0 16px 44px rgba(37,99,235,.10),0 2px 8px rgba(15,23,42,.04);
+  }
+  html { width:100%; max-width:100%; overflow-x:hidden; background:#eff6ff; }
+  html,body,button,input,select,textarea { font-family:'Inter','Segoe UI',sans-serif!important; }
+  body { width:100%; max-width:100%; overflow-x:hidden; color:#0f172a; }
+  button,input,select,textarea { font-variation-settings:normal; }
+  button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible { outline:3px solid rgba(59,130,246,.22); outline-offset:2px; }
+
+  /* Global signed-in visual tokens only: layout and application behaviour remain untouched. */
+  body.crm-authenticated { background:linear-gradient(180deg,#f8fafc 0%,#eff6ff 100%)!important; }
+  #appScreen,.system-shell,.system-main,.system-content,.system-content-inner { max-width:100%; }
+  .system-sidebar.modern-navbar,.system-card,.modal-card,.draft-confirm-card,.crm-contacts-nav,.crm-contacts-list-panel,.crm-contacts-detail-panel { border-color:rgba(191,219,254,.78)!important; box-shadow:var(--crm-shadow)!important; }
+  .system-nav-item.active { color:#2563eb!important; background:#eff6ff!important; box-shadow:inset 0 0 0 1px rgba(37,99,235,.10)!important; }
+  .system-nav-item:hover { color:#2563eb!important; background:#eff6ff!important; }
+  .modern-log-button,.system-btn.primary,.submit-btn,.event-log-btn,.sync-btn,.crm-contacts-btn.primary,.modal-success .close-success-btn,.draft-action-save { background:#2563eb!important; border-color:#2563eb!important; color:#fff!important; box-shadow:0 8px 20px rgba(37,99,235,.22)!important; }
+  .modern-log-button:hover,.system-btn.primary:hover,.submit-btn:hover,.event-log-btn:hover,.sync-btn:hover,.crm-contacts-btn.primary:hover,.modal-success .close-success-btn:hover,.draft-action-save:hover { background:#1d4ed8!important; border-color:#1d4ed8!important; }
+  button:disabled,.submit-btn:disabled,.system-btn:disabled,.crm-contacts-btn:disabled { background:#cbd5e1!important; border-color:#cbd5e1!important; color:#64748b!important; box-shadow:none!important; cursor:not-allowed!important; transform:none!important; }
+  .system-input,.system-select,.system-textarea,.form-input,.form-textarea,.business-card-review-input,.modern-global-search { border-color:#dbeafe!important; background:#fff!important; color:#0f172a!important; }
+  .system-input:focus,.system-select:focus,.system-textarea:focus,.form-input:focus,.form-textarea:focus,.business-card-review-input:focus,.modern-global-search:focus-within { border-color:#3b82f6!important; box-shadow:0 0 0 3px rgba(59,130,246,.12)!important; }
+  .system-kpi-icon,.my-summary-icon,.help-icon,.choice-icon,.visual-kpi-icon { color:#2563eb!important; background:#eff6ff!important; border-color:#bfdbfe!important; }
+  .business-card-status.ready { color:#1d4ed8!important; background:#eff6ff!important; border-color:#bfdbfe!important; }
+  .business-card-review-reason.ready { color:#1d4ed8!important; }
+  .calendar-attachment-state { border-color:#bfdbfe!important; background:linear-gradient(135deg,#eff6ff,#fff)!important; }
+  .calendar-attachment-label,.calendar-attachment-count,.calendar-open-btn { color:#2563eb!important; }
+  .calendar-open-btn { border-color:#bfdbfe!important; }
+
+  /* Approved signed-out login composition. */
+  body:not(.crm-authenticated) { min-height:100vh; min-height:100dvh; padding:0!important; margin:0; background:#eef4fb!important; }
+  body:not(.crm-authenticated)::before,body:not(.crm-authenticated)::after { display:none!important; }
+  #loginScreen {
+    position:fixed!important; inset:0!important; z-index:3000!important; display:flex; align-items:flex-start; justify-content:center;
+    width:100%!important; max-width:none!important; min-height:100vh!important; min-height:100dvh!important;
+    padding:10px!important; overflow-x:hidden!important; overflow-y:auto!important; flex-direction:row!important; gap:0!important;
+    background:linear-gradient(135deg,#f8fafc 0%,#edf4ff 48%,#eaf2fb 100%)!important;
+  }
+  #loginScreen::before,#loginScreen::after { display:none!important; }
+  #loginScreen .login-shell {
+    width:min(1640px,calc(100% - 0px))!important; max-width:100%!important; min-width:0!important; flex:0 0 auto!important;
+    min-height:min(900px,calc(100vh - 20px))!important; display:grid!important;
+    grid-template-columns:minmax(0,1.55fr) minmax(520px,.95fr)!important;
+    grid-template-rows:minmax(0,1fr) auto!important;
+    grid-template-areas:"story access" "benefits access"!important;
+    border:1px solid rgba(203,213,225,.78)!important; border-radius:30px!important; overflow:hidden!important;
+    background:
+      radial-gradient(circle at 67% 55%,rgba(59,130,246,.09),transparent 34%),
+      linear-gradient(135deg,rgba(255,255,255,.96),rgba(239,246,255,.88))!important;
+    box-shadow:0 20px 58px rgba(15,23,42,.10),inset 0 1px 0 rgba(255,255,255,.95)!important;
+    backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  }
+  #loginScreen .login-shell::before {
+    content:""; position:absolute; inset:0; pointer-events:none; opacity:.7;
+    background:linear-gradient(39deg,transparent 47.7%,rgba(255,255,255,.7) 48%,rgba(255,255,255,.7) 48.35%,transparent 48.65%);
+  }
+  #loginScreen .login-story-panel {
+    grid-area:story!important; position:relative!important; min-width:0!important; max-width:100%!important;
+    padding:64px 70px 22px!important; overflow:visible!important; border:0!important; background:transparent!important;
+  }
+  #loginScreen .login-brand-row { display:flex!important; align-items:center!important; justify-content:flex-start!important; position:relative!important; z-index:2!important; }
+  #loginScreen .login-brand-lockup { display:flex!important; align-items:center!important; gap:17px!important; min-width:0!important; overflow:visible!important; }
+  #loginScreen .login-brand-symbol { width:64px!important; height:64px!important; flex:0 0 64px!important; overflow:visible!important; }
+  #loginScreen .login-brand-copy { min-width:0; }
+  #loginScreen .login-brand-name { color:#0f172a; font-size:28px; line-height:1.05; font-weight:800; letter-spacing:-.7px; white-space:nowrap; }
+  #loginScreen .login-brand-product { margin-top:8px; color:#334155; font-size:15px; line-height:1; font-weight:600; letter-spacing:6px; text-transform:uppercase; white-space:nowrap; }
+  #loginScreen .login-hero-copy { width:100%!important; max-width:650px!important; margin-top:65px!important; padding:0!important; overflow:visible!important; position:relative!important; z-index:2!important; }
+  #loginScreen .login-eyebrow { display:flex!important; align-items:center!important; gap:13px!important; margin:0 0 24px!important; color:#2563eb!important; font-size:14px!important; font-weight:700!important; letter-spacing:2.4px!important; text-transform:uppercase!important; }
+  #loginScreen .login-eyebrow::before { content:""!important; width:35px!important; height:3px!important; flex:0 0 35px!important; border-radius:999px!important; background:linear-gradient(90deg,#2563eb,#0891b2)!important; }
+  #loginScreen .login-hero-title { width:100%!important; max-width:650px!important; margin:0!important; color:#0f172a!important; font-size:clamp(58px,5vw,82px)!important; line-height:.91!important; font-weight:800!important; letter-spacing:-4px!important; overflow:visible!important; }
+  #loginScreen .login-hero-title .title-line,#loginScreen .login-hero-title .title-accent { display:block!important; width:auto!important; max-width:100%!important; padding:0 .08em .05em 0!important; white-space:nowrap!important; overflow:visible!important; }
+  #loginScreen .login-hero-title .title-accent { margin-top:7px!important; color:#2563eb!important; background:linear-gradient(90deg,#4f46e5 0%,#3b82f6 58%,#0891b2 100%)!important; -webkit-background-clip:text!important; background-clip:text!important; -webkit-text-fill-color:transparent!important; }
+  #loginScreen .login-hero-subtitle { max-width:600px!important; margin:31px 0 0!important; color:#334155!important; font-size:18px!important; line-height:1.72!important; font-weight:450!important; }
+  #loginScreen .login-network-watermark,#loginScreen .login-network-sheen,#loginScreen .login-signal-card,#loginScreen .workspace-secure-pill,#loginScreen .login-card-brand,#loginScreen .login-card-topline,#loginScreen .login-note,#loginScreen .login-footer-note { display:none!important; }
+
+  #loginScreen .login-access-panel {
+    grid-area:access!important; position:relative!important; min-width:0!important; display:flex!important; align-items:center!important; justify-content:center!important;
+    margin:78px 54px 78px 0!important; padding:72px 68px 72px 82px!important;
+    border:1px solid rgba(226,232,240,.92)!important; border-radius:170px 18px 18px 170px!important;
+    background:rgba(255,255,255,.94)!important;
+    box-shadow:0 26px 70px rgba(37,99,235,.12),inset 0 1px 0 rgba(255,255,255,1)!important;
+    overflow:hidden!important;
+  }
+  #loginScreen .login-access-panel::before { display:none!important; }
+  #loginScreen .login-card { width:100%!important; max-width:450px!important; padding:0!important; margin:0!important; align-items:stretch!important; gap:0!important; text-align:left!important; border:0!important; border-radius:0!important; background:transparent!important; box-shadow:none!important; backdrop-filter:none!important; animation:none!important; }
+  #loginScreen .login-title { margin:0!important; color:#0f172a!important; font-size:42px!important; line-height:1.12!important; font-weight:800!important; letter-spacing:-1.4px!important; text-align:left!important; }
+  #loginScreen .login-sub { margin:26px 0 32px!important; color:#475569!important; font-size:17px!important; line-height:1.6!important; text-align:left!important; }
+  #loginScreen .error-msg { display:none; width:100%!important; margin:0 0 16px!important; padding:12px 14px!important; border:1px solid #fecaca!important; border-radius:12px!important; background:#fef2f2!important; color:#b91c1c!important; font-size:13px!important; text-align:left!important; }
+  #loginScreen .google-btn { width:100%!important; min-height:78px!important; display:flex!important; align-items:center!important; justify-content:center!important; gap:18px!important; padding:18px 24px!important; border:1.5px solid #cbd5e1!important; border-radius:13px!important; background:#fff!important; color:#0f172a!important; font-size:18px!important; font-weight:700!important; box-shadow:none!important; transform:none!important; }
+  #loginScreen .google-btn:hover { border-color:#3b82f6!important; background:#f8fafc!important; box-shadow:0 10px 24px rgba(37,99,235,.10)!important; transform:translateY(-1px)!important; }
+  #loginScreen .google-btn:active { transform:translateY(0)!important; }
+  #loginScreen .google-btn img,#loginScreen .google-mark { width:30px!important; height:30px!important; flex:0 0 30px!important; }
+  #loginScreen .login-card-divider { height:1px!important; margin:26px 0 22px!important; background:#cbd5e1!important; }
+  #loginScreen .login-trust-list { display:flex!important; flex-direction:column!important; gap:16px!important; margin:0!important; }
+  #loginScreen .login-trust-item { display:grid!important; grid-template-columns:48px minmax(0,1fr)!important; align-items:center!important; gap:16px!important; color:#475569!important; font-size:15px!important; line-height:1.45!important; font-weight:500!important; text-align:left!important; }
+  #loginScreen .login-trust-item strong { color:#334155!important; font-weight:650!important; }
+  #loginScreen .login-trust-icon { width:48px!important; height:48px!important; display:grid!important; place-items:center!important; padding:12px!important; border:0!important; border-radius:13px!important; box-shadow:none!important; }
+  #loginScreen .login-trust-icon.trust-shield { color:#4f46e5!important; background:#eef2ff!important; }
+  #loginScreen .login-trust-icon.trust-lock { color:#0891b2!important; background:#ecfeff!important; }
+  #loginScreen .login-trust-icon svg { width:100%!important; height:100%!important; fill:none!important; stroke:currentColor!important; stroke-width:1.8!important; stroke-linecap:round!important; stroke-linejoin:round!important; }
+
+  #loginScreen .login-benefit-band {
+    grid-area:benefits!important; position:relative!important; z-index:2!important; min-width:0!important;
+    display:grid!important; grid-template-columns:repeat(3,minmax(0,1fr))!important; gap:22px!important;
+    padding:6px 70px 43px!important; border:0!important; background:transparent!important;
+  }
+  #loginScreen .login-benefit-card { min-width:0!important; min-height:173px!important; padding:17px 18px 18px!important; border:1px solid rgba(203,213,225,.78)!important; border-radius:13px!important; background:rgba(255,255,255,.72)!important; box-shadow:0 8px 24px rgba(37,99,235,.06)!important; backdrop-filter:blur(15px)!important; -webkit-backdrop-filter:blur(15px)!important; overflow:hidden!important; animation:none!important; transform:none!important; }
+  #loginScreen .login-benefit-card::before { display:none!important; }
+  #loginScreen .login-benefit-card:hover { border-color:#bfdbfe!important; background:#fff!important; box-shadow:0 12px 28px rgba(37,99,235,.09)!important; transform:translateY(-2px)!important; }
+  #loginScreen .login-benefit-icon { width:50px!important; height:50px!important; display:grid!important; place-items:center!important; margin:0 0 18px!important; padding:12px!important; border-radius:12px!important; border:1px solid rgba(191,219,254,.82)!important; box-shadow:none!important; }
+  #loginScreen .benefit-capture { color:#6d28d9!important; background:#f5f3ff!important; }
+  #loginScreen .benefit-connect { color:#0891b2!important; background:#ecfeff!important; }
+  #loginScreen .benefit-understand { color:#4f46e5!important; background:#eef2ff!important; }
+  #loginScreen .login-benefit-icon svg { width:100%!important; height:100%!important; fill:none!important; stroke:currentColor!important; stroke-width:1.7!important; stroke-linecap:round!important; stroke-linejoin:round!important; }
+  #loginScreen .login-benefit-title { color:#0f172a!important; font-size:17px!important; line-height:1.25!important; font-weight:750!important; }
+  #loginScreen .login-benefit-copy { margin-top:8px!important; color:#475569!important; font-size:14px!important; line-height:1.55!important; font-weight:450!important; }
+  #loginScreen .login-footer-row { grid-column:1/-1; display:flex; align-items:center; gap:20px; min-width:0; margin-top:15px; color:#64748b; font-size:12px; font-weight:500; }
+  #loginScreen .login-footer-divider { width:1px; height:18px; background:#cbd5e1; }
+  #loginScreen .login-footer-mark { display:inline-flex; align-items:flex-end; gap:5px; color:#1e3a8a; line-height:1; white-space:nowrap; }
+  #loginScreen .login-footer-mark>span { font-size:17px; font-weight:800; letter-spacing:.5px; }
+  #loginScreen .login-footer-mark strong { font-size:19px; font-weight:800; letter-spacing:-1px; }
+  #loginScreen .login-footer-mark small { margin-bottom:1px; font-size:7px; font-weight:800; letter-spacing:.8px; }
+
+  @media (max-width:1320px) {
+    #loginScreen .login-shell { grid-template-columns:minmax(0,1.4fr) minmax(450px,.9fr)!important; }
+    #loginScreen .login-story-panel { padding:48px 48px 18px!important; }
+    #loginScreen .login-benefit-band { padding:6px 48px 34px!important; gap:15px!important; }
+    #loginScreen .login-hero-copy { margin-top:48px!important; }
+    #loginScreen .login-hero-title { font-size:clamp(54px,5.2vw,70px)!important; letter-spacing:-3.2px!important; }
+    #loginScreen .login-hero-subtitle { font-size:16px!important; }
+    #loginScreen .login-access-panel { margin:54px 34px 54px 0!important; padding:58px 42px 58px 66px!important; border-radius:140px 18px 18px 140px!important; }
+    #loginScreen .login-title { font-size:36px!important; }
+    #loginScreen .login-sub { font-size:15px!important; margin:21px 0 26px!important; }
+    #loginScreen .google-btn { min-height:64px!important; font-size:16px!important; }
+    #loginScreen .login-trust-item { font-size:13px!important; grid-template-columns:42px minmax(0,1fr)!important; gap:13px!important; }
+    #loginScreen .login-trust-icon { width:42px!important; height:42px!important; padding:10px!important; }
+    #loginScreen .login-benefit-card { min-height:150px!important; }
+  }
+  @media (max-width:980px) {
+    #loginScreen { align-items:flex-start!important; justify-content:flex-start!important; padding:12px!important; }
+    #loginScreen .login-shell { min-height:0!important; grid-template-columns:1fr!important; grid-template-rows:auto auto auto!important; grid-template-areas:"story" "access" "benefits"!important; border-radius:24px!important; }
+    #loginScreen .login-story-panel { padding:32px 30px 26px!important; }
+    #loginScreen .login-brand-symbol { width:52px!important; height:52px!important; flex-basis:52px!important; }
+    #loginScreen .login-brand-name { font-size:24px!important; }
+    #loginScreen .login-brand-product { font-size:12px!important; letter-spacing:4.8px!important; }
+    #loginScreen .login-hero-copy { margin-top:38px!important; max-width:760px!important; }
+    #loginScreen .login-hero-title { max-width:760px!important; font-size:clamp(48px,8vw,68px)!important; line-height:.94!important; }
+    #loginScreen .login-hero-subtitle { max-width:720px!important; margin-top:23px!important; }
+    #loginScreen .login-access-panel { margin:0 26px!important; padding:44px 38px!important; border-radius:32px!important; }
+    #loginScreen .login-card { max-width:620px!important; }
+    #loginScreen .login-benefit-band { padding:28px 26px 30px!important; grid-template-columns:repeat(3,minmax(0,1fr))!important; }
+    #loginScreen .login-footer-row { margin-top:6px; }
+  }
+  @media (max-width:680px) {
+    #loginScreen { padding:8px!important; }
+    #loginScreen .login-shell { border-radius:20px!important; }
+    #loginScreen .login-story-panel { padding:24px 20px 22px!important; }
+    #loginScreen .login-brand-lockup { gap:12px!important; }
+    #loginScreen .login-brand-symbol { width:44px!important; height:44px!important; flex-basis:44px!important; }
+    #loginScreen .login-brand-name { font-size:20px!important; letter-spacing:-.3px!important; }
+    #loginScreen .login-brand-product { margin-top:5px!important; font-size:10px!important; letter-spacing:3.8px!important; }
+    #loginScreen .login-hero-copy { margin-top:30px!important; }
+    #loginScreen .login-eyebrow { margin-bottom:16px!important; font-size:10px!important; letter-spacing:1.55px!important; gap:9px!important; }
+    #loginScreen .login-eyebrow::before { width:24px!important; flex-basis:24px!important; height:2px!important; }
+    #loginScreen .login-hero-title { font-size:clamp(40px,12vw,56px)!important; line-height:.96!important; letter-spacing:-2.2px!important; }
+    #loginScreen .login-hero-title .title-line,#loginScreen .login-hero-title .title-accent { white-space:normal!important; }
+    #loginScreen .login-hero-subtitle { margin-top:18px!important; font-size:13px!important; line-height:1.6!important; }
+    #loginScreen .login-access-panel { margin:0 12px!important; padding:30px 20px!important; border-radius:24px!important; }
+    #loginScreen .login-title { font-size:30px!important; letter-spacing:-.8px!important; }
+    #loginScreen .login-sub { margin:14px 0 22px!important; font-size:13px!important; }
+    #loginScreen .google-btn { min-height:56px!important; gap:12px!important; padding:14px!important; font-size:14px!important; }
+    #loginScreen .google-btn img,#loginScreen .google-mark { width:24px!important; height:24px!important; flex-basis:24px!important; }
+    #loginScreen .login-card-divider { margin:21px 0 18px!important; }
+    #loginScreen .login-trust-item { grid-template-columns:38px minmax(0,1fr)!important; gap:11px!important; font-size:11.5px!important; }
+    #loginScreen .login-trust-icon { width:38px!important; height:38px!important; padding:9px!important; }
+    #loginScreen .login-benefit-band { grid-template-columns:1fr!important; gap:10px!important; padding:18px 12px 24px!important; }
+    #loginScreen .login-benefit-card { min-height:0!important; display:grid!important; grid-template-columns:46px minmax(0,1fr)!important; grid-template-rows:auto auto!important; column-gap:13px!important; padding:14px!important; }
+    #loginScreen .login-benefit-icon { grid-row:1/3!important; width:46px!important; height:46px!important; margin:0!important; padding:11px!important; }
+    #loginScreen .login-benefit-title { font-size:14px!important; }
+    #loginScreen .login-benefit-copy { margin-top:3px!important; font-size:11.5px!important; }
+    #loginScreen .login-footer-row { flex-wrap:wrap; gap:10px 14px; margin:10px 4px 0; font-size:10px; }
+    #loginScreen .login-footer-mark>span { font-size:15px; }
+    #loginScreen .login-footer-mark strong { font-size:17px; }
+  }
+  @media (max-width:380px) {
+    #loginScreen .login-hero-title { font-size:37px!important; }
+    #loginScreen .login-brand-name { font-size:18px!important; }
+    #loginScreen .login-brand-product { letter-spacing:3px!important; }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    #loginScreen *,#loginScreen *::before,#loginScreen *::after { animation:none!important; transition:none!important; }
+  }
+</style>
+</head>
 <body>
+<!-- Final standardised MRANTI CRM build: signed-out page redesigned; signed-in logic preserved. -->
 <!-- PREMIUM LANDING SCREEN V8 -->
 <div id="loginScreen">
 <main aria-label="MRANTI CRM sign in" class="login-shell">
 <section class="login-story-panel">
 <div class="login-brand-row">
-<div class="login-brand-lockup">
-<img alt="MRANTI 30 Years" class="login-logo" src="https://cdn.prod.website-files.com/6719e3902a71ea8154ba371d/6996a2c470a01e3f32ffa080_M30.png"/>
-<div aria-hidden="true" class="login-brand-divider"></div>
-<div class="login-brand-product">CRM Workspace</div>
+<div class="login-brand-lockup" aria-label="MRANTI CRM Workspace">
+<svg class="login-brand-symbol" aria-hidden="true" viewBox="0 0 64 64">
+<defs><linearGradient id="loginBrandGradient" x1="8" y1="7" x2="55" y2="57" gradientUnits="userSpaceOnUse"><stop stop-color="#2563eb"/><stop offset=".58" stop-color="#7c3aed"/><stop offset="1" stop-color="#0891b2"/></linearGradient></defs>
+<g fill="none" stroke="url(#loginBrandGradient)" stroke-width="2.6" stroke-linecap="round"><path d="M32 10 18 18 10 32l8 14 14 8 14-8 8-14-8-14-14-8Z"/><path d="M18 18 32 32 46 18M10 32h44M18 46l14-14 14 14M32 10v44"/></g>
+<g fill="url(#loginBrandGradient)"><circle cx="32" cy="10" r="4.8"/><circle cx="18" cy="18" r="4.8"/><circle cx="46" cy="18" r="4.8"/><circle cx="10" cy="32" r="4.8"/><circle cx="54" cy="32" r="4.8"/><circle cx="18" cy="46" r="4.8"/><circle cx="46" cy="46" r="4.8"/><circle cx="32" cy="54" r="4.8"/><circle cx="32" cy="32" r="5.5"/></g>
+</svg>
+<div class="login-brand-copy"><div class="login-brand-name">MRANTI CRM</div><div class="login-brand-product">Workspace</div></div>
 </div>
-<div class="workspace-secure-pill">MRANTI Workspace</div>
 </div>
 <div class="login-hero-copy">
 <div class="login-eyebrow">Relationship intelligence</div>
-<h1 class="login-hero-title">
-<span class="title-line">Relationships</span>
-<span class="title-line">become</span>
-<span class="title-accent">intelligence.</span>
-</h1>
+<h1 class="login-hero-title"><span class="title-line">Relationships</span><span class="title-line">become</span><span class="title-accent">intelligence.</span></h1>
 <p class="login-hero-subtitle">Capture meetings, contacts, business cards and supporting documents in one connected workspace—then understand who MRANTI is engaging with and why.</p>
 </div>
-<div aria-hidden="true" class="login-network-watermark"></div>
-<div aria-hidden="true" class="login-network-sheen"></div>
-<div aria-hidden="true" class="login-signal-card signal-one">Contact captured</div>
-<div aria-hidden="true" class="login-signal-card signal-two">Meeting connected</div>
-<div aria-hidden="true" class="login-signal-card signal-three">Relationship mapped</div>
-<div class="login-footer-note">MRANTI · Malaysian Research Accelerator for Technology &amp; Innovation</div>
 </section>
 <section class="login-access-panel">
-<div class="login-card"><div class="login-card-brand"><img alt="MRANTI 30 Years" src="https://cdn.prod.website-files.com/6719e3902a71ea8154ba371d/6996a2c470a01e3f32ffa080_M30.png"/><span>CRM Workspace</span></div>
-<div class="login-card-topline">
-<span class="login-label">MRANTI CRM</span>
-<span class="login-version">Secure internal access</span>
-</div>
+<div class="login-card">
 <h2 class="login-title">Welcome back</h2>
 <p class="login-sub">Sign in with your MRANTI Google Workspace account to continue.</p>
-<div class="error-msg" id="errorMsg" role="alert"></div>
+<div class="error-msg" id="errorMsg" role="alert" aria-live="polite"></div>
+<button class="google-btn" onclick="signIn()" type="button"><svg class="google-mark" aria-hidden="true" viewBox="0 0 24 24"><path fill="#4285F4" d="M21.6 12.23c0-.71-.06-1.39-.18-2.05H12v3.88h5.38a4.6 4.6 0 0 1-2 3.02v2.52h3.24c1.9-1.75 2.98-4.33 2.98-7.37Z"/><path fill="#34A853" d="M12 22c2.7 0 4.97-.9 6.62-2.4l-3.24-2.52c-.9.6-2.05.96-3.38.96-2.61 0-4.82-1.76-5.61-4.13H3.04v2.6A10 10 0 0 0 12 22Z"/><path fill="#FBBC05" d="M6.39 13.91A6 6 0 0 1 6.08 12c0-.66.11-1.3.31-1.91v-2.6H3.04A10 10 0 0 0 2 12c0 1.62.39 3.15 1.04 4.51l3.35-2.6Z"/><path fill="#EA4335" d="M12 5.96c1.47 0 2.79.5 3.83 1.5l2.87-2.87A9.63 9.63 0 0 0 12 2a10 10 0 0 0-8.96 5.49l3.35 2.6C7.18 7.72 9.39 5.96 12 5.96Z"/></svg><span>Continue with Google</span></button>
 <div class="login-card-divider"></div>
-<button class="google-btn" onclick="signIn()">
-<img alt="Google" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"/>
-<span>Continue with Google</span>
-</button>
 <div class="login-trust-list">
-<div class="login-trust-item">
-<span class="login-trust-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M16 8.5v5a2.5 2.5 0 0 1-5 0V11a2 2 0 0 1 4 0v2.5"></path><path d="M16 13.5a4 4 0 1 1-1.1-2.75"></path></svg></span>
-<span>Restricted to authorised <strong>@mranti.my</strong> accounts.</span>
+<div class="login-trust-item"><span class="login-trust-icon trust-shield"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 5 6v5.2c0 4.4 2.8 7.6 7 9.3 4.2-1.7 7-4.9 7-9.3V6l-7-3Z"/></svg></span><span>Authorised <strong>@mranti.my</strong> accounts only.</span></div>
+<div class="login-trust-item"><span class="login-trust-icon trust-lock"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><span>Access follows your organisation account and approved Workspace permissions.</span></div>
 </div>
-<div class="login-trust-item">
-<span class="login-trust-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 3 4.5 6v5.2c0 4.7 3.2 8.1 7.5 9.8 4.3-1.7 7.5-5.1 7.5-9.8V6L12 3Z"></path><path d="m8.7 12.1 2.1 2.1 4.5-4.6"></path></svg></span>
-<span>Secured through MRANTI Google Workspace authentication.</span>
-</div>
-</div>
-<p class="login-note">Your CRM access follows your organisation account and approved Workspace permissions.</p>
 </div>
 </section>
 <section aria-label="MRANTI CRM capabilities" class="login-benefit-band">
-<article class="login-benefit-card">
-<div class="login-benefit-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect height="14" rx="3" width="16" x="4" y="5"></rect><circle cx="9" cy="11" r="2"></circle><path d="M13 10h4"></path><path d="M13 14h4"></path><path d="M7 16h4"></path></svg></div>
-<div class="login-benefit-title">Capture</div>
-<div class="login-benefit-copy">Meetings, contacts, business cards and action items.</div>
-</article>
-<article class="login-benefit-card">
-<div class="login-benefit-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="6" r="3"></circle><circle cx="18" cy="18" r="3"></circle><path d="m8.7 10.7 6.6-3.4"></path><path d="m8.7 13.3 6.6 3.4"></path></svg></div>
-<div class="login-benefit-title">Connect</div>
-<div class="login-benefit-copy">Staff, companies, documents and relationship history.</div>
-</article>
-<article class="login-benefit-card">
-<div class="login-benefit-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 19V9"></path><path d="M10 19V5"></path><path d="M16 19v-7"></path><path d="M22 19H2"></path><path d="m4 7 6-4 6 7 5-5"></path></svg></div>
-<div class="login-benefit-title">Understand</div>
-<div class="login-benefit-copy">Searchable context and relationship intelligence.</div>
-</article>
+<article class="login-benefit-card"><div class="login-benefit-icon benefit-capture"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="14" rx="3"/><path d="M8 3v6M16 3v6M4 10h16"/><path d="m9 15 2 2 4-4"/></svg></div><div class="login-benefit-title">Capture</div><div class="login-benefit-copy">Meetings, contacts, business cards and action items.</div></article>
+<article class="login-benefit-card"><div class="login-benefit-icon benefit-connect"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="6" cy="7" r="3"/><circle cx="18" cy="7" r="3"/><circle cx="12" cy="18" r="3"/><path d="m8.5 8.7 2.1 6.3M15.5 8.7 13.4 15"/></svg></div><div class="login-benefit-title">Connect</div><div class="login-benefit-copy">Staff, companies, documents and relationship history.</div></article>
+<article class="login-benefit-card"><div class="login-benefit-icon benefit-understand"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4 4M10.5 7.5v3l2 1.5"/></svg></div><div class="login-benefit-title">Understand</div><div class="login-benefit-copy">Searchable context and relationship intelligence.</div></article>
+<div class="login-footer-row"><span>© 2026 MRANTI. All rights reserved.</span><span class="login-footer-divider" aria-hidden="true"></span><span class="login-footer-mark" aria-label="MRANTI 30 Years"><span>MRANTI</span><strong>30</strong><small>YEARS</small></span></div>
 </section>
 </main>
 </div>
@@ -3901,7 +4077,7 @@
 <div class="settings-section"><div class="settings-title">Workspace Preferences</div><div class="settings-copy">Personalise how the CRM opens and how much information is displayed. These preferences are stored only in this browser.</div><div class="settings-grid">
 <div class="settings-field"><label>Default landing page</label><select class="system-select" id="profileDefaultPage"><option value="dashboard">Dashboard</option><option value="my-records">My CRM Entries</option><option value="contacts">CRM Contacts</option><option value="relationships">Relationship Intelligence</option></select></div>
 <div class="settings-field"><label>Display density</label><select class="system-select" id="profileDensity"><option value="comfortable">Comfortable</option><option value="compact">Compact</option></select></div>
-</div><div style="margin-top:14px;"><button class="system-btn primary" onclick="systemSavePreferences()">Save Preferences</button><span id="profilePreferenceStatus" style="margin-left:10px;color:#047857;font-size:10px;font-weight:800;"></span></div></div>
+</div><div style="margin-top:14px;"><button class="system-btn primary" onclick="systemSavePreferences()">Save Preferences</button><span id="profilePreferenceStatus" style="margin-left:10px;color:#1d4ed8;font-size:10px;font-weight:800;"></span></div></div>
 <div class="settings-section"><div class="settings-title">Account Security</div><div class="settings-copy">Access is restricted to authorised <strong>@mranti.my</strong> Google Workspace accounts. Record changes are verified using your Firebase session and logged with your email address.</div></div>
 <div class="settings-section"><div class="settings-title">Calendar Connection</div><div class="settings-copy">Google Calendar access uses a short-lived Google token. When the token expires, use Sync Calendar to reconnect securely.</div><div style="margin-top:12px;"><button class="system-btn" onclick="systemNavigate('dashboard');setTimeout(syncCalendar,250)">Reconnect Calendar</button></div></div>
 </section>
@@ -4247,12 +4423,12 @@
     const AVATAR_PALETTE = [
       { bg: '#dbeafe', text: '#2563eb' }, // blue
       { bg: '#ede9fe', text: '#7c3aed' }, // violet
-      { bg: '#cffafe', text: '#0891b2' }, // cyan
-      { bg: '#d1fae5', text: '#059669' }, // emerald
+      { bg: '#eff6ff', text: '#0891b2' }, // cyan
+      { bg: '#dbeafe', text: '#2563eb' }, // emerald
       { bg: '#fef3c7', text: '#b45309' }, // amber
       { bg: '#fee2e2', text: '#dc2626' }, // red
       { bg: '#e0e7ff', text: '#4338ca' }, // indigo
-      { bg: '#ccfbf1', text: '#0d9488' }  // teal
+      { bg: '#dbeafe', text: '#2563eb' }  // teal
     ];
 
     function getAvatarColor(seed) {
@@ -4528,7 +4704,7 @@
     // Distinct colors per meeting so the clock arcs and legend dots line up
     // visually. Reused loosely from the same palette family as the avatar
     // colors for consistency across the app.
-    const CHART_PALETTE = ['#2563eb', '#7c3aed', '#0891b2', '#d97706', '#dc2626', '#059669', '#4f46e5', '#0d9488'];
+    const CHART_PALETTE = ['#2563eb', '#7c3aed', '#0891b2', '#d97706', '#dc2626', '#2563eb', '#4f46e5', '#2563eb'];
 
     // Same KL-timezone approach as getEventDateKey() - a meeting's clock
     // position must be based on Malaysia local time, not the browser's own
