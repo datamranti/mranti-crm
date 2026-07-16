@@ -4283,6 +4283,361 @@
   }
 </style>
 
+
+<style id="mranti-dashboard-refinement-v16">
+  /* Final signed-in Dashboard and shared navigation refinement only. */
+  body.crm-authenticated,
+  body.crm-authenticated button,
+  body.crm-authenticated input,
+  body.crm-authenticated select,
+  body.crm-authenticated textarea {
+    font-family:'Inter','Segoe UI',sans-serif;
+  }
+
+  /* Preserve both supplied brand assets in their original colours. */
+  .system-sidebar.modern-navbar .system-brand-logo,
+  .system-sidebar.modern-navbar .system-app-logo {
+    filter:none!important;
+    opacity:1!important;
+    mix-blend-mode:normal!important;
+  }
+  .system-sidebar.modern-navbar .system-brand-logo {
+    background-size:contain!important;
+    background-repeat:no-repeat!important;
+    background-position:left center!important;
+  }
+  .system-sidebar.modern-navbar .system-app-logo {
+    background-size:contain!important;
+    background-repeat:no-repeat!important;
+    background-position:center!important;
+  }
+
+  /* Shared expandable detail region below the two compact summary cards. */
+  #pageDashboard .dashboard-detail-region {
+    width:100%;
+    max-height:0;
+    margin:0;
+    overflow:hidden;
+    opacity:0;
+    transform:translateY(-8px);
+    pointer-events:none;
+    transition:max-height .36s cubic-bezier(.22,1,.36,1),opacity .24s ease,transform .32s ease,margin .32s ease;
+  }
+  #pageDashboard .dashboard-detail-region.open {
+    max-height:760px;
+    margin:-2px 0 18px;
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+  }
+  #pageDashboard .dashboard-detail-shell {
+    border:1px solid rgba(147,197,253,.42);
+    border-radius:20px;
+    background:rgba(255,255,255,.93);
+    box-shadow:0 16px 38px rgba(37,99,235,.09),0 2px 8px rgba(15,23,42,.035);
+    padding:20px;
+    overflow:hidden;
+  }
+  #pageDashboard .dashboard-detail-head {
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:18px;
+  }
+  #pageDashboard .dashboard-detail-title-wrap {
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    min-width:0;
+  }
+  #pageDashboard .dashboard-detail-icon,
+  #pageDashboard .dashboard-detail-empty-icon {
+    width:40px;
+    height:40px;
+    flex:0 0 40px;
+    display:grid;
+    place-items:center;
+    padding:9px;
+    border:1px solid #bfdbfe;
+    border-radius:12px;
+    color:#2563eb;
+    background:#eff6ff;
+  }
+  #pageDashboard .dashboard-detail-icon svg,
+  #pageDashboard .dashboard-detail-empty-icon svg {
+    width:100%;
+    height:100%;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  #pageDashboard .dashboard-detail-kicker {
+    color:#2563eb;
+    font-size:9px;
+    font-weight:850;
+    letter-spacing:1.45px;
+    text-transform:uppercase;
+  }
+  #pageDashboard .dashboard-detail-title {
+    margin-top:4px;
+    color:#0f172a;
+    font-size:19px;
+    line-height:1.2;
+    font-weight:850;
+    letter-spacing:-.35px;
+  }
+  #pageDashboard .dashboard-detail-subtitle {
+    margin-top:5px;
+    color:#64748b;
+    font-size:10.5px;
+    line-height:1.45;
+  }
+  #pageDashboard .dashboard-detail-close {
+    width:34px;
+    height:34px;
+    flex:0 0 34px;
+    display:grid;
+    place-items:center;
+    border:1px solid #dbeafe;
+    border-radius:10px;
+    background:#fff;
+    color:#64748b;
+    cursor:pointer;
+    transition:border-color .18s ease,color .18s ease,background .18s ease;
+  }
+  #pageDashboard .dashboard-detail-close:hover { border-color:#93c5fd; color:#2563eb; background:#eff6ff; }
+  #pageDashboard .dashboard-detail-close svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; }
+
+  #pageDashboard .dashboard-week-selector {
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:8px;
+    margin-top:18px;
+  }
+  #pageDashboard .dashboard-week-button {
+    min-width:0;
+    padding:9px 8px;
+    border:1px solid #dbeafe;
+    border-radius:11px;
+    background:#f8fbff;
+    color:#64748b;
+    font:inherit;
+    cursor:pointer;
+    text-align:center;
+    transition:border-color .18s ease,background .18s ease,color .18s ease,box-shadow .18s ease;
+  }
+  #pageDashboard .dashboard-week-button:hover { border-color:#93c5fd; color:#2563eb; background:#eff6ff; }
+  #pageDashboard .dashboard-week-button.active { border-color:#3b82f6; color:#1d4ed8; background:#eff6ff; box-shadow:0 0 0 3px rgba(59,130,246,.09); }
+  #pageDashboard .dashboard-week-name { display:block; font-size:10.5px; font-weight:850; }
+  #pageDashboard .dashboard-week-range { display:block; margin-top:3px; font-size:8.5px; color:#94a3b8; white-space:nowrap; }
+  #pageDashboard .dashboard-week-count { display:inline-flex; min-width:18px; height:18px; margin-top:5px; padding:0 5px; align-items:center; justify-content:center; border-radius:999px; background:#dbeafe; color:#2563eb; font-size:8.5px; font-weight:850; }
+  #pageDashboard .dashboard-week-button.active .dashboard-week-count { background:#2563eb; color:#fff; }
+
+  #pageDashboard .dashboard-detail-list {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+    margin-top:14px;
+    max-height:390px;
+    overflow:auto;
+    padding:1px 3px 2px 1px;
+    scrollbar-gutter:stable;
+  }
+  #pageDashboard .dashboard-detail-meeting {
+    width:100%;
+    min-width:0;
+    padding:13px 14px;
+    border:1px solid #dbeafe;
+    border-radius:14px;
+    background:#fff;
+    color:#0f172a;
+    font:inherit;
+    text-align:left;
+    cursor:pointer;
+    transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+  }
+  #pageDashboard .dashboard-detail-meeting:hover { border-color:#93c5fd; box-shadow:0 9px 22px rgba(37,99,235,.08); transform:translateY(-1px); }
+  #pageDashboard .dashboard-detail-meeting-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+  #pageDashboard .dashboard-detail-organisation { min-width:0; font-size:11.5px; line-height:1.35; font-weight:850; }
+  #pageDashboard .dashboard-detail-date { flex:0 0 auto; color:#64748b; font-size:9px; font-weight:750; white-space:nowrap; }
+  #pageDashboard .dashboard-detail-meeting-title { margin-top:7px; font-size:10.5px; font-weight:800; line-height:1.4; }
+  #pageDashboard .dashboard-detail-contact { margin-top:5px; color:#475569; font-size:9.5px; font-weight:700; }
+  #pageDashboard .dashboard-detail-purpose { margin-top:7px; color:#64748b; font-size:9.5px; line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  #pageDashboard .dashboard-detail-meeting-footer { margin-top:9px; padding-top:8px; border-top:1px solid #eff6ff; display:flex; align-items:center; justify-content:space-between; gap:10px; color:#64748b; font-size:8.8px; }
+  #pageDashboard .dashboard-detail-meeting-footer span:first-child { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+  #pageDashboard .dashboard-detail-empty {
+    grid-column:1 / -1;
+    min-height:126px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    border:1px dashed #bfdbfe;
+    border-radius:14px;
+    background:#f8fbff;
+    color:#64748b;
+    text-align:center;
+    font-size:10.5px;
+    line-height:1.45;
+  }
+  #pageDashboard .dashboard-detail-empty-icon { width:38px; height:38px; flex-basis:38px; }
+
+  #pageDashboard .dashboard-org-summary {
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:end;
+    gap:14px;
+    margin-top:17px;
+  }
+  #pageDashboard .dashboard-org-total { color:#0f172a; font-size:30px; line-height:1; font-weight:900; letter-spacing:-1px; }
+  #pageDashboard .dashboard-org-total small { margin-left:4px; color:#64748b; font-size:10px; font-weight:750; letter-spacing:0; }
+  #pageDashboard .dashboard-detail-progress { margin-top:12px; }
+  #pageDashboard .dashboard-detail-progress-track { height:12px; display:flex; overflow:hidden; border-radius:999px; background:#e8eef8; }
+  #pageDashboard .dashboard-detail-progress-new { background:#3b82f6; }
+  #pageDashboard .dashboard-detail-progress-returning { background:#06b6d4; }
+  #pageDashboard .dashboard-detail-org-legend { display:flex; align-items:center; gap:18px; flex-wrap:wrap; color:#64748b; font-size:9.5px; }
+  #pageDashboard .dashboard-detail-org-legend span { display:inline-flex; align-items:center; gap:6px; }
+  #pageDashboard .dashboard-detail-org-legend i,
+  #pageDashboard .dashboard-org-status-dot { width:8px; height:8px; flex:0 0 8px; border-radius:999px; background:#3b82f6; }
+  #pageDashboard .dashboard-detail-org-legend i.returning,
+  #pageDashboard .dashboard-org-status-dot.returning { background:#06b6d4; }
+
+  #pageDashboard .dashboard-org-filters { display:flex; gap:8px; margin-top:14px; }
+  #pageDashboard .dashboard-org-filter {
+    flex:1;
+    min-height:34px;
+    padding:7px 12px;
+    border:1px solid #dbeafe;
+    border-radius:10px;
+    background:#fff;
+    color:#64748b;
+    font:inherit;
+    font-size:9.5px;
+    font-weight:800;
+    cursor:pointer;
+  }
+  #pageDashboard .dashboard-org-filter:hover { color:#2563eb; border-color:#93c5fd; background:#eff6ff; }
+  #pageDashboard .dashboard-org-filter.active { color:#1d4ed8; border-color:#3b82f6; background:#eff6ff; box-shadow:0 0 0 3px rgba(59,130,246,.08); }
+  #pageDashboard .dashboard-org-list { display:flex; flex-direction:column; gap:7px; margin-top:11px; max-height:370px; overflow:auto; padding-right:3px; scrollbar-gutter:stable; }
+  #pageDashboard .dashboard-org-row {
+    width:100%;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto auto;
+    align-items:center;
+    gap:10px;
+    padding:10px 12px;
+    border:1px solid #e2e8f0;
+    border-radius:12px;
+    background:#fff;
+    color:#0f172a;
+    font:inherit;
+    text-align:left;
+    cursor:pointer;
+    transition:border-color .18s ease,background .18s ease;
+  }
+  #pageDashboard .dashboard-org-row:hover { border-color:#93c5fd; background:#f8fbff; }
+  #pageDashboard .dashboard-org-name { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:10.5px; font-weight:800; }
+  #pageDashboard .dashboard-org-date { color:#94a3b8; font-size:8.8px; white-space:nowrap; }
+  #pageDashboard .dashboard-org-status { display:inline-flex; align-items:center; gap:6px; color:#64748b; font-size:9px; font-weight:750; white-space:nowrap; }
+  #pageDashboard .dashboard-org-help { margin-top:10px; color:#94a3b8; font-size:8.5px; text-align:center; }
+
+  /* Google Calendar-inspired timed Week view in the existing Calendar panel. */
+  #pageDashboard .calendar-section.calendar-week-active .cal-weekday-row { display:none!important; }
+  #pageDashboard #calGrid.week-time-mode {
+    display:block!important;
+    width:100%;
+    overflow:visible!important;
+  }
+  #pageDashboard .week-calendar-shell {
+    width:100%;
+    border:1px solid #dbeafe;
+    border-radius:16px;
+    overflow:hidden;
+    background:#fff;
+  }
+  #pageDashboard .week-calendar-scroll { width:100%; overflow-x:auto; overscroll-behavior-x:contain; }
+  #pageDashboard .week-calendar-inner { min-width:820px; }
+  #pageDashboard .week-calendar-header,
+  #pageDashboard .week-all-day-row {
+    display:grid;
+    grid-template-columns:64px repeat(7,minmax(0,1fr));
+  }
+  #pageDashboard .week-calendar-header { border-bottom:1px solid #dbeafe; background:#f8fbff; }
+  #pageDashboard .week-header-axis { border-right:1px solid #e2e8f0; }
+  #pageDashboard .week-day-header {
+    min-width:0;
+    padding:10px 6px 9px;
+    border-left:1px solid #e2e8f0;
+    text-align:center;
+  }
+  #pageDashboard .week-day-name { display:block; color:#64748b; font-size:8.5px; font-weight:850; letter-spacing:.8px; text-transform:uppercase; }
+  #pageDashboard .week-day-date { width:28px; height:28px; margin:4px auto 0; display:grid; place-items:center; border-radius:999px; color:#0f172a; font-size:11px; font-weight:850; }
+  #pageDashboard .week-day-header.today .week-day-date { background:#2563eb; color:#fff; box-shadow:0 4px 12px rgba(37,99,235,.22); }
+  #pageDashboard .week-all-day-row { border-bottom:1px solid #dbeafe; background:#fff; }
+  #pageDashboard .week-all-day-label { padding:8px 7px; border-right:1px solid #e2e8f0; color:#94a3b8; font-size:8px; font-weight:800; text-align:right; }
+  #pageDashboard .week-all-day-cell { min-height:34px; padding:5px; border-left:1px solid #e2e8f0; }
+  #pageDashboard .week-all-day-chip { display:block; width:100%; margin:2px 0; padding:4px 6px; overflow:hidden; border:1px solid #bfdbfe; border-radius:6px; background:#eff6ff; color:#1e3a8a; font-size:8px; font-weight:750; text-overflow:ellipsis; white-space:nowrap; cursor:pointer; }
+  #pageDashboard .week-time-scroll { max-height:600px; overflow-y:auto; overflow-x:hidden; scrollbar-gutter:stable; }
+  #pageDashboard .week-time-grid { display:grid; grid-template-columns:64px minmax(0,1fr); position:relative; }
+  #pageDashboard .week-time-axis { position:relative; height:var(--week-grid-height); border-right:1px solid #e2e8f0; background:#fff; }
+  #pageDashboard .week-time-label { position:absolute; right:8px; transform:translateY(-50%); color:#94a3b8; font-size:8px; font-weight:750; white-space:nowrap; }
+  #pageDashboard .week-day-columns {
+    position:relative;
+    height:var(--week-grid-height);
+    display:grid;
+    grid-template-columns:repeat(7,minmax(0,1fr));
+    background-image:repeating-linear-gradient(to bottom,transparent 0 calc(var(--week-hour-height) - 1px),#e2e8f0 calc(var(--week-hour-height) - 1px) var(--week-hour-height));
+  }
+  #pageDashboard .week-day-column { position:relative; min-width:0; border-left:1px solid #e2e8f0; }
+  #pageDashboard .week-day-column.today { background:rgba(239,246,255,.42); }
+  #pageDashboard .week-event {
+    position:absolute;
+    z-index:3;
+    min-height:24px;
+    padding:5px 6px;
+    overflow:hidden;
+    border:1px solid #93c5fd;
+    border-left:3px solid #3b82f6;
+    border-radius:7px;
+    background:#dbeafe;
+    color:#0f172a;
+    font:inherit;
+    text-align:left;
+    cursor:pointer;
+    box-shadow:0 3px 8px rgba(37,99,235,.10);
+    transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease;
+  }
+  #pageDashboard .week-event:hover { z-index:6; border-color:#3b82f6; box-shadow:0 8px 18px rgba(37,99,235,.16); transform:translateY(-1px); }
+  #pageDashboard .week-event.selected { z-index:7; border-color:#2563eb; box-shadow:0 0 0 2px rgba(37,99,235,.22),0 8px 18px rgba(37,99,235,.14); }
+  #pageDashboard .week-event-title { display:block; overflow:hidden; font-size:8.5px; line-height:1.25; font-weight:850; text-overflow:ellipsis; white-space:nowrap; }
+  #pageDashboard .week-event-time { display:block; margin-top:2px; color:#475569; font-size:7.5px; font-weight:700; white-space:nowrap; }
+  #pageDashboard .week-current-line { position:absolute; left:0; right:0; z-index:8; height:2px; background:#06b6d4; pointer-events:none; }
+  #pageDashboard .week-current-line::before { content:""; position:absolute; left:-4px; top:-3px; width:8px; height:8px; border-radius:999px; background:#06b6d4; }
+
+  @media (max-width:760px) {
+    #pageDashboard .dashboard-detail-region.open { max-height:900px; }
+    #pageDashboard .dashboard-detail-shell { padding:16px; }
+    #pageDashboard .dashboard-detail-list { grid-template-columns:1fr; max-height:470px; }
+    #pageDashboard .dashboard-week-selector { grid-template-columns:repeat(5,minmax(58px,1fr)); overflow-x:auto; padding-bottom:2px; }
+    #pageDashboard .dashboard-org-summary { grid-template-columns:1fr; align-items:start; }
+    #pageDashboard .dashboard-org-row { grid-template-columns:minmax(0,1fr) auto; }
+    #pageDashboard .dashboard-org-date { grid-column:1; grid-row:2; }
+    #pageDashboard .dashboard-org-status { grid-column:2; grid-row:1 / span 2; }
+    #pageDashboard .week-time-scroll { max-height:520px; }
+  }
+  @media (max-width:430px) {
+    #pageDashboard .dashboard-detail-head { gap:10px; }
+    #pageDashboard .dashboard-detail-icon { width:36px; height:36px; flex-basis:36px; padding:8px; }
+    #pageDashboard .dashboard-detail-title { font-size:17px; }
+    #pageDashboard .dashboard-org-filters { gap:5px; }
+    #pageDashboard .dashboard-org-filter { padding:7px 8px; }
+  }
+</style>
+
 </head>
 <body>
 <!-- Final standardised MRANTI CRM build: signed-out page redesigned; signed-in logic preserved. -->
@@ -4404,6 +4759,9 @@
 <button class="visual-kpi-link" onclick="dashboardViewOrganisations()" type="button">View organisations <span aria-hidden="true">→</span></button>
 </article>
 </div>
+<section aria-hidden="true" aria-live="polite" class="dashboard-detail-region" id="dashboardDetailRegion">
+<div id="dashboardDetailContent"></div>
+</section>
 <div class="dashboard-workspace">
 <section class="system-card dashboard-calendar-card" id="dashboardCalendarSection">
 <div class="calendar-panel">
@@ -4897,6 +5255,12 @@
     try { calendarViewMode = localStorage.getItem('mranti_crm_calendar_view_v1') === 'week' ? 'week' : 'month'; } catch (error) {}
     let currentEvent = null;
     window._eventsCache = {};
+    let dashboardDetailMode = null;
+    let dashboardSelectedMeetingWeek = Math.min(4, Math.max(0, Math.floor((new Date().getDate() - 1) / 7)));
+    let dashboardOrganisationFilter = 'all';
+    let dashboardMeetingWeeks = [[], [], [], [], []];
+    let dashboardOrganisationRows = [];
+    let dashboardOrganisationTotals = { total: 0, fresh: 0, returning: 0 };
 
     // Temporary meeting draft: scoped to this browser tab and cleared when the tab closes.
     const MEETING_DRAFT_KEY = 'mranti_crm_meeting_draft_v6';
@@ -5166,19 +5530,146 @@
       document.getElementById('dashboardCalendarSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
+    function dashboardDetailCalendarIcon() {
+      return '<svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg>';
+    }
+
+    function dashboardDetailNetworkIcon() {
+      return '<svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="7" cy="7" r="3"></circle><circle cx="17" cy="7" r="3"></circle><circle cx="12" cy="17" r="3"></circle><path d="m9.5 8.5 1.5 5.5M14.5 8.5 13 14M10 7h4"></path></svg>';
+    }
+
+    function dashboardCloseDetail() {
+      const region = document.getElementById('dashboardDetailRegion');
+      if (!region) return;
+      region.classList.remove('open');
+      region.setAttribute('aria-hidden', 'true');
+      dashboardDetailMode = null;
+    }
+
+    function dashboardOpenDetail(mode, forceOpen = false) {
+      const region = document.getElementById('dashboardDetailRegion');
+      if (!region) return;
+      if (!forceOpen && dashboardDetailMode === mode && region.classList.contains('open')) {
+        dashboardCloseDetail();
+        return;
+      }
+      dashboardDetailMode = mode;
+      dashboardRenderDetailPanel();
+      region.classList.add('open');
+      region.setAttribute('aria-hidden', 'false');
+      requestAnimationFrame(() => region.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
+    }
+
     function dashboardViewMeetings() {
-      dashboardScrollToCalendar();
+      dashboardOpenDetail('meetings');
     }
 
     function dashboardOpenMeetingWeek(index) {
+      dashboardSelectedMeetingWeek = Math.min(4, Math.max(0, Number(index) || 0));
+      dashboardOpenDetail('meetings', true);
       const now = new Date();
-      const target = new Date(now.getFullYear(), now.getMonth(), 1 + (Number(index) * 7));
+      const target = new Date(now.getFullYear(), now.getMonth(), 1 + (dashboardSelectedMeetingWeek * 7));
       setCalendarView('week', target);
-      dashboardScrollToCalendar();
+    }
+
+    function dashboardSelectMeetingWeek(index) {
+      dashboardSelectedMeetingWeek = Math.min(4, Math.max(0, Number(index) || 0));
+      dashboardRenderDetailPanel();
+      const now = new Date();
+      const target = new Date(now.getFullYear(), now.getMonth(), 1 + (dashboardSelectedMeetingWeek * 7));
+      setCalendarView('week', target);
     }
 
     function dashboardViewOrganisations() {
-      systemNavigate('contacts');
+      dashboardOpenDetail('organisations');
+    }
+
+    function dashboardSetOrganisationFilter(filter) {
+      dashboardOrganisationFilter = ['new', 'returning'].includes(filter) ? filter : 'all';
+      dashboardRenderDetailPanel();
+    }
+
+    function dashboardOpenMeetingDetailItem(button) {
+      const recordId = button?.dataset?.recordId || '';
+      const eventKey = button?.dataset?.eventKey || '';
+      if (recordId) {
+        systemOpenRecordFromDashboard(recordId);
+        return;
+      }
+      if (eventKey && window._eventsCache[eventKey]) {
+        openEventModal(eventKey);
+      }
+    }
+
+    function dashboardOpenOrganisationRow(button) {
+      const recordId = button?.dataset?.recordId || '';
+      if (recordId) systemOpenRecordFromDashboard(recordId);
+    }
+
+    function dashboardWeekRangeLabel(index) {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), now.getMonth(), 1 + index * 7);
+      const end = new Date(now.getFullYear(), now.getMonth(), Math.min(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(), 7 + index * 7));
+      const monthLabel = start.toLocaleDateString('en-MY', { month: 'short' });
+      return `${start.getDate()}–${end.getDate()} ${monthLabel}`;
+    }
+
+    function dashboardMeetingDetailMarkup() {
+      const selected = dashboardMeetingWeeks[dashboardSelectedMeetingWeek] || [];
+      const selector = dashboardMeetingWeeks.map((items, index) => `
+        <button class="dashboard-week-button${index === dashboardSelectedMeetingWeek ? ' active' : ''}" type="button" onclick="dashboardSelectMeetingWeek(${index})" aria-pressed="${index === dashboardSelectedMeetingWeek}">
+          <span class="dashboard-week-name">W${index + 1}</span>
+          <span class="dashboard-week-range">${dashboardWeekRangeLabel(index)}</span>
+          <span class="dashboard-week-count">${items.length}</span>
+        </button>`).join('');
+      const list = selected.length ? selected.map(item => {
+        const recordAttribute = crmEscape(item.recordId || '');
+        const eventAttribute = crmEscape(item.eventKey || '');
+        return `<button class="dashboard-detail-meeting" type="button" data-record-id="${recordAttribute}" data-event-key="${eventAttribute}" onclick="dashboardOpenMeetingDetailItem(this)">
+          <div class="dashboard-detail-meeting-top"><span class="dashboard-detail-organisation">${crmEscape(item.organisation)}</span><span class="dashboard-detail-date">${crmEscape(item.dateLabel)}</span></div>
+          <div class="dashboard-detail-meeting-title">${crmEscape(item.title)}</div>
+          <div class="dashboard-detail-contact">${crmEscape(item.contact)}</div>
+          <div class="dashboard-detail-purpose">${crmEscape(item.purpose)}</div>
+          <div class="dashboard-detail-meeting-footer"><span>${crmEscape(item.timeLabel)}</span><span>${item.attendeeCount} attendee${item.attendeeCount === 1 ? '' : 's'}</span></div>
+        </button>`;
+      }).join('') : `<div class="dashboard-detail-empty"><span class="dashboard-detail-empty-icon">${dashboardDetailCalendarIcon()}</span><span>No meetings are recorded for this week.</span></div>`;
+      const total = dashboardMeetingWeeks.reduce((sum, items) => sum + items.length, 0);
+      return `<div class="dashboard-detail-shell">
+        <div class="dashboard-detail-head">
+          <div class="dashboard-detail-title-wrap"><span class="dashboard-detail-icon">${dashboardDetailCalendarIcon()}</span><div><div class="dashboard-detail-kicker">Dashboard detail</div><div class="dashboard-detail-title">Meetings this month</div><div class="dashboard-detail-subtitle">${total} meeting${total === 1 ? '' : 's'} across five calendar weeks. Select a week to review its meetings.</div></div></div>
+          <button class="dashboard-detail-close" type="button" onclick="dashboardCloseDetail()" aria-label="Close meetings detail"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+        </div>
+        <div class="dashboard-week-selector">${selector}</div>
+        <div class="dashboard-detail-list">${list}</div>
+      </div>`;
+    }
+
+    function dashboardOrganisationDetailMarkup() {
+      const totals = dashboardOrganisationTotals;
+      const filtered = dashboardOrganisationRows.filter(item => dashboardOrganisationFilter === 'all' || item.status === dashboardOrganisationFilter);
+      const freshPercent = totals.total ? totals.fresh / totals.total * 100 : 0;
+      const returningPercent = totals.total ? totals.returning / totals.total * 100 : 0;
+      const rows = filtered.length ? filtered.map(item => `<button class="dashboard-org-row" type="button" data-record-id="${crmEscape(item.recordId || '')}" onclick="dashboardOpenOrganisationRow(this)">
+        <span class="dashboard-org-name">${crmEscape(item.name)}</span>
+        <span class="dashboard-org-date">${crmEscape(item.latestLabel)}</span>
+        <span class="dashboard-org-status"><i class="dashboard-org-status-dot${item.status === 'returning' ? ' returning' : ''}"></i>${item.status === 'returning' ? 'Returning' : 'New'}</span>
+      </button>`).join('') : `<div class="dashboard-detail-empty"><span class="dashboard-detail-empty-icon">${dashboardDetailNetworkIcon()}</span><span>No ${dashboardOrganisationFilter === 'all' ? '' : dashboardOrganisationFilter + ' '}organisations are recorded for this month.</span></div>`;
+      return `<div class="dashboard-detail-shell">
+        <div class="dashboard-detail-head">
+          <div class="dashboard-detail-title-wrap"><span class="dashboard-detail-icon">${dashboardDetailNetworkIcon()}</span><div><div class="dashboard-detail-kicker">Dashboard detail</div><div class="dashboard-detail-title">Organisations engaged</div><div class="dashboard-detail-subtitle">New and returning relationships in the current month.</div></div></div>
+          <button class="dashboard-detail-close" type="button" onclick="dashboardCloseDetail()" aria-label="Close organisations detail"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+        </div>
+        <div class="dashboard-org-summary"><div><div class="dashboard-org-total">${totals.total}<small>total</small></div><div class="dashboard-detail-progress"><div class="dashboard-detail-progress-track"><span class="dashboard-detail-progress-new" style="width:${freshPercent}%"></span><span class="dashboard-detail-progress-returning" style="width:${returningPercent}%"></span></div></div></div><div class="dashboard-detail-org-legend"><span><i></i>New — ${totals.fresh}</span><span><i class="returning"></i>Returning — ${totals.returning}</span></div></div>
+        <div class="dashboard-org-filters" role="group" aria-label="Filter organisations"><button class="dashboard-org-filter${dashboardOrganisationFilter === 'all' ? ' active' : ''}" type="button" onclick="dashboardSetOrganisationFilter('all')">All</button><button class="dashboard-org-filter${dashboardOrganisationFilter === 'new' ? ' active' : ''}" type="button" onclick="dashboardSetOrganisationFilter('new')">New</button><button class="dashboard-org-filter${dashboardOrganisationFilter === 'returning' ? ' active' : ''}" type="button" onclick="dashboardSetOrganisationFilter('returning')">Returning</button></div>
+        <div class="dashboard-org-list">${rows}</div>
+        <div class="dashboard-org-help">Select an organisation to open its most recent CRM meeting record.</div>
+      </div>`;
+    }
+
+    function dashboardRenderDetailPanel() {
+      const content = document.getElementById('dashboardDetailContent');
+      if (!content || !dashboardDetailMode) return;
+      content.innerHTML = dashboardDetailMode === 'organisations' ? dashboardOrganisationDetailMarkup() : dashboardMeetingDetailMarkup();
     }
 
     // The grid always shows 6 full weeks (42 cells) so the layout never
@@ -5468,39 +5959,119 @@
         </button>`;
     }
 
+    function dashboardWeekEventLayout(events) {
+      const sorted = events.slice().sort((a, b) => a.startMs - b.startMs || a.endMs - b.endMs);
+      const laneEnds = [];
+      const placed = sorted.map(item => {
+        let lane = laneEnds.findIndex(end => end <= item.startMs);
+        if (lane < 0) lane = laneEnds.length;
+        laneEnds[lane] = item.endMs;
+        return { ...item, lane };
+      });
+      const laneCount = Math.max(1, laneEnds.length);
+      return placed.map(item => ({ ...item, laneCount }));
+    }
+
+    function dashboardOpenWeekEvent(key, button) {
+      document.querySelectorAll('#pageDashboard .week-event.selected').forEach(item => item.classList.remove('selected'));
+      if (button) button.classList.add('selected');
+      if (key && window._eventsCache[key]) openEventModal(key);
+    }
+
+    function dashboardRenderTimedWeek(grid, label, monthNames) {
+      const weekStart = getWeekStart(calendarViewDate);
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekStart.getDate() + 6);
+      const sameMonth = weekStart.getMonth() === weekEnd.getMonth();
+      label.textContent = sameMonth
+        ? `${weekStart.getDate()}–${weekEnd.getDate()} ${monthNames[weekStart.getMonth()]} ${weekEnd.getFullYear()}`
+        : `${weekStart.getDate()} ${monthNames[weekStart.getMonth()]} – ${weekEnd.getDate()} ${monthNames[weekEnd.getMonth()]} ${weekEnd.getFullYear()}`;
+
+      const START_HOUR = 6;
+      const END_HOUR = 20;
+      const HOUR_HEIGHT = 58;
+      const GRID_HEIGHT = (END_HOUR - START_HOUR) * HOUR_HEIGHT;
+      const todayKey = ymdKey(new Date());
+      const days = [];
+      let hasAllDay = false;
+      window._eventsCache = window._eventsCache || {};
+
+      for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
+        const date = new Date(weekStart);
+        date.setDate(weekStart.getDate() + dayIndex);
+        const key = ymdKey(date);
+        const dayEvents = (calendarEventsByDate[key] || []).slice();
+        const allDay = dayEvents.filter(event => event.start?.date && !event.start?.dateTime);
+        if (allDay.length) hasAllDay = true;
+        const timed = dayEvents.filter(event => event.start?.dateTime).map((event, index) => {
+          const start = new Date(event.start.dateTime);
+          const end = event.end?.dateTime ? new Date(event.end.dateTime) : new Date(start.getTime() + 30 * 60000);
+          const startHour = getKLHourFraction(start);
+          const durationHours = Math.max(.25, (end - start) / 3600000);
+          const clippedStart = Math.max(START_HOUR, Math.min(END_HOUR, startHour));
+          const clippedEnd = Math.max(START_HOUR, Math.min(END_HOUR, startHour + durationHours));
+          return { event, index, startMs: start.getTime(), endMs: end.getTime(), startHour, clippedStart, clippedEnd };
+        }).filter(item => item.clippedEnd > START_HOUR && item.clippedStart < END_HOUR);
+        days.push({ date, key, allDay, timed: dashboardWeekEventLayout(timed) });
+      }
+
+      const headers = days.map(day => `<div class="week-day-header${day.key === todayKey ? ' today' : ''}"><span class="week-day-name">${day.date.toLocaleDateString('en-MY', { weekday:'short' })}</span><span class="week-day-date">${day.date.getDate()}</span></div>`).join('');
+      const allDayMarkup = hasAllDay ? `<div class="week-all-day-row"><div class="week-all-day-label">All day</div>${days.map((day, dayIndex) => `<div class="week-all-day-cell">${day.allDay.map((event, eventIndex) => { const eventKey = `wa${dayIndex}_${eventIndex}`; window._eventsCache[eventKey] = event; return `<button class="week-all-day-chip" type="button" onclick="dashboardOpenWeekEvent('${eventKey}',this)">${esc(event.summary || '(No title)')}</button>`; }).join('')}</div>`).join('')}</div>` : '';
+      const labels = Array.from({ length: END_HOUR - START_HOUR + 1 }, (_, index) => {
+        const hour = START_HOUR + index;
+        const date = new Date(2000, 0, 1, hour, 0, 0);
+        return `<span class="week-time-label" style="top:${index * HOUR_HEIGHT}px">${date.toLocaleTimeString('en-MY', { hour:'numeric', minute:'2-digit', hour12:true })}</span>`;
+      }).join('');
+      const columns = days.map((day, dayIndex) => `<div class="week-day-column${day.key === todayKey ? ' today' : ''}">${day.timed.map((item, eventIndex) => {
+        const eventKey = `wt${dayIndex}_${eventIndex}`;
+        window._eventsCache[eventKey] = item.event;
+        const top = (item.clippedStart - START_HOUR) * HOUR_HEIGHT;
+        const height = Math.max(24, (item.clippedEnd - item.clippedStart) * HOUR_HEIGHT);
+        const gutter = 4;
+        const laneWidth = 100 / item.laneCount;
+        const left = item.lane * laneWidth;
+        const width = laneWidth;
+        const startLabel = formatKLTime(new Date(item.event.start.dateTime));
+        return `<button class="week-event" type="button" style="top:${top + 2}px;height:${Math.max(22, height - 4)}px;left:calc(${left}% + ${gutter}px);width:calc(${width}% - ${gutter * 2}px)" onclick="dashboardOpenWeekEvent('${eventKey}',this)" title="${esc(item.event.summary || '(No title)')} — ${esc(startLabel)}"><span class="week-event-title">${esc(item.event.summary || '(No title)')}</span><span class="week-event-time">${esc(startLabel)}</span></button>`;
+      }).join('')}</div>`).join('');
+
+      let currentLine = '';
+      const now = new Date();
+      if (days.some(day => day.key === todayKey)) {
+        const currentHour = getKLHourFraction(now);
+        if (currentHour >= START_HOUR && currentHour <= END_HOUR) currentLine = `<div class="week-current-line" style="top:${(currentHour - START_HOUR) * HOUR_HEIGHT}px"></div>`;
+      }
+
+      grid.classList.remove('week-mode');
+      grid.classList.add('week-time-mode');
+      grid.innerHTML = `<div class="week-calendar-shell"><div class="week-calendar-scroll"><div class="week-calendar-inner"><div class="week-calendar-header"><div class="week-header-axis"></div>${headers}</div>${allDayMarkup}<div class="week-time-scroll"><div class="week-time-grid" style="--week-grid-height:${GRID_HEIGHT}px;--week-hour-height:${HOUR_HEIGHT}px"><div class="week-time-axis">${labels}</div><div class="week-day-columns">${columns}${currentLine}</div></div></div></div></div></div>`;
+      requestAnimationFrame(() => {
+        const scroll = grid.querySelector('.week-time-scroll');
+        if (!scroll) return;
+        const targetHour = days.some(day => day.key === todayKey) ? Math.max(START_HOUR, getKLHourFraction(new Date()) - 1) : 8;
+        scroll.scrollTop = Math.max(0, (targetHour - START_HOUR) * HOUR_HEIGHT);
+      });
+    }
+
     function renderCalendarGrid() {
       const grid = document.getElementById('calGrid');
       const label = document.getElementById('calMonthLabel');
       if (!grid || !label) return;
       updateCalendarViewControls();
       const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-      const cells = [];
-
       if (calendarViewMode === 'week') {
-        const weekStart = getWeekStart(calendarViewDate);
-        const weekEnd = new Date(weekStart);
-        weekEnd.setDate(weekStart.getDate() + 6);
-        const sameMonth = weekStart.getMonth() === weekEnd.getMonth();
-        label.textContent = sameMonth
-          ? `${weekStart.getDate()}–${weekEnd.getDate()} ${monthNames[weekStart.getMonth()]} ${weekEnd.getFullYear()}`
-          : `${weekStart.getDate()} ${monthNames[weekStart.getMonth()]} – ${weekEnd.getDate()} ${monthNames[weekEnd.getMonth()]} ${weekEnd.getFullYear()}`;
-        grid.classList.add('week-mode');
-        for (let i = 0; i < 7; i++) {
-          const cellDate = new Date(weekStart);
-          cellDate.setDate(weekStart.getDate() + i);
-          cells.push(calendarDayCellMarkup(cellDate, false, 4));
-        }
-      } else {
-        label.textContent = monthNames[calendarViewDate.getMonth()] + ' ' + calendarViewDate.getFullYear();
-        grid.classList.remove('week-mode');
-        const { gridStart } = getGridRange(calendarViewDate);
-        for (let i = 0; i < 42; i++) {
-          const cellDate = new Date(gridStart);
-          cellDate.setDate(gridStart.getDate() + i);
-          cells.push(calendarDayCellMarkup(cellDate, cellDate.getMonth() !== calendarViewDate.getMonth(), 2));
-        }
+        dashboardRenderTimedWeek(grid, label, monthNames);
+        return;
       }
-
+      label.textContent = monthNames[calendarViewDate.getMonth()] + ' ' + calendarViewDate.getFullYear();
+      grid.classList.remove('week-mode', 'week-time-mode');
+      const cells = [];
+      const { gridStart } = getGridRange(calendarViewDate);
+      for (let i = 0; i < 42; i++) {
+        const cellDate = new Date(gridStart);
+        cellDate.setDate(gridStart.getDate() + i);
+        cells.push(calendarDayCellMarkup(cellDate, cellDate.getMonth() !== calendarViewDate.getMonth(), 2));
+      }
       grid.innerHTML = cells.join('');
     }
 
@@ -5568,9 +6139,10 @@
         ? new Date(today)
         : new Date(today.getFullYear(), today.getMonth(), 1);
       const todayKey = ymdKey(today);
+      selectedDateKey = calendarViewMode === 'week' ? todayKey : selectedDateKey;
       renderCalendarGrid();
       await loadMonthEvents(calendarViewDate);
-      selectDay(todayKey);
+      if (calendarViewMode === 'month') selectDay(todayKey);
     }
 
     function esc(s) {
@@ -6920,20 +7492,75 @@
       return null;
     }
     function dashboardMonthKey(date){return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}`;}
-    function dashboardRenderMeetingVisual(){
+    function dashboardBuildMeetingWeeks(active) {
+      const now = new Date();
+      const currentKey = dashboardMonthKey(now);
+      const recordIndex = new Map();
+      (Array.isArray(active) ? active : []).forEach(record => {
+        const date = dashboardParseRecordDate(record.meetingDate);
+        if (!date || dashboardMonthKey(date) !== currentKey) return;
+        const key = `${ymdKey(date)}|${crmNormalize(record.meetingTitle || '')}`;
+        if (!recordIndex.has(key)) recordIndex.set(key, record);
+      });
+      const calendarItems = [];
+      Object.entries(calendarEventsByDate || {}).forEach(([dateKey, events]) => {
+        if (!dateKey.startsWith(currentKey + '-')) return;
+        (Array.isArray(events) ? events : []).forEach(event => calendarItems.push({ dateKey, event }));
+      });
+      const weeks = [[], [], [], [], []];
+      if (calendarItems.length) {
+        calendarItems.forEach(({ dateKey, event }, index) => {
+          const startRaw = event.start?.dateTime || event.start?.date || dateKey;
+          const parsed = event.start?.dateTime ? new Date(event.start.dateTime) : new Date(dateKey + 'T00:00:00');
+          const day = Number(dateKey.slice(-2));
+          const weekIndex = Math.min(4, Math.max(0, Math.floor((day - 1) / 7)));
+          const match = recordIndex.get(`${dateKey}|${crmNormalize(event.summary || '')}`) || null;
+          const attendees = (event.attendees || []).filter(item => !item.self).map(item => item.displayName || item.email).filter(Boolean);
+          const eventKey = `dashboardCalendarMeeting_${weekIndex}_${index}`;
+          window._eventsCache[eventKey] = event;
+          const parts = dashboardMeetingDateParts(startRaw);
+          weeks[weekIndex].push({
+            recordId: match?.recordId || '', eventKey,
+            organisation: match?.companyName || event.location || 'Organisation not recorded',
+            title: match?.meetingTitle || event.summary || 'Untitled meeting',
+            contact: match?.personName || attendees[0] || 'External contact not recorded',
+            dateLabel: parts.date, timeLabel: parts.time,
+            purpose: match?.reason || match?.meetingNotes || event.description || 'No meeting purpose recorded.',
+            attendeeCount: attendees.length || dashboardAttendeeCount(match?.attendees),
+            sortTime: parsed.getTime()
+          });
+        });
+      } else {
+        (Array.isArray(active) ? active : []).forEach(record => {
+          const parsed = dashboardParseRecordDate(record.meetingDate);
+          if (!parsed || dashboardMonthKey(parsed) !== currentKey) return;
+          const weekIndex = Math.min(4, Math.max(0, Math.floor((parsed.getDate() - 1) / 7)));
+          const parts = dashboardMeetingDateParts(record.meetingDate);
+          weeks[weekIndex].push({
+            recordId: record.recordId || '', eventKey: '',
+            organisation: record.companyName || 'Organisation not recorded',
+            title: record.meetingTitle || 'Untitled meeting',
+            contact: record.personName || 'External contact not recorded',
+            dateLabel: parts.date, timeLabel: parts.time,
+            purpose: record.reason || record.meetingNotes || 'No meeting purpose recorded.',
+            attendeeCount: dashboardAttendeeCount(record.attendees),
+            sortTime: parsed.getTime()
+          });
+        });
+      }
+      weeks.forEach(items => items.sort((a, b) => a.sortTime - b.sortTime));
+      dashboardMeetingWeeks = weeks;
+      return weeks;
+    }
+
+    function dashboardRenderMeetingVisual(active = []){
       const now=new Date();
       const currentKey=dashboardMonthKey(now);
       const previousDate=new Date(now.getFullYear(),now.getMonth()-1,1);
       const previousKey=dashboardMonthKey(previousDate);
-      const weeks=[0,0,0,0,0];
-      let currentTotal=0;
-      Object.entries(calendarEventsByDate||{}).forEach(([key,events])=>{
-        if(!key.startsWith(currentKey+'-'))return;
-        const day=Number(key.slice(-2));
-        const index=Math.min(4,Math.max(0,Math.floor((day-1)/7)));
-        const count=Array.isArray(events)?events.length:0;
-        weeks[index]+=count;currentTotal+=count;
-      });
+      const detailWeeks=dashboardBuildMeetingWeeks(active);
+      const weeks=detailWeeks.map(items=>items.length);
+      const currentTotal=weeks.reduce((sum,count)=>sum+count,0);
       const previousEvents=Array.isArray(monthCache?.[previousKey])?monthCache[previousKey]:null;
       const trend=document.getElementById('dashboardMeetingsTrend');
       if(trend){
@@ -6951,9 +7578,11 @@
       if(totalElement)totalElement.textContent=currentTotal;
       const max=Math.max(1,...weeks);
       const bars=document.getElementById('dashboardMeetingsWeeklyBars');
-      if(!bars)return;
-      bars.innerHTML=weeks.map((count,index)=>`<button class="weekly-bar" type="button" onclick="dashboardOpenMeetingWeek(${index})" aria-label="Open week ${index+1}, ${count} meeting${count===1?'':'s'}"><span class="weekly-bar-value">${count}</span><span class="weekly-bar-track"><span class="weekly-bar-fill" style="height:${count?Math.max(10,Math.round(count/max*100)):4}%"></span></span><span class="weekly-bar-label">W${index+1}</span></button>`).join('');
-      bars.setAttribute('aria-label',`Weekly meeting distribution: ${weeks.map((count,index)=>`week ${index+1}, ${count}`).join('; ')}`);
+      if(bars){
+        bars.innerHTML=weeks.map((count,index)=>`<button class="weekly-bar" type="button" onclick="dashboardOpenMeetingWeek(${index})" aria-label="Open week ${index+1}, ${count} meeting${count===1?'':'s'}"><span class="weekly-bar-value">${count}</span><span class="weekly-bar-track"><span class="weekly-bar-fill" style="height:${count?Math.max(10,Math.round(count/max*100)):4}%"></span></span><span class="weekly-bar-label">W${index+1}</span></button>`).join('');
+        bars.setAttribute('aria-label',`Weekly meeting distribution: ${weeks.map((count,index)=>`week ${index+1}, ${count}`).join('; ')}`);
+      }
+      if(dashboardDetailMode==='meetings') dashboardRenderDetailPanel();
     }
 
     function dashboardRenderOrganisationVisual(active){
@@ -6966,19 +7595,30 @@
         const date=dashboardParseRecordDate(record.meetingDate);
         if(!name||!date)return;
         const key=name.toLowerCase();
-        const entry=historyByOrganisation.get(key)||{name,dates:[]};
-        entry.dates.push(date);
+        const entry=historyByOrganisation.get(key)||{name,engagements:[]};
+        entry.engagements.push({date,record});
         historyByOrganisation.set(key,entry);
       });
-      let fresh=0;
-      let returning=0;
+      const rows=[];
       historyByOrganisation.forEach(entry=>{
-        const engagedThisMonth=entry.dates.some(date=>date>=currentMonthStart&&date<nextMonthStart);
-        if(!engagedThisMonth)return;
-        const hadEarlierEngagement=entry.dates.some(date=>date<currentMonthStart);
-        if(hadEarlierEngagement)returning+=1;else fresh+=1;
+        const monthEngagements=entry.engagements.filter(item=>item.date>=currentMonthStart&&item.date<nextMonthStart).sort((a,b)=>b.date-a.date);
+        if(!monthEngagements.length)return;
+        const hadEarlierEngagement=entry.engagements.some(item=>item.date<currentMonthStart);
+        const latest=monthEngagements[0];
+        rows.push({
+          name:entry.name,
+          status:hadEarlierEngagement?'returning':'new',
+          recordId:latest.record?.recordId||'',
+          latestDate:latest.date,
+          latestLabel:latest.date.toLocaleDateString('en-MY',{day:'numeric',month:'short',year:'numeric'})
+        });
       });
+      rows.sort((a,b)=>b.latestDate-a.latestDate||a.name.localeCompare(b.name));
+      dashboardOrganisationRows=rows;
+      const fresh=rows.filter(item=>item.status==='new').length;
+      const returning=rows.filter(item=>item.status==='returning').length;
       const total=fresh+returning;
+      dashboardOrganisationTotals={total,fresh,returning};
       const freshPercent=total?fresh/total*100:0;
       const returningPercent=total?returning/total*100:0;
       const totalElement=document.getElementById('dashboardCompaniesCount');
@@ -6993,6 +7633,7 @@
       if(freshSegment)freshSegment.style.width=`${freshPercent}%`;
       if(returningSegment)returningSegment.style.width=`${returningPercent}%`;
       if(bar)bar.setAttribute('aria-label',`${total} organisations engaged this month: ${fresh} new and ${returning} returning`);
+      if(dashboardDetailMode==='organisations') dashboardRenderDetailPanel();
     }
 
     function dashboardAttendeeCount(value){
@@ -7036,7 +7677,7 @@
       const actions=my.filter(crmHasAction);
       const actionBadge=document.getElementById('systemActionBadge');
       if(actionBadge){actionBadge.textContent=actions.length;actionBadge.classList.toggle('show',actions.length>0);}
-      dashboardRenderMeetingVisual();
+      dashboardRenderMeetingVisual(active);
       dashboardRenderOrganisationVisual(active);
       const recent=crmSortRecords(active).slice(0,4);
       const recentContainer=document.getElementById('dashboardRecentActivity');
