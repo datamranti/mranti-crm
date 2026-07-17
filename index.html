@@ -4580,6 +4580,261 @@
 
 </style>
 
+
+<style id="dashboard-paired-expanded-cards-v18">
+  /* Scope: Meetings this month and Organisations engaged cards only. */
+  #pageDashboard .dashboard-summary-grid {
+    align-items:start!important;
+  }
+  #pageDashboard .dashboard-visual-kpi.is-expanded {
+    grid-column:auto!important;
+    height:auto!important;
+    min-height:156px!important;
+    overflow:visible!important;
+  }
+  #pageDashboard .dashboard-inline-detail.open {
+    max-height:590px;
+  }
+  #pageDashboard .dashboard-inline-divider {
+    margin-top:2px;
+    margin-bottom:12px;
+  }
+
+  #pageDashboard .dashboard-week-selector {
+    gap:7px;
+  }
+  #pageDashboard .dashboard-week-button {
+    padding:8px 5px;
+    border-radius:9px;
+  }
+  #pageDashboard .dashboard-week-range {
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  #pageDashboard .dashboard-detail-list,
+  #pageDashboard .dashboard-org-list {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+    max-height:340px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding:1px 4px 2px 1px;
+    scrollbar-gutter:stable;
+    scrollbar-width:thin;
+    scrollbar-color:#bfdbfe transparent;
+  }
+  #pageDashboard .dashboard-detail-list::-webkit-scrollbar,
+  #pageDashboard .dashboard-org-list::-webkit-scrollbar { width:6px; }
+  #pageDashboard .dashboard-detail-list::-webkit-scrollbar-track,
+  #pageDashboard .dashboard-org-list::-webkit-scrollbar-track { background:transparent; }
+  #pageDashboard .dashboard-detail-list::-webkit-scrollbar-thumb,
+  #pageDashboard .dashboard-org-list::-webkit-scrollbar-thumb { background:#bfdbfe; border-radius:999px; }
+
+  #pageDashboard .dashboard-detail-meeting {
+    display:grid;
+    grid-template-columns:30px minmax(0,1fr);
+    align-items:start;
+    gap:9px;
+    min-height:108px;
+    padding:10px;
+    background:linear-gradient(145deg,#ffffff,#f8fbff);
+  }
+  #pageDashboard .dashboard-detail-meeting-copy {
+    min-width:0;
+    display:block;
+  }
+  #pageDashboard .dashboard-detail-item-icon {
+    width:28px;
+    height:28px;
+    display:grid;
+    place-items:center;
+    border:1px solid #bfdbfe;
+    border-radius:9px;
+    background:#eff6ff;
+    color:#2563eb;
+    flex:0 0 28px;
+  }
+  #pageDashboard .dashboard-detail-item-icon svg {
+    width:15px;
+    height:15px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  #pageDashboard .dashboard-detail-meeting-top {
+    min-width:0;
+    gap:8px;
+  }
+  #pageDashboard .dashboard-detail-organisation {
+    white-space:normal;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+  }
+  #pageDashboard .dashboard-detail-date {
+    max-width:48%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #pageDashboard .dashboard-detail-purpose {
+    -webkit-line-clamp:1;
+  }
+
+  #pageDashboard .dashboard-org-tools {
+    grid-template-columns:minmax(185px,.78fr) minmax(0,1.22fr);
+    gap:8px;
+  }
+  #pageDashboard .dashboard-org-filters { gap:6px; }
+  #pageDashboard .dashboard-org-filter {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    min-width:0;
+    padding:7px 9px;
+  }
+  #pageDashboard .dashboard-org-filter b {
+    min-width:18px;
+    height:18px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:0 5px;
+    border-radius:999px;
+    background:#eff6ff;
+    color:#2563eb;
+    font-size:8.5px;
+    font-weight:850;
+  }
+  #pageDashboard .dashboard-org-filter.active b {
+    background:#dbeafe;
+    color:#1d4ed8;
+  }
+  #pageDashboard .dashboard-org-list {
+    margin-top:10px;
+  }
+  #pageDashboard .dashboard-org-row {
+    position:relative;
+    display:grid;
+    grid-template-columns:28px minmax(0,1fr);
+    align-items:start;
+    gap:9px;
+    min-height:76px;
+    padding:10px 10px 29px;
+    border-color:#dbeafe;
+    background:linear-gradient(145deg,#ffffff,#f8fbff);
+  }
+  #pageDashboard .dashboard-org-record {
+    min-width:0;
+    display:block;
+  }
+  #pageDashboard .dashboard-org-card-head {
+    min-width:0;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:8px;
+  }
+  #pageDashboard .dashboard-org-card-head strong {
+    min-width:0;
+    white-space:normal;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+    font-size:10.2px;
+    line-height:1.3;
+  }
+  #pageDashboard .dashboard-org-record small {
+    display:block;
+    margin-top:5px;
+    white-space:normal;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+    line-height:1.35;
+  }
+  #pageDashboard .dashboard-org-date {
+    flex:0 0 auto;
+    max-width:42%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #pageDashboard .dashboard-org-badge {
+    position:absolute;
+    right:10px;
+    bottom:8px;
+    display:inline-flex;
+    align-items:center;
+    min-height:18px;
+    padding:3px 7px;
+    border-radius:999px;
+    font-size:8px;
+    font-weight:850;
+  }
+  #pageDashboard .dashboard-org-badge.new {
+    color:#1d4ed8;
+    background:#eff6ff;
+    border:1px solid #bfdbfe;
+  }
+  #pageDashboard .dashboard-org-badge.returning {
+    color:#0e7490;
+    background:#ecfeff;
+    border:1px solid #a5f3fc;
+  }
+
+  #pageDashboard .dashboard-detail-action-row {
+    display:flex;
+    justify-content:flex-end;
+    margin-top:8px;
+  }
+  #pageDashboard .dashboard-detail-action {
+    padding:3px 0;
+    border:0;
+    background:transparent;
+    color:#2563eb;
+    font:inherit;
+    font-size:9.5px;
+    font-weight:850;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  #pageDashboard .dashboard-detail-action:hover {
+    color:#1d4ed8;
+    text-decoration:underline;
+    text-underline-offset:3px;
+  }
+  #pageDashboard .dashboard-org-footer {
+    margin-top:8px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:12px;
+  }
+  #pageDashboard .dashboard-org-help {
+    margin-top:0;
+    max-width:72%;
+  }
+
+  @media (max-width:1180px) {
+    #pageDashboard .dashboard-detail-list,
+    #pageDashboard .dashboard-org-list { grid-template-columns:1fr; }
+  }
+  @media (max-width:760px) {
+    #pageDashboard .dashboard-visual-kpi.is-expanded { grid-column:auto!important; }
+    #pageDashboard .dashboard-inline-detail.open { max-height:650px; }
+    #pageDashboard .dashboard-org-tools { grid-template-columns:1fr; }
+    #pageDashboard .dashboard-org-search { width:100%; }
+    #pageDashboard .dashboard-org-footer { align-items:flex-start; flex-direction:column; }
+    #pageDashboard .dashboard-org-help { max-width:none; }
+    #pageDashboard .dashboard-detail-action { align-self:flex-end; }
+  }
+</style>
 </head>
 <body>
 <!-- Final standardised MRANTI CRM build: signed-out page redesigned; signed-in logic preserved. -->
@@ -5195,7 +5450,7 @@
     let calendarViewMode = 'month';
     let currentEvent = null;
     window._eventsCache = {};
-    let dashboardExpandedCard = null;
+    let dashboardExpandedCards = { meetings: false, organisations: false };
     let dashboardSelectedMeetingWeek = Math.min(4, Math.max(0, Math.floor((new Date().getDate() - 1) / 7)));
     let dashboardOrganisationFilter = 'new';
     let dashboardOrganisationSearch = '';
@@ -5489,6 +5744,8 @@
       const decoder = document.createElement('textarea');
       decoder.innerHTML = text;
       text = decoder.value;
+      text = text.replace(/<[^>]*>/g, ' ');
+      text = text.replace(/\b(?:href|target|rel)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, ' ');
       text = text.replace(/(?:https?:\/\/|www\.)\S+/gi, ' ');
       text = text.replace(/\s+/g, ' ').trim();
       return text || fallback;
@@ -5500,7 +5757,7 @@
         { mode: 'organisations', cardId: 'dashboardOrganisationsCard', detailId: 'dashboardOrganisationsDetails', toggleId: 'dashboardOrganisationsToggle' }
       ];
       configs.forEach(config => {
-        const open = dashboardExpandedCard === config.mode;
+        const open = Boolean(dashboardExpandedCards[config.mode]);
         const card = document.getElementById(config.cardId);
         const detail = document.getElementById(config.detailId);
         const toggle = document.getElementById(config.toggleId);
@@ -5514,29 +5771,30 @@
             : 'Show details <span aria-hidden="true">↓</span>';
         }
       });
-      dashboardRenderDetailPanel();
+      dashboardRenderDetailPanels();
     }
 
     function dashboardViewMeetings() {
-      dashboardExpandedCard = dashboardExpandedCard === 'meetings' ? null : 'meetings';
+      dashboardExpandedCards.meetings = !dashboardExpandedCards.meetings;
       dashboardApplyExpandedState();
     }
 
     function dashboardOpenMeetingWeek(index) {
       dashboardSelectedMeetingWeek = Math.min(4, Math.max(0, Number(index) || 0));
-      dashboardExpandedCard = 'meetings';
+      dashboardExpandedCards.meetings = true;
       dashboardApplyExpandedState();
     }
 
     function dashboardSelectMeetingWeek(index) {
       dashboardSelectedMeetingWeek = Math.min(4, Math.max(0, Number(index) || 0));
-      dashboardExpandedCard = 'meetings';
-      dashboardRenderDetailPanel();
+      dashboardExpandedCards.meetings = true;
+      const meetings = document.getElementById('dashboardMeetingsDetails');
+      if (meetings) meetings.innerHTML = dashboardMeetingDetailMarkup();
     }
 
     function dashboardViewOrganisations() {
-      dashboardExpandedCard = dashboardExpandedCard === 'organisations' ? null : 'organisations';
-      if (dashboardExpandedCard === 'organisations' && !['new', 'returning'].includes(dashboardOrganisationFilter)) {
+      dashboardExpandedCards.organisations = !dashboardExpandedCards.organisations;
+      if (dashboardExpandedCards.organisations && !['new', 'returning'].includes(dashboardOrganisationFilter)) {
         dashboardOrganisationFilter = dashboardOrganisationTotals.fresh || !dashboardOrganisationTotals.returning ? 'new' : 'returning';
       }
       dashboardApplyExpandedState();
@@ -5544,7 +5802,8 @@
 
     function dashboardSetOrganisationFilter(filter) {
       dashboardOrganisationFilter = filter === 'returning' ? 'returning' : 'new';
-      dashboardRenderDetailPanel();
+      const organisations = document.getElementById('dashboardOrganisationsDetails');
+      if (organisations) organisations.innerHTML = dashboardOrganisationDetailMarkup();
     }
 
     function dashboardSetOrganisationSearch(value) {
@@ -5595,14 +5854,17 @@
         const eventAttribute = crmEscape(item.eventKey || '');
         const dateTime = [item.dateLabel, item.timeLabel].filter(Boolean).join(' · ');
         return `<button class="dashboard-detail-meeting" type="button" data-record-id="${recordAttribute}" data-event-key="${eventAttribute}" onclick="dashboardOpenMeetingDetailItem(this)">
-          <div class="dashboard-detail-meeting-top"><span class="dashboard-detail-organisation">${crmEscape(organisation)}</span><span class="dashboard-detail-date">${crmEscape(dateTime)}</span></div>
-          <div class="dashboard-detail-meeting-title">${crmEscape(title)}</div>
-          <div class="dashboard-detail-contact">${crmEscape(contact)}</div>
-          <div class="dashboard-detail-purpose">${crmEscape(purpose)}</div>
-          <div class="dashboard-detail-meeting-footer"><span>${item.attendeeCount} attendee${item.attendeeCount === 1 ? '' : 's'}</span></div>
+          <span class="dashboard-detail-item-icon calendar">${dashboardDetailCalendarIcon()}</span>
+          <span class="dashboard-detail-meeting-copy">
+            <span class="dashboard-detail-meeting-top"><span class="dashboard-detail-organisation">${crmEscape(organisation)}</span><span class="dashboard-detail-date">${crmEscape(dateTime)}</span></span>
+            <span class="dashboard-detail-meeting-title">${crmEscape(title)}</span>
+            <span class="dashboard-detail-contact">${crmEscape(contact)}</span>
+            <span class="dashboard-detail-purpose">${crmEscape(purpose)}</span>
+            <span class="dashboard-detail-meeting-footer"><span>${item.attendeeCount} attendee${item.attendeeCount === 1 ? '' : 's'}</span></span>
+          </span>
         </button>`;
       }).join('') : `<div class="dashboard-detail-empty">No meetings are recorded for this week.</div>`;
-      return `<div class="dashboard-inline-divider"></div><div class="dashboard-week-selector">${selector}</div><div class="dashboard-detail-list">${list}</div>`;
+      return `<div class="dashboard-inline-divider"></div><div class="dashboard-week-selector">${selector}</div><div class="dashboard-detail-list">${list}</div><div class="dashboard-detail-action-row"><button class="dashboard-detail-action" type="button" onclick="systemNavigate('contacts')">View all meetings →</button></div>`;
     }
 
     function dashboardOrganisationRowsMarkup() {
@@ -5611,7 +5873,7 @@
       const filtered = dashboardOrganisationRows.filter(item => {
         if (item.status !== activeFilter) return false;
         if (!query) return true;
-        const haystack = `${item.name || ''} ${item.latestMeetingTitle || ''}`.toLowerCase();
+        const haystack = `${item.name || ''} ${item.latestMeetingTitle || ''} ${item.latestLabel || ''}`.toLowerCase();
         return haystack.includes(query);
       });
       if (!filtered.length) {
@@ -5621,8 +5883,12 @@
         return `<div class="dashboard-detail-empty">${crmEscape(message)}</div>`;
       }
       return filtered.map(item => `<button class="dashboard-org-row" type="button" data-record-id="${crmEscape(item.recordId || '')}" onclick="dashboardOpenOrganisationRow(this)">
-        <span class="dashboard-org-record"><strong>${crmEscape(dashboardCleanDisplayText(item.name, 'Organisation not recorded'))}</strong><small>${crmEscape(dashboardCleanDisplayText(item.latestMeetingTitle, 'Latest meeting title not recorded'))}</small></span>
-        <span class="dashboard-org-meta"><span class="dashboard-org-status"><i class="dashboard-org-status-dot${item.status === 'returning' ? ' returning' : ''}"></i>${item.status === 'returning' ? 'Returning' : 'New'}</span><span class="dashboard-org-date">${crmEscape(item.latestLabel)}</span></span>
+        <span class="dashboard-detail-item-icon network">${dashboardDetailNetworkIcon()}</span>
+        <span class="dashboard-org-record">
+          <span class="dashboard-org-card-head"><strong>${crmEscape(dashboardCleanDisplayText(item.name, 'Organisation not recorded'))}</strong><span class="dashboard-org-date">${crmEscape(item.latestLabel)}</span></span>
+          <small>${crmEscape(dashboardCleanDisplayText(item.latestMeetingTitle, 'Latest meeting title not recorded'))}</small>
+        </span>
+        <span class="dashboard-org-badge ${item.status === 'returning' ? 'returning' : 'new'}">${item.status === 'returning' ? 'Returning' : 'New'}</span>
       </button>`).join('');
     }
 
@@ -5631,25 +5897,20 @@
       return `<div class="dashboard-inline-divider"></div>
         <div class="dashboard-org-tools">
           <div class="dashboard-org-filters" role="group" aria-label="Filter organisations">
-            <button class="dashboard-org-filter${activeFilter === 'new' ? ' active' : ''}" type="button" onclick="dashboardSetOrganisationFilter('new')">New</button>
-            <button class="dashboard-org-filter${activeFilter === 'returning' ? ' active' : ''}" type="button" onclick="dashboardSetOrganisationFilter('returning')">Returning</button>
+            <button class="dashboard-org-filter${activeFilter === 'new' ? ' active' : ''}" type="button" onclick="dashboardSetOrganisationFilter('new')"><span>New</span><b>${dashboardOrganisationTotals.fresh}</b></button>
+            <button class="dashboard-org-filter${activeFilter === 'returning' ? ' active' : ''}" type="button" onclick="dashboardSetOrganisationFilter('returning')"><span>Returning</span><b>${dashboardOrganisationTotals.returning}</b></button>
           </div>
-          <input class="dashboard-org-search" type="search" value="${crmEscape(dashboardOrganisationSearch)}" oninput="dashboardSetOrganisationSearch(this.value)" placeholder="Search organisations or latest meetings" aria-label="Search organisations" />
+          <input class="dashboard-org-search" type="search" value="${crmEscape(dashboardOrganisationSearch)}" oninput="dashboardSetOrganisationSearch(this.value)" placeholder="Search organisations or latest meetings..." aria-label="Search organisations" />
         </div>
         <div class="dashboard-org-list" id="dashboardOrganisationDetailList">${dashboardOrganisationRowsMarkup()}</div>
-        <div class="dashboard-org-help"><strong>New:</strong> first recorded CRM engagement occurred during the selected month. <strong>Returning:</strong> at least one CRM engagement existed before the selected month.</div>`;
+        <div class="dashboard-org-footer"><div class="dashboard-org-help"><strong>New:</strong> first recorded CRM engagement occurred during the selected month.<br><strong>Returning:</strong> at least one CRM engagement existed before the selected month.</div><button class="dashboard-detail-action" type="button" onclick="systemNavigate('contacts')">View all organisations →</button></div>`;
     }
 
-    function dashboardRenderDetailPanel() {
+    function dashboardRenderDetailPanels() {
       const meetings = document.getElementById('dashboardMeetingsDetails');
       const organisations = document.getElementById('dashboardOrganisationsDetails');
-      if (dashboardExpandedCard === 'meetings') {
-        if (meetings) meetings.innerHTML = dashboardMeetingDetailMarkup();
-        return;
-      }
-      if (dashboardExpandedCard === 'organisations') {
-        if (organisations) organisations.innerHTML = dashboardOrganisationDetailMarkup();
-      }
+      if (dashboardExpandedCards.meetings && meetings) meetings.innerHTML = dashboardMeetingDetailMarkup();
+      if (dashboardExpandedCards.organisations && organisations) organisations.innerHTML = dashboardOrganisationDetailMarkup();
     }
 
     // The grid always shows 6 full weeks (42 cells) so the layout never
@@ -7574,7 +7835,7 @@
         bars.innerHTML=weeks.map((count,index)=>`<button class="weekly-bar" type="button" onclick="dashboardOpenMeetingWeek(${index})" aria-label="Open week ${index+1}, ${count} meeting${count===1?'':'s'}"><span class="weekly-bar-value">${count}</span><span class="weekly-bar-track"><span class="weekly-bar-fill" style="height:${count?Math.max(10,Math.round(count/max*100)):4}%"></span></span><span class="weekly-bar-label">W${index+1}</span></button>`).join('');
         bars.setAttribute('aria-label',`Weekly meeting distribution: ${weeks.map((count,index)=>`week ${index+1}, ${count}`).join('; ')}`);
       }
-      if(dashboardExpandedCard==='meetings') dashboardRenderDetailPanel();
+      if(dashboardExpandedCards.meetings){const details=document.getElementById('dashboardMeetingsDetails');if(details)details.innerHTML=dashboardMeetingDetailMarkup();}
     }
 
     function dashboardRenderOrganisationVisual(active){
@@ -7626,7 +7887,7 @@
       if(freshSegment)freshSegment.style.width=`${freshPercent}%`;
       if(returningSegment)returningSegment.style.width=`${returningPercent}%`;
       if(bar)bar.setAttribute('aria-label',`${total} organisations engaged this month: ${fresh} new and ${returning} returning`);
-      if(dashboardExpandedCard==='organisations') dashboardRenderDetailPanel();
+      if(dashboardExpandedCards.organisations){const details=document.getElementById('dashboardOrganisationsDetails');if(details)details.innerHTML=dashboardOrganisationDetailMarkup();}
     }
 
     function dashboardAttendeeCount(value){
