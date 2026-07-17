@@ -4835,6 +4835,97 @@
     #pageDashboard .dashboard-detail-action { align-self:flex-end; }
   }
 </style>
+
+<style id="dashboard-balanced-expanded-previews-v19">
+  /* Scope: fixed, aligned preview areas inside the two expanded Dashboard KPI cards only. */
+  #pageDashboard .dashboard-visual-kpi.is-expanded {
+    height:540px!important;
+    min-height:540px!important;
+    max-height:540px!important;
+    overflow:hidden!important;
+  }
+
+  #pageDashboard .dashboard-visual-kpi.is-expanded .weekly-bars {
+    flex:0 0 61px!important;
+  }
+
+  #pageDashboard .dashboard-visual-kpi.is-expanded .organisation-progress {
+    flex:0 0 auto!important;
+  }
+
+  #pageDashboard .dashboard-inline-detail.open {
+    display:flex;
+    flex:1 1 auto;
+    flex-direction:column;
+    min-height:0;
+    max-height:590px!important;
+    overflow:hidden;
+  }
+
+  #pageDashboard .dashboard-week-selector,
+  #pageDashboard .dashboard-org-tools,
+  #pageDashboard .dashboard-inline-divider,
+  #pageDashboard .dashboard-detail-action-row,
+  #pageDashboard .dashboard-org-footer {
+    flex:0 0 auto;
+  }
+
+  #pageDashboard .dashboard-detail-list,
+  #pageDashboard .dashboard-org-list {
+    box-sizing:border-box;
+    height:248px!important;
+    min-height:248px!important;
+    max-height:248px!important;
+    flex:0 0 248px;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    grid-auto-rows:120px;
+    align-content:start;
+    gap:8px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding:0 4px 0 0;
+    scrollbar-gutter:auto;
+    scrollbar-width:thin;
+    scrollbar-color:#bfdbfe transparent;
+  }
+
+  #pageDashboard .dashboard-detail-meeting,
+  #pageDashboard .dashboard-org-row {
+    box-sizing:border-box;
+    height:120px!important;
+    min-height:120px!important;
+    max-height:120px!important;
+    overflow:hidden;
+  }
+
+  #pageDashboard .dashboard-detail-action-row,
+  #pageDashboard .dashboard-org-footer {
+    margin-top:auto;
+    padding-top:8px;
+  }
+
+  @media (max-width:760px) {
+    #pageDashboard .dashboard-inline-detail.open {
+      max-height:650px!important;
+    }
+
+    #pageDashboard .dashboard-visual-kpi.is-expanded {
+      height:620px!important;
+      min-height:620px!important;
+      max-height:620px!important;
+    }
+
+    #pageDashboard .dashboard-detail-list,
+    #pageDashboard .dashboard-org-list {
+      height:248px!important;
+      min-height:248px!important;
+      max-height:248px!important;
+      flex-basis:248px;
+      grid-template-columns:1fr!important;
+      grid-auto-rows:120px;
+    }
+  }
+</style>
 </head>
 <body>
 <!-- Final standardised MRANTI CRM build: signed-out page redesigned; signed-in logic preserved. -->
