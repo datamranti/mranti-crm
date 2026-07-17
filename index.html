@@ -5732,6 +5732,1100 @@
     #loginScreen .login-brand-divider { height:28px!important; }
   }
 </style>
+<style id="crm-contact-intelligence-v1">
+  #pageContacts.contact-intel-page {
+    width: 100%;
+    min-width: 0;
+    padding: 4px 0 28px;
+    gap: 0;
+    color: #0f172a;
+  }
+
+  .contact-intel-page-head {
+    width: 100%;
+    padding: 14px 2px 0;
+  }
+  .contact-intel-eyebrow {
+    color: #2563eb;
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: 1.75px;
+    text-transform: uppercase;
+  }
+  .contact-intel-page-head h1 {
+    margin: 8px 0 0;
+    color: #0f172a;
+    font-size: clamp(25px, 2.1vw, 32px);
+    line-height: 1.08;
+    letter-spacing: -.75px;
+    font-weight: 800;
+  }
+  .contact-intel-page-head p {
+    margin: 7px 0 0;
+    color: #52627a;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .contact-intel-head-divider {
+    width: 100%;
+    height: 1px;
+    margin-top: 18px;
+    background: linear-gradient(90deg, rgba(147,197,253,.9), rgba(219,234,254,.86));
+  }
+
+  .contact-intel-toolbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 18px 0 16px;
+    min-width: 0;
+  }
+  .contact-intel-search-wrap {
+    position: relative;
+    flex: 1 1 410px;
+    min-width: 260px;
+  }
+  .contact-intel-search-wrap svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    width: 17px;
+    height: 17px;
+    transform: translateY(-50%);
+    fill: none;
+    stroke: #64748b;
+    stroke-width: 1.8;
+    pointer-events: none;
+  }
+  .contact-intel-search-wrap .system-input {
+    width: 100%;
+    min-height: 46px;
+    padding-left: 42px;
+    border-radius: 11px;
+    background: rgba(255,255,255,.92);
+  }
+  .contact-intel-toolbar .system-select,
+  .contact-intel-toolbar .system-btn {
+    min-height: 46px;
+    border-radius: 11px;
+  }
+  #crmContactsStatus { flex: 0 1 186px; min-width: 150px; }
+  .contact-intel-clear { min-width: 92px; justify-content: center; }
+  .contact-intel-count-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    min-width: 132px;
+    padding: 0 14px;
+    border: 1px solid #bfdbfe;
+    border-radius: 11px;
+    background: rgba(255,255,255,.92);
+    color: #1e3a8a;
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .contact-intel-count-chip svg,
+  .contact-intel-filter-btn svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .contact-intel-toolbar-spacer { flex: 1 1 18px; }
+  .contact-intel-sort-label {
+    color: #334155;
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .contact-intel-sort { flex: 0 1 190px; min-width: 170px; }
+  .contact-intel-filter-anchor { position: relative; flex: 0 0 auto; }
+  .contact-intel-filter-btn { min-width: 104px; justify-content: center; }
+  .contact-intel-filter-panel {
+    display: none;
+    position: absolute;
+    z-index: 80;
+    right: 0;
+    top: calc(100% + 8px);
+    width: 250px;
+    padding: 14px;
+    border: 1px solid #bfdbfe;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 18px 42px rgba(15,23,42,.14);
+  }
+  .contact-intel-filter-panel.show { display: block; }
+  .contact-intel-filter-title {
+    margin-bottom: 11px;
+    color: #0f172a;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .contact-intel-filter-panel label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 0;
+    color: #475569;
+    font-size: 11.5px;
+    line-height: 1.35;
+    cursor: pointer;
+  }
+  .contact-intel-filter-panel input { accent-color: #2563eb; }
+  .contact-intel-filter-reset {
+    width: 100%;
+    margin-top: 8px;
+    padding: 8px 10px;
+    border: 1px solid #dbeafe;
+    border-radius: 9px;
+    background: #f8fafc;
+    color: #2563eb;
+    font: inherit;
+    font-size: 10.5px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  #pageContacts .crm-contacts-banner {
+    margin: 0 0 12px;
+  }
+
+  .contact-intel-workspace {
+    display: grid;
+    grid-template-columns: minmax(340px, 29%) minmax(0, 1fr);
+    gap: 14px;
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+  }
+  .contact-directory-panel,
+  .contact-workspace-panel {
+    min-width: 0;
+    height: min(760px, calc(100vh - 224px));
+    min-height: 610px;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 18px;
+    border: 1px solid rgba(147,197,253,.5);
+    background: rgba(255,255,255,.94);
+    box-shadow: 0 12px 32px rgba(37,99,235,.07), 0 1px 4px rgba(15,23,42,.04);
+    backdrop-filter: blur(14px);
+  }
+  .contact-directory-panel {
+    display: flex;
+    flex-direction: column;
+  }
+  .contact-directory-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex: 0 0 auto;
+    min-height: 50px;
+    padding: 0 17px;
+    border-bottom: 1px solid #dbeafe;
+    color: #0f172a;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: .7px;
+  }
+  .contact-directory-head span:last-child {
+    color: #2563eb;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .contact-directory-list {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #bfdbfe transparent;
+  }
+  .contact-directory-list::-webkit-scrollbar { width: 7px; }
+  .contact-directory-list::-webkit-scrollbar-thumb { background: #bfdbfe; border-radius: 999px; }
+  .contact-directory-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 48px minmax(0,1fr) auto;
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+    min-height: 86px;
+    padding: 14px 15px;
+    border: 0;
+    border-bottom: 1px solid #e2e8f0;
+    background: #fff;
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background .18s ease, border-color .18s ease;
+  }
+  .contact-directory-row:hover { background: #f8fbff; }
+  .contact-directory-row.active {
+    background: linear-gradient(90deg, #eff6ff, #f8fbff 82%);
+    box-shadow: inset 3px 0 0 #2563eb;
+  }
+  .contact-directory-row:focus-visible {
+    outline: 3px solid rgba(37,99,235,.2);
+    outline-offset: -3px;
+  }
+  .contact-directory-avatar {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #bfdbfe;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #eff6ff, #dbeafe);
+    color: #1d4ed8;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+  }
+  .contact-directory-copy { min-width: 0; }
+  .contact-directory-name {
+    color: #0f172a;
+    font-size: 12.5px;
+    line-height: 1.3;
+    font-weight: 800;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .contact-directory-org,
+  .contact-directory-latest {
+    margin-top: 5px;
+    color: #52627a;
+    font-size: 10px;
+    line-height: 1.35;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+  }
+  .contact-directory-org { -webkit-line-clamp: 1; }
+  .contact-directory-latest { -webkit-line-clamp: 1; color: #334e79; }
+  .contact-directory-status {
+    align-self: start;
+    padding: 4px 8px;
+    border: 1px solid #bfdbfe;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 8.5px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .contact-directory-status.follow { border-color: #fed7aa; background: #fff7ed; color: #c2410c; }
+  .contact-directory-status.archived { border-color: #cbd5e1; background: #f1f5f9; color: #64748b; }
+  .contact-directory-load {
+    flex: 0 0 auto;
+    min-height: 44px;
+    border: 0;
+    border-top: 1px solid #dbeafe;
+    background: #fff;
+    color: #2563eb;
+    font: inherit;
+    font-size: 10.5px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .contact-workspace-panel {
+    display: flex;
+    flex-direction: column;
+  }
+  .contact-identity-header {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 20px;
+    align-items: start;
+    flex: 0 0 auto;
+    padding: 16px 18px 14px;
+    border-bottom: 1px solid #dbeafe;
+    background: rgba(255,255,255,.98);
+  }
+  .contact-identity-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    min-width: 0;
+  }
+  .contact-identity-avatar {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    border: 1px solid #bfdbfe;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #eff6ff, #dbeafe);
+    color: #1d4ed8;
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+  .contact-identity-copy { min-width: 0; padding-top: 2px; }
+  .contact-identity-copy h2 {
+    margin: 0;
+    color: #0f172a;
+    font-size: 21px;
+    line-height: 1.18;
+    font-weight: 800;
+    letter-spacing: -.45px;
+    overflow-wrap: anywhere;
+  }
+  .contact-identity-org {
+    margin-top: 6px;
+    color: #1e3a8a;
+    font-size: 11.5px;
+    line-height: 1.4;
+    font-weight: 650;
+  }
+  .contact-identity-role {
+    margin-top: 3px;
+    color: #64748b;
+    font-size: 10.5px;
+    line-height: 1.35;
+  }
+  .contact-identity-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px 14px;
+    margin-top: 10px;
+    min-width: 0;
+  }
+  .contact-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    color: #334e79;
+    font-size: 10px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+  .contact-meta-item svg {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 auto;
+    fill: none;
+    stroke: #526aa8;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .contact-meta-item a { color: inherit; text-decoration: none; }
+  .contact-meta-item a:hover { color: #2563eb; text-decoration: underline; }
+  .contact-identity-side {
+    display: grid;
+    grid-template-columns: minmax(0, auto) auto;
+    justify-items: end;
+    align-items: start;
+    gap: 10px 14px;
+    min-width: 230px;
+  }
+  .contact-status-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 27px;
+    padding: 0 11px;
+    border: 1px solid #bfdbfe;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 9.5px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .contact-status-badge.follow { border-color: #fed7aa; background: #fff7ed; color: #c2410c; }
+  .contact-status-badge.archived { border-color: #cbd5e1; background: #f1f5f9; color: #64748b; }
+  .contact-identity-stats {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    color: #52627a;
+    font-size: 10px;
+    font-weight: 650;
+    white-space: nowrap;
+  }
+  .contact-overflow-wrap { position: relative; grid-column: 2; grid-row: 1; }
+  .contact-overflow-button {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 28px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #0f172a;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+  .contact-overflow-button:hover { background: #eff6ff; color: #2563eb; }
+  .contact-overflow-menu {
+    display: none;
+    position: absolute;
+    z-index: 90;
+    top: calc(100% + 6px);
+    right: 0;
+    width: 205px;
+    overflow: hidden;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 16px 36px rgba(15,23,42,.14);
+  }
+  .contact-overflow-menu.show { display: block; }
+  .contact-overflow-menu button {
+    width: 100%;
+    padding: 11px 13px;
+    border: 0;
+    border-bottom: 1px solid #e2e8f0;
+    background: #fff;
+    color: #334155;
+    text-align: left;
+    font: inherit;
+    font-size: 10.5px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .contact-overflow-menu button:last-child { border-bottom: 0; }
+  .contact-overflow-menu button:hover { background: #f8fbff; color: #2563eb; }
+  .contact-overflow-menu button[disabled] { display: none; }
+
+  .contact-tabbar {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    flex: 0 0 auto;
+    min-height: 48px;
+    padding: 0 16px;
+    border-bottom: 1px solid #dbeafe;
+    background: #fff;
+  }
+  .contact-tab {
+    position: relative;
+    padding: 0 11px;
+    border: 0;
+    background: transparent;
+    color: #334155;
+    font: inherit;
+    font-size: 10.5px;
+    font-weight: 750;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .contact-tab::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: -1px;
+    height: 2px;
+    border-radius: 999px 999px 0 0;
+    background: #2563eb;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform .18s ease;
+  }
+  .contact-tab.active { color: #1d4ed8; }
+  .contact-tab.active::after { transform: scaleX(1); }
+  .contact-tab:focus-visible { outline: 3px solid rgba(37,99,235,.18); outline-offset: -3px; border-radius: 8px; }
+
+  .contact-workspace-content {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 12px 14px 14px;
+    background: #fbfdff;
+    scrollbar-width: thin;
+    scrollbar-color: #bfdbfe transparent;
+  }
+  .contact-workspace-content::-webkit-scrollbar { width: 7px; }
+  .contact-workspace-content::-webkit-scrollbar-thumb { background: #bfdbfe; border-radius: 999px; }
+  .contact-empty-state,
+  .crm-contacts-empty {
+    padding: 30px 18px;
+    color: #64748b;
+    font-size: 11.5px;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .crm-legacy-compat { display: none !important; }
+
+  .contact-panel-card {
+    min-width: 0;
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .contact-panel-card + .contact-panel-card { margin-top: 10px; }
+  .contact-panel-title-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border-bottom: 1px solid #dbeafe;
+  }
+  .contact-panel-title {
+    color: #0f172a;
+    font-size: 13px;
+    line-height: 1.3;
+    font-weight: 800;
+  }
+  .contact-panel-subtitle {
+    margin-top: 4px;
+    color: #64748b;
+    font-size: 10px;
+    line-height: 1.4;
+  }
+  .contact-link-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #2563eb;
+    font: inherit;
+    font-size: 10px;
+    line-height: 1.35;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .contact-link-button:hover { text-decoration: underline; }
+  .contact-section-kicker {
+    color: #2563eb;
+    font-size: 8.5px;
+    font-weight: 850;
+    letter-spacing: .7px;
+    text-transform: uppercase;
+  }
+
+  .briefing-hero-body {
+    display: grid;
+    grid-template-columns: minmax(0,.95fr) minmax(0,1.35fr);
+    gap: 14px;
+    padding: 12px 14px 14px;
+  }
+  .briefing-latest,
+  .briefing-discussion { min-width: 0; }
+  .briefing-discussion {
+    padding-left: 14px;
+    border-left: 1px solid #dbeafe;
+  }
+  .briefing-meeting-title {
+    margin-top: 7px;
+    color: #0f172a;
+    font-size: 12.5px;
+    line-height: 1.4;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+  }
+  .briefing-meeting-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 11px;
+    margin-top: 5px;
+    color: #52627a;
+    font-size: 9.5px;
+    line-height: 1.4;
+  }
+  .briefing-last-met {
+    margin-top: 10px;
+    padding: 10px 11px;
+    border: 1px solid #dbeafe;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #eff6ff, #f8fbff);
+  }
+  .briefing-last-met strong { display: block; margin-top: 4px; color: #0f172a; font-size: 10.5px; }
+  .briefing-last-met span { display: block; margin-top: 3px; color: #52627a; font-size: 9.5px; }
+  .briefing-summary {
+    margin-top: 8px;
+    color: #243b64;
+    font-size: 10.5px;
+    line-height: 1.65;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+  }
+  .briefing-summary.clamped {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden;
+  }
+  .briefing-link-row { margin-top: 10px; }
+
+  .briefing-middle-grid {
+    display: grid;
+    grid-template-columns: minmax(0,1.08fr) minmax(280px,.92fr);
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .followup-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .followup-table th {
+    padding: 7px 9px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #52627a;
+    font-size: 8px;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: .35px;
+  }
+  .followup-table td {
+    padding: 8px 9px;
+    border-bottom: 1px solid #eef2f7;
+    color: #334155;
+    font-size: 9.5px;
+    line-height: 1.45;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+  }
+  .followup-table tr:last-child td { border-bottom: 0; }
+  .followup-status {
+    display: inline-flex;
+    padding: 3px 7px;
+    border: 1px solid #fed7aa;
+    border-radius: 999px;
+    background: #fff7ed;
+    color: #c2410c;
+    font-size: 8px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .followup-empty { padding: 18px 14px; color: #64748b; font-size: 10px; }
+  .continue-list {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    padding: 12px 14px 14px;
+  }
+  .continue-item {
+    display: grid;
+    grid-template-columns: 19px minmax(0,1fr);
+    gap: 9px;
+    align-items: start;
+    color: #334155;
+    font-size: 9.8px;
+    line-height: 1.45;
+  }
+  .continue-number {
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #2563eb;
+    color: #fff;
+    font-size: 8px;
+    font-weight: 800;
+  }
+  .interaction-preview-list { padding: 3px 14px 8px; }
+  .interaction-preview-row {
+    display: grid;
+    grid-template-columns: 78px minmax(0,1fr) auto;
+    gap: 10px;
+    align-items: start;
+    padding: 9px 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .interaction-preview-row:last-child { border-bottom: 0; }
+  .interaction-date { color: #526aa8; font-size: 9px; font-weight: 700; }
+  .interaction-title { color: #0f172a; font-size: 9.8px; line-height: 1.35; font-weight: 800; }
+  .interaction-context { margin-top: 3px; color: #64748b; font-size: 8.8px; line-height: 1.4; }
+  .interaction-counts { color: #52627a; font-size: 8.5px; white-space: nowrap; }
+  .supporting-doc-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 11px 14px;
+    border: 0;
+    background: #fff;
+    color: #1e3a8a;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+  }
+  .supporting-doc-row strong { display: block; font-size: 10.5px; }
+  .supporting-doc-row span { display: block; margin-top: 3px; color: #64748b; font-size: 9px; }
+  .supporting-doc-row:hover { background: #f8fbff; }
+
+  .contact-split-view {
+    display: grid;
+    grid-template-columns: minmax(260px, 37%) minmax(0,1fr);
+    gap: 10px;
+    min-height: 100%;
+  }
+  .contact-split-pane {
+    min-width: 0;
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .contact-split-pane-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 45px;
+    padding: 0 13px;
+    border-bottom: 1px solid #dbeafe;
+    color: #0f172a;
+    font-size: 10.5px;
+    font-weight: 800;
+  }
+  .relationship-timeline,
+  .document-list {
+    max-height: 560px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #bfdbfe transparent;
+  }
+  .timeline-item,
+  .document-list-item {
+    width: 100%;
+    min-width: 0;
+    padding: 12px 13px;
+    border: 0;
+    border-bottom: 1px solid #e2e8f0;
+    background: #fff;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+  }
+  .timeline-item:hover,
+  .document-list-item:hover { background: #f8fbff; }
+  .timeline-item.active,
+  .document-list-item.active {
+    background: #eff6ff;
+    box-shadow: inset 3px 0 0 #2563eb;
+  }
+  .timeline-title,
+  .document-name {
+    color: #0f172a;
+    font-size: 10.5px;
+    line-height: 1.4;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+  }
+  .timeline-meta,
+  .document-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 9px;
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 8.8px;
+    line-height: 1.35;
+  }
+  .timeline-context {
+    margin-top: 6px;
+    color: #52627a;
+    font-size: 9px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .timeline-badges { display: flex; gap: 6px; margin-top: 7px; flex-wrap: wrap; }
+  .timeline-badge,
+  .document-status {
+    display: inline-flex;
+    padding: 3px 6px;
+    border: 1px solid #dbeafe;
+    border-radius: 999px;
+    background: #f8fbff;
+    color: #526aa8;
+    font-size: 7.8px;
+    font-weight: 800;
+  }
+
+  .meeting-detail-pane,
+  .document-preview-pane { min-width: 0; }
+  .meeting-detail-scroll,
+  .document-preview-scroll {
+    max-height: 560px;
+    overflow-y: auto;
+    padding: 14px;
+    scrollbar-width: thin;
+    scrollbar-color: #bfdbfe transparent;
+  }
+  .back-to-briefing { margin-bottom: 10px; }
+  .meeting-detail-title {
+    color: #0f172a;
+    font-size: 15px;
+    line-height: 1.35;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+  }
+  .meeting-detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 11px;
+    margin-top: 7px;
+    color: #52627a;
+    font-size: 9.5px;
+    line-height: 1.4;
+  }
+  .detail-section {
+    padding: 11px 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .detail-section:last-child { border-bottom: 0; }
+  .detail-section-label {
+    color: #52627a;
+    font-size: 8px;
+    font-weight: 850;
+    letter-spacing: .55px;
+    text-transform: uppercase;
+  }
+  .detail-section-value {
+    margin-top: 5px;
+    color: #243b64;
+    font-size: 10px;
+    line-height: 1.58;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+  }
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 10px;
+  }
+  .detail-mini-card {
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #f8fafc;
+  }
+  .detail-mini-card .detail-section-value { margin-top: 4px; }
+  .detail-doc-list { display: flex; flex-direction: column; gap: 7px; margin-top: 7px; }
+  .detail-doc-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 9px;
+    border: 1px solid #dbeafe;
+    border-radius: 9px;
+    background: #f8fbff;
+    color: #2563eb;
+    text-decoration: none;
+    font-size: 9px;
+    font-weight: 750;
+    overflow-wrap: anywhere;
+  }
+
+  .document-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    padding: 9px 11px;
+    border-bottom: 1px solid #dbeafe;
+  }
+  .document-toolbar select {
+    min-height: 34px;
+    flex: 1 1 120px;
+    min-width: 0;
+    padding: 0 9px;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    background: #fff;
+    color: #334155;
+    font: inherit;
+    font-size: 9px;
+  }
+  .document-filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin: 8px 11px 0;
+    padding: 5px 8px;
+    border: 1px solid #bfdbfe;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 8px;
+    font-weight: 800;
+  }
+  .document-filter-pill button { border: 0; background: transparent; color: inherit; cursor: pointer; font: inherit; }
+  .document-preview-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 8px 10px;
+    border-bottom: 1px solid #dbeafe;
+    background: #f8fbff;
+  }
+  .document-preview-tab {
+    min-height: 32px;
+    padding: 0 10px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: #52627a;
+    font: inherit;
+    font-size: 8.8px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .document-preview-tab.active { border-color: #bfdbfe; background: #fff; color: #1d4ed8; }
+  .document-preview-frame {
+    width: 100%;
+    min-height: 410px;
+    border: 0;
+    background: #f8fafc;
+  }
+  .document-text-view {
+    min-height: 410px;
+    padding: 14px;
+    color: #334155;
+    font-size: 10px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .document-info-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px; padding: 14px; }
+
+  .record-info-groups { display: grid; gap: 10px; }
+  .record-info-group {
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .record-info-group h3 {
+    margin: 0;
+    padding: 11px 13px;
+    border-bottom: 1px solid #dbeafe;
+    color: #0f172a;
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .record-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 10px;
+    padding: 12px 13px;
+  }
+  .record-info-field { min-width: 0; }
+  .record-info-field.full { grid-column: 1 / -1; }
+  .record-info-field label {
+    display: block;
+    color: #64748b;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .45px;
+    text-transform: uppercase;
+  }
+  .record-info-field div {
+    margin-top: 4px;
+    color: #243b64;
+    font-size: 9.8px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 1260px) {
+    .contact-intel-toolbar { flex-wrap: wrap; }
+    .contact-intel-search-wrap { flex-basis: 360px; }
+    .contact-intel-toolbar-spacer { display: none; }
+    .contact-intel-sort-label { margin-left: auto; }
+    .contact-intel-workspace { grid-template-columns: minmax(310px, 31%) minmax(0, 1fr); }
+  }
+
+  @media (max-width: 1020px) {
+    .contact-intel-workspace { grid-template-columns: minmax(280px, 34%) minmax(0, 1fr); }
+    .contact-directory-panel,
+    .contact-workspace-panel { height: min(740px, calc(100vh - 244px)); }
+    .contact-identity-header { grid-template-columns: 1fr; gap: 12px; }
+    .contact-identity-side { min-width: 0; grid-template-columns: auto auto; justify-items: start; }
+    .contact-identity-stats { grid-column: 1 / 2; justify-content: flex-start; }
+    .contact-overflow-wrap { grid-column: 2; grid-row: 1; justify-self: end; }
+    .briefing-hero-body,
+    .briefing-middle-grid { grid-template-columns: 1fr; }
+    .briefing-discussion { padding-left: 0; padding-top: 12px; border-left: 0; border-top: 1px solid #dbeafe; }
+    .contact-split-view { grid-template-columns: 1fr; }
+    .relationship-timeline,
+    .document-list { max-height: 250px; }
+  }
+
+  @media (max-width: 780px) {
+    #pageContacts.contact-intel-page { padding-top: 0; }
+    .contact-intel-page-head { padding-top: 8px; }
+    .contact-intel-toolbar { display: grid; grid-template-columns: 1fr 1fr; }
+    .contact-intel-search-wrap { grid-column: 1 / -1; min-width: 0; }
+    #crmContactsStatus,
+    .contact-intel-sort { min-width: 0; width: 100%; }
+    .contact-intel-clear,
+    .contact-intel-count-chip,
+    .contact-intel-filter-anchor { width: 100%; }
+    .contact-intel-count-chip { min-width: 0; }
+    .contact-intel-sort-label { display: none; }
+    .contact-intel-filter-btn { width: 100%; }
+    .contact-intel-filter-panel { left: 0; right: auto; width: min(280px, calc(100vw - 32px)); }
+    .contact-intel-workspace { grid-template-columns: 1fr; }
+    .contact-directory-panel,
+    .contact-workspace-panel { height: auto; min-height: 0; }
+    .contact-directory-panel { max-height: 390px; }
+    .contact-workspace-panel { min-height: 620px; }
+    .contact-identity-header { position: static; }
+    .contact-tabbar { overflow-x: auto; padding: 0 8px; }
+    .contact-tab { min-width: max-content; }
+    .contact-workspace-content { max-height: none; overflow: visible; }
+    .relationship-timeline,
+    .document-list,
+    .meeting-detail-scroll,
+    .document-preview-scroll { max-height: none; }
+  }
+
+  @media (max-width: 520px) {
+    .contact-intel-page-head h1 { font-size: 25px; }
+    .contact-intel-toolbar { grid-template-columns: 1fr; gap: 9px; }
+    .contact-intel-search-wrap { grid-column: auto; }
+    .contact-identity-main { gap: 11px; }
+    .contact-identity-avatar { width: 48px; height: 48px; flex-basis: 48px; font-size: 19px; }
+    .contact-identity-copy h2 { font-size: 18px; }
+    .contact-identity-side { grid-template-columns: 1fr auto; }
+    .contact-identity-stats { flex-wrap: wrap; white-space: normal; }
+    .contact-tabbar { gap: 2px; }
+    .contact-tab { padding: 0 9px; font-size: 10px; }
+    .contact-workspace-content { padding: 10px; }
+    .detail-grid,
+    .record-info-grid,
+    .document-info-grid { grid-template-columns: 1fr; }
+    .record-info-field.full { grid-column: auto; }
+    .followup-table th:nth-child(2),
+    .followup-table td:nth-child(2),
+    .followup-table th:nth-child(3),
+    .followup-table td:nth-child(3) { display: none; }
+    .interaction-preview-row { grid-template-columns: 68px minmax(0,1fr); }
+    .interaction-counts { grid-column: 2; }
+  }
+</style>
+
 </head>
 <body>
 <!-- Final standardised MRANTI CRM build: signed-out page redesigned; signed-in logic preserved. -->
@@ -5889,53 +6983,109 @@
 </aside>
 </div>
 </section>
-<section class="system-page" data-page="contacts" id="pageContacts">
-<div class="system-page-toolbar">
-<div><h1>CRM Contacts</h1><p>Search the organisation-wide relationship database and review complete meeting context.</p></div>
-<div class="system-toolbar-actions records-filter-grid">
-<input class="system-input" id="crmContactsSearch" oninput="crmFilterRecords()" placeholder="Search name, company, email, phone or meeting..." type="search"/>
-<select class="system-select" id="crmContactsStatus" onchange="crmFilterRecords()"><option value="Active">Active Records</option><option value="Archived">Archived Records</option><option value="All">All Records</option></select>
-<button class="system-btn" onclick="crmClearSearch()" type="button">Clear</button>
-</div>
-</div>
-<div class="crm-contacts-banner info" id="crmContactsBanner"></div>
-<div class="records-layout">
-<section class="system-card records-panel">
-<div class="records-panel-head"><span class="records-panel-title">All contacts &amp; meetings</span><span class="records-panel-count" id="crmContactsCount">0 records</span></div>
-<div class="records-list" id="crmContactsList"><div class="crm-contacts-empty">Loading CRM contacts…</div></div>
+<section class="system-page contact-intel-page" data-page="contacts" id="pageContacts">
+  <header class="contact-intel-page-head">
+    <div class="contact-intel-eyebrow">MRANTI CRM WORKSPACE</div>
+    <h1>CRM Contacts</h1>
+    <p>Prepare for stakeholder meetings with complete MRANTI relationship context.</p>
+    <div class="contact-intel-head-divider" aria-hidden="true"></div>
+  </header>
+
+  <div class="contact-intel-toolbar" aria-label="Contact search and filters">
+    <label class="contact-intel-search-wrap" aria-label="Search contacts">
+      <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.4-3.4"></path></svg>
+      <input class="system-input" id="crmContactsSearch" oninput="crmFilterRecords()" placeholder="Search name, company, email, phone or meeting..." type="search"/>
+    </label>
+    <select class="system-select" id="crmContactsStatus" onchange="crmFilterRecords()" aria-label="Record status">
+      <option value="All">All Records</option>
+      <option value="Active">Active Records</option>
+      <option value="Archived">Archived Records</option>
+    </select>
+    <button class="system-btn contact-intel-clear" onclick="crmClearSearch()" type="button">Clear</button>
+    <div class="contact-intel-count-chip" aria-live="polite">
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      <span id="crmContactsCount">0 contacts</span>
+    </div>
+    <div class="contact-intel-toolbar-spacer"></div>
+    <label class="contact-intel-sort-label" for="crmContactsSort">Sort by:</label>
+    <select class="system-select contact-intel-sort" id="crmContactsSort" onchange="crmFilterRecords()">
+      <option value="engaged-desc">Last engaged (desc)</option>
+      <option value="engaged-asc">Last engaged (asc)</option>
+      <option value="name-asc">Name (A–Z)</option>
+      <option value="name-desc">Name (Z–A)</option>
+      <option value="company-asc">Organisation (A–Z)</option>
+    </select>
+    <div class="contact-intel-filter-anchor">
+      <button aria-expanded="false" class="system-btn contact-intel-filter-btn" id="crmContactFilterButton" onclick="crmToggleContactFilters(event)" type="button">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"></path></svg><span>Filter</span>
+      </button>
+      <div class="contact-intel-filter-panel" id="crmContactFilterPanel" role="dialog" aria-label="Additional contact filters">
+        <div class="contact-intel-filter-title">Additional filters</div>
+        <label><input id="crmFilterHasActions" onchange="crmFilterRecords()" type="checkbox"/> Has open action items</label>
+        <label><input id="crmFilterHasDocuments" onchange="crmFilterRecords()" type="checkbox"/> Has linked documents</label>
+        <button class="contact-intel-filter-reset" onclick="crmResetAdditionalFilters()" type="button">Reset additional filters</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="crm-contacts-banner info" id="crmContactsBanner" role="status" aria-live="polite"></div>
+
+  <div class="contact-intel-workspace">
+    <aside class="contact-directory-panel system-card" aria-label="Contact directory">
+      <div class="contact-directory-head">
+        <span>ALL CONTACTS</span>
+        <span id="crmDirectoryCount">0 contacts</span>
+      </div>
+      <div class="contact-directory-list" id="crmContactsList">
+        <div class="crm-contacts-empty">Loading CRM contacts…</div>
+      </div>
+      <button class="contact-directory-load" id="crmLoadMoreContacts" onclick="crmLoadMoreContacts()" type="button" style="display:none;">Load more contacts <span aria-hidden="true">↓</span></button>
+    </aside>
+
+    <section class="contact-workspace-panel system-card" aria-label="Selected contact workspace">
+      <div class="contact-identity-header" id="crmContactIdentityHeader">
+        <div class="contact-identity-main">
+          <div class="contact-identity-avatar" id="crmContactAvatar">—</div>
+          <div class="contact-identity-copy">
+            <h2 id="crmContactName">Select a contact</h2>
+            <div class="contact-identity-org" id="crmContactOrganisation"></div>
+            <div class="contact-identity-role" id="crmContactRole"></div>
+            <div class="contact-identity-meta" id="crmContactMeta"></div>
+          </div>
+        </div>
+        <div class="contact-identity-side">
+          <span class="contact-status-badge" id="crmContactStatusBadge">—</span>
+          <div class="contact-identity-stats">
+            <span id="crmContactMeetingCount">0 meetings</span><span aria-hidden="true">•</span><span id="crmContactLastEngaged">Last engaged —</span>
+          </div>
+          <div class="contact-overflow-wrap">
+            <button aria-expanded="false" aria-label="Contact record actions" class="contact-overflow-button" id="crmContactOverflowButton" onclick="crmToggleContactMenu(event)" type="button">•••</button>
+            <div class="contact-overflow-menu" id="crmContactOverflowMenu">
+              <button id="crmManageOwnBtn" onclick="crmManageSelectedOwnRecord()" type="button">Manage selected record</button>
+              <button id="crmContactArchiveAction" onclick="crmContactMutateSelectedStatus()" type="button">Archive selected record</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-tabbar" role="tablist" aria-label="Contact workspace views" onkeydown="crmContactTabKeydown(event)">
+        <button aria-controls="crmWorkspaceContent" aria-selected="true" class="contact-tab active" data-tab="briefing" id="crmTabBriefing" onclick="crmSwitchContactTab('briefing')" role="tab" type="button">Briefing</button>
+        <button aria-controls="crmWorkspaceContent" aria-selected="false" class="contact-tab" data-tab="history" id="crmTabHistory" onclick="crmSwitchContactTab('history')" role="tab" type="button">Relationship History</button>
+        <button aria-controls="crmWorkspaceContent" aria-selected="false" class="contact-tab" data-tab="documents" id="crmTabDocuments" onclick="crmSwitchContactTab('documents')" role="tab" type="button">Documents</button>
+        <button aria-controls="crmWorkspaceContent" aria-selected="false" class="contact-tab" data-tab="record" id="crmTabRecord" onclick="crmSwitchContactTab('record')" role="tab" type="button">Record Info</button>
+      </div>
+
+      <div class="contact-workspace-content" id="crmWorkspaceContent" role="tabpanel" aria-live="polite">
+        <div class="contact-empty-state">Select a contact to review relationship intelligence.</div>
+      </div>
+    </section>
+  </div>
+
+  <div class="crm-legacy-compat" aria-hidden="true">
+    <div id="crmDetailName"></div><div id="crmDetailCompany"></div><div id="crmDetailEmail"></div><div id="crmDetailPhone"></div><div id="crmDetailJobTitle"></div><div id="crmDetailMeetingTitle"></div><div id="crmDetailMeetingDate"></div><div id="crmDetailReason"></div><div id="crmDetailAttendees"></div><div id="crmDetailNotes"></div><div id="crmDetailActionItems"></div><div id="crmDetailUploader"></div><div id="crmDetailUploaderEmail"></div><div id="crmDetailStatus"></div><div id="crmDetailUpdated"></div><div id="crmOwnerNotice"></div><div id="crmDocumentSection"></div><div id="crmDetailDocuments"></div><div id="crmLegacyNote"></div>
+  </div>
 </section>
-<section class="system-card record-detail">
-<div class="record-detail-header">
-<div><div class="record-detail-name" id="crmDetailName">Select a record</div><div class="record-detail-company" id="crmDetailCompany"></div></div>
-<div class="record-detail-actions"><button class="system-btn" id="crmManageOwnBtn" onclick="crmManageSelectedOwnRecord()" style="display:none;" type="button">Manage in My CRM Entries</button></div>
-</div>
-<div class="record-detail-body">
-<div class="record-owner-banner other" id="crmOwnerNotice">Select a record to view its ownership and meeting details.</div>
-<section><div class="record-section-title">Contact</div><div class="record-info-grid">
-<div class="record-info"><div class="record-info-label">Email</div><div class="record-info-value" id="crmDetailEmail"></div></div>
-<div class="record-info"><div class="record-info-label">Contact Number</div><div class="record-info-value" id="crmDetailPhone"></div></div>
-<div class="record-info full"><div class="record-info-label">Job Title</div><div class="record-info-value" id="crmDetailJobTitle"></div></div>
-</div></section>
-<section><div class="record-section-title">Meeting</div><div class="record-info-grid">
-<div class="record-info full"><div class="record-info-label">Meeting Title</div><div class="record-info-value" id="crmDetailMeetingTitle"></div></div>
-<div class="record-info"><div class="record-info-label">Meeting Date</div><div class="record-info-value" id="crmDetailMeetingDate"></div></div>
-<div class="record-info"><div class="record-info-label">Purpose</div><div class="record-info-value" id="crmDetailReason"></div></div>
-<div class="record-info full"><div class="record-info-label">Attendees</div><div class="record-info-value" id="crmDetailAttendees"></div></div>
-</div></section>
-<section><div class="record-section-title">Meeting Notes</div><div class="record-notes" id="crmDetailNotes">No meeting notes recorded.</div></section>
-<section><div class="record-section-title">Action Items</div><div class="record-notes" id="crmDetailActionItems">No action items recorded.</div></section>
-<section><div class="record-section-title">Internal Log</div><div class="record-info-grid">
-<div class="record-info"><div class="record-info-label">Uploader</div><div class="record-info-value" id="crmDetailUploader"></div></div>
-<div class="record-info"><div class="record-info-label">Uploader Email</div><div class="record-info-value" id="crmDetailUploaderEmail"></div></div>
-<div class="record-info"><div class="record-info-label">Record Status</div><div class="record-info-value" id="crmDetailStatus"></div></div>
-<div class="record-info"><div class="record-info-label">Last Updated</div><div class="record-info-value" id="crmDetailUpdated"></div></div>
-</div></section>
-<section id="crmDocumentSection" style="display:none;"><div class="record-section-title">Meeting Documents</div><div class="record-docs" id="crmDetailDocuments"></div></section>
-<div id="crmLegacyNote" style="display:none"></div>
-</div>
-</section>
-</div>
-</section>
+
 <section class="system-page" data-page="my-records" id="pageMyRecords">
 <div class="system-page-toolbar modern-page-intro">
 <div><h1>My CRM Entries</h1><p>Manage only the records uploaded using your MRANTI account. <span class="modern-last-updated">Last activity: <strong id="myLastUpdated">—</strong></span></p></div>
@@ -9148,6 +10298,737 @@
     function systemApplyPreferences(){const prefs=systemGetPreferences();document.body.classList.toggle('crm-density-compact',prefs.density==='compact');const density=document.getElementById('profileDensity');const defaultPage=document.getElementById('profileDefaultPage');if(density)density.value=prefs.density||'comfortable';if(defaultPage)defaultPage.value=prefs.defaultPage||'dashboard';}
     function systemSavePreferences(){const prefs={defaultPage:document.getElementById('profileDefaultPage').value,density:document.getElementById('profileDensity').value};localStorage.setItem(CRM_PREFERENCES_KEY,JSON.stringify(prefs));systemApplyPreferences();const status=document.getElementById('profilePreferenceStatus');status.textContent='Preferences saved.';setTimeout(()=>status.textContent='',2200);}
     function systemRenderProfile(){if(!currentUser)return;const owned=myOwnedIndices().map(i=>crmRecords[i]);const actions=owned.filter(crmHasAction);const archived=owned.filter(r=>crmStatus(r).toLowerCase()==='archived');const last=crmSortRecords(owned)[0];document.getElementById('profileUploadedCount').textContent=owned.length;document.getElementById('profileActionCount').textContent=actions.length;document.getElementById('profileArchivedCount').textContent=archived.length;document.getElementById('profileLastActivity').textContent=last?(last.lastUpdated||last.meetingDate||'—'):'—';systemApplyPreferences();}
+
+
+    // CONTACT-CENTRIC RELATIONSHIP INTELLIGENCE WORKSPACE
+    let crmContactGroups = [];
+    let crmFilteredContactGroups = [];
+    let crmSelectedContactKey = '';
+    let crmSelectedMeetingIndex = -1;
+    let crmActiveContactTab = 'briefing';
+    let crmContactRenderLimit = 12;
+    let crmHistoryBackToBriefing = false;
+    let crmHistoryFocusSection = '';
+    let crmLatestDocumentFilter = false;
+    let crmSelectedDocumentKey = '';
+    let crmDocumentPreviewMode = 'original';
+
+    function crmIntelText(value, fallback = '') {
+      const raw = String(value == null ? '' : value)
+        .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+        .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/https?:\/\/\S+/gi, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      return raw || fallback;
+    }
+
+    function crmIntelDateValue(record) {
+      const candidates = [record?.meetingDate, record?.startDateTime, record?.startTime, record?.lastUpdated, record?.createdAt];
+      for (const candidate of candidates) {
+        if (!candidate) continue;
+        const parsed = new Date(candidate);
+        if (!Number.isNaN(parsed.getTime())) return parsed;
+        const withoutWeekday = String(candidate).replace(/^[A-Za-z]{3,9},\s*/, '');
+        const fallback = new Date(withoutWeekday);
+        if (!Number.isNaN(fallback.getTime())) return fallback;
+      }
+      return null;
+    }
+
+    function crmIntelDateScore(record) {
+      return crmIntelDateValue(record)?.getTime() || 0;
+    }
+
+    function crmIntelFullDate(record) {
+      const date = crmIntelDateValue(record);
+      return date ? date.toLocaleDateString('en-MY', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) : 'Date not recorded';
+    }
+
+    function crmIntelShortDate(record) {
+      const date = crmIntelDateValue(record);
+      return date ? date.toLocaleDateString('en-MY', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Date not recorded';
+    }
+
+    function crmIntelTimeRange(record) {
+      const startCandidate = record?.startDateTime || record?.startTime || record?.meetingDate || '';
+      const endCandidate = record?.endDateTime || record?.endTime || '';
+      const parseTime = value => {
+        if (!value) return '';
+        const parsed = new Date(value);
+        if (!Number.isNaN(parsed.getTime()) && /T\d{2}:\d{2}|\d{1,2}:\d{2}|\d{1,2}\s*(?:am|pm)/i.test(String(value))) {
+          return parsed.toLocaleTimeString('en-MY', { hour: 'numeric', minute: '2-digit', hour12: true });
+        }
+        const match = String(value).match(/\b(\d{1,2}:\d{2}\s*(?:AM|PM)?)\b/i);
+        return match ? match[1].toUpperCase().replace(/\s+/g, ' ') : '';
+      };
+      const start = parseTime(startCandidate);
+      const end = parseTime(endCandidate);
+      if (start && end && start !== end) return `${start}–${end}`;
+      return start || end || 'Time not recorded';
+    }
+
+    function crmIntelInitials(name) {
+      const parts = crmIntelText(name, 'Contact').split(/\s+/).filter(Boolean);
+      return (parts.slice(0, 2).map(part => part.charAt(0)).join('') || 'C').toUpperCase();
+    }
+
+    function crmIntelFirstName(name) {
+      const clean = crmIntelText(name, 'this contact').replace(/^(mr|mrs|ms|miss|dr|prof)\.?\s+/i, '');
+      return clean.split(/\s+/)[0] || 'this contact';
+    }
+
+    function crmIntelContactKey(record) {
+      const email = crmNormalize(record?.email || '');
+      if (email) return `email:${email}`;
+      return `person:${crmNormalize(record?.personName || '')}|company:${crmNormalize(record?.companyName || '')}`;
+    }
+
+    function crmIntelRecordValue(records, fields, fallback = '') {
+      for (const record of records) {
+        for (const field of fields) {
+          const value = crmIntelText(record?.[field] || '');
+          if (value) return value;
+        }
+      }
+      return fallback;
+    }
+
+    function crmIntelStatusClass(status) {
+      const value = crmNormalize(status);
+      if (value.includes('archive')) return 'archived';
+      if (value.includes('follow') || value.includes('pending')) return 'follow';
+      return '';
+    }
+
+    function crmIntelActionLines(record) {
+      const raw = record?.actionItems;
+      if (Array.isArray(raw)) return raw.map(item => crmIntelText(typeof item === 'string' ? item : item?.action || item?.text || '')).filter(Boolean);
+      return String(raw || '')
+        .split(/\n+|;(?=\s*[A-Z0-9])/)
+        .map(item => crmIntelText(item.replace(/^[-•*\d.)\s]+/, '')))
+        .filter(Boolean);
+    }
+
+    function crmIntelDocumentsForRecord(record, recordIndex) {
+      const documents = Array.isArray(record?.meetingDocuments) ? record.meetingDocuments : [];
+      return documents.map((document, index) => ({
+        ...document,
+        _recordIndex: recordIndex,
+        _recordKey: crmRecordRouteKey(record),
+        _docIndex: index,
+        _docKey: `${crmRecordRouteKey(record)}::${index}`,
+        _meetingTitle: crmIntelText(record.meetingTitle, 'Untitled meeting'),
+        _meetingDate: crmIntelShortDate(record)
+      }));
+    }
+
+    function crmBuildContactGroups() {
+      const map = new Map();
+      crmRecords.forEach((record, index) => {
+        const key = crmIntelContactKey(record);
+        if (!map.has(key)) map.set(key, { key, records: [] });
+        map.get(key).records.push({ record, index });
+      });
+
+      crmContactGroups = Array.from(map.values()).map(group => {
+        group.records.sort((a, b) => crmIntelDateScore(b.record) - crmIntelDateScore(a.record));
+        const ordered = group.records.map(entry => entry.record);
+        const latestEntry = group.records[0] || { record: {}, index: -1 };
+        const latest = latestEntry.record;
+        const documents = group.records.flatMap(entry => crmIntelDocumentsForRecord(entry.record, entry.index));
+        const actions = group.records.flatMap(entry => crmIntelActionLines(entry.record).map(action => ({ action, recordIndex: entry.index, record: entry.record })));
+        return {
+          ...group,
+          latest,
+          latestIndex: latestEntry.index,
+          name: crmIntelRecordValue(ordered, ['personName'], 'Unnamed contact'),
+          company: crmIntelRecordValue(ordered, ['companyName', 'organisation', 'organization'], 'Organisation not recorded'),
+          email: crmIntelRecordValue(ordered, ['email']),
+          phone: crmIntelRecordValue(ordered, ['phone', 'contactNumber']),
+          jobTitle: crmIntelRecordValue(ordered, ['jobTitle', 'position']),
+          department: crmIntelRecordValue(ordered, ['department', 'division']),
+          location: crmIntelRecordValue(ordered, ['contactLocation', 'city', 'country', 'location']),
+          status: crmStatus(latest),
+          latestTitle: crmIntelText(latest.meetingTitle, 'No meeting title recorded'),
+          latestDateScore: crmIntelDateScore(latest),
+          documents,
+          actions,
+          searchText: crmNormalize(ordered.map(crmRecordSearchText).join(' '))
+        };
+      });
+      return crmContactGroups;
+    }
+
+    function crmVisibleContactGroups() {
+      crmBuildContactGroups();
+      const query = crmNormalize(document.getElementById('crmContactsSearch')?.value || '');
+      const status = document.getElementById('crmContactsStatus')?.value || 'All';
+      const hasActions = Boolean(document.getElementById('crmFilterHasActions')?.checked);
+      const hasDocuments = Boolean(document.getElementById('crmFilterHasDocuments')?.checked);
+      const sort = document.getElementById('crmContactsSort')?.value || 'engaged-desc';
+      const visible = crmContactGroups.filter(group => {
+        if (status !== 'All' && crmNormalize(group.status) !== crmNormalize(status)) return false;
+        if (query && !group.searchText.includes(query)) return false;
+        if (hasActions && !group.actions.length) return false;
+        if (hasDocuments && !group.documents.length) return false;
+        return true;
+      });
+      visible.sort((a, b) => {
+        if (sort === 'engaged-asc') return a.latestDateScore - b.latestDateScore;
+        if (sort === 'name-asc') return a.name.localeCompare(b.name);
+        if (sort === 'name-desc') return b.name.localeCompare(a.name);
+        if (sort === 'company-asc') return a.company.localeCompare(b.company);
+        return b.latestDateScore - a.latestDateScore;
+      });
+      return visible;
+    }
+
+    function crmVisibleRecordIndices() {
+      return crmVisibleContactGroups().flatMap(group => group.records.map(entry => entry.index));
+    }
+
+    function crmDirectoryRow(group) {
+      const active = group.key === crmSelectedContactKey;
+      const statusClass = crmIntelStatusClass(group.status);
+      return `<button class="contact-directory-row ${active ? 'active' : ''}" type="button" data-contact-key="${encodeURIComponent(group.key)}" onclick="crmSelectContactByKey(decodeURIComponent(this.dataset.contactKey))" aria-pressed="${active ? 'true' : 'false'}">
+        <span class="contact-directory-avatar" aria-hidden="true">${crmEscape(crmIntelInitials(group.name))}</span>
+        <span class="contact-directory-copy">
+          <span class="contact-directory-name">${crmEscape(group.name)}</span>
+          <span class="contact-directory-org">${crmEscape(group.company)}</span>
+          <span class="contact-directory-latest">${crmEscape(group.latestTitle)}</span>
+        </span>
+        <span class="contact-directory-status ${statusClass}">${crmEscape(group.status)}</span>
+      </button>`;
+    }
+
+    function crmCurrentContactGroup() {
+      return crmContactGroups.find(group => group.key === crmSelectedContactKey) || null;
+    }
+
+    function crmCurrentMeetingRecord() {
+      return crmRecords[crmSelectedMeetingIndex] || crmCurrentContactGroup()?.latest || null;
+    }
+
+    function crmSelectContactByKey(key, options = {}) {
+      const group = crmContactGroups.find(item => item.key === key);
+      if (!group) return;
+      const changed = crmSelectedContactKey !== key;
+      crmSelectedContactKey = key;
+      crmSelectedMeetingIndex = Number.isInteger(options.meetingIndex) && crmRecords[options.meetingIndex] ? options.meetingIndex : group.latestIndex;
+      crmSelectedIndex = crmSelectedMeetingIndex;
+      if (changed || !options.preserveTab) crmActiveContactTab = options.tab || 'briefing';
+      if (options.tab) crmActiveContactTab = options.tab;
+      crmHistoryBackToBriefing = Boolean(options.backToBriefing);
+      crmHistoryFocusSection = options.focus || '';
+      crmLatestDocumentFilter = Boolean(options.latestDocuments);
+      crmSelectedDocumentKey = '';
+      crmRenderContactDirectory();
+      crmRenderContactIdentity();
+      crmRenderContactTabs();
+      crmRenderContactWorkspace();
+      requestAnimationFrame(() => {
+        document.querySelector(`#crmContactsList [data-contact-key="${CSS.escape(encodeURIComponent(key))}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    }
+
+    function crmSelectRecord(index) {
+      const record = crmRecords[index];
+      if (!record) return;
+      const key = crmIntelContactKey(record);
+      crmSelectContactByKey(key, { meetingIndex: index, tab: 'history' });
+    }
+
+    function crmRenderContactDirectory() {
+      const list = document.getElementById('crmContactsList');
+      const count = crmFilteredContactGroups.length;
+      const visible = crmFilteredContactGroups.slice(0, crmContactRenderLimit);
+      if (document.getElementById('crmContactsCount')) document.getElementById('crmContactsCount').textContent = `${count} contact${count === 1 ? '' : 's'}`;
+      if (document.getElementById('crmDirectoryCount')) document.getElementById('crmDirectoryCount').textContent = `${count} contact${count === 1 ? '' : 's'}`;
+      if (!list) return;
+      list.innerHTML = visible.length ? visible.map(crmDirectoryRow).join('') : '<div class="crm-contacts-empty">No contacts match the current search and filters.</div>';
+      const loadMore = document.getElementById('crmLoadMoreContacts');
+      if (loadMore) loadMore.style.display = count > visible.length ? 'block' : 'none';
+    }
+
+    function crmLoadMoreContacts() {
+      crmContactRenderLimit += 12;
+      crmRenderContactDirectory();
+    }
+
+    function crmFilterRecords(options = {}) {
+      const allowAutoSelect = options.allowAutoSelect !== false;
+      crmFilteredContactGroups = crmVisibleContactGroups();
+      if (!crmFilteredContactGroups.length) {
+        crmSelectedContactKey = '';
+        crmSelectedMeetingIndex = -1;
+        crmSelectedIndex = -1;
+        crmRenderContactDirectory();
+        crmClearDetail();
+        return;
+      }
+
+      const selectedStillVisible = crmFilteredContactGroups.some(group => group.key === crmSelectedContactKey);
+      if (!selectedStillVisible && allowAutoSelect) {
+        const groupFromIndex = crmRecords[crmSelectedIndex] ? crmFilteredContactGroups.find(group => group.key === crmIntelContactKey(crmRecords[crmSelectedIndex])) : null;
+        const selected = groupFromIndex || crmFilteredContactGroups[0];
+        crmSelectedContactKey = selected.key;
+        crmSelectedMeetingIndex = selected.latestIndex;
+        crmSelectedIndex = selected.latestIndex;
+        crmActiveContactTab = 'briefing';
+      } else if (!selectedStillVisible && !allowAutoSelect) {
+        crmSelectedContactKey = '';
+        crmSelectedMeetingIndex = -1;
+      }
+
+      crmRenderContactDirectory();
+      if (crmSelectedContactKey) {
+        crmRenderContactIdentity();
+        crmRenderContactTabs();
+        crmRenderContactWorkspace();
+      } else {
+        crmClearDetail();
+      }
+    }
+
+    function crmClearSearch() {
+      const search = document.getElementById('crmContactsSearch');
+      const status = document.getElementById('crmContactsStatus');
+      const sort = document.getElementById('crmContactsSort');
+      if (search) search.value = '';
+      if (status) status.value = 'All';
+      if (sort) sort.value = 'engaged-desc';
+      crmResetAdditionalFilters(false);
+      crmContactRenderLimit = 12;
+      crmFilterRecords();
+    }
+
+    function crmToggleContactFilters(event) {
+      event?.stopPropagation();
+      const panel = document.getElementById('crmContactFilterPanel');
+      const button = document.getElementById('crmContactFilterButton');
+      const show = !panel?.classList.contains('show');
+      panel?.classList.toggle('show', show);
+      button?.setAttribute('aria-expanded', String(show));
+    }
+
+    function crmResetAdditionalFilters(render = true) {
+      const actions = document.getElementById('crmFilterHasActions');
+      const documents = document.getElementById('crmFilterHasDocuments');
+      if (actions) actions.checked = false;
+      if (documents) documents.checked = false;
+      if (render) crmFilterRecords();
+    }
+
+    function crmToggleContactMenu(event) {
+      event?.stopPropagation();
+      const menu = document.getElementById('crmContactOverflowMenu');
+      const button = document.getElementById('crmContactOverflowButton');
+      const show = !menu?.classList.contains('show');
+      menu?.classList.toggle('show', show);
+      button?.setAttribute('aria-expanded', String(show));
+    }
+
+    function crmContactMetaMarkup(group) {
+      const items = [];
+      if (group.email) items.push(`<span class="contact-meta-item"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"></path><path d="m4 7 8 6 8-6"></path></svg><a href="mailto:${crmEscape(group.email)}">${crmEscape(group.email)}</a></span>`);
+      if (group.phone) items.push(`<span class="contact-meta-item"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"></path></svg><span>${crmEscape(group.phone)}</span></span>`);
+      if (group.location) items.push(`<span class="contact-meta-item"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"></path><circle cx="12" cy="10" r="2.5"></circle></svg><span>${crmEscape(group.location)}</span></span>`);
+      return items.join('');
+    }
+
+    function crmRenderContactIdentity() {
+      const group = crmCurrentContactGroup();
+      if (!group) return crmClearDetail();
+      const record = crmCurrentMeetingRecord() || group.latest;
+      document.getElementById('crmContactAvatar').textContent = crmIntelInitials(group.name);
+      document.getElementById('crmContactName').textContent = group.name;
+      document.getElementById('crmContactOrganisation').textContent = group.company;
+      document.getElementById('crmContactRole').textContent = [group.jobTitle, group.department].filter(Boolean).join(' · ');
+      document.getElementById('crmContactMeta').innerHTML = crmContactMetaMarkup(group);
+      const statusBadge = document.getElementById('crmContactStatusBadge');
+      statusBadge.textContent = group.status;
+      statusBadge.className = `contact-status-badge ${crmIntelStatusClass(group.status)}`;
+      document.getElementById('crmContactMeetingCount').textContent = `${group.records.length} meeting${group.records.length === 1 ? '' : 's'}`;
+      document.getElementById('crmContactLastEngaged').textContent = `Last engaged ${crmIntelShortDate(group.latest)}`;
+
+      const owned = crmIsOwned(record) && Boolean(record?.recordId);
+      const manage = document.getElementById('crmManageOwnBtn');
+      const archive = document.getElementById('crmContactArchiveAction');
+      if (manage) manage.disabled = !owned;
+      if (archive) {
+        archive.disabled = !owned;
+        archive.textContent = crmNormalize(crmStatus(record)).includes('archive') ? 'Restore selected record' : 'Archive selected record';
+      }
+    }
+
+    function crmRenderContactTabs() {
+      document.querySelectorAll('.contact-tab[data-tab]').forEach(button => {
+        const active = button.dataset.tab === crmActiveContactTab;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-selected', String(active));
+        button.tabIndex = active ? 0 : -1;
+      });
+    }
+
+    function crmSwitchContactTab(tab, options = {}) {
+      if (!['briefing', 'history', 'documents', 'record'].includes(tab)) return;
+      crmActiveContactTab = tab;
+      if (tab !== 'history') {
+        crmHistoryBackToBriefing = false;
+        crmHistoryFocusSection = '';
+      }
+      if (tab !== 'documents' && !options.preserveDocumentFilter) crmLatestDocumentFilter = false;
+      crmRenderContactTabs();
+      crmRenderContactWorkspace();
+    }
+
+    function crmContactTabKeydown(event) {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      const tabs = Array.from(document.querySelectorAll('.contact-tab[data-tab]'));
+      const current = tabs.findIndex(tab => tab.getAttribute('aria-selected') === 'true');
+      let next = current;
+      if (event.key === 'ArrowRight') next = (current + 1) % tabs.length;
+      if (event.key === 'ArrowLeft') next = (current - 1 + tabs.length) % tabs.length;
+      if (event.key === 'Home') next = 0;
+      if (event.key === 'End') next = tabs.length - 1;
+      event.preventDefault();
+      crmSwitchContactTab(tabs[next].dataset.tab);
+      tabs[next].focus();
+    }
+
+    function crmOpenHistoryForMeeting(index, focus = '', backToBriefing = true) {
+      if (!crmRecords[index]) return;
+      crmSelectedMeetingIndex = index;
+      crmSelectedIndex = index;
+      crmHistoryFocusSection = focus;
+      crmHistoryBackToBriefing = backToBriefing;
+      crmActiveContactTab = 'history';
+      crmRenderContactIdentity();
+      crmRenderContactTabs();
+      crmRenderContactWorkspace();
+    }
+
+    function crmOpenLatestDocuments() {
+      const group = crmCurrentContactGroup();
+      if (!group) return;
+      crmLatestDocumentFilter = true;
+      crmSelectedDocumentKey = '';
+      crmActiveContactTab = 'documents';
+      crmRenderContactTabs();
+      crmRenderContactWorkspace();
+    }
+
+    function crmRenderContactWorkspace() {
+      const content = document.getElementById('crmWorkspaceContent');
+      const group = crmCurrentContactGroup();
+      if (!content) return;
+      if (!group) {
+        content.innerHTML = '<div class="contact-empty-state">Select a contact to review relationship intelligence.</div>';
+        return;
+      }
+      if (crmActiveContactTab === 'history') content.innerHTML = crmHistoryMarkup(group);
+      else if (crmActiveContactTab === 'documents') content.innerHTML = crmDocumentsMarkup(group);
+      else if (crmActiveContactTab === 'record') content.innerHTML = crmRecordInfoMarkup(group);
+      else content.innerHTML = crmBriefingMarkup(group);
+      crmRenderContactIdentity();
+      if (crmHistoryFocusSection) {
+        const targetId = crmHistoryFocusSection === 'notes' ? 'crmMeetingNotesFocus' : crmHistoryFocusSection === 'actions' ? 'crmMeetingActionsFocus' : '';
+        if (targetId) requestAnimationFrame(() => document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+      }
+    }
+
+    function crmBriefingMarkup(group) {
+      const latest = group.latest;
+      const latestIndex = group.latestIndex;
+      const summary = crmIntelText(latest.meetingNotes || latest.reason, 'No discussion summary has been recorded for the latest interaction.');
+      const latestActions = crmIntelActionLines(latest);
+      const openActions = group.actions.slice(0, 4);
+      const older = group.records.slice(1, 3);
+      const staff = crmIntelText(latest.uploaderName || latest.updatedBy || latest.uploaderEmail, 'MRANTI staff not recorded');
+      const owner = crmIntelText(latest.uploaderName || latest.uploaderEmail, 'Owner not recorded');
+      const continueItems = [];
+      if (openActions[0]) continueItems.push(`Follow up on: ${openActions[0].action}`);
+      if (latest.reason || latest.meetingTitle) continueItems.push(`Continue the ${crmIntelText(latest.reason || latest.meetingTitle).toLowerCase()} discussion.`);
+      if (summary && !summary.startsWith('No discussion')) continueItems.push('Review topics already covered in the latest notes before the conversation.');
+      if (!continueItems.length) continueItems.push('Review the latest meeting notes and outstanding actions before the conversation.');
+
+      const followRows = openActions.map(item => `<tr><td>${crmEscape(item.action)}</td><td>${crmEscape(crmIntelText(item.record.uploaderName || item.record.updatedBy, owner))}</td><td>${crmEscape(crmIntelText(item.record.dueDate || item.record.actionDueDate, 'Not recorded'))}</td><td><span class="followup-status">Open</span></td></tr>`).join('');
+      const olderRows = older.map(entry => {
+        const actions = crmIntelActionLines(entry.record).length;
+        const docs = Array.isArray(entry.record.meetingDocuments) ? entry.record.meetingDocuments.length : 0;
+        return `<div class="interaction-preview-row"><div class="interaction-date">${crmEscape(crmIntelShortDate(entry.record))}</div><div><div class="interaction-title">${crmEscape(crmIntelText(entry.record.meetingTitle, 'Untitled meeting'))}</div><div class="interaction-context">${crmEscape(crmIntelText(entry.record.uploaderName || entry.record.uploaderEmail, 'MRANTI staff not recorded'))} · ${crmEscape(crmIntelText(entry.record.reason || entry.record.meetingNotes, 'No context recorded'))}</div></div><div class="interaction-counts">${docs} doc${docs === 1 ? '' : 's'} · ${actions} action${actions === 1 ? '' : 's'}</div></div>`;
+      }).join('');
+
+      return `<section class="contact-panel-card">
+        <div class="contact-panel-title-row"><div><div class="contact-panel-title">Before you meet ${crmEscape(crmIntelFirstName(group.name))}</div><div class="contact-panel-subtitle">The latest MRANTI context you need for the conversation.</div></div></div>
+        <div class="briefing-hero-body">
+          <div class="briefing-latest">
+            <div class="contact-section-kicker">Latest MRANTI interaction</div>
+            <div class="briefing-meeting-title">${crmEscape(group.latestTitle)}</div>
+            <div class="briefing-meeting-meta"><span>${crmEscape(crmIntelShortDate(latest))}</span><span>${crmEscape(crmIntelTimeRange(latest))}</span><span>${crmEscape(crmIntelText(latest.meetingFormat || latest.source || latest.inputMethod, 'Meeting source not recorded'))}</span></div>
+            <div class="briefing-last-met"><div class="contact-section-kicker">Last met by MRANTI</div><strong>${crmEscape(staff)}</strong><span>${crmEscape(crmIntelText(latest.uploaderUnit || latest.department, 'MRANTI'))}</span></div>
+          </div>
+          <div class="briefing-discussion">
+            <div class="contact-section-kicker">Discussion brief</div>
+            <div class="briefing-summary clamped">${crmEscape(summary)}</div>
+            <div class="briefing-link-row"><button class="contact-link-button" onclick="crmOpenHistoryForMeeting(${latestIndex}, 'notes', true)" type="button">Read full meeting notes <span aria-hidden="true">→</span></button></div>
+          </div>
+        </div>
+      </section>
+      <div class="briefing-middle-grid">
+        <section class="contact-panel-card">
+          <div class="contact-panel-title-row"><div class="contact-panel-title">Open follow-ups</div></div>
+          ${followRows ? `<table class="followup-table"><thead><tr><th style="width:44%">Action</th><th style="width:24%">Owner</th><th style="width:20%">Due date</th><th>Status</th></tr></thead><tbody>${followRows}</tbody></table><div style="padding:8px 13px 11px"><button class="contact-link-button" onclick="crmOpenHistoryForMeeting(${openActions[0]?.recordIndex ?? latestIndex}, 'actions', true)" type="button">View all action items <span aria-hidden="true">→</span></button></div>` : '<div class="followup-empty">No open follow-ups recorded.</div>'}
+        </section>
+        <section class="contact-panel-card">
+          <div class="contact-panel-title-row"><div class="contact-panel-title">Continue the conversation</div></div>
+          <div class="continue-list">${continueItems.slice(0, 3).map((item, index) => `<div class="continue-item"><span class="continue-number">${index + 1}</span><span>${crmEscape(item)}</span></div>`).join('')}</div>
+        </section>
+      </div>
+      <section class="contact-panel-card">
+        <div class="contact-panel-title-row"><div class="contact-panel-title">Previous interactions with MRANTI</div></div>
+        <div class="interaction-preview-list">${olderRows || '<div class="followup-empty">No previous interactions recorded.</div>'}</div>
+        <div style="padding:0 14px 12px"><button class="contact-link-button" onclick="crmOpenHistoryForMeeting(${latestIndex}, '', false)" type="button">View complete relationship history <span aria-hidden="true">→</span></button></div>
+      </section>
+      <section class="contact-panel-card"><button class="supporting-doc-row" onclick="crmOpenLatestDocuments()" type="button"><span><strong>${group.documents.length} relevant document${group.documents.length === 1 ? '' : 's'} available</strong><span>Meeting documents, decks and notes connected to this contact.</span></span><strong aria-hidden="true">›</strong></button></section>`;
+    }
+
+    function crmSelectContactMeeting(index) {
+      if (!crmRecords[index]) return;
+      crmSelectedMeetingIndex = index;
+      crmSelectedIndex = index;
+      crmHistoryFocusSection = '';
+      crmRenderContactIdentity();
+      crmRenderContactWorkspace();
+      requestAnimationFrame(() => document.querySelector(`.timeline-item[data-record-index="${index}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
+    }
+
+    function crmHistoryMarkup(group) {
+      if (!group.records.length) return '<div class="contact-empty-state">No meetings recorded for this contact.</div>';
+      if (!group.records.some(entry => entry.index === crmSelectedMeetingIndex)) crmSelectedMeetingIndex = group.latestIndex;
+      const timeline = group.records.map(entry => {
+        const record = entry.record;
+        const selected = entry.index === crmSelectedMeetingIndex;
+        const docs = Array.isArray(record.meetingDocuments) ? record.meetingDocuments.length : 0;
+        const actions = crmIntelActionLines(record).length;
+        return `<button class="timeline-item ${selected ? 'active' : ''}" type="button" data-record-index="${entry.index}" onclick="crmSelectContactMeeting(${entry.index})"><div class="timeline-title">${crmEscape(crmIntelText(record.meetingTitle, 'Untitled meeting'))}</div><div class="timeline-meta"><span>${crmEscape(crmIntelShortDate(record))}</span><span>${crmEscape(crmIntelTimeRange(record))}</span><span>${crmEscape(crmIntelText(record.uploaderName || record.uploaderEmail, 'MRANTI staff not recorded'))}</span></div><div class="timeline-context">${crmEscape(crmIntelText(record.reason || record.meetingNotes, 'No context recorded'))}</div><div class="timeline-badges"><span class="timeline-badge">${actions} action${actions === 1 ? '' : 's'}</span><span class="timeline-badge">${docs} document${docs === 1 ? '' : 's'}</span><span class="timeline-badge">${crmEscape(crmIntelText(record.recordSource || record.source || record.inputMethod, 'Source not recorded'))}</span></div></button>`;
+      }).join('');
+      return `<div class="contact-split-view"><section class="contact-split-pane"><div class="contact-split-pane-head"><span>Relationship timeline</span><span>${group.records.length} meeting${group.records.length === 1 ? '' : 's'}</span></div><div class="relationship-timeline">${timeline}</div></section><section class="contact-split-pane meeting-detail-pane">${crmMeetingDetailMarkup(crmRecords[crmSelectedMeetingIndex])}</section></div>`;
+    }
+
+    function crmMeetingDetailMarkup(record) {
+      if (!record) return '<div class="contact-empty-state">Select a meeting to review its details.</div>';
+      const index = crmRecords.indexOf(record);
+      const actions = crmIntelActionLines(record);
+      const documents = crmIntelDocumentsForRecord(record, index);
+      const attendees = crmIntelText(record.attendees, 'No attendees recorded.');
+      const staff = crmIntelText(record.uploaderName || record.updatedBy || record.uploaderEmail, 'MRANTI staff not recorded');
+      const source = crmIntelText(record.recordSource || record.source || record.inputMethod, 'Source not recorded');
+      const location = crmIntelText(record.location || record.meetingLocation, 'Location not recorded');
+      const purpose = crmIntelText(record.reason || record.purpose, 'No purpose recorded.');
+      const notes = crmIntelText(record.meetingNotes, 'No meeting notes recorded.');
+      const documentMarkup = documents.length ? documents.map(doc => {
+        const url = crmSafeDocumentUrl(doc.url || doc.webViewLink || doc.downloadUrl);
+        const name = crmEscape(crmIntelText(doc.name, 'Meeting document'));
+        return url ? `<a class="detail-doc-link" href="${crmEscape(url)}" target="_blank" rel="noopener"><span>${name}</span><span>Open</span></a>` : `<div class="detail-doc-link"><span>${name}</span><span>Preview unavailable</span></div>`;
+      }).join('') : '<div class="detail-section-value">No linked documents.</div>';
+      return `<div class="meeting-detail-scroll">
+        ${crmHistoryBackToBriefing ? '<button class="contact-link-button back-to-briefing" onclick="crmSwitchContactTab(\'briefing\')" type="button">← Back to Briefing</button>' : ''}
+        <div class="meeting-detail-title">${crmEscape(crmIntelText(record.meetingTitle, 'Untitled meeting'))}</div>
+        <div class="meeting-detail-meta"><span>${crmEscape(crmIntelFullDate(record))}</span><span>${crmEscape(crmIntelTimeRange(record))}</span><span>${crmEscape(source)}</span></div>
+        <div class="detail-section"><div class="detail-grid"><div class="detail-mini-card"><div class="detail-section-label">Purpose</div><div class="detail-section-value">${crmEscape(purpose)}</div></div><div class="detail-mini-card"><div class="detail-section-label">Location</div><div class="detail-section-value">${crmEscape(location)}</div></div><div class="detail-mini-card"><div class="detail-section-label">Attendees</div><div class="detail-section-value">${crmEscape(attendees)}</div></div><div class="detail-mini-card"><div class="detail-section-label">MRANTI staff involved</div><div class="detail-section-value">${crmEscape(staff)}</div></div></div></div>
+        <div class="detail-section" id="crmMeetingNotesFocus"><div class="detail-section-label">Meeting notes</div><div class="detail-section-value">${crmEscape(notes)}</div></div>
+        <div class="detail-section"><div class="detail-section-label">Decisions or outcomes</div><div class="detail-section-value">${crmEscape(crmIntelText(record.decisions || record.outcomes, 'No separate decisions recorded.'))}</div></div>
+        <div class="detail-section" id="crmMeetingActionsFocus"><div class="detail-section-label">Action items</div><div class="detail-section-value">${actions.length ? crmEscape(actions.map((item, itemIndex) => `${itemIndex + 1}. ${item}`).join('\n')) : 'No action items recorded.'}</div></div>
+        <div class="detail-section"><div class="detail-section-label">Linked documents</div><div class="detail-doc-list">${documentMarkup}</div></div>
+        <div class="detail-section"><div class="detail-section-label">Record ownership</div><div class="detail-section-value">Uploaded by ${crmEscape(crmIntelText(record.uploaderName || record.uploaderEmail, 'Not recorded'))}. ${crmIsOwned(record) ? 'You may manage this record.' : 'Only the uploader may modify it.'}</div></div>
+      </div>`;
+    }
+
+    function crmDocumentStatus(document) {
+      return crmIntelText(document.extractionStatus || document.status || document.analysisStatus, document.extractedText || document.text ? 'Extracted' : 'Not analysed');
+    }
+
+    function crmDocumentType(document) {
+      const explicit = crmIntelText(document.type || document.mimeType || document.fileType);
+      if (explicit) return explicit;
+      const name = String(document.name || '');
+      const extension = name.includes('.') ? name.split('.').pop().toUpperCase() : '';
+      return extension || 'Document';
+    }
+
+    function crmDocumentsMarkup(group) {
+      let documents = group.documents.slice();
+      const latestIndex = group.latestIndex;
+      if (crmLatestDocumentFilter) documents = documents.filter(document => document._recordIndex === latestIndex);
+      const typeFilter = document.querySelector('#crmDocumentTypeFilter')?.value || 'All';
+      const statusFilter = document.querySelector('#crmDocumentStatusFilter')?.value || 'All';
+      if (typeFilter !== 'All') documents = documents.filter(document => crmDocumentType(document) === typeFilter);
+      if (statusFilter !== 'All') documents = documents.filter(document => crmDocumentStatus(document) === statusFilter);
+      const allTypes = Array.from(new Set(group.documents.map(crmDocumentType))).sort();
+      const allStatuses = Array.from(new Set(group.documents.map(crmDocumentStatus))).sort();
+      if (!documents.some(document => document._docKey === crmSelectedDocumentKey)) crmSelectedDocumentKey = documents[0]?._docKey || '';
+      const selected = documents.find(document => document._docKey === crmSelectedDocumentKey) || null;
+      const list = documents.map(document => `<button class="document-list-item ${document._docKey === crmSelectedDocumentKey ? 'active' : ''}" type="button" data-document-key="${encodeURIComponent(document._docKey)}" onclick="crmSelectDocument(decodeURIComponent(this.dataset.documentKey))"><div class="document-name">${crmEscape(crmIntelText(document.name, 'Meeting document'))}</div><div class="document-meta"><span>${crmEscape(crmDocumentType(document))}</span><span>${crmEscape(document._meetingTitle)}</span><span>${crmEscape(crmDocumentStatus(document))}</span><span>${crmEscape(document._meetingDate)}</span></div></button>`).join('');
+      return `<div class="contact-split-view"><section class="contact-split-pane"><div class="contact-split-pane-head"><span>Documents</span><span>${documents.length} file${documents.length === 1 ? '' : 's'}</span></div><div class="document-toolbar"><select id="crmDocumentTypeFilter" onchange="crmRenderContactWorkspace()"><option value="All">All file types</option>${allTypes.map(type => `<option value="${crmEscape(type)}" ${type === typeFilter ? 'selected' : ''}>${crmEscape(type)}</option>`).join('')}</select><select id="crmDocumentStatusFilter" onchange="crmRenderContactWorkspace()"><option value="All">All extraction statuses</option>${allStatuses.map(status => `<option value="${crmEscape(status)}" ${status === statusFilter ? 'selected' : ''}>${crmEscape(status)}</option>`).join('')}</select></div>${crmLatestDocumentFilter ? '<div class="document-filter-pill">Filtered by latest interaction <button aria-label="Remove latest interaction filter" onclick="crmRemoveLatestDocumentFilter()" type="button">×</button></div>' : ''}<div class="document-list">${list || '<div class="contact-empty-state">No documents linked to this contact.</div>'}</div></section><section class="contact-split-pane document-preview-pane">${crmDocumentPreviewMarkup(selected)}</section></div>`;
+    }
+
+    function crmSelectDocument(key) {
+      crmSelectedDocumentKey = key;
+      crmDocumentPreviewMode = 'original';
+      crmRenderContactWorkspace();
+    }
+
+    function crmRemoveLatestDocumentFilter() {
+      crmLatestDocumentFilter = false;
+      crmSelectedDocumentKey = '';
+      crmRenderContactWorkspace();
+    }
+
+    function crmSetDocumentPreviewMode(mode) {
+      crmDocumentPreviewMode = mode;
+      crmRenderContactWorkspace();
+    }
+
+    function crmSafeDocumentUrl(value) {
+      const url = String(value || '').trim();
+      return /^https?:\/\//i.test(url) ? url : '';
+    }
+
+    function crmExtractedInfoMarkup(document) {
+      const info = document?.extractedInfo || document?.fields || document?.extractedFields;
+      if (!info) return '<div class="contact-empty-state">No extracted information is available.</div>';
+      if (typeof info === 'object') {
+        const entries = Object.entries(info).filter(([, value]) => value != null && String(value).trim());
+        return entries.length ? `<div class="document-info-grid">${entries.map(([key, value]) => `<div class="detail-mini-card"><div class="detail-section-label">${crmEscape(key.replace(/([a-z])([A-Z])/g, '$1 $2'))}</div><div class="detail-section-value">${crmEscape(typeof value === 'object' ? JSON.stringify(value) : String(value))}</div></div>`).join('')}</div>` : '<div class="contact-empty-state">No extracted information is available.</div>';
+      }
+      return `<div class="document-text-view">${crmEscape(crmIntelText(info, 'No extracted information is available.'))}</div>`;
+    }
+
+    function crmDocumentPreviewMarkup(document) {
+      if (!document) return '<div class="contact-empty-state">Select a document to preview it.</div>';
+      const url = crmSafeDocumentUrl(document.url || document.webViewLink || document.downloadUrl);
+      const extractedText = crmIntelText(document.extractedText || document.text || document.content, 'No extracted text is available.');
+      let body = '';
+      if (crmDocumentPreviewMode === 'text') body = `<div class="document-text-view">${crmEscape(extractedText)}</div>`;
+      else if (crmDocumentPreviewMode === 'info') body = crmExtractedInfoMarkup(document);
+      else body = url ? `<iframe class="document-preview-frame" src="${crmEscape(url)}" title="Document preview"></iframe><div style="padding:9px 12px;border-top:1px solid #dbeafe"><a class="contact-link-button" href="${crmEscape(url)}" target="_blank" rel="noopener">Open document in a new tab →</a></div>` : '<div class="contact-empty-state">Preview unavailable.</div>';
+      return `<div class="contact-split-pane-head"><span>${crmEscape(crmIntelText(document.name, 'Document preview'))}</span><span>${crmEscape(crmDocumentStatus(document))}</span></div><div class="document-preview-tabs" role="tablist"><button aria-selected="${crmDocumentPreviewMode === 'original'}" class="document-preview-tab ${crmDocumentPreviewMode === 'original' ? 'active' : ''}" onclick="crmSetDocumentPreviewMode('original')" role="tab" type="button">Original document</button><button aria-selected="${crmDocumentPreviewMode === 'text'}" class="document-preview-tab ${crmDocumentPreviewMode === 'text' ? 'active' : ''}" onclick="crmSetDocumentPreviewMode('text')" role="tab" type="button">Extracted text</button><button aria-selected="${crmDocumentPreviewMode === 'info'}" class="document-preview-tab ${crmDocumentPreviewMode === 'info' ? 'active' : ''}" onclick="crmSetDocumentPreviewMode('info')" role="tab" type="button">Extracted information</button></div><div class="document-preview-scroll">${body}</div>`;
+    }
+
+    function crmInfoField(label, value, full = false) {
+      return `<div class="record-info-field ${full ? 'full' : ''}"><label>${crmEscape(label)}</label><div>${crmEscape(crmIntelText(value, 'Not recorded'))}</div></div>`;
+    }
+
+    function crmRecordInfoMarkup(group) {
+      const record = crmCurrentMeetingRecord() || group.latest;
+      const missing = [!group.email && 'email', !group.phone && 'phone', !group.jobTitle && 'job title', !group.location && 'location'].filter(Boolean).join(', ');
+      return `<div class="record-info-groups">
+        <section class="record-info-group"><h3>Contact Information</h3><div class="record-info-grid">${crmInfoField('Name', group.name)}${crmInfoField('Organisation', group.company)}${crmInfoField('Email', group.email)}${crmInfoField('Phone', group.phone)}${crmInfoField('Job title', group.jobTitle)}${crmInfoField('Department', group.department)}${crmInfoField('Location', group.location, true)}</div></section>
+        <section class="record-info-group"><h3>Record Ownership and Permissions</h3><div class="record-info-grid">${crmInfoField('Uploader', record.uploaderName || record.uploaderEmail)}${crmInfoField('Uploader email', record.uploaderEmail)}${crmInfoField('Who may edit', crmIsOwned(record) ? 'Signed-in uploader' : 'Uploader only')}${crmInfoField('Record status', crmStatus(record))}${crmInfoField('Archive status', crmNormalize(crmStatus(record)).includes('archive') ? 'Archived' : 'Active')}</div></section>
+        <section class="record-info-group"><h3>Source and Data Quality</h3><div class="record-info-grid">${crmInfoField('Input method', record.inputMethod)}${crmInfoField('Record source', record.recordSource || record.source)}${crmInfoField('Origin', record.ocrStatus ? 'OCR-assisted' : record.inputMethod)}${crmInfoField('Missing fields', missing || 'No key contact fields missing')}${crmInfoField('Search index status', record.searchIndex ? 'Available' : 'Not recorded')}${crmInfoField('Processing status', record.processingStatus || record.extractionStatus)}</div></section>
+        <section class="record-info-group"><h3>Activity and Audit History</h3><div class="record-info-grid">${crmInfoField('Created date', record.createdAt || record.submittedAt || record.meetingDate)}${crmInfoField('Last updated', record.lastUpdated)}${crmInfoField('Updated by', record.updatedBy)}${crmInfoField('Record ID', record.recordId || 'Legacy record')}${crmInfoField('Audit history', record.auditHistory || 'No audit history is available beyond the current record metadata.', true)}</div></section>
+      </div>`;
+    }
+
+    function crmClearDetail() {
+      const avatar = document.getElementById('crmContactAvatar');
+      if (avatar) avatar.textContent = '—';
+      if (document.getElementById('crmContactName')) document.getElementById('crmContactName').textContent = 'Select a contact';
+      if (document.getElementById('crmContactOrganisation')) document.getElementById('crmContactOrganisation').textContent = '';
+      if (document.getElementById('crmContactRole')) document.getElementById('crmContactRole').textContent = '';
+      if (document.getElementById('crmContactMeta')) document.getElementById('crmContactMeta').innerHTML = '';
+      if (document.getElementById('crmContactStatusBadge')) document.getElementById('crmContactStatusBadge').textContent = '—';
+      if (document.getElementById('crmContactMeetingCount')) document.getElementById('crmContactMeetingCount').textContent = '0 meetings';
+      if (document.getElementById('crmContactLastEngaged')) document.getElementById('crmContactLastEngaged').textContent = 'Last engaged —';
+      if (document.getElementById('crmWorkspaceContent')) document.getElementById('crmWorkspaceContent').innerHTML = '<div class="contact-empty-state">Select a contact to review relationship intelligence.</div>';
+      document.getElementById('crmManageOwnBtn')?.setAttribute('disabled', '');
+      document.getElementById('crmContactArchiveAction')?.setAttribute('disabled', '');
+    }
+
+    function crmRenderDetail() {
+      const record = crmRecords[crmSelectedIndex];
+      if (!record) return crmClearDetail();
+      const group = crmContactGroups.find(item => item.key === crmIntelContactKey(record));
+      if (!group) return crmClearDetail();
+      crmSelectedContactKey = group.key;
+      if (!Number.isInteger(crmSelectedMeetingIndex) || !crmRecords[crmSelectedMeetingIndex]) crmSelectedMeetingIndex = crmSelectedIndex;
+      crmRenderContactDirectory();
+      crmRenderContactIdentity();
+      crmRenderContactTabs();
+      crmRenderContactWorkspace();
+    }
+
+    function crmManageSelectedOwnRecord() {
+      const record = crmCurrentMeetingRecord();
+      if (!record || !crmIsOwned(record)) return;
+      const index = crmRecords.indexOf(record);
+      mySelectedIndex = index;
+      document.getElementById('crmContactOverflowMenu')?.classList.remove('show');
+      systemNavigate('my-records');
+      setTimeout(() => myFilterRecords(), 50);
+    }
+
+    function crmContactMutateSelectedStatus() {
+      const record = crmCurrentMeetingRecord();
+      if (!record || !crmIsOwned(record) || !record.recordId) return;
+      mySelectedIndex = crmRecords.indexOf(record);
+      document.getElementById('crmContactOverflowMenu')?.classList.remove('show');
+      const action = crmNormalize(crmStatus(record)).includes('archive') ? 'restore' : 'archive';
+      myMutateStatus(action);
+    }
+
+    function crmApplyPendingRecordSelection() {
+      if (systemRouteFromHash() !== 'contacts') return false;
+      const recordKey = systemRecordKeyFromHash() || crmPendingRecordKey;
+      if (!recordKey) return false;
+      const index = crmFindRecordIndexByRouteKey(recordKey);
+      const search = document.getElementById('crmContactsSearch');
+      const status = document.getElementById('crmContactsStatus');
+      if (search) search.value = '';
+      if (status) status.value = 'All';
+      crmResetAdditionalFilters(false);
+      if (index < 0) {
+        crmPendingRecordKey = '';
+        crmSelectedContactKey = '';
+        crmSelectedMeetingIndex = -1;
+        crmSelectedIndex = -1;
+        crmFilterRecords({ allowAutoSelect: false });
+        crmSetBanner('The selected meeting record could not be found.', 'info');
+        return false;
+      }
+      crmBuildContactGroups();
+      const record = crmRecords[index];
+      const key = crmIntelContactKey(record);
+      crmSelectedContactKey = key;
+      crmSelectedMeetingIndex = index;
+      crmSelectedIndex = index;
+      crmActiveContactTab = 'history';
+      crmHistoryBackToBriefing = false;
+      crmHistoryFocusSection = '';
+      crmContactRenderLimit = Math.max(crmContactRenderLimit, crmContactGroups.length);
+      crmPendingRecordKey = '';
+      crmFilterRecords({ allowAutoSelect: false });
+      requestAnimationFrame(() => {
+        document.querySelector(`#crmContactsList [data-contact-key="${CSS.escape(encodeURIComponent(key))}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        document.querySelector(`.timeline-item[data-record-index="${index}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+      return true;
+    }
+
+    document.addEventListener('click', event => {
+      if (!event.target.closest('.contact-intel-filter-anchor')) {
+        document.getElementById('crmContactFilterPanel')?.classList.remove('show');
+        document.getElementById('crmContactFilterButton')?.setAttribute('aria-expanded', 'false');
+      }
+      if (!event.target.closest('.contact-overflow-wrap')) {
+        document.getElementById('crmContactOverflowMenu')?.classList.remove('show');
+        document.getElementById('crmContactOverflowButton')?.setAttribute('aria-expanded', 'false');
+      }
+    });
+
 
     // If a user returns to the base URL after signing in, respect their saved default page.
     function systemApplyDefaultRouteOnFirstLoad(){if(window.location.hash)return;const prefs=systemGetPreferences();const target=SYSTEM_ROUTES[prefs.defaultPage]?prefs.defaultPage:'dashboard';history.replaceState(null,'','#'+target);}
