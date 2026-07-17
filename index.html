@@ -5464,14 +5464,14 @@
   #pageDashboard .meeting-inline-column.has-expanded .meeting-inline-card.is-expanded {
     flex:1 1 auto;
     height:auto!important;
-    min-height:186px!important;
+    min-height:192px!important;
     max-height:none!important;
   }
   #pageDashboard .meeting-inline-column.has-expanded .meeting-inline-card.is-compact {
-    flex:0 0 54px;
-    height:54px!important;
-    min-height:54px!important;
-    max-height:54px!important;
+    flex:0 0 48px;
+    height:48px!important;
+    min-height:48px!important;
+    max-height:48px!important;
   }
   #pageDashboard .meeting-inline-card.is-expanded {
     display:flex!important;
@@ -5508,6 +5508,7 @@
   }
   #pageDashboard .meeting-inline-expanded-date,
   #pageDashboard .meeting-inline-expanded-time {
+    display:block;
     min-width:0;
     margin-top:4px;
     color:#475569;
@@ -5565,8 +5566,7 @@
     align-items:start;
     padding:3px 0;
   }
-  #pageDashboard .meeting-inline-field small,
-  #pageDashboard .meeting-inline-note small {
+  #pageDashboard .meeting-inline-field small {
     display:block;
     color:#94a3b8;
     font-size:7.8px;
@@ -5591,23 +5591,6 @@
   #pageDashboard .meeting-inline-field.organisation strong,
   #pageDashboard .meeting-inline-field.contact strong,
   #pageDashboard .meeting-inline-field.location strong { -webkit-line-clamp:2; }
-  #pageDashboard .meeting-inline-note {
-    min-width:0;
-    margin-top:5px;
-    padding:7px 8px;
-    border:1px solid #dbeafe;
-    border-radius:8px;
-    background:#f8fbff;
-  }
-  #pageDashboard .meeting-inline-note p {
-    min-width:0;
-    margin:3px 0 0;
-    color:#52627a;
-    font-size:8.8px;
-    line-height:1.4;
-    overflow-wrap:anywhere;
-    word-break:break-word;
-  }
   #pageDashboard .meeting-inline-card.is-compact {
     display:flex!important;
     align-items:center!important;
@@ -5688,19 +5671,19 @@
       order:var(--meeting-order);
       flex:0 0 120px;
     }
-    #pageDashboard .meeting-inline-grid.has-any-expanded { overflow:hidden; }
+    #pageDashboard .meeting-inline-grid.has-any-expanded { overflow-y:auto; overflow-x:hidden; }
     #pageDashboard .meeting-inline-grid.has-any-expanded .meeting-inline-card.is-expanded {
-      flex:1 1 auto;
-      height:auto!important;
-      min-height:128px!important;
-      max-height:none!important;
+      flex:0 0 192px;
+      height:192px!important;
+      min-height:192px!important;
+      max-height:192px!important;
     }
     #pageDashboard .meeting-inline-grid.has-any-expanded .meeting-inline-card.is-compact {
-      flex:0 0 34px;
-      height:34px!important;
-      min-height:34px!important;
-      max-height:34px!important;
-      padding:5px 8px!important;
+      flex:0 0 48px;
+      height:48px!important;
+      min-height:48px!important;
+      max-height:48px!important;
+      padding:7px 9px!important;
     }
     #pageDashboard .meeting-inline-grid.has-any-expanded .meeting-inline-compact-attendees { display:none; }
     #pageDashboard .meeting-inline-expanded-head { padding:8px 8px 7px 10px; }
@@ -6320,8 +6303,7 @@
     let dashboardMeetingWeeks = [[], [], [], [], []];
     let dashboardOrganisationRows = [];
     let dashboardOrganisationTotals = { total: 0, fresh: 0, returning: 0 };
-    let dashboardExpandedMeetingCards = { left: null, right: null };
-    let dashboardLastExpandedMeetingColumn = null;
+    let dashboardExpandedMeetingCard = null;
 
     // Temporary meeting draft: scoped to this browser tab and cleared when the tab closes.
     const MEETING_DRAFT_KEY = 'mranti_crm_meeting_draft_v6';
@@ -6721,8 +6703,7 @@
     }
 
     function dashboardResetInlineMeetingCards() {
-      dashboardExpandedMeetingCards = { left: null, right: null };
-      dashboardLastExpandedMeetingColumn = null;
+      dashboardExpandedMeetingCard = null;
     }
 
     function dashboardViewMeetings() {
@@ -6828,17 +6809,12 @@
         organisation: dashboardCleanDisplayText(item?.organisation, 'Organisation not recorded'),
         contact: !contactValue || /^external contact not recorded$/i.test(contactValue) ? 'Contact not recorded' : contactValue,
         location: dashboardCleanDisplayText(item?.location, 'Location not recorded'),
-        attendeeCount: Number(item?.attendeeCount || 0),
-        purpose: dashboardSanitiseMeetingText(item?.purpose, title)
+        attendeeCount: Number(item?.attendeeCount || 0)
       };
     }
 
     function dashboardMeetingInlineField(label, value, modifier = '') {
       return `<div class="meeting-inline-field${modifier ? ` ${modifier}` : ''}"><small>${crmEscape(label)}</small><strong>${crmEscape(value)}</strong></div>`;
-    }
-
-    function dashboardMeetingUsesSingleColumn() {
-      return window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
     }
 
     function dashboardMeetingColumnForIndex(itemIndex) {
@@ -6860,24 +6836,15 @@
     function dashboardToggleInlineMeetingCard(card) {
       const itemIndex = Number(card?.dataset?.itemIndex);
       if (!Number.isInteger(itemIndex)) return;
-      const column = dashboardMeetingColumnForIndex(itemIndex);
-      const alreadyOpen = dashboardExpandedMeetingCards[column] === itemIndex;
-
-      if (dashboardMeetingUsesSingleColumn()) {
-        dashboardExpandedMeetingCards = { left: null, right: null };
-      }
-
-      dashboardExpandedMeetingCards[column] = alreadyOpen ? null : itemIndex;
-      dashboardLastExpandedMeetingColumn = alreadyOpen ? null : column;
+      const alreadyOpen = dashboardExpandedMeetingCard === itemIndex;
+      dashboardExpandedMeetingCard = alreadyOpen ? null : itemIndex;
       dashboardRefreshInlineMeetingCards(itemIndex);
     }
 
-    function dashboardCloseInlineMeetingCard(column, event) {
+    function dashboardCloseInlineMeetingCard(event) {
       event?.stopPropagation();
-      if (column !== 'left' && column !== 'right') return;
-      const closedIndex = dashboardExpandedMeetingCards[column];
-      dashboardExpandedMeetingCards[column] = null;
-      if (dashboardLastExpandedMeetingColumn === column) dashboardLastExpandedMeetingColumn = null;
+      const closedIndex = dashboardExpandedMeetingCard;
+      dashboardExpandedMeetingCard = null;
       dashboardRefreshInlineMeetingCards(closedIndex);
     }
 
@@ -6890,25 +6857,14 @@
     }
 
     function dashboardCloseAllInlineMeetingCards() {
-      if (dashboardExpandedMeetingCards.left === null && dashboardExpandedMeetingCards.right === null) return;
-      dashboardResetInlineMeetingCards();
-      dashboardRefreshInlineMeetingCards();
+      if (dashboardExpandedMeetingCard === null) return;
+      const closedIndex = dashboardExpandedMeetingCard;
+      dashboardExpandedMeetingCard = null;
+      dashboardRefreshInlineMeetingCards(closedIndex);
     }
 
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape') dashboardCloseAllInlineMeetingCards();
-    });
-
-    let dashboardMeetingViewportTimer = null;
-    window.addEventListener('resize', () => {
-      clearTimeout(dashboardMeetingViewportTimer);
-      dashboardMeetingViewportTimer = setTimeout(() => {
-        if (!dashboardMeetingUsesSingleColumn()) return;
-        if (dashboardExpandedMeetingCards.left === null || dashboardExpandedMeetingCards.right === null) return;
-        const keep = dashboardLastExpandedMeetingColumn === 'right' ? 'right' : 'left';
-        dashboardExpandedMeetingCards[keep === 'left' ? 'right' : 'left'] = null;
-        dashboardRefreshInlineMeetingCards();
-      }, 120);
     });
 
     function dashboardShowNotice(message) {
@@ -7028,19 +6984,18 @@
       </article>`;
     }
 
-    function dashboardMeetingExpandedCardMarkup(item, itemIndex, column) {
+    function dashboardMeetingExpandedCardMarkup(item, itemIndex) {
       const details = dashboardMeetingInlineData(item);
       return `<article class="dashboard-detail-meeting meeting-inline-card is-expanded" role="button" tabindex="0" aria-expanded="true" data-week-index="${dashboardSelectedMeetingWeek}" data-item-index="${itemIndex}" style="--meeting-order:${itemIndex}" onclick="dashboardToggleInlineMeetingCard(this)" onkeydown="dashboardMeetingCardKeydown(event,this)">
         <div class="meeting-inline-expanded-head">
           <span><strong class="meeting-inline-expanded-title">${crmEscape(details.title)}</strong><span class="meeting-inline-expanded-date">${crmEscape(details.date)}</span><span class="meeting-inline-expanded-time">${crmEscape(details.time)}</span></span>
-          <button aria-label="Close meeting details" class="meeting-inline-close" type="button" onclick="dashboardCloseInlineMeetingCard('${column}',event)">×</button>
+          <button aria-label="Close meeting details" class="meeting-inline-close" type="button" onclick="dashboardCloseInlineMeetingCard(event)">×</button>
         </div>
         <div class="meeting-inline-expanded-body">
           ${dashboardMeetingInlineField('Organisation', details.organisation, 'organisation')}
           ${dashboardMeetingInlineField('Contact', details.contact, 'contact')}
           ${dashboardMeetingInlineField('Location', details.location, 'location')}
           ${dashboardMeetingInlineField('Attendees', `${details.attendeeCount} attendee${details.attendeeCount === 1 ? '' : 's'}`, 'attendees')}
-          ${details.purpose ? `<div class="meeting-inline-note"><small>Purpose / notes</small><p>${crmEscape(details.purpose)}</p></div>` : ''}
         </div>
       </article>`;
     }
@@ -7056,26 +7011,20 @@
 
       const preview = selected.slice(0, 4);
       const validIndices = new Set(preview.map((_, index) => index));
-      if (!validIndices.has(dashboardExpandedMeetingCards.left)) dashboardExpandedMeetingCards.left = null;
-      if (!validIndices.has(dashboardExpandedMeetingCards.right)) dashboardExpandedMeetingCards.right = null;
+      if (!validIndices.has(dashboardExpandedMeetingCard)) dashboardExpandedMeetingCard = null;
 
-      const isMobile = dashboardMeetingUsesSingleColumn();
-      if (isMobile && dashboardExpandedMeetingCards.left !== null && dashboardExpandedMeetingCards.right !== null) {
-        const keep = dashboardLastExpandedMeetingColumn === 'right' ? 'right' : 'left';
-        dashboardExpandedMeetingCards[keep === 'left' ? 'right' : 'left'] = null;
-      }
-      const anyExpanded = dashboardExpandedMeetingCards.left !== null || dashboardExpandedMeetingCards.right !== null;
+      const selectedIndex = dashboardExpandedMeetingCard;
+      const anyExpanded = selectedIndex !== null;
+      const selectedColumn = anyExpanded ? dashboardMeetingColumnForIndex(selectedIndex) : null;
 
       const columns = ['left', 'right'].map((column, parity) => {
         const columnItems = preview.map((item, itemIndex) => ({ item, itemIndex })).filter(entry => entry.itemIndex % 2 === parity);
-        const selectedIndex = dashboardExpandedMeetingCards[column];
-        const hasExpanded = selectedIndex !== null && columnItems.some(entry => entry.itemIndex === selectedIndex);
+        const hasExpanded = anyExpanded && column === selectedColumn && columnItems.some(entry => entry.itemIndex === selectedIndex);
         const cards = columnItems.map(({ item, itemIndex }) => {
           const isExpanded = hasExpanded && selectedIndex === itemIndex;
           const compactForColumn = hasExpanded && !isExpanded;
-          const compactForMobile = isMobile && anyExpanded && !isExpanded;
-          if (isExpanded) return dashboardMeetingExpandedCardMarkup(item, itemIndex, column);
-          if (compactForColumn || compactForMobile) return dashboardMeetingCompactCardMarkup(item, itemIndex);
+          if (isExpanded) return dashboardMeetingExpandedCardMarkup(item, itemIndex);
+          if (compactForColumn) return dashboardMeetingCompactCardMarkup(item, itemIndex);
           return dashboardMeetingNormalCardMarkup(item, itemIndex);
         }).join('');
         return `<div class="meeting-inline-column${hasExpanded ? ' has-expanded' : ''}" data-meeting-column="${column}">${cards}</div>`;
