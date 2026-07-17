@@ -5484,13 +5484,18 @@
     cursor:pointer;
   }
   #pageDashboard .meeting-inline-expanded-head {
+    position:relative;
     flex:0 0 auto;
+    width:100%;
     min-width:0;
-    display:grid;
-    grid-template-columns:minmax(0,1fr) 27px;
-    gap:8px;
-    padding:11px 10px 9px 12px;
+    display:block;
+    padding:11px 48px 9px 12px;
     border-bottom:1px solid #dbeafe;
+  }
+  #pageDashboard .meeting-inline-expanded-heading {
+    display:block;
+    min-width:0;
+    width:100%;
   }
   #pageDashboard .meeting-inline-expanded-title {
     min-width:0;
@@ -5524,8 +5529,15 @@
     font-weight:650;
   }
   #pageDashboard .meeting-inline-close {
-    width:27px;
-    height:27px;
+    position:absolute;
+    top:11px;
+    right:10px;
+    z-index:1;
+    width:28px;
+    height:28px;
+    min-width:28px;
+    min-height:28px;
+    flex:0 0 28px;
     display:grid;
     place-items:center;
     border:0;
@@ -5686,7 +5698,8 @@
       padding:7px 9px!important;
     }
     #pageDashboard .meeting-inline-grid.has-any-expanded .meeting-inline-compact-attendees { display:none; }
-    #pageDashboard .meeting-inline-expanded-head { padding:8px 8px 7px 10px; }
+    #pageDashboard .meeting-inline-expanded-head { padding:8px 44px 7px 10px; }
+    #pageDashboard .meeting-inline-close { top:8px; right:8px; }
     #pageDashboard .meeting-inline-expanded-body { padding:6px 10px 8px; }
   }
 </style>
@@ -6988,7 +7001,7 @@
       const details = dashboardMeetingInlineData(item);
       return `<article class="dashboard-detail-meeting meeting-inline-card is-expanded" role="button" tabindex="0" aria-expanded="true" data-week-index="${dashboardSelectedMeetingWeek}" data-item-index="${itemIndex}" style="--meeting-order:${itemIndex}" onclick="dashboardToggleInlineMeetingCard(this)" onkeydown="dashboardMeetingCardKeydown(event,this)">
         <div class="meeting-inline-expanded-head">
-          <span><strong class="meeting-inline-expanded-title">${crmEscape(details.title)}</strong><span class="meeting-inline-expanded-date">${crmEscape(details.date)}</span><span class="meeting-inline-expanded-time">${crmEscape(details.time)}</span></span>
+          <span class="meeting-inline-expanded-heading"><strong class="meeting-inline-expanded-title">${crmEscape(details.title)}</strong><span class="meeting-inline-expanded-date">${crmEscape(details.date)}</span><span class="meeting-inline-expanded-time">${crmEscape(details.time)}</span></span>
           <button aria-label="Close meeting details" class="meeting-inline-close" type="button" onclick="dashboardCloseInlineMeetingCard(event)">×</button>
         </div>
         <div class="meeting-inline-expanded-body">
