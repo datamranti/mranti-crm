@@ -7196,6 +7196,162 @@
     }
   }
 </style>
+
+<style id="mranti-page-and-calendar-standardisation-v26">
+  /* My Entries and Relationships use the approved Dashboard/Contacts page-intro system. */
+  #pageMyRecords .my-records-page-hero,
+  #pageRelationships .relationship-page-hero {
+    display:block!important;
+    min-height:0!important;
+    padding:18px 2px 22px!important;
+    margin:0 0 18px!important;
+    border:0!important;
+    border-bottom:1px solid rgba(147,197,253,.34)!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    backdrop-filter:none!important;
+    overflow:visible!important;
+  }
+  #pageMyRecords .my-records-page-hero::after,
+  #pageRelationships .relationship-page-hero::after { display:none!important; }
+  #pageMyRecords .dashboard-welcome-label,
+  #pageRelationships .dashboard-welcome-label { font-size:10px!important; letter-spacing:1.75px!important; }
+  #pageMyRecords .dashboard-welcome-title,
+  #pageRelationships .dashboard-welcome-title {
+    margin-top:8px!important;
+    font-size:clamp(28px,2.5vw,38px)!important;
+    line-height:1.12!important;
+    letter-spacing:-1.1px!important;
+  }
+  #pageMyRecords .dashboard-welcome-copy,
+  #pageRelationships .dashboard-welcome-copy {
+    margin-top:8px!important;
+    max-width:720px!important;
+    color:#64748b!important;
+    font-size:13px!important;
+    line-height:1.55!important;
+  }
+  .standard-page-intro-row { display:flex; align-items:flex-start; justify-content:space-between; gap:24px; width:100%; }
+  .standard-page-intro-copy { min-width:0; }
+  .standard-page-intro-actions { flex:0 0 auto; padding-top:6px; }
+  .standard-page-supporting-meta { margin-top:8px; color:#94a3b8; font-size:10.5px; line-height:1.45; }
+  .standard-page-supporting-meta strong { color:#64748b; font-weight:750; }
+
+  /* Relationship page: no enclosing card; the embedded graph and details are the two primary surfaces. */
+  body.crm-relationship-mode { overflow-x:hidden!important; overflow-y:auto!important; }
+  body.crm-relationship-mode #appScreen { min-height:100vh!important; }
+  body.crm-relationship-mode .system-sidebar.modern-navbar { top:12px!important; margin-top:12px!important; }
+  body.crm-relationship-mode .system-content {
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    padding:24px 24px 46px!important;
+    overflow:visible!important;
+  }
+  body.crm-relationship-mode .system-content-inner {
+    width:min(1600px,100%)!important;
+    max-width:1600px!important;
+    height:auto!important;
+    min-height:0!important;
+    margin:0 auto!important;
+  }
+  body.crm-relationship-mode #pageRelationships {
+    display:none;
+    width:100%!important;
+    max-width:none!important;
+    height:auto!important;
+    min-height:0!important;
+  }
+  body.crm-relationship-mode #pageRelationships.active { display:block; }
+  #pageRelationships .relationship-workspace-host {
+    width:100%;
+    min-width:0;
+    margin:0;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+    overflow:visible;
+  }
+  #pageRelationships #relationshipFrame {
+    display:block;
+    width:100%!important;
+    max-width:none!important;
+    height:clamp(720px,calc(100vh - 230px),860px)!important;
+    min-height:720px!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+  }
+  #pageRelationships #relationshipLoading {
+    width:100%;
+    min-height:720px!important;
+    border:1px dashed #bfdbfe;
+    border-radius:18px;
+    background:rgba(248,251,255,.74);
+  }
+
+  /* Google Calendar-style deterministic collision lanes. */
+  #pageDashboard .week-day-column { overflow:hidden; }
+  #pageDashboard .week-event {
+    min-width:0!important;
+    box-sizing:border-box!important;
+    padding:5px 6px!important;
+    overflow:hidden!important;
+    color:#0f172a!important;
+    transform:none!important;
+  }
+  #pageDashboard .week-event:hover {
+    z-index:9!important;
+    transform:none!important;
+    border-color:#2563eb!important;
+    box-shadow:0 9px 20px rgba(37,99,235,.18)!important;
+  }
+  #pageDashboard .week-event:focus-visible {
+    z-index:10!important;
+    outline:2px solid #2563eb!important;
+    outline-offset:1px!important;
+  }
+  #pageDashboard .week-event-head { min-width:0!important; }
+  #pageDashboard .week-event-title {
+    min-width:0!important;
+    display:-webkit-box!important;
+    -webkit-box-orient:vertical!important;
+    -webkit-line-clamp:2!important;
+    overflow:hidden!important;
+    white-space:normal!important;
+    overflow-wrap:anywhere!important;
+    line-height:1.22!important;
+  }
+  #pageDashboard .week-event-time { overflow:hidden!important; text-overflow:ellipsis!important; }
+  #pageDashboard .week-event-location { min-width:0!important; overflow:hidden!important; }
+  #pageDashboard .week-event.is-crowded .week-event-location { display:none!important; }
+  #pageDashboard .week-event.is-crowded .week-event-icon { display:none!important; }
+  #pageDashboard .week-event.is-crowded { padding-left:5px!important; padding-right:5px!important; }
+  #pageDashboard .week-event-variant-1 { background:#dbeafe!important; border-color:#2563eb!important; border-left-color:#2563eb!important; }
+  #pageDashboard .week-event-variant-2 { background:#e8f1ff!important; border-color:#3b82f6!important; border-left-color:#3b82f6!important; }
+  #pageDashboard .week-event-variant-3 { background:#e0f2fe!important; border-color:#0ea5e9!important; border-left-color:#0ea5e9!important; }
+  #pageDashboard .week-event-variant-4 { background:#dff7f7!important; border-color:#22b8c7!important; border-left-color:#22b8c7!important; }
+  #pageDashboard .week-event-variant-5 { background:#eef2ff!important; border-color:#6366f1!important; border-left-color:#6366f1!important; }
+
+  @media(max-width:1030px) {
+    body.crm-relationship-mode .system-content { padding:18px 12px 36px!important; }
+    #pageRelationships #relationshipFrame { height:1240px!important; min-height:1240px!important; }
+    #pageRelationships #relationshipLoading { min-height:820px!important; }
+  }
+  @media(max-width:700px) {
+    .standard-page-intro-row { flex-direction:column; gap:14px; }
+    .standard-page-intro-actions { width:100%; padding-top:0; }
+    .standard-page-intro-actions .system-btn { width:100%; }
+    #pageMyRecords .my-records-page-hero,
+    #pageRelationships .relationship-page-hero { padding-top:12px!important; }
+    #pageMyRecords .dashboard-welcome-title,
+    #pageRelationships .dashboard-welcome-title { font-size:27px!important; }
+    #pageRelationships #relationshipFrame { height:1320px!important; min-height:1320px!important; }
+  }
+</style>
 </head>
 <body>
 <!-- Final standardised MRANTI CRM build: signed-out page redesigned; signed-in logic preserved. -->
@@ -7443,10 +7599,19 @@
 </section>
 
 <section class="system-page" data-page="my-records" id="pageMyRecords">
-<div class="system-page-toolbar modern-page-intro">
-<div><h1>My CRM Entries</h1><p>Manage only the records uploaded using your MRANTI account. <span class="modern-last-updated">Last activity: <strong id="myLastUpdated">—</strong></span></p></div>
-<div class="system-toolbar-actions"><button class="system-btn primary" onclick="openManualModal()"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg><span>Log new meeting</span></button></div>
-</div>
+<header class="dashboard-hero my-records-page-hero">
+  <div class="standard-page-intro-row">
+    <div class="standard-page-intro-copy">
+      <div class="dashboard-welcome-label">MRANTI CRM WORKSPACE</div>
+      <h1 class="dashboard-welcome-title">My CRM Entries</h1>
+      <p class="dashboard-welcome-copy">Manage only the records uploaded using your MRANTI account.</p>
+      <div class="standard-page-supporting-meta">Last activity: <strong id="myLastUpdated">—</strong></div>
+    </div>
+    <div class="standard-page-intro-actions">
+      <button class="system-btn primary" onclick="openManualModal()"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg><span>Log new meeting</span></button>
+    </div>
+  </div>
+</header>
 <div class="my-records-summary">
 <article class="system-card my-summary-card"><div class="my-summary-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></div><div><div class="my-summary-value" id="myActiveCount">0</div><div class="my-summary-label">Active entries</div></div></article>
 <article class="system-card my-summary-card"><div class="my-summary-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg></div><div><div class="my-summary-value" id="myActionCount">0</div><div class="my-summary-label">Open action items</div></div></article>
@@ -7494,9 +7659,16 @@
 </div>
 </section>
 <section class="system-page relationship-page" data-page="relationships" id="pageRelationships">
-<div class="system-card embedded-page-card relationship-embedded-card">
-<div class="embedded-page-loading" id="relationshipLoading">Loading Relationship Intelligence…</div>
-<iframe class="embedded-page-frame" id="relationshipFrame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads" style="display:none" title="MRANTI Relationship Intelligence"></iframe>
+<header class="dashboard-hero relationship-page-hero">
+  <div>
+    <div class="dashboard-welcome-label">MRANTI CRM WORKSPACE</div>
+    <h1 class="dashboard-welcome-title">Relationship Intelligence</h1>
+    <p class="dashboard-welcome-copy">Explore who MRANTI has engaged, why meetings happened and how relationships connect.</p>
+  </div>
+</header>
+<div class="relationship-workspace-host">
+  <div class="embedded-page-loading" id="relationshipLoading">Loading Relationship Intelligence…</div>
+  <iframe class="embedded-page-frame" id="relationshipFrame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads" style="display:none" title="MRANTI Relationship Intelligence"></iframe>
 </div>
 </section>
 <section class="system-page" data-page="profile" id="pageProfile">
@@ -8764,15 +8936,48 @@
 
     function dashboardWeekEventLayout(events) {
       const sorted = events.slice().sort((a, b) => a.startMs - b.startMs || a.endMs - b.endMs);
-      const laneEnds = [];
-      const placed = sorted.map(item => {
-        let lane = laneEnds.findIndex(end => end <= item.startMs);
-        if (lane < 0) lane = laneEnds.length;
-        laneEnds[lane] = item.endMs;
-        return { ...item, lane };
+      const groups = [];
+      let currentGroup = [];
+      let groupEnd = -Infinity;
+
+      sorted.forEach(item => {
+        // Boundary-touching meetings are not overlapping: 11:00 end and
+        // 11:00 start belong to separate groups.
+        if (currentGroup.length && item.startMs >= groupEnd) {
+          groups.push(currentGroup);
+          currentGroup = [];
+          groupEnd = -Infinity;
+        }
+        currentGroup.push(item);
+        groupEnd = Math.max(groupEnd, item.endMs);
       });
-      const laneCount = Math.max(1, laneEnds.length);
-      return placed.map(item => ({ ...item, laneCount }));
+      if (currentGroup.length) groups.push(currentGroup);
+
+      return groups.flatMap((group, overlapGroup) => {
+        const laneEnds = [];
+        const placed = group.map(item => {
+          let lane = laneEnds.findIndex(end => end <= item.startMs);
+          if (lane < 0) lane = laneEnds.length;
+          laneEnds[lane] = item.endMs;
+          return { ...item, lane, overlapGroup };
+        });
+        const laneCount = Math.max(1, laneEnds.length);
+        return placed.map(item => ({ ...item, laneCount }));
+      });
+    }
+
+    function dashboardStableEventVariant(event) {
+      const seed = String(
+        event?.id ||
+        event?.iCalUID ||
+        `${event?.summary || ''}|${event?.start?.dateTime || event?.start?.date || ''}|${event?.end?.dateTime || event?.end?.date || ''}`
+      );
+      let hash = 2166136261;
+      for (let i = 0; i < seed.length; i++) {
+        hash ^= seed.charCodeAt(i);
+        hash = Math.imul(hash, 16777619);
+      }
+      return (Math.abs(hash) % 5) + 1;
     }
 
     function dashboardOpenWeekEvent(key, button) {
@@ -8856,16 +9061,21 @@
         const eventKey = `wt${dayIndex}_${eventIndex}`;
         window._eventsCache[eventKey] = item.event;
         const top = GRID_TOP_PADDING + item.clippedStart * PIXELS_PER_MINUTE;
-        const height = Math.max(1, (item.clippedEnd - item.clippedStart) * PIXELS_PER_MINUTE);
+        const height = Math.max(30, (item.clippedEnd - item.clippedStart) * PIXELS_PER_MINUTE);
         const laneWidth = 100 / item.laneCount;
-        const left = item.lane * laneWidth;
-        const horizontalGap = 3;
+        const edgePadding = 5;
+        const laneGap = 5;
+        const pixelCorrection = (edgePadding * 2 + (item.laneCount - 1) * laneGap) / item.laneCount;
+        const leftOffset = edgePadding + item.lane * (laneGap - pixelCorrection);
         const startDate = new Date(item.event.start.dateTime);
         const endDate = item.event.end?.dateTime ? new Date(item.event.end.dateTime) : new Date(startDate.getTime() + 30 * 60000);
         const timeRange = `${formatKLTime(startDate)}–${formatKLTime(endDate)}`;
         const title = dashboardCleanDisplayText(item.event.summary, 'Untitled meeting');
         const location = dashboardCleanDisplayText(item.event.location || '', '');
-        return `<button class="week-event" type="button" style="top:${top}px;height:${height}px;left:calc(${left}% + ${horizontalGap}px);width:calc(${laneWidth}% - ${horizontalGap * 2}px)" onclick="dashboardOpenWeekEvent('${eventKey}',this)" title="${esc(title)} — ${esc(timeRange)}${location ? ` — ${esc(location)}` : ''}"><span class="week-event-head"><span class="week-event-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg></span><span class="week-event-title">${esc(title)}</span></span><span class="week-event-time">${esc(timeRange)}</span>${location ? `<span class="week-event-location"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg><span>${esc(location)}</span></span>` : ''}</button>`;
+        const variant = dashboardStableEventVariant(item.event);
+        const crowdClass = item.laneCount >= 3 ? ' is-crowded' : '';
+        const ariaLabel = `${title}. ${day.date.toLocaleDateString('en-MY', { weekday:'long', day:'numeric', month:'long', year:'numeric' })}. ${timeRange}${location ? `. ${location}` : ''}`;
+        return `<button class="week-event week-event-variant-${variant}${crowdClass}" type="button" style="top:${top}px;height:${height}px;left:calc(${item.lane * laneWidth}% + ${leftOffset}px);width:calc(${laneWidth}% - ${pixelCorrection}px)" onclick="dashboardOpenWeekEvent('${eventKey}',this)" aria-label="${esc(ariaLabel)}" title="${esc(title)} — ${esc(timeRange)}${location ? ` — ${esc(location)}` : ''}"><span class="week-event-head"><span class="week-event-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg></span><span class="week-event-title">${esc(title)}</span></span><span class="week-event-time">${esc(timeRange)}</span>${location ? `<span class="week-event-location"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg><span>${esc(location)}</span></span>` : ''}</button>`;
       }).join('')}</div>`).join('');
 
       let currentLine = '';
@@ -10616,17 +10826,23 @@
       try {
         let html = await crmFetchHtml(CRM_RELATIONSHIP_PAGE_URL);
         const integratedStyles = `<style id="mrantiIntegratedRelationshipStyles">
-          html,body{height:100%!important;min-height:100%!important;overflow:hidden!important;background:transparent!important}
-          body{padding:0!important}
+          *,*::before,*::after{box-sizing:border-box}
+          html,body{width:100%!important;height:100%!important;min-height:100%!important;margin:0!important;overflow:hidden!important;background:transparent!important}
+          body{padding:0!important;font-family:Inter,Segoe UI,sans-serif!important}
           .top-nav,.page-head{display:none!important}
-          .shell{width:100%!important;max-width:none!important;height:100%!important;min-height:0!important;margin:0!important;padding:0!important;gap:9px!important;display:flex!important;flex-direction:column!important;box-sizing:border-box!important;overflow:hidden!important}
-          .filter-row{flex:0 0 auto!important;gap:10px!important}
-          .legend-row{flex:0 0 auto!important}
-          .main-workspace{flex:1 1 auto!important;min-height:0!important;height:auto!important;grid-template-columns:minmax(0,1fr) 340px!important;gap:12px!important;overflow:hidden!important}
-          .graph-panel,.detail-panel{height:100%!important;min-height:0!important}
-          .detail-panel{overflow:auto!important}
-          #graphSvg{width:100%!important;height:100%!important}
-          @media(max-width:1000px){html,body{overflow:auto!important}.main-workspace{height:auto!important;grid-template-columns:1fr!important}.graph-panel{min-height:680px!important}.detail-panel{min-height:520px!important}}
+          .shell{width:100%!important;max-width:none!important;height:100%!important;min-height:0!important;margin:0!important;padding:0!important;gap:10px!important;display:flex!important;flex-direction:column!important;box-sizing:border-box!important;overflow:hidden!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+          .filter-row{flex:0 0 auto!important;width:100%!important;gap:10px!important;margin:0!important;align-items:end!important}
+          .legend-row{flex:0 0 auto!important;width:100%!important;margin:0!important;padding:0 2px!important}
+          .main-workspace{flex:1 1 auto!important;min-height:620px!important;height:auto!important;display:grid!important;grid-template-columns:minmax(0,1fr) minmax(350px,380px)!important;gap:16px!important;align-items:stretch!important;overflow:hidden!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+          .graph-panel,.detail-panel{width:100%!important;height:100%!important;min-height:0!important;min-width:0!important;margin:0!important;box-sizing:border-box!important;border-radius:18px!important}
+          .graph-panel{overflow:hidden!important}
+          .detail-panel{min-width:350px!important;padding:16px!important;overflow-x:hidden!important;overflow-y:auto!important;scrollbar-gutter:stable!important}
+          .detail-panel *{min-width:0;box-sizing:border-box}
+          .detail-panel p,.detail-panel div,.detail-panel span,.detail-panel strong,.detail-panel button{overflow-wrap:anywhere!important;word-break:normal!important}
+          .detail-panel [class*="meeting"],.detail-panel [class*="history"],.detail-panel [class*="staff"]{max-width:100%!important}
+          #graphSvg{display:block!important;width:100%!important;height:100%!important;min-height:620px!important}
+          @media(max-width:1050px){html,body{height:auto!important;min-height:100%!important;overflow:auto!important}.shell{height:auto!important;overflow:visible!important}.filter-row{flex-wrap:wrap!important}.main-workspace{height:auto!important;min-height:0!important;grid-template-columns:1fr!important;overflow:visible!important}.graph-panel{min-height:640px!important;height:640px!important}.detail-panel{min-width:0!important;min-height:520px!important;height:auto!important;overflow:visible!important}#graphSvg{min-height:640px!important;height:640px!important}}
+          @media(max-width:620px){.filter-row{display:grid!important;grid-template-columns:1fr!important}.graph-panel{min-height:520px!important;height:520px!important}.detail-panel{padding:14px!important}#graphSvg{min-height:520px!important;height:520px!important}}
         </style>`;
         html = html.replace('</head>', integratedStyles + '</head>');
         frame.srcdoc = html;
