@@ -5417,10 +5417,9 @@
   }
 </style>
 
-<style id="dashboard-embedded-meeting-drawer-v24">
-  /* Final approved scope: meeting details remain inside the Meetings-this-month preview area. */
+<style id="dashboard-inline-expanding-meetings-v25">
+  /* Scope: inline meeting-card expansion inside Meetings this month only. */
   #pageDashboard .meeting-preview-stage {
-    position:relative;
     width:100%;
     height:248px;
     min-height:248px;
@@ -5428,90 +5427,77 @@
     margin-top:12px;
     overflow:hidden;
     border-radius:11px;
-    isolation:isolate;
   }
-  #pageDashboard .meeting-preview-stage .dashboard-detail-list {
-    width:100%;
-    height:100%!important;
-    min-height:100%!important;
-    max-height:100%!important;
-    margin-top:0!important;
-  }
-  #pageDashboard .embedded-meeting-drawer {
-    position:absolute;
-    top:0;
-    right:0;
-    bottom:0;
-    z-index:5;
-    width:min(360px,100%);
-    min-width:0;
-    display:flex;
-    flex-direction:column;
-    overflow:hidden;
-    border-left:1px solid #93c5fd;
-    border-radius:11px 0 0 11px;
-    background:#ffffff;
-    color:#0f172a;
-    box-shadow:-16px 0 32px rgba(15,23,42,.13),-3px 0 10px rgba(37,99,235,.08);
-    transform:translateX(105%);
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-    transition:transform .2s cubic-bezier(.22,1,.36,1),opacity .18s ease,visibility 0s linear .2s;
-  }
-  #pageDashboard .embedded-meeting-drawer.open {
-    transform:translateX(0);
-    opacity:1;
-    visibility:visible;
-    pointer-events:auto;
-    transition:transform .2s cubic-bezier(.22,1,.36,1),opacity .18s ease,visibility 0s;
-  }
-  #dashboardMeetingDrawerContent {
+  #pageDashboard .meeting-inline-grid {
     width:100%;
     height:100%;
     min-width:0;
     min-height:0;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+  #pageDashboard .meeting-inline-column {
+    min-width:0;
+    min-height:0;
+    height:100%;
     display:flex;
     flex-direction:column;
+    gap:8px;
   }
-  #pageDashboard .embedded-meeting-drawer-close {
-    position:absolute;
-    top:9px;
-    right:9px;
-    z-index:3;
-    width:27px;
-    height:27px;
-    display:grid;
-    place-items:center;
-    border:0;
-    border-radius:8px;
-    background:#f1f5f9;
-    color:#64748b;
-    font:inherit;
-    font-size:17px;
-    line-height:1;
-    cursor:pointer;
-    transition:background .18s ease,color .18s ease;
-  }
-  #pageDashboard .embedded-meeting-drawer-close:hover,
-  #pageDashboard .embedded-meeting-drawer-close:focus-visible {
-    background:#e2e8f0;
-    color:#0f172a;
+  #pageDashboard .meeting-inline-card {
+    position:relative;
+    box-sizing:border-box;
+    flex:0 0 120px;
+    width:100%;
+    height:120px!important;
+    min-height:120px!important;
+    max-height:120px!important;
+    overflow:hidden;
     outline:none;
+    transition:flex-basis .2s cubic-bezier(.22,1,.36,1),height .2s cubic-bezier(.22,1,.36,1),min-height .2s cubic-bezier(.22,1,.36,1),border-color .18s ease,background .18s ease,box-shadow .18s ease;
   }
-  #pageDashboard .embedded-meeting-drawer-head {
+  #pageDashboard .meeting-inline-card:focus-visible {
+    border-color:#3b82f6!important;
+    box-shadow:0 0 0 3px rgba(59,130,246,.14)!important;
+  }
+  #pageDashboard .meeting-inline-column.has-expanded .meeting-inline-card.is-expanded {
+    flex:1 1 auto;
+    height:auto!important;
+    min-height:186px!important;
+    max-height:none!important;
+  }
+  #pageDashboard .meeting-inline-column.has-expanded .meeting-inline-card.is-compact {
+    flex:0 0 54px;
+    height:54px!important;
+    min-height:54px!important;
+    max-height:54px!important;
+  }
+  #pageDashboard .meeting-inline-card.is-expanded {
+    display:flex!important;
+    flex-direction:column;
+    gap:0!important;
+    padding:0!important;
+    border-color:#3b82f6!important;
+    background:linear-gradient(145deg,#ffffff,#f8fbff)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.96),0 8px 20px rgba(37,99,235,.08)!important;
+    cursor:pointer;
+  }
+  #pageDashboard .meeting-inline-expanded-head {
     flex:0 0 auto;
     min-width:0;
-    padding:13px 42px 11px 14px;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 27px;
+    gap:8px;
+    padding:11px 10px 9px 12px;
     border-bottom:1px solid #dbeafe;
-    background:linear-gradient(145deg,#ffffff,#f8fbff);
   }
-  #pageDashboard .embedded-meeting-drawer-head h3 {
-    margin:0;
+  #pageDashboard .meeting-inline-expanded-title {
     min-width:0;
+    margin:0;
     color:#0f172a;
-    font-size:13.5px;
-    line-height:1.32;
+    font-size:11px;
+    line-height:1.28;
     font-weight:850;
     display:-webkit-box;
     -webkit-box-orient:vertical;
@@ -5520,104 +5506,205 @@
     overflow-wrap:anywhere;
     word-break:break-word;
   }
-  #pageDashboard .embedded-meeting-drawer-date,
-  #pageDashboard .embedded-meeting-drawer-time {
+  #pageDashboard .meeting-inline-expanded-date,
+  #pageDashboard .meeting-inline-expanded-time {
     min-width:0;
-    margin-top:6px;
+    margin-top:4px;
     color:#475569;
-    font-size:10px;
-    line-height:1.35;
+    font-size:8.7px;
+    line-height:1.3;
     font-weight:750;
     overflow-wrap:anywhere;
     word-break:break-word;
   }
-  #pageDashboard .embedded-meeting-drawer-time {
-    margin-top:2px;
+  #pageDashboard .meeting-inline-expanded-time {
+    margin-top:1px;
     color:#64748b;
     font-weight:650;
   }
-  #pageDashboard .embedded-meeting-drawer-body {
+  #pageDashboard .meeting-inline-close {
+    width:27px;
+    height:27px;
+    display:grid;
+    place-items:center;
+    border:0;
+    border-radius:8px;
+    background:#eff6ff;
+    color:#64748b;
+    font:inherit;
+    font-size:16px;
+    line-height:1;
+    cursor:pointer;
+    transition:background .18s ease,color .18s ease;
+  }
+  #pageDashboard .meeting-inline-close:hover,
+  #pageDashboard .meeting-inline-close:focus-visible {
+    background:#dbeafe;
+    color:#1e3a8a;
+    outline:none;
+  }
+  #pageDashboard .meeting-inline-expanded-body {
     flex:1 1 auto;
     min-width:0;
     min-height:0;
     overflow-y:auto;
     overflow-x:hidden;
-    padding:10px 14px 13px;
+    padding:8px 12px 10px;
     scrollbar-width:thin;
     scrollbar-color:#bfdbfe transparent;
     overscroll-behavior:contain;
   }
-  #pageDashboard .embedded-meeting-drawer-body::-webkit-scrollbar { width:5px; }
-  #pageDashboard .embedded-meeting-drawer-body::-webkit-scrollbar-track { background:transparent; }
-  #pageDashboard .embedded-meeting-drawer-body::-webkit-scrollbar-thumb { background:#bfdbfe; border-radius:999px; }
-  #pageDashboard .embedded-meeting-drawer-details {
-    display:flex;
-    flex-direction:column;
-    gap:0;
-  }
-  #pageDashboard .embedded-meeting-drawer-row {
-    display:grid;
-    grid-template-columns:78px minmax(0,1fr);
-    gap:9px;
-    align-items:start;
+  #pageDashboard .meeting-inline-expanded-body::-webkit-scrollbar { width:5px; }
+  #pageDashboard .meeting-inline-expanded-body::-webkit-scrollbar-track { background:transparent; }
+  #pageDashboard .meeting-inline-expanded-body::-webkit-scrollbar-thumb { background:#bfdbfe; border-radius:999px; }
+  #pageDashboard .meeting-inline-field {
     min-width:0;
-    padding:5px 0;
+    display:grid;
+    grid-template-columns:74px minmax(0,1fr);
+    gap:8px;
+    align-items:start;
+    padding:3px 0;
   }
-  #pageDashboard .embedded-meeting-drawer-row small,
-  #pageDashboard .embedded-meeting-drawer-note small {
+  #pageDashboard .meeting-inline-field small,
+  #pageDashboard .meeting-inline-note small {
     display:block;
     color:#94a3b8;
-    font-size:8.2px;
+    font-size:7.8px;
     line-height:1.35;
     font-weight:850;
-    letter-spacing:.5px;
+    letter-spacing:.48px;
     text-transform:uppercase;
   }
-  #pageDashboard .embedded-meeting-drawer-row strong {
-    display:-webkit-box;
+  #pageDashboard .meeting-inline-field strong {
     min-width:0;
     margin:0;
     color:#334155;
-    font-size:10.2px;
-    line-height:1.4;
+    font-size:8.9px;
+    line-height:1.35;
     font-weight:720;
+    display:-webkit-box;
     -webkit-box-orient:vertical;
     overflow:hidden;
     overflow-wrap:anywhere;
     word-break:break-word;
   }
-  #pageDashboard .embedded-meeting-drawer-row.location strong { -webkit-line-clamp:3; }
-  #pageDashboard .embedded-meeting-drawer-row.organisation strong,
-  #pageDashboard .embedded-meeting-drawer-row.contact strong { -webkit-line-clamp:2; }
-  #pageDashboard .embedded-meeting-drawer-note {
+  #pageDashboard .meeting-inline-field.organisation strong,
+  #pageDashboard .meeting-inline-field.contact strong,
+  #pageDashboard .meeting-inline-field.location strong { -webkit-line-clamp:2; }
+  #pageDashboard .meeting-inline-note {
     min-width:0;
-    margin-top:8px;
-    padding:9px 10px;
+    margin-top:5px;
+    padding:7px 8px;
     border:1px solid #dbeafe;
-    border-radius:9px;
+    border-radius:8px;
     background:#f8fbff;
   }
-  #pageDashboard .embedded-meeting-drawer-note p {
-    margin:4px 0 0;
+  #pageDashboard .meeting-inline-note p {
     min-width:0;
+    margin:3px 0 0;
     color:#52627a;
-    font-size:10.2px;
-    line-height:1.45;
+    font-size:8.8px;
+    line-height:1.4;
     overflow-wrap:anywhere;
     word-break:break-word;
   }
-  #pageDashboard .dashboard-detail-meeting.drawer-selected {
-    border-color:#3b82f6!important;
-    background:#f8fbff!important;
-    box-shadow:0 0 0 2px rgba(59,130,246,.15),0 8px 20px rgba(37,99,235,.08)!important;
+  #pageDashboard .meeting-inline-card.is-compact {
+    display:flex!important;
+    align-items:center!important;
+    gap:8px!important;
+    padding:8px 10px!important;
+    border-color:#dbeafe!important;
+    background:#ffffff!important;
+    box-shadow:none!important;
+  }
+  #pageDashboard .meeting-inline-compact-copy {
+    min-width:0;
+    flex:1 1 auto;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  #pageDashboard .meeting-inline-compact-title {
+    min-width:0;
+    color:#0f172a;
+    font-size:9.3px;
+    line-height:1.2;
+    font-weight:820;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #pageDashboard .meeting-inline-compact-meta {
+    min-width:0;
+    color:#64748b;
+    font-size:7.9px;
+    line-height:1.2;
+    font-weight:650;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #pageDashboard .meeting-inline-compact-attendees {
+    flex:0 0 auto;
+    color:#64748b;
+    font-size:7.7px;
+    font-weight:750;
+    white-space:nowrap;
+  }
+  #pageDashboard .meeting-inline-empty {
+    grid-column:1 / -1;
+    height:100%;
+    min-height:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    border:1px dashed #bfdbfe;
+    border-radius:11px;
+    background:#f8fbff;
+    color:#64748b;
+    font-size:10px;
+    text-align:center;
+  }
+  @media (max-width:1180px) and (min-width:761px) {
+    #pageDashboard .meeting-inline-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   }
   @media (max-width:760px) {
-    #pageDashboard .embedded-meeting-drawer {
-      width:100%;
-      border-left:0;
-      border-radius:11px;
-      box-shadow:0 0 24px rgba(15,23,42,.12);
+    #pageDashboard .meeting-inline-grid {
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      overflow-y:auto;
+      overflow-x:hidden;
+      padding-right:3px;
+      scrollbar-width:thin;
+      scrollbar-color:#bfdbfe transparent;
     }
+    #pageDashboard .meeting-inline-grid::-webkit-scrollbar { width:5px; }
+    #pageDashboard .meeting-inline-grid::-webkit-scrollbar-track { background:transparent; }
+    #pageDashboard .meeting-inline-grid::-webkit-scrollbar-thumb { background:#bfdbfe; border-radius:999px; }
+    #pageDashboard .meeting-inline-column { display:contents; }
+    #pageDashboard .meeting-inline-card {
+      order:var(--meeting-order);
+      flex:0 0 120px;
+    }
+    #pageDashboard .meeting-inline-grid.has-any-expanded { overflow:hidden; }
+    #pageDashboard .meeting-inline-grid.has-any-expanded .meeting-inline-card.is-expanded {
+      flex:1 1 auto;
+      height:auto!important;
+      min-height:128px!important;
+      max-height:none!important;
+    }
+    #pageDashboard .meeting-inline-grid.has-any-expanded .meeting-inline-card.is-compact {
+      flex:0 0 34px;
+      height:34px!important;
+      min-height:34px!important;
+      max-height:34px!important;
+      padding:5px 8px!important;
+    }
+    #pageDashboard .meeting-inline-grid.has-any-expanded .meeting-inline-compact-attendees { display:none; }
+    #pageDashboard .meeting-inline-expanded-head { padding:8px 8px 7px 10px; }
+    #pageDashboard .meeting-inline-expanded-body { padding:6px 10px 8px; }
   }
 </style>
 </head>
@@ -6233,6 +6320,8 @@
     let dashboardMeetingWeeks = [[], [], [], [], []];
     let dashboardOrganisationRows = [];
     let dashboardOrganisationTotals = { total: 0, fresh: 0, returning: 0 };
+    let dashboardExpandedMeetingCards = { left: null, right: null };
+    let dashboardLastExpandedMeetingColumn = null;
 
     // Temporary meeting draft: scoped to this browser tab and cleared when the tab closes.
     const MEETING_DRAFT_KEY = 'mranti_crm_meeting_draft_v6';
@@ -6631,19 +6720,27 @@
       dashboardRenderDetailPanels();
     }
 
+    function dashboardResetInlineMeetingCards() {
+      dashboardExpandedMeetingCards = { left: null, right: null };
+      dashboardLastExpandedMeetingColumn = null;
+    }
+
     function dashboardViewMeetings() {
       dashboardExpandedCards.meetings = !dashboardExpandedCards.meetings;
+      if (!dashboardExpandedCards.meetings) dashboardResetInlineMeetingCards();
       dashboardApplyExpandedState();
     }
 
     function dashboardOpenMeetingWeek(index) {
       dashboardSelectedMeetingWeek = Math.min(4, Math.max(0, Number(index) || 0));
+      dashboardResetInlineMeetingCards();
       dashboardExpandedCards.meetings = true;
       dashboardApplyExpandedState();
     }
 
     function dashboardSelectMeetingWeek(index) {
       dashboardSelectedMeetingWeek = Math.min(4, Math.max(0, Number(index) || 0));
+      dashboardResetInlineMeetingCards();
       dashboardExpandedCards.meetings = true;
       const meetings = document.getElementById('dashboardMeetingsDetails');
       if (meetings) meetings.innerHTML = dashboardMeetingDetailMarkup();
@@ -6688,7 +6785,7 @@
       return { title, organisation, contact, location, purpose };
     }
 
-    function dashboardMeetingDrawerDate(item, event) {
+    function dashboardMeetingInlineDate(item, event) {
       const startRaw = event?.start?.dateTime || event?.start?.date || '';
       if (startRaw) {
         const startDate = event?.start?.dateTime ? new Date(startRaw) : new Date(startRaw + 'T00:00:00');
@@ -6706,7 +6803,7 @@
       return dashboardCleanDisplayText(item?.dateLabel, 'Date not recorded');
     }
 
-    function dashboardMeetingDrawerTime(item, event) {
+    function dashboardMeetingInlineTime(item, event) {
       if (event?.start?.date && !event?.start?.dateTime) return 'All day';
       if (event?.start?.dateTime) {
         const startDate = new Date(event.start.dateTime);
@@ -6720,62 +6817,98 @@
       return dashboardCleanDisplayText(item?.timeLabel, 'Time not recorded');
     }
 
-    function dashboardMeetingDrawerRow(label, value, modifier = '') {
-      return `<div class="embedded-meeting-drawer-row${modifier ? ` ${modifier}` : ''}"><small>${crmEscape(label)}</small><strong>${crmEscape(value)}</strong></div>`;
-    }
-
-    function dashboardCloseMeetingDrawer() {
-      const drawer = document.getElementById('dashboardMeetingDrawer');
-      document.querySelector('#dashboardMeetingsDetails .dashboard-detail-meeting.drawer-selected')?.classList.remove('drawer-selected');
-      if (!drawer) return;
-      drawer.classList.remove('open');
-      drawer.setAttribute('aria-hidden', 'true');
-    }
-
-    function dashboardOpenMeetingDetailItem(button) {
-      const weekIndex = Number(button?.dataset?.weekIndex);
-      const itemIndex = Number(button?.dataset?.itemIndex);
-      const item = dashboardMeetingWeeks?.[weekIndex]?.[itemIndex];
-      if (!item) return;
-
-      const drawer = document.getElementById('dashboardMeetingDrawer');
-      const content = document.getElementById('dashboardMeetingDrawerContent');
-      if (!drawer || !content) return;
-
-      const event = item.eventKey ? window._eventsCache[item.eventKey] : null;
+    function dashboardMeetingInlineData(item) {
+      const event = item?.eventKey ? window._eventsCache[item.eventKey] : null;
       const title = dashboardCleanDisplayText(event?.summary, '') || dashboardCleanDisplayText(item?.title, 'Untitled meeting');
-      const dateLabel = dashboardMeetingDrawerDate(item, event);
-      const timeLabel = dashboardMeetingDrawerTime(item, event);
-      const location = dashboardCleanDisplayText(item?.location, 'Location not recorded');
-      const organisation = dashboardCleanDisplayText(item?.organisation, 'Organisation not recorded');
       const contactValue = dashboardCleanDisplayText(item?.contact, '');
-      const contact = !contactValue || /^external contact not recorded$/i.test(contactValue) ? 'Contact not recorded' : contactValue;
-      const attendeeCount = Number(item?.attendeeCount || 0);
-      const purpose = dashboardSanitiseMeetingText(item?.purpose, title);
+      return {
+        title,
+        date: dashboardMeetingInlineDate(item, event),
+        time: dashboardMeetingInlineTime(item, event),
+        organisation: dashboardCleanDisplayText(item?.organisation, 'Organisation not recorded'),
+        contact: !contactValue || /^external contact not recorded$/i.test(contactValue) ? 'Contact not recorded' : contactValue,
+        location: dashboardCleanDisplayText(item?.location, 'Location not recorded'),
+        attendeeCount: Number(item?.attendeeCount || 0),
+        purpose: dashboardSanitiseMeetingText(item?.purpose, title)
+      };
+    }
 
-      content.innerHTML = `<div class="embedded-meeting-drawer-head">
-          <h3>${crmEscape(title)}</h3>
-          <div class="embedded-meeting-drawer-date">${crmEscape(dateLabel)}</div>
-          <div class="embedded-meeting-drawer-time">${crmEscape(timeLabel)}</div>
-        </div>
-        <div class="embedded-meeting-drawer-body">
-          <div class="embedded-meeting-drawer-details">
-            ${dashboardMeetingDrawerRow('Location', location, 'location')}
-            ${dashboardMeetingDrawerRow('Organisation', organisation, 'organisation')}
-            ${dashboardMeetingDrawerRow('Contact', contact, 'contact')}
-            ${dashboardMeetingDrawerRow('Attendees', `${attendeeCount} attendee${attendeeCount === 1 ? '' : 's'}`, 'attendees')}
-          </div>
-          ${purpose ? `<div class="embedded-meeting-drawer-note"><small>Purpose / notes</small><p>${crmEscape(purpose)}</p></div>` : ''}
-        </div>`;
+    function dashboardMeetingInlineField(label, value, modifier = '') {
+      return `<div class="meeting-inline-field${modifier ? ` ${modifier}` : ''}"><small>${crmEscape(label)}</small><strong>${crmEscape(value)}</strong></div>`;
+    }
 
-      document.querySelector('#dashboardMeetingsDetails .dashboard-detail-meeting.drawer-selected')?.classList.remove('drawer-selected');
-      button.classList.add('drawer-selected');
-      drawer.classList.add('open');
-      drawer.setAttribute('aria-hidden', 'false');
+    function dashboardMeetingUsesSingleColumn() {
+      return window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
+    }
+
+    function dashboardMeetingColumnForIndex(itemIndex) {
+      return Number(itemIndex) % 2 === 0 ? 'left' : 'right';
+    }
+
+    function dashboardRefreshInlineMeetingCards(focusIndex = null) {
+      const meetings = document.getElementById('dashboardMeetingsDetails');
+      if (!meetings || !dashboardExpandedCards.meetings) return;
+      meetings.innerHTML = dashboardMeetingDetailMarkup();
+      if (focusIndex !== null) {
+        requestAnimationFrame(() => {
+          const target = meetings.querySelector(`[data-item-index="${focusIndex}"]`);
+          if (target && typeof target.focus === 'function') target.focus({ preventScroll: true });
+        });
+      }
+    }
+
+    function dashboardToggleInlineMeetingCard(card) {
+      const itemIndex = Number(card?.dataset?.itemIndex);
+      if (!Number.isInteger(itemIndex)) return;
+      const column = dashboardMeetingColumnForIndex(itemIndex);
+      const alreadyOpen = dashboardExpandedMeetingCards[column] === itemIndex;
+
+      if (dashboardMeetingUsesSingleColumn()) {
+        dashboardExpandedMeetingCards = { left: null, right: null };
+      }
+
+      dashboardExpandedMeetingCards[column] = alreadyOpen ? null : itemIndex;
+      dashboardLastExpandedMeetingColumn = alreadyOpen ? null : column;
+      dashboardRefreshInlineMeetingCards(itemIndex);
+    }
+
+    function dashboardCloseInlineMeetingCard(column, event) {
+      event?.stopPropagation();
+      if (column !== 'left' && column !== 'right') return;
+      const closedIndex = dashboardExpandedMeetingCards[column];
+      dashboardExpandedMeetingCards[column] = null;
+      if (dashboardLastExpandedMeetingColumn === column) dashboardLastExpandedMeetingColumn = null;
+      dashboardRefreshInlineMeetingCards(closedIndex);
+    }
+
+    function dashboardMeetingCardKeydown(event, card) {
+      if (event.target !== card) return;
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        dashboardToggleInlineMeetingCard(card);
+      }
+    }
+
+    function dashboardCloseAllInlineMeetingCards() {
+      if (dashboardExpandedMeetingCards.left === null && dashboardExpandedMeetingCards.right === null) return;
+      dashboardResetInlineMeetingCards();
+      dashboardRefreshInlineMeetingCards();
     }
 
     document.addEventListener('keydown', event => {
-      if (event.key === 'Escape') dashboardCloseMeetingDrawer();
+      if (event.key === 'Escape') dashboardCloseAllInlineMeetingCards();
+    });
+
+    let dashboardMeetingViewportTimer = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(dashboardMeetingViewportTimer);
+      dashboardMeetingViewportTimer = setTimeout(() => {
+        if (!dashboardMeetingUsesSingleColumn()) return;
+        if (dashboardExpandedMeetingCards.left === null || dashboardExpandedMeetingCards.right === null) return;
+        const keep = dashboardLastExpandedMeetingColumn === 'right' ? 'right' : 'left';
+        dashboardExpandedMeetingCards[keep === 'left' ? 'right' : 'left'] = null;
+        dashboardRefreshInlineMeetingCards();
+      }, 120);
     });
 
     function dashboardShowNotice(message) {
@@ -6869,6 +7002,49 @@
       return `${startLabel}–${endLabel}`;
     }
 
+    function dashboardMeetingNormalCardMarkup(item, itemIndex, extraClasses = '') {
+      const presentation = dashboardMeetingPresentation(item);
+      const dateTime = [item.dateLabel, item.timeLabel].filter(Boolean).join(' · ');
+      return `<article class="dashboard-detail-meeting meeting-inline-card is-normal${extraClasses ? ` ${extraClasses}` : ''}" role="button" tabindex="0" aria-expanded="false" data-week-index="${dashboardSelectedMeetingWeek}" data-item-index="${itemIndex}" style="--meeting-order:${itemIndex}" onclick="dashboardToggleInlineMeetingCard(this)" onkeydown="dashboardMeetingCardKeydown(event,this)">
+        <span class="dashboard-detail-item-icon calendar">${dashboardDetailCalendarIcon()}</span>
+        <span class="dashboard-detail-meeting-copy">
+          <span class="dashboard-detail-meeting-title">${crmEscape(presentation.title)}</span>
+          ${presentation.organisation ? `<span class="dashboard-detail-organisation">${crmEscape(presentation.organisation)}</span>` : ''}
+          ${presentation.contact ? `<span class="dashboard-detail-contact">${crmEscape(presentation.contact)}</span>` : ''}
+          <span class="dashboard-detail-date-line">${crmEscape(dateTime)}</span>
+          ${presentation.location ? `<span class="dashboard-detail-location"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg><span>${crmEscape(presentation.location)}</span></span>` : ''}
+          ${presentation.purpose ? `<span class="dashboard-detail-purpose">${crmEscape(presentation.purpose)}</span>` : ''}
+          <span class="dashboard-detail-meeting-footer"><span>${item.attendeeCount} attendee${item.attendeeCount === 1 ? '' : 's'}</span></span>
+        </span>
+      </article>`;
+    }
+
+    function dashboardMeetingCompactCardMarkup(item, itemIndex) {
+      const details = dashboardMeetingInlineData(item);
+      const dateTime = [item.dateLabel, item.timeLabel].filter(Boolean).join(' · ');
+      return `<article class="dashboard-detail-meeting meeting-inline-card is-compact" role="button" tabindex="0" aria-expanded="false" data-week-index="${dashboardSelectedMeetingWeek}" data-item-index="${itemIndex}" style="--meeting-order:${itemIndex}" onclick="dashboardToggleInlineMeetingCard(this)" onkeydown="dashboardMeetingCardKeydown(event,this)">
+        <span class="meeting-inline-compact-copy"><strong class="meeting-inline-compact-title">${crmEscape(details.title)}</strong><span class="meeting-inline-compact-meta">${crmEscape(dateTime || details.time)}</span></span>
+        ${details.attendeeCount ? `<span class="meeting-inline-compact-attendees">${details.attendeeCount}</span>` : ''}
+      </article>`;
+    }
+
+    function dashboardMeetingExpandedCardMarkup(item, itemIndex, column) {
+      const details = dashboardMeetingInlineData(item);
+      return `<article class="dashboard-detail-meeting meeting-inline-card is-expanded" role="button" tabindex="0" aria-expanded="true" data-week-index="${dashboardSelectedMeetingWeek}" data-item-index="${itemIndex}" style="--meeting-order:${itemIndex}" onclick="dashboardToggleInlineMeetingCard(this)" onkeydown="dashboardMeetingCardKeydown(event,this)">
+        <div class="meeting-inline-expanded-head">
+          <span><strong class="meeting-inline-expanded-title">${crmEscape(details.title)}</strong><span class="meeting-inline-expanded-date">${crmEscape(details.date)}</span><span class="meeting-inline-expanded-time">${crmEscape(details.time)}</span></span>
+          <button aria-label="Close meeting details" class="meeting-inline-close" type="button" onclick="dashboardCloseInlineMeetingCard('${column}',event)">×</button>
+        </div>
+        <div class="meeting-inline-expanded-body">
+          ${dashboardMeetingInlineField('Organisation', details.organisation, 'organisation')}
+          ${dashboardMeetingInlineField('Contact', details.contact, 'contact')}
+          ${dashboardMeetingInlineField('Location', details.location, 'location')}
+          ${dashboardMeetingInlineField('Attendees', `${details.attendeeCount} attendee${details.attendeeCount === 1 ? '' : 's'}`, 'attendees')}
+          ${details.purpose ? `<div class="meeting-inline-note"><small>Purpose / notes</small><p>${crmEscape(details.purpose)}</p></div>` : ''}
+        </div>
+      </article>`;
+    }
+
     function dashboardMeetingDetailMarkup() {
       const selected = dashboardMeetingWeeks[dashboardSelectedMeetingWeek] || [];
       const selector = dashboardMeetingWeeks.map((items, index) => `
@@ -6877,23 +7053,39 @@
           <span class="dashboard-week-range">${dashboardWeekRangeLabel(index)}</span>
           <span class="dashboard-week-count">${items.length}</span>
         </button>`).join('');
-      const list = selected.length ? selected.map((item, itemIndex) => {
-        const presentation = dashboardMeetingPresentation(item);
-        const dateTime = [item.dateLabel, item.timeLabel].filter(Boolean).join(' · ');
-        return `<button class="dashboard-detail-meeting" type="button" data-week-index="${dashboardSelectedMeetingWeek}" data-item-index="${itemIndex}" onclick="dashboardOpenMeetingDetailItem(this)">
-          <span class="dashboard-detail-item-icon calendar">${dashboardDetailCalendarIcon()}</span>
-          <span class="dashboard-detail-meeting-copy">
-            <span class="dashboard-detail-meeting-title">${crmEscape(presentation.title)}</span>
-            ${presentation.organisation ? `<span class="dashboard-detail-organisation">${crmEscape(presentation.organisation)}</span>` : ''}
-            ${presentation.contact ? `<span class="dashboard-detail-contact">${crmEscape(presentation.contact)}</span>` : ''}
-            <span class="dashboard-detail-date-line">${crmEscape(dateTime)}</span>
-            ${presentation.location ? `<span class="dashboard-detail-location"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg><span>${crmEscape(presentation.location)}</span></span>` : ''}
-            ${presentation.purpose ? `<span class="dashboard-detail-purpose">${crmEscape(presentation.purpose)}</span>` : ''}
-            <span class="dashboard-detail-meeting-footer"><span>${item.attendeeCount} attendee${item.attendeeCount === 1 ? '' : 's'}</span></span>
-          </span>
-        </button>`;
-      }).join('') : `<div class="dashboard-detail-empty">No meetings are recorded for this week.</div>`;
-      return `<div class="dashboard-inline-divider"></div><div class="dashboard-week-selector">${selector}</div><div class="meeting-preview-stage"><div class="dashboard-detail-list">${list}</div><aside aria-hidden="true" aria-label="Meeting details" class="embedded-meeting-drawer" id="dashboardMeetingDrawer" role="dialog"><button aria-label="Close meeting details" class="embedded-meeting-drawer-close" id="dashboardMeetingDrawerClose" onclick="dashboardCloseMeetingDrawer()" type="button">×</button><div id="dashboardMeetingDrawerContent"></div></aside></div><div class="dashboard-detail-action-row"><button class="dashboard-detail-action" type="button" onclick="systemNavigate('contacts')">View all meetings →</button></div>`;
+
+      const preview = selected.slice(0, 4);
+      const validIndices = new Set(preview.map((_, index) => index));
+      if (!validIndices.has(dashboardExpandedMeetingCards.left)) dashboardExpandedMeetingCards.left = null;
+      if (!validIndices.has(dashboardExpandedMeetingCards.right)) dashboardExpandedMeetingCards.right = null;
+
+      const isMobile = dashboardMeetingUsesSingleColumn();
+      if (isMobile && dashboardExpandedMeetingCards.left !== null && dashboardExpandedMeetingCards.right !== null) {
+        const keep = dashboardLastExpandedMeetingColumn === 'right' ? 'right' : 'left';
+        dashboardExpandedMeetingCards[keep === 'left' ? 'right' : 'left'] = null;
+      }
+      const anyExpanded = dashboardExpandedMeetingCards.left !== null || dashboardExpandedMeetingCards.right !== null;
+
+      const columns = ['left', 'right'].map((column, parity) => {
+        const columnItems = preview.map((item, itemIndex) => ({ item, itemIndex })).filter(entry => entry.itemIndex % 2 === parity);
+        const selectedIndex = dashboardExpandedMeetingCards[column];
+        const hasExpanded = selectedIndex !== null && columnItems.some(entry => entry.itemIndex === selectedIndex);
+        const cards = columnItems.map(({ item, itemIndex }) => {
+          const isExpanded = hasExpanded && selectedIndex === itemIndex;
+          const compactForColumn = hasExpanded && !isExpanded;
+          const compactForMobile = isMobile && anyExpanded && !isExpanded;
+          if (isExpanded) return dashboardMeetingExpandedCardMarkup(item, itemIndex, column);
+          if (compactForColumn || compactForMobile) return dashboardMeetingCompactCardMarkup(item, itemIndex);
+          return dashboardMeetingNormalCardMarkup(item, itemIndex);
+        }).join('');
+        return `<div class="meeting-inline-column${hasExpanded ? ' has-expanded' : ''}" data-meeting-column="${column}">${cards}</div>`;
+      }).join('');
+
+      const list = preview.length
+        ? `<div class="meeting-inline-grid${anyExpanded ? ' has-any-expanded' : ''}">${columns}</div>`
+        : `<div class="meeting-inline-grid"><div class="meeting-inline-empty">No meetings are recorded for this week.</div></div>`;
+
+      return `<div class="dashboard-inline-divider"></div><div class="dashboard-week-selector">${selector}</div><div class="meeting-preview-stage">${list}</div><div class="dashboard-detail-action-row"><button class="dashboard-detail-action" type="button" onclick="systemNavigate('contacts')">View all meetings →</button></div>`;
     }
 
     function dashboardOrganisationRowsMarkup() {
@@ -8707,6 +8899,7 @@
       }
       weeks.forEach(items => items.sort((a, b) => a.sortTime - b.sortTime));
       dashboardMeetingWeeks = weeks;
+      dashboardResetInlineMeetingCards();
       return weeks;
     }
 
