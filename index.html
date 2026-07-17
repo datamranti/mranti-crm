@@ -4282,7 +4282,7 @@
 
 
 <style id="mranti-dashboard-refinement-v16">
-  /* Final signed-in Dashboard and shared navigation refinement only. */
+  /* Dashboard details expand inside the existing summary cards. */
   body.crm-authenticated,
   body.crm-authenticated button,
   body.crm-authenticated input,
@@ -4291,7 +4291,7 @@
     font-family:'Inter','Segoe UI',sans-serif;
   }
 
-  /* Preserve both supplied brand assets in their original colours. */
+  /* Preserve both supplied brand assets in their existing original colours. */
   .system-sidebar.modern-navbar .system-brand-logo,
   .system-sidebar.modern-navbar .system-app-logo {
     opacity:1!important;
@@ -4307,97 +4307,52 @@
     background-repeat:no-repeat!important;
     background-position:center!important;
   }
-  #pageDashboard .dashboard-detail-shell {
-    border:1px solid rgba(147,197,253,.42);
-    border-radius:20px;
-    background:rgba(255,255,255,.93);
-    box-shadow:0 16px 38px rgba(37,99,235,.09),0 2px 8px rgba(15,23,42,.035);
-    padding:20px;
+
+  #pageDashboard .dashboard-summary-grid { align-items:start; }
+  #pageDashboard .dashboard-visual-kpi {
+    height:156px!important;
+    min-height:156px!important;
     overflow:hidden;
+    transition:box-shadow .22s ease,border-color .22s ease;
   }
-  #pageDashboard .dashboard-detail-head {
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-    gap:18px;
+  #pageDashboard .dashboard-visual-kpi.is-expanded {
+    grid-column:1 / -1;
+    height:auto!important;
+    overflow:visible;
+    border-color:rgba(59,130,246,.42);
+    box-shadow:0 18px 44px rgba(37,99,235,.11),0 2px 8px rgba(15,23,42,.04);
   }
-  #pageDashboard .dashboard-detail-title-wrap {
-    display:flex;
-    align-items:flex-start;
-    gap:12px;
-    min-width:0;
-  }
-  #pageDashboard .dashboard-detail-icon,
-  #pageDashboard .dashboard-detail-empty-icon {
-    width:40px;
-    height:40px;
-    flex:0 0 40px;
-    display:grid;
-    place-items:center;
-    padding:9px;
-    border:1px solid #bfdbfe;
-    border-radius:12px;
-    color:#2563eb;
-    background:#eff6ff;
-  }
-  #pageDashboard .dashboard-detail-icon svg,
-  #pageDashboard .dashboard-detail-empty-icon svg {
+  #pageDashboard .dashboard-inline-detail {
     width:100%;
-    height:100%;
-    fill:none;
-    stroke:currentColor;
-    stroke-width:1.8;
-    stroke-linecap:round;
-    stroke-linejoin:round;
+    max-height:0;
+    margin-top:0;
+    overflow:hidden;
+    opacity:0;
+    pointer-events:none;
+    transition:max-height .28s cubic-bezier(.22,1,.36,1),opacity .18s ease,margin-top .28s cubic-bezier(.22,1,.36,1);
   }
-  #pageDashboard .dashboard-detail-kicker {
-    color:#2563eb;
-    font-size:9px;
-    font-weight:850;
-    letter-spacing:1.45px;
-    text-transform:uppercase;
+  #pageDashboard .dashboard-inline-detail.open {
+    max-height:520px;
+    margin-top:12px;
+    opacity:1;
+    pointer-events:auto;
   }
-  #pageDashboard .dashboard-detail-title {
-    margin-top:4px;
-    color:#0f172a;
-    font-size:19px;
-    line-height:1.2;
-    font-weight:850;
-    letter-spacing:-.35px;
+  #pageDashboard .dashboard-inline-divider {
+    height:1px;
+    margin-bottom:14px;
+    background:rgba(191,219,254,.8);
   }
-  #pageDashboard .dashboard-detail-subtitle {
-    margin-top:5px;
-    color:#64748b;
-    font-size:10.5px;
-    line-height:1.45;
-  }
-  #pageDashboard .dashboard-detail-close {
-    width:34px;
-    height:34px;
-    flex:0 0 34px;
-    display:grid;
-    place-items:center;
-    border:1px solid #dbeafe;
-    border-radius:10px;
-    background:#fff;
-    color:#64748b;
-    cursor:pointer;
-    transition:border-color .18s ease,color .18s ease,background .18s ease;
-  }
-  #pageDashboard .dashboard-detail-close:hover { border-color:#93c5fd; color:#2563eb; background:#eff6ff; }
-  #pageDashboard .dashboard-detail-close svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; }
 
   #pageDashboard .dashboard-week-selector {
     display:grid;
     grid-template-columns:repeat(5,minmax(0,1fr));
     gap:8px;
-    margin-top:18px;
   }
   #pageDashboard .dashboard-week-button {
     min-width:0;
-    padding:9px 8px;
+    padding:8px 7px;
     border:1px solid #dbeafe;
-    border-radius:11px;
+    border-radius:10px;
     background:#f8fbff;
     color:#64748b;
     font:inherit;
@@ -4406,84 +4361,66 @@
     transition:border-color .18s ease,background .18s ease,color .18s ease,box-shadow .18s ease;
   }
   #pageDashboard .dashboard-week-button:hover { border-color:#93c5fd; color:#2563eb; background:#eff6ff; }
-  #pageDashboard .dashboard-week-button.active { border-color:#3b82f6; color:#1d4ed8; background:#eff6ff; box-shadow:0 0 0 3px rgba(59,130,246,.09); }
+  #pageDashboard .dashboard-week-button.active { border-color:#3b82f6; color:#1d4ed8; background:#eff6ff; box-shadow:0 0 0 3px rgba(59,130,246,.08); }
   #pageDashboard .dashboard-week-name { display:block; font-size:10.5px; font-weight:850; }
-  #pageDashboard .dashboard-week-range { display:block; margin-top:3px; font-size:8.5px; color:#94a3b8; white-space:nowrap; }
-  #pageDashboard .dashboard-week-count { display:inline-flex; min-width:18px; height:18px; margin-top:5px; padding:0 5px; align-items:center; justify-content:center; border-radius:999px; background:#dbeafe; color:#2563eb; font-size:8.5px; font-weight:850; }
+  #pageDashboard .dashboard-week-range { display:block; margin-top:2px; color:#94a3b8; font-size:8.5px; white-space:nowrap; }
+  #pageDashboard .dashboard-week-count { display:inline-flex; min-width:18px; height:18px; margin-top:4px; padding:0 5px; align-items:center; justify-content:center; border-radius:999px; background:#dbeafe; color:#2563eb; font-size:8.5px; font-weight:850; }
   #pageDashboard .dashboard-week-button.active .dashboard-week-count { background:#2563eb; color:#fff; }
 
   #pageDashboard .dashboard-detail-list {
     display:grid;
     grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:10px;
-    margin-top:14px;
-    max-height:390px;
-    overflow:auto;
+    gap:8px;
+    max-height:320px;
+    margin-top:12px;
+    overflow-y:auto;
+    overflow-x:hidden;
     padding:1px 3px 2px 1px;
     scrollbar-gutter:stable;
   }
   #pageDashboard .dashboard-detail-meeting {
     width:100%;
     min-width:0;
-    padding:13px 14px;
+    padding:11px 12px;
     border:1px solid #dbeafe;
-    border-radius:14px;
+    border-radius:11px;
     background:#fff;
     color:#0f172a;
     font:inherit;
     text-align:left;
     cursor:pointer;
-    transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+    transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;
   }
-  #pageDashboard .dashboard-detail-meeting:hover { border-color:#93c5fd; box-shadow:0 9px 22px rgba(37,99,235,.08); transform:translateY(-1px); }
+  #pageDashboard .dashboard-detail-meeting:hover { border-color:#93c5fd; background:#f8fbff; box-shadow:0 7px 18px rgba(37,99,235,.07); }
   #pageDashboard .dashboard-detail-meeting-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
-  #pageDashboard .dashboard-detail-organisation { min-width:0; font-size:11.5px; line-height:1.35; font-weight:850; }
-  #pageDashboard .dashboard-detail-date { flex:0 0 auto; color:#64748b; font-size:9px; font-weight:750; white-space:nowrap; }
-  #pageDashboard .dashboard-detail-meeting-title { margin-top:7px; font-size:10.5px; font-weight:800; line-height:1.4; }
-  #pageDashboard .dashboard-detail-contact { margin-top:5px; color:#475569; font-size:9.5px; font-weight:700; }
-  #pageDashboard .dashboard-detail-purpose { margin-top:7px; color:#64748b; font-size:9.5px; line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-  #pageDashboard .dashboard-detail-meeting-footer { margin-top:9px; padding-top:8px; border-top:1px solid #eff6ff; display:flex; align-items:center; justify-content:space-between; gap:10px; color:#64748b; font-size:8.8px; }
-  #pageDashboard .dashboard-detail-meeting-footer span:first-child { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  #pageDashboard .dashboard-detail-organisation { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:10.5px; line-height:1.35; font-weight:850; }
+  #pageDashboard .dashboard-detail-date { flex:0 0 auto; color:#64748b; font-size:8.8px; font-weight:750; white-space:nowrap; }
+  #pageDashboard .dashboard-detail-meeting-title { margin-top:5px; font-size:10px; font-weight:800; line-height:1.35; }
+  #pageDashboard .dashboard-detail-contact { margin-top:4px; color:#475569; font-size:9.2px; font-weight:700; }
+  #pageDashboard .dashboard-detail-purpose { margin-top:5px; color:#64748b; font-size:9.2px; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  #pageDashboard .dashboard-detail-meeting-footer { margin-top:7px; padding-top:7px; border-top:1px solid #eff6ff; display:flex; justify-content:flex-end; color:#64748b; font-size:8.7px; }
 
   #pageDashboard .dashboard-detail-empty {
     grid-column:1 / -1;
-    min-height:126px;
+    min-height:92px;
     display:flex;
-    flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:9px;
     border:1px dashed #bfdbfe;
-    border-radius:14px;
+    border-radius:11px;
     background:#f8fbff;
     color:#64748b;
+    font-size:10px;
     text-align:center;
-    font-size:10.5px;
-    line-height:1.45;
   }
-  #pageDashboard .dashboard-detail-empty-icon { width:38px; height:38px; flex-basis:38px; }
 
-  #pageDashboard .dashboard-org-summary {
+  #pageDashboard .dashboard-org-tools {
     display:grid;
-    grid-template-columns:minmax(0,1fr) auto;
-    align-items:end;
-    gap:14px;
-    margin-top:17px;
+    grid-template-columns:minmax(210px,.75fr) minmax(0,1.25fr);
+    gap:10px;
+    align-items:center;
   }
-  #pageDashboard .dashboard-org-total { color:#0f172a; font-size:30px; line-height:1; font-weight:900; letter-spacing:-1px; }
-  #pageDashboard .dashboard-org-total small { margin-left:4px; color:#64748b; font-size:10px; font-weight:750; letter-spacing:0; }
-  #pageDashboard .dashboard-detail-progress { margin-top:12px; }
-  #pageDashboard .dashboard-detail-progress-track { height:12px; display:flex; overflow:hidden; border-radius:999px; background:#e8eef8; }
-  #pageDashboard .dashboard-detail-progress-new { background:#3b82f6; }
-  #pageDashboard .dashboard-detail-progress-returning { background:#06b6d4; }
-  #pageDashboard .dashboard-detail-org-legend { display:flex; align-items:center; gap:18px; flex-wrap:wrap; color:#64748b; font-size:9.5px; }
-  #pageDashboard .dashboard-detail-org-legend span { display:inline-flex; align-items:center; gap:6px; }
-  #pageDashboard .dashboard-detail-org-legend i,
-  #pageDashboard .dashboard-org-status-dot { width:8px; height:8px; flex:0 0 8px; border-radius:999px; background:#3b82f6; }
-  #pageDashboard .dashboard-detail-org-legend i.returning,
-  #pageDashboard .dashboard-org-status-dot.returning { background:#06b6d4; }
-
-  #pageDashboard .dashboard-org-filters { display:flex; gap:8px; margin-top:14px; }
+  #pageDashboard .dashboard-org-filters { display:flex; gap:7px; }
   #pageDashboard .dashboard-org-filter {
     flex:1;
     min-height:34px;
@@ -4499,16 +4436,30 @@
   }
   #pageDashboard .dashboard-org-filter:hover { color:#2563eb; border-color:#93c5fd; background:#eff6ff; }
   #pageDashboard .dashboard-org-filter.active { color:#1d4ed8; border-color:#3b82f6; background:#eff6ff; box-shadow:0 0 0 3px rgba(59,130,246,.08); }
-  #pageDashboard .dashboard-org-list { display:flex; flex-direction:column; gap:7px; margin-top:11px; max-height:370px; overflow:auto; padding-right:3px; scrollbar-gutter:stable; }
+  #pageDashboard .dashboard-org-search {
+    width:100%;
+    min-width:0;
+    height:34px;
+    padding:0 11px;
+    border:1px solid #dbeafe;
+    border-radius:10px;
+    background:#fff;
+    color:#0f172a;
+    font:inherit;
+    font-size:9.8px;
+    outline:none;
+  }
+  #pageDashboard .dashboard-org-search:focus { border-color:#3b82f6; box-shadow:0 0 0 3px rgba(59,130,246,.08); }
+  #pageDashboard .dashboard-org-list { display:flex; flex-direction:column; gap:6px; max-height:320px; margin-top:10px; overflow-y:auto; overflow-x:hidden; padding-right:3px; scrollbar-gutter:stable; }
   #pageDashboard .dashboard-org-row {
     width:100%;
     display:grid;
-    grid-template-columns:minmax(0,1fr) auto auto;
+    grid-template-columns:minmax(0,1fr) auto;
     align-items:center;
-    gap:10px;
-    padding:10px 12px;
+    gap:12px;
+    padding:9px 11px;
     border:1px solid #e2e8f0;
-    border-radius:12px;
+    border-radius:10px;
     background:#fff;
     color:#0f172a;
     font:inherit;
@@ -4517,40 +4468,27 @@
     transition:border-color .18s ease,background .18s ease;
   }
   #pageDashboard .dashboard-org-row:hover { border-color:#93c5fd; background:#f8fbff; }
-  #pageDashboard .dashboard-org-name { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:10.5px; font-weight:800; }
-  #pageDashboard .dashboard-org-date { color:#94a3b8; font-size:8.8px; white-space:nowrap; }
+  #pageDashboard .dashboard-org-record { min-width:0; display:flex; flex-direction:column; gap:3px; }
+  #pageDashboard .dashboard-org-record strong { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#0f172a; font-size:10.3px; font-weight:850; }
+  #pageDashboard .dashboard-org-record small { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#64748b; font-size:8.8px; font-weight:650; }
+  #pageDashboard .dashboard-org-meta { display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
   #pageDashboard .dashboard-org-status { display:inline-flex; align-items:center; gap:6px; color:#64748b; font-size:9px; font-weight:750; white-space:nowrap; }
-  #pageDashboard .dashboard-org-help { margin-top:10px; color:#94a3b8; font-size:8.5px; text-align:center; }
+  #pageDashboard .dashboard-org-status-dot { width:7px; height:7px; flex:0 0 7px; border-radius:999px; background:#3b82f6; }
+  #pageDashboard .dashboard-org-status-dot.returning { background:#06b6d4; }
+  #pageDashboard .dashboard-org-date { color:#94a3b8; font-size:8.6px; white-space:nowrap; }
+  #pageDashboard .dashboard-org-help { margin-top:8px; color:#94a3b8; font-size:8.4px; line-height:1.45; }
 
-  /* Google Calendar-inspired timed Week view in the existing Calendar panel. */
+  /* Google Calendar-inspired full 24-hour Week view. */
   #pageDashboard .calendar-section.calendar-week-active .cal-weekday-row { display:none!important; }
-  #pageDashboard #calGrid.week-time-mode {
-    display:block!important;
-    width:100%;
-    overflow:visible!important;
-  }
-  #pageDashboard .week-calendar-shell {
-    width:100%;
-    border:1px solid #dbeafe;
-    border-radius:16px;
-    overflow:hidden;
-    background:#fff;
-  }
-  #pageDashboard .week-calendar-scroll { width:100%; overflow-x:auto; overscroll-behavior-x:contain; }
+  #pageDashboard #calGrid.week-time-mode { display:block!important; width:100%; overflow:visible!important; }
+  #pageDashboard .week-calendar-shell { width:100%; border:1px solid #dbeafe; border-radius:16px; overflow:hidden; background:#fff; }
+  #pageDashboard .week-calendar-scroll { width:100%; overflow-x:auto; overflow-y:visible; overscroll-behavior-x:auto; }
   #pageDashboard .week-calendar-inner { min-width:820px; }
   #pageDashboard .week-calendar-header,
-  #pageDashboard .week-all-day-row {
-    display:grid;
-    grid-template-columns:64px repeat(7,minmax(0,1fr));
-  }
-  #pageDashboard .week-calendar-header { border-bottom:1px solid #dbeafe; background:#f8fbff; }
+  #pageDashboard .week-all-day-row { display:grid; grid-template-columns:64px repeat(7,minmax(0,1fr)); }
+  #pageDashboard .week-calendar-header { position:sticky; top:0; z-index:5; border-bottom:1px solid #dbeafe; background:#f8fbff; }
   #pageDashboard .week-header-axis { border-right:1px solid #e2e8f0; }
-  #pageDashboard .week-day-header {
-    min-width:0;
-    padding:10px 6px 9px;
-    border-left:1px solid #e2e8f0;
-    text-align:center;
-  }
+  #pageDashboard .week-day-header { min-width:0; padding:9px 6px 8px; border-left:1px solid #e2e8f0; text-align:center; }
   #pageDashboard .week-day-name { display:block; color:#64748b; font-size:8.5px; font-weight:850; letter-spacing:.8px; text-transform:uppercase; }
   #pageDashboard .week-day-date { width:28px; height:28px; margin:4px auto 0; display:grid; place-items:center; border-radius:999px; color:#0f172a; font-size:11px; font-weight:850; }
   #pageDashboard .week-day-header.today .week-day-date { background:#2563eb; color:#fff; box-shadow:0 4px 12px rgba(37,99,235,.22); }
@@ -4558,8 +4496,15 @@
   #pageDashboard .week-all-day-label { padding:8px 7px; border-right:1px solid #e2e8f0; color:#94a3b8; font-size:8px; font-weight:800; text-align:right; }
   #pageDashboard .week-all-day-cell { min-height:34px; padding:5px; border-left:1px solid #e2e8f0; }
   #pageDashboard .week-all-day-chip { display:block; width:100%; margin:2px 0; padding:4px 6px; overflow:hidden; border:1px solid #bfdbfe; border-radius:6px; background:#eff6ff; color:#1e3a8a; font-size:8px; font-weight:750; text-overflow:ellipsis; white-space:nowrap; cursor:pointer; }
-  #pageDashboard .week-time-scroll { max-height:600px; overflow-y:auto; overflow-x:hidden; scrollbar-gutter:stable; }
-  #pageDashboard .week-time-grid { display:grid; grid-template-columns:64px minmax(0,1fr); position:relative; }
+  #pageDashboard .week-time-scroll {
+    max-height:min(620px,65vh);
+    overflow-y:auto;
+    overflow-x:hidden;
+    overscroll-behavior-y:auto;
+    touch-action:pan-y;
+    scrollbar-gutter:stable;
+  }
+  #pageDashboard .week-time-grid { display:grid; grid-template-columns:64px minmax(0,1fr); position:relative; padding:12px 0; }
   #pageDashboard .week-time-axis { position:relative; height:var(--week-grid-height); border-right:1px solid #e2e8f0; background:#fff; }
   #pageDashboard .week-time-label { position:absolute; right:8px; transform:translateY(-50%); color:#94a3b8; font-size:8px; font-weight:750; white-space:nowrap; }
   #pageDashboard .week-day-columns {
@@ -4567,19 +4512,19 @@
     height:var(--week-grid-height);
     display:grid;
     grid-template-columns:repeat(7,minmax(0,1fr));
-    background-image:repeating-linear-gradient(to bottom,transparent 0 calc(var(--week-hour-height) - 1px),#e2e8f0 calc(var(--week-hour-height) - 1px) var(--week-hour-height));
+    background-image:linear-gradient(to bottom,#e2e8f0 1px,transparent 1px);
+    background-size:100% var(--week-hour-height);
   }
   #pageDashboard .week-day-column { position:relative; min-width:0; border-left:1px solid #e2e8f0; }
   #pageDashboard .week-day-column.today { background:rgba(239,246,255,.42); }
   #pageDashboard .week-event {
     position:absolute;
     z-index:3;
-    min-height:24px;
-    padding:5px 6px;
+    padding:4px 5px;
     overflow:hidden;
     border:1px solid #93c5fd;
     border-left:3px solid #3b82f6;
-    border-radius:7px;
+    border-radius:6px;
     background:#dbeafe;
     color:#0f172a;
     font:inherit;
@@ -4590,27 +4535,24 @@
   }
   #pageDashboard .week-event:hover { z-index:6; border-color:#3b82f6; box-shadow:0 8px 18px rgba(37,99,235,.16); transform:translateY(-1px); }
   #pageDashboard .week-event.selected { z-index:7; border-color:#2563eb; box-shadow:0 0 0 2px rgba(37,99,235,.22),0 8px 18px rgba(37,99,235,.14); }
-  #pageDashboard .week-event-title { display:block; overflow:hidden; font-size:8.5px; line-height:1.25; font-weight:850; text-overflow:ellipsis; white-space:nowrap; }
-  #pageDashboard .week-event-time { display:block; margin-top:2px; color:#475569; font-size:7.5px; font-weight:700; white-space:nowrap; }
+  #pageDashboard .week-event-title { display:block; overflow:hidden; font-size:8.8px; line-height:1.25; font-weight:850; text-overflow:ellipsis; white-space:nowrap; }
+  #pageDashboard .week-event-time { display:block; margin-top:2px; color:#475569; font-size:7.8px; font-weight:700; white-space:nowrap; }
+  #pageDashboard .week-event-location { display:block; margin-top:2px; overflow:hidden; color:#64748b; font-size:7.5px; font-weight:650; text-overflow:ellipsis; white-space:nowrap; }
   #pageDashboard .week-current-line { position:absolute; left:0; right:0; z-index:8; height:2px; background:#06b6d4; pointer-events:none; }
   #pageDashboard .week-current-line::before { content:""; position:absolute; left:-4px; top:-3px; width:8px; height:8px; border-radius:999px; background:#06b6d4; }
 
   @media (max-width:760px) {
-#pageDashboard .dashboard-detail-shell { padding:16px; }
-    #pageDashboard .dashboard-detail-list { grid-template-columns:1fr; max-height:470px; }
-    #pageDashboard .dashboard-week-selector { grid-template-columns:repeat(5,minmax(58px,1fr)); overflow-x:auto; padding-bottom:2px; }
-    #pageDashboard .dashboard-org-summary { grid-template-columns:1fr; align-items:start; }
-    #pageDashboard .dashboard-org-row { grid-template-columns:minmax(0,1fr) auto; }
-    #pageDashboard .dashboard-org-date { grid-column:1; grid-row:2; }
-    #pageDashboard .dashboard-org-status { grid-column:2; grid-row:1 / span 2; }
-    #pageDashboard .week-time-scroll { max-height:520px; }
+    #pageDashboard .dashboard-visual-kpi.is-expanded { grid-column:auto; }
+    #pageDashboard .dashboard-week-selector { grid-template-columns:repeat(5,minmax(60px,1fr)); overflow-x:auto; padding-bottom:3px; }
+    #pageDashboard .dashboard-detail-list { grid-template-columns:1fr; }
+    #pageDashboard .dashboard-org-tools { grid-template-columns:1fr; }
+    #pageDashboard .dashboard-org-row { align-items:start; }
+    #pageDashboard .week-time-scroll { max-height:560px; }
   }
   @media (max-width:430px) {
-    #pageDashboard .dashboard-detail-head { gap:10px; }
-    #pageDashboard .dashboard-detail-icon { width:36px; height:36px; flex-basis:36px; padding:8px; }
-    #pageDashboard .dashboard-detail-title { font-size:17px; }
-    #pageDashboard .dashboard-org-filters { gap:5px; }
-    #pageDashboard .dashboard-org-filter { padding:7px 8px; }
+    #pageDashboard .dashboard-inline-detail.open { max-height:560px; }
+    #pageDashboard .dashboard-org-row { grid-template-columns:minmax(0,1fr); gap:7px; }
+    #pageDashboard .dashboard-org-meta { align-items:flex-start; flex-direction:row; justify-content:space-between; }
   }
 </style>
 
@@ -4636,132 +4578,6 @@
     mix-blend-mode:normal!important;
   }
 
-  body.dashboard-popup-open { overflow:hidden!important; }
-  #pageDashboard .dashboard-analytics-overlay {
-    position:fixed;
-    inset:0;
-    z-index:1250;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:24px;
-    background:rgba(15,23,42,.38);
-    backdrop-filter:blur(7px);
-    -webkit-backdrop-filter:blur(7px);
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-    transition:opacity .2s ease,visibility .2s ease;
-  }
-  #pageDashboard .dashboard-analytics-overlay.open {
-    opacity:1;
-    visibility:visible;
-    pointer-events:auto;
-  }
-  #pageDashboard .dashboard-analytics-dialog {
-    width:min(960px,calc(100vw - 48px));
-    max-width:960px;
-    max-height:78vh;
-    min-height:0;
-    overflow:hidden;
-    border:1px solid rgba(147,197,253,.46);
-    border-radius:24px;
-    background:#fff;
-    box-shadow:0 32px 90px rgba(15,23,42,.24),0 8px 24px rgba(37,99,235,.12);
-    transform:translateY(12px) scale(.985);
-    transition:transform .25s cubic-bezier(.22,1,.36,1);
-  }
-  #pageDashboard .dashboard-analytics-overlay.open .dashboard-analytics-dialog { transform:translateY(0) scale(1); }
-  #pageDashboard #dashboardAnalyticsContent,
-  #pageDashboard .dashboard-popup-shell { min-height:0; max-height:78vh; }
-  #pageDashboard .dashboard-popup-shell { display:flex; flex-direction:column; padding:0; border:0; border-radius:24px; box-shadow:none; }
-  #pageDashboard .dashboard-popup-head {
-    position:sticky;
-    top:0;
-    z-index:4;
-    flex:0 0 auto;
-    padding:22px 24px 18px;
-    border-bottom:1px solid #e2e8f0;
-    background:rgba(255,255,255,.97);
-    backdrop-filter:blur(16px);
-    -webkit-backdrop-filter:blur(16px);
-  }
-  #pageDashboard .dashboard-popup-body {
-    min-height:0;
-    overflow-y:auto;
-    overflow-x:hidden;
-    overscroll-behavior:auto;
-    padding:18px 24px 24px;
-    scrollbar-gutter:stable;
-  }
-  #pageDashboard .dashboard-popup-count {
-    display:inline-flex;
-    min-width:25px;
-    height:25px;
-    margin-left:7px;
-    padding:0 8px;
-    align-items:center;
-    justify-content:center;
-    vertical-align:2px;
-    border-radius:999px;
-    background:#eff6ff;
-    color:#2563eb;
-    font-size:11px;
-    font-weight:850;
-  }
-  #pageDashboard .dashboard-popup-section-label { margin:16px 0 0; color:#475569; font-size:10px; font-weight:850; letter-spacing:.5px; text-transform:uppercase; }
-  #pageDashboard .dashboard-detail-list,
-  #pageDashboard .dashboard-org-list { max-height:none; overflow:visible; }
-  #pageDashboard .dashboard-org-record { min-width:0; display:flex; flex-direction:column; gap:3px; }
-  #pageDashboard .dashboard-org-record strong { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#0f172a; font-size:10.5px; font-weight:850; }
-  #pageDashboard .dashboard-org-record small { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#64748b; font-size:8.8px; font-weight:650; }
-  #pageDashboard .dashboard-network-icon svg { fill:none!important; stroke:#2563eb!important; stroke-width:1.8!important; stroke-linecap:round!important; stroke-linejoin:round!important; }
-
-  #pageDashboard .week-calendar-shell { overflow:hidden; }
-  #pageDashboard .week-calendar-scroll { overflow-x:auto; overflow-y:visible; overscroll-behavior-x:auto; }
-  #pageDashboard .week-calendar-header { position:relative; z-index:3; }
-  #pageDashboard .week-time-scroll {
-    max-height:min(540px,62vh);
-    overflow-y:auto;
-    overflow-x:hidden;
-    overscroll-behavior-y:auto;
-    touch-action:pan-y;
-    scrollbar-gutter:stable;
-  }
-  #pageDashboard .week-event { min-height:26px; }
-  #pageDashboard .week-event-title { font-size:9.5px; line-height:1.3; }
-  #pageDashboard .week-event-time { font-size:8.25px; white-space:normal; line-height:1.25; }
-
-  @media (max-width:760px) {
-    #pageDashboard .dashboard-analytics-overlay { align-items:flex-end; padding:0; }
-    #pageDashboard .dashboard-analytics-dialog {
-      width:100%;
-      max-width:none;
-      max-height:90vh;
-      border-width:1px 0 0;
-      border-radius:22px 22px 0 0;
-      transform:translateY(24px);
-    }
-    #pageDashboard .dashboard-analytics-overlay.open .dashboard-analytics-dialog { transform:translateY(0); }
-    #pageDashboard #dashboardAnalyticsContent,
-    #pageDashboard .dashboard-popup-shell { max-height:90vh; }
-    #pageDashboard .dashboard-popup-head { padding:17px 16px 14px; }
-    #pageDashboard .dashboard-popup-body { padding:14px 16px calc(20px + env(safe-area-inset-bottom)); }
-    #pageDashboard .dashboard-week-selector { grid-template-columns:repeat(5,minmax(62px,1fr)); overflow-x:auto; padding-bottom:4px; }
-    #pageDashboard .dashboard-detail-list { grid-template-columns:1fr; }
-    #pageDashboard .dashboard-org-row { grid-template-columns:minmax(0,1fr) auto; }
-    #pageDashboard .dashboard-org-date { grid-column:1; grid-row:2; }
-    #pageDashboard .dashboard-org-status { grid-column:2; grid-row:1 / span 2; }
-    #pageDashboard .week-time-scroll { max-height:56vh; }
-  }
-
-  @media (max-width:430px) {
-    #pageDashboard .dashboard-detail-title { font-size:17px; }
-    #pageDashboard .dashboard-detail-icon { width:36px; height:36px; flex-basis:36px; padding:8px; }
-    #pageDashboard .dashboard-detail-close { width:36px; height:36px; flex-basis:36px; }
-    #pageDashboard .dashboard-org-summary { grid-template-columns:1fr; align-items:start; }
-    #pageDashboard .dashboard-detail-org-legend { gap:10px; }
-  }
 </style>
 
 </head>
@@ -4853,7 +4669,7 @@
 </div>
 </div>
 <div class="system-kpi-grid dashboard-summary-grid">
-<article class="system-card dashboard-visual-kpi meetings-kpi-card">
+<article class="system-card dashboard-visual-kpi meetings-kpi-card" id="dashboardMeetingsCard">
 <div class="visual-kpi-heading">
 <div class="visual-kpi-title-row">
 <span aria-hidden="true" class="visual-kpi-icon"><svg viewbox="0 0 24 24"><rect height="16" rx="3" width="18" x="3" y="5"></rect><path d="M16 3v4"></path><path d="M8 3v4"></path><path d="M3 10h18"></path></svg></span>
@@ -4862,9 +4678,10 @@
 <div class="visual-kpi-value" id="dashboardMeetingsMonth">0</div>
 </div>
 <div aria-label="Weekly meeting distribution" class="weekly-bars" id="dashboardMeetingsWeeklyBars" role="group"></div>
-<button class="visual-kpi-link" onclick="dashboardViewMeetings()" type="button">View meetings <span aria-hidden="true">→</span></button>
+<button aria-expanded="false" class="visual-kpi-link" id="dashboardMeetingsToggle" onclick="dashboardViewMeetings()" type="button">Show details <span aria-hidden="true">↓</span></button>
+<div aria-hidden="true" class="dashboard-inline-detail" id="dashboardMeetingsDetails"></div>
 </article>
-<article class="system-card dashboard-visual-kpi organisations-kpi-card">
+<article class="system-card dashboard-visual-kpi organisations-kpi-card" id="dashboardOrganisationsCard">
 <div class="visual-kpi-heading">
 <div class="visual-kpi-title-row">
 <span aria-hidden="true" class="visual-kpi-icon dashboard-network-icon"><svg viewbox="0 0 24 24"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg></span>
@@ -4882,13 +4699,9 @@
 <div><span class="legend-dot returning"></span><span>Returning</span><strong id="dashboardOrgReturningCount">0</strong></div>
 </div>
 </div>
-<button class="visual-kpi-link" onclick="dashboardViewOrganisations()" type="button">View organisations <span aria-hidden="true">→</span></button>
+<button aria-expanded="false" class="visual-kpi-link" id="dashboardOrganisationsToggle" onclick="dashboardViewOrganisations()" type="button">Show details <span aria-hidden="true">↓</span></button>
+<div aria-hidden="true" class="dashboard-inline-detail" id="dashboardOrganisationsDetails"></div>
 </article>
-</div>
-<div aria-hidden="true" class="dashboard-analytics-overlay" id="dashboardAnalyticsOverlay" onclick="dashboardHandlePopupBackdrop(event)">
-<section aria-labelledby="dashboardAnalyticsTitle" aria-modal="true" class="dashboard-analytics-dialog" id="dashboardAnalyticsDialog" role="dialog">
-<div id="dashboardAnalyticsContent"></div>
-</section>
 </div>
 <div class="dashboard-workspace">
 <section class="system-card dashboard-calendar-card" id="dashboardCalendarSection">
@@ -5382,9 +5195,10 @@
     let calendarViewMode = 'month';
     let currentEvent = null;
     window._eventsCache = {};
-    let dashboardDetailMode = null;
+    let dashboardExpandedCard = null;
     let dashboardSelectedMeetingWeek = Math.min(4, Math.max(0, Math.floor((new Date().getDate() - 1) / 7)));
     let dashboardOrganisationFilter = 'new';
+    let dashboardOrganisationSearch = '';
     let dashboardMeetingWeeks = [[], [], [], [], []];
     let dashboardOrganisationRows = [];
     let dashboardOrganisationTotals = { total: 0, fresh: 0, returning: 0 };
@@ -5660,10 +5474,6 @@
       if (googleAccessToken) loadMonthEvents(calendarViewDate);
     }
 
-    function dashboardScrollToCalendar() {
-      document.getElementById('dashboardCalendarSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
     function dashboardDetailCalendarIcon() {
       return '<svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg>';
     }
@@ -5672,71 +5482,64 @@
       return '<svg aria-hidden="true" viewBox="0 0 24 24"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg>';
     }
 
-    function dashboardCloseDetail() {
-      const overlay = document.getElementById('dashboardAnalyticsOverlay');
-      if (!overlay) return;
-      overlay.classList.remove('open');
-      overlay.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('dashboard-popup-open');
-      const previouslyFocused = window.dashboardPopupPreviouslyFocused;
-      dashboardDetailMode = null;
-      window.setTimeout(() => {
-        if (!overlay.classList.contains('open')) {
-          const content = document.getElementById('dashboardAnalyticsContent');
-          if (content) content.innerHTML = '';
+    function dashboardCleanDisplayText(value, fallback = '') {
+      let text = String(value || '');
+      text = text.replace(/\[([^\]]+)\]\((?:https?:\/\/|www\.)[^)]+\)/gi, '$1');
+      text = text.replace(/<[^>]*>/g, ' ');
+      const decoder = document.createElement('textarea');
+      decoder.innerHTML = text;
+      text = decoder.value;
+      text = text.replace(/(?:https?:\/\/|www\.)\S+/gi, ' ');
+      text = text.replace(/\s+/g, ' ').trim();
+      return text || fallback;
+    }
+
+    function dashboardApplyExpandedState() {
+      const configs = [
+        { mode: 'meetings', cardId: 'dashboardMeetingsCard', detailId: 'dashboardMeetingsDetails', toggleId: 'dashboardMeetingsToggle' },
+        { mode: 'organisations', cardId: 'dashboardOrganisationsCard', detailId: 'dashboardOrganisationsDetails', toggleId: 'dashboardOrganisationsToggle' }
+      ];
+      configs.forEach(config => {
+        const open = dashboardExpandedCard === config.mode;
+        const card = document.getElementById(config.cardId);
+        const detail = document.getElementById(config.detailId);
+        const toggle = document.getElementById(config.toggleId);
+        card?.classList.toggle('is-expanded', open);
+        detail?.classList.toggle('open', open);
+        detail?.setAttribute('aria-hidden', String(!open));
+        if (toggle) {
+          toggle.setAttribute('aria-expanded', String(open));
+          toggle.innerHTML = open
+            ? 'Hide details <span aria-hidden="true">↑</span>'
+            : 'Show details <span aria-hidden="true">↓</span>';
         }
-      }, 220);
-      if (previouslyFocused && typeof previouslyFocused.focus === 'function') {
-        window.setTimeout(() => previouslyFocused.focus({ preventScroll: true }), 0);
-      }
-      window.dashboardPopupPreviouslyFocused = null;
-    }
-
-    function dashboardOpenDetail(mode, forceOpen = false) {
-      const overlay = document.getElementById('dashboardAnalyticsOverlay');
-      if (!overlay) return;
-      if (!forceOpen && dashboardDetailMode === mode && overlay.classList.contains('open')) {
-        dashboardCloseDetail();
-        return;
-      }
-      if (mode === 'organisations' && !['new', 'returning'].includes(dashboardOrganisationFilter)) {
-        dashboardOrganisationFilter = dashboardOrganisationTotals.fresh || !dashboardOrganisationTotals.returning ? 'new' : 'returning';
-      }
-      window.dashboardPopupPreviouslyFocused = document.activeElement;
-      dashboardDetailMode = mode;
+      });
       dashboardRenderDetailPanel();
-      overlay.classList.add('open');
-      overlay.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('dashboard-popup-open');
-      requestAnimationFrame(() => overlay.querySelector('.dashboard-detail-close')?.focus({ preventScroll: true }));
-    }
-
-    function dashboardHandlePopupBackdrop(event) {
-      if (event?.target?.id === 'dashboardAnalyticsOverlay') dashboardCloseDetail();
     }
 
     function dashboardViewMeetings() {
-      dashboardOpenDetail('meetings');
+      dashboardExpandedCard = dashboardExpandedCard === 'meetings' ? null : 'meetings';
+      dashboardApplyExpandedState();
     }
 
     function dashboardOpenMeetingWeek(index) {
       dashboardSelectedMeetingWeek = Math.min(4, Math.max(0, Number(index) || 0));
-      dashboardOpenDetail('meetings', true);
-      const now = new Date();
-      const target = new Date(now.getFullYear(), now.getMonth(), 1 + (dashboardSelectedMeetingWeek * 7));
-      setCalendarView('week', target);
+      dashboardExpandedCard = 'meetings';
+      dashboardApplyExpandedState();
     }
 
     function dashboardSelectMeetingWeek(index) {
       dashboardSelectedMeetingWeek = Math.min(4, Math.max(0, Number(index) || 0));
+      dashboardExpandedCard = 'meetings';
       dashboardRenderDetailPanel();
-      const now = new Date();
-      const target = new Date(now.getFullYear(), now.getMonth(), 1 + (dashboardSelectedMeetingWeek * 7));
-      setCalendarView('week', target);
     }
 
     function dashboardViewOrganisations() {
-      dashboardOpenDetail('organisations');
+      dashboardExpandedCard = dashboardExpandedCard === 'organisations' ? null : 'organisations';
+      if (dashboardExpandedCard === 'organisations' && !['new', 'returning'].includes(dashboardOrganisationFilter)) {
+        dashboardOrganisationFilter = dashboardOrganisationTotals.fresh || !dashboardOrganisationTotals.returning ? 'new' : 'returning';
+      }
+      dashboardApplyExpandedState();
     }
 
     function dashboardSetOrganisationFilter(filter) {
@@ -5744,10 +5547,15 @@
       dashboardRenderDetailPanel();
     }
 
+    function dashboardSetOrganisationSearch(value) {
+      dashboardOrganisationSearch = String(value || '').trim().toLowerCase();
+      const list = document.querySelector('#dashboardOrganisationsDetails .dashboard-org-list');
+      if (list) list.innerHTML = dashboardOrganisationRowsMarkup();
+    }
+
     function dashboardOpenMeetingDetailItem(button) {
       const recordId = button?.dataset?.recordId || '';
       const eventKey = button?.dataset?.eventKey || '';
-      dashboardCloseDetail();
       if (recordId) {
         systemOpenRecordFromDashboard(recordId);
         return;
@@ -5757,16 +5565,17 @@
 
     function dashboardOpenOrganisationRow(button) {
       const recordId = button?.dataset?.recordId || '';
-      dashboardCloseDetail();
       if (recordId) systemOpenRecordFromDashboard(recordId);
     }
 
     function dashboardWeekRangeLabel(index) {
       const now = new Date();
       const start = new Date(now.getFullYear(), now.getMonth(), 1 + index * 7);
-      const end = new Date(now.getFullYear(), now.getMonth(), Math.min(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(), 7 + index * 7));
-      const monthLabel = start.toLocaleDateString('en-MY', { month: 'short' });
-      return `${start.getDate()}–${end.getDate()} ${monthLabel}`;
+      const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      const end = new Date(now.getFullYear(), now.getMonth(), Math.min(monthEnd.getDate(), 7 + index * 7));
+      const startLabel = start.toLocaleDateString('en-MY', { day: 'numeric', month: 'short' });
+      const endLabel = end.toLocaleDateString('en-MY', { day: 'numeric', month: 'short' });
+      return `${startLabel}–${endLabel}`;
     }
 
     function dashboardMeetingDetailMarkup() {
@@ -5778,66 +5587,70 @@
           <span class="dashboard-week-count">${items.length}</span>
         </button>`).join('');
       const list = selected.length ? selected.map(item => {
+        const organisation = dashboardCleanDisplayText(item.organisation, 'Organisation not recorded');
+        const title = dashboardCleanDisplayText(item.title, 'Untitled meeting');
+        const contact = dashboardCleanDisplayText(item.contact, 'External contact not recorded');
+        const purpose = dashboardCleanDisplayText(item.purpose, 'No meeting purpose recorded.');
         const recordAttribute = crmEscape(item.recordId || '');
         const eventAttribute = crmEscape(item.eventKey || '');
+        const dateTime = [item.dateLabel, item.timeLabel].filter(Boolean).join(' · ');
         return `<button class="dashboard-detail-meeting" type="button" data-record-id="${recordAttribute}" data-event-key="${eventAttribute}" onclick="dashboardOpenMeetingDetailItem(this)">
-          <div class="dashboard-detail-meeting-top"><span class="dashboard-detail-organisation">${crmEscape(item.organisation)}</span><span class="dashboard-detail-date">${crmEscape(item.dateLabel)}</span></div>
-          <div class="dashboard-detail-meeting-title">${crmEscape(item.title)}</div>
-          <div class="dashboard-detail-contact">${crmEscape(item.contact)}</div>
-          <div class="dashboard-detail-purpose">${crmEscape(item.purpose)}</div>
-          <div class="dashboard-detail-meeting-footer"><span>${crmEscape(item.timeLabel)}</span><span>${item.attendeeCount} attendee${item.attendeeCount === 1 ? '' : 's'}</span></div>
+          <div class="dashboard-detail-meeting-top"><span class="dashboard-detail-organisation">${crmEscape(organisation)}</span><span class="dashboard-detail-date">${crmEscape(dateTime)}</span></div>
+          <div class="dashboard-detail-meeting-title">${crmEscape(title)}</div>
+          <div class="dashboard-detail-contact">${crmEscape(contact)}</div>
+          <div class="dashboard-detail-purpose">${crmEscape(purpose)}</div>
+          <div class="dashboard-detail-meeting-footer"><span>${item.attendeeCount} attendee${item.attendeeCount === 1 ? '' : 's'}</span></div>
         </button>`;
-      }).join('') : `<div class="dashboard-detail-empty"><span class="dashboard-detail-empty-icon">${dashboardDetailCalendarIcon()}</span><span>No meetings are recorded for this week.</span></div>`;
-      const total = dashboardMeetingWeeks.reduce((sum, items) => sum + items.length, 0);
-      return `<div class="dashboard-detail-shell dashboard-popup-shell">
-        <div class="dashboard-detail-head dashboard-popup-head">
-          <div class="dashboard-detail-title-wrap"><span class="dashboard-detail-icon">${dashboardDetailCalendarIcon()}</span><div><div class="dashboard-detail-kicker">Dashboard analytics</div><div class="dashboard-detail-title" id="dashboardAnalyticsTitle">Meetings this month <span class="dashboard-popup-count">${total}</span></div><div class="dashboard-detail-subtitle">Review meetings by calendar week.</div></div></div>
-          <button class="dashboard-detail-close" type="button" onclick="dashboardCloseDetail()" aria-label="Close meetings popup"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
-        </div>
-        <div class="dashboard-popup-body">
-          <div class="dashboard-week-selector">${selector}</div>
-          <div class="dashboard-popup-section-label">Meetings in ${dashboardWeekRangeLabel(dashboardSelectedMeetingWeek)}</div>
-          <div class="dashboard-detail-list">${list}</div>
-        </div>
-      </div>`;
+      }).join('') : `<div class="dashboard-detail-empty">No meetings are recorded for this week.</div>`;
+      return `<div class="dashboard-inline-divider"></div><div class="dashboard-week-selector">${selector}</div><div class="dashboard-detail-list">${list}</div>`;
+    }
+
+    function dashboardOrganisationRowsMarkup() {
+      const activeFilter = dashboardOrganisationFilter === 'returning' ? 'returning' : 'new';
+      const query = dashboardOrganisationSearch;
+      const filtered = dashboardOrganisationRows.filter(item => {
+        if (item.status !== activeFilter) return false;
+        if (!query) return true;
+        const haystack = `${item.name || ''} ${item.latestMeetingTitle || ''}`.toLowerCase();
+        return haystack.includes(query);
+      });
+      if (!filtered.length) {
+        const message = query
+          ? `No ${activeFilter} organisations match your search.`
+          : `No ${activeFilter} organisations are recorded for this month.`;
+        return `<div class="dashboard-detail-empty">${crmEscape(message)}</div>`;
+      }
+      return filtered.map(item => `<button class="dashboard-org-row" type="button" data-record-id="${crmEscape(item.recordId || '')}" onclick="dashboardOpenOrganisationRow(this)">
+        <span class="dashboard-org-record"><strong>${crmEscape(dashboardCleanDisplayText(item.name, 'Organisation not recorded'))}</strong><small>${crmEscape(dashboardCleanDisplayText(item.latestMeetingTitle, 'Latest meeting title not recorded'))}</small></span>
+        <span class="dashboard-org-meta"><span class="dashboard-org-status"><i class="dashboard-org-status-dot${item.status === 'returning' ? ' returning' : ''}"></i>${item.status === 'returning' ? 'Returning' : 'New'}</span><span class="dashboard-org-date">${crmEscape(item.latestLabel)}</span></span>
+      </button>`).join('');
     }
 
     function dashboardOrganisationDetailMarkup() {
-      const totals = dashboardOrganisationTotals;
       const activeFilter = dashboardOrganisationFilter === 'returning' ? 'returning' : 'new';
-      const filtered = dashboardOrganisationRows.filter(item => item.status === activeFilter);
-      const freshPercent = totals.total ? totals.fresh / totals.total * 100 : 0;
-      const returningPercent = totals.total ? totals.returning / totals.total * 100 : 0;
-      const rows = filtered.length ? filtered.map(item => `<button class="dashboard-org-row" type="button" data-record-id="${crmEscape(item.recordId || '')}" onclick="dashboardOpenOrganisationRow(this)">
-        <span class="dashboard-org-record"><strong>${crmEscape(item.name)}</strong><small>${crmEscape(item.latestMeetingTitle || 'Latest meeting title not recorded')}</small></span>
-        <span class="dashboard-org-date">${crmEscape(item.latestLabel)}</span>
-        <span class="dashboard-org-status"><i class="dashboard-org-status-dot${item.status === 'returning' ? ' returning' : ''}"></i>${item.status === 'returning' ? 'Returning' : 'New'}</span>
-      </button>`).join('') : `<div class="dashboard-detail-empty"><span class="dashboard-detail-empty-icon">${dashboardDetailNetworkIcon()}</span><span>No ${activeFilter} organisations are recorded for this month.</span></div>`;
-      return `<div class="dashboard-detail-shell dashboard-popup-shell">
-        <div class="dashboard-detail-head dashboard-popup-head">
-          <div class="dashboard-detail-title-wrap"><span class="dashboard-detail-icon dashboard-network-icon">${dashboardDetailNetworkIcon()}</span><div><div class="dashboard-detail-kicker">Dashboard analytics</div><div class="dashboard-detail-title" id="dashboardAnalyticsTitle">Organisations engaged</div><div class="dashboard-detail-subtitle">New and returning relationships this month.</div></div></div>
-          <button class="dashboard-detail-close" type="button" onclick="dashboardCloseDetail()" aria-label="Close organisations popup"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+      return `<div class="dashboard-inline-divider"></div>
+        <div class="dashboard-org-tools">
+          <div class="dashboard-org-filters" role="group" aria-label="Filter organisations">
+            <button class="dashboard-org-filter${activeFilter === 'new' ? ' active' : ''}" type="button" onclick="dashboardSetOrganisationFilter('new')">New</button>
+            <button class="dashboard-org-filter${activeFilter === 'returning' ? ' active' : ''}" type="button" onclick="dashboardSetOrganisationFilter('returning')">Returning</button>
+          </div>
+          <input class="dashboard-org-search" type="search" value="${crmEscape(dashboardOrganisationSearch)}" oninput="dashboardSetOrganisationSearch(this.value)" placeholder="Search organisations or latest meetings" aria-label="Search organisations" />
         </div>
-        <div class="dashboard-popup-body">
-          <div class="dashboard-org-summary"><div><div class="dashboard-org-total">${totals.total}<small>organisations</small></div><div class="dashboard-detail-progress"><div class="dashboard-detail-progress-track"><span class="dashboard-detail-progress-new" style="width:${freshPercent}%"></span><span class="dashboard-detail-progress-returning" style="width:${returningPercent}%"></span></div></div></div><div class="dashboard-detail-org-legend"><span><i></i>New — ${totals.fresh}</span><span><i class="returning"></i>Returning — ${totals.returning}</span></div></div>
-          <div class="dashboard-org-filters" role="group" aria-label="Filter organisations"><button class="dashboard-org-filter${activeFilter === 'new' ? ' active' : ''}" type="button" onclick="dashboardSetOrganisationFilter('new')">New</button><button class="dashboard-org-filter${activeFilter === 'returning' ? ' active' : ''}" type="button" onclick="dashboardSetOrganisationFilter('returning')">Returning</button></div>
-          <div class="dashboard-org-list">${rows}</div>
-          <div class="dashboard-org-help">Select an organisation to open its latest relevant CRM meeting record.</div>
-        </div>
-      </div>`;
+        <div class="dashboard-org-list" id="dashboardOrganisationDetailList">${dashboardOrganisationRowsMarkup()}</div>
+        <div class="dashboard-org-help"><strong>New:</strong> first recorded CRM engagement occurred during the selected month. <strong>Returning:</strong> at least one CRM engagement existed before the selected month.</div>`;
     }
 
     function dashboardRenderDetailPanel() {
-      const content = document.getElementById('dashboardAnalyticsContent');
-      if (!content || !dashboardDetailMode) return;
-      content.innerHTML = dashboardDetailMode === 'organisations' ? dashboardOrganisationDetailMarkup() : dashboardMeetingDetailMarkup();
+      const meetings = document.getElementById('dashboardMeetingsDetails');
+      const organisations = document.getElementById('dashboardOrganisationsDetails');
+      if (dashboardExpandedCard === 'meetings') {
+        if (meetings) meetings.innerHTML = dashboardMeetingDetailMarkup();
+        return;
+      }
+      if (dashboardExpandedCard === 'organisations') {
+        if (organisations) organisations.innerHTML = dashboardOrganisationDetailMarkup();
+      }
     }
-
-
-    document.addEventListener('keydown', event => {
-      const overlay = document.getElementById('dashboardAnalyticsOverlay');
-      if (event.key === 'Escape' && overlay?.classList.contains('open')) dashboardCloseDetail();
-    });
 
     // The grid always shows 6 full weeks (42 cells) so the layout never
     // reflows in height between months, same as Google Calendar's month view.
@@ -6157,14 +5970,15 @@
           ? `${weekStart.getDate()} ${monthNames[weekStart.getMonth()]} – ${weekEnd.getDate()} ${monthNames[weekEnd.getMonth()]} ${weekEnd.getFullYear()}`
           : `${weekStart.getDate()} ${monthNames[weekStart.getMonth()]} ${weekStart.getFullYear()} – ${weekEnd.getDate()} ${monthNames[weekEnd.getMonth()]} ${weekEnd.getFullYear()}`;
 
-      const START_HOUR = 6;
-      const END_HOUR = 21;
-      const HOUR_HEIGHT = 58;
-      const GRID_HEIGHT = (END_HOUR - START_HOUR) * HOUR_HEIGHT;
+      const MINUTES_PER_DAY = 24 * 60;
+      const PIXELS_PER_MINUTE = 1;
+      const HOUR_HEIGHT = 60;
+      const GRID_HEIGHT = MINUTES_PER_DAY * PIXELS_PER_MINUTE;
+      const GRID_PADDING = 12;
       const todayKey = ymdKey(new Date());
       const days = [];
       let hasAllDay = false;
-      let earliestDisplayedHour = null;
+      let earliestMeetingMinute = null;
       window._eventsCache = window._eventsCache || {};
 
       for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
@@ -6177,45 +5991,46 @@
         const timed = dayEvents.filter(event => event.start?.dateTime).map((event, index) => {
           const start = new Date(event.start.dateTime);
           const end = event.end?.dateTime ? new Date(event.end.dateTime) : new Date(start.getTime() + 30 * 60000);
-          const startHour = getKLHourFraction(start);
-          const durationHours = Math.max(.25, (end - start) / 3600000);
-          const clippedStart = Math.max(START_HOUR, Math.min(END_HOUR, startHour));
-          const clippedEnd = Math.max(START_HOUR, Math.min(END_HOUR, startHour + durationHours));
-          if (clippedEnd > START_HOUR && clippedStart < END_HOUR) {
-            earliestDisplayedHour = earliestDisplayedHour === null ? clippedStart : Math.min(earliestDisplayedHour, clippedStart);
+          const startMinute = Math.round(getKLHourFraction(start) * 60);
+          const durationMinutes = Math.max(1, Math.round((end - start) / 60000));
+          const endMinute = startMinute + durationMinutes;
+          const clippedStart = Math.max(0, Math.min(MINUTES_PER_DAY, startMinute));
+          const clippedEnd = Math.max(0, Math.min(MINUTES_PER_DAY, endMinute));
+          if (clippedEnd > clippedStart) {
+            earliestMeetingMinute = earliestMeetingMinute === null ? clippedStart : Math.min(earliestMeetingMinute, clippedStart);
           }
-          return { event, index, startMs: start.getTime(), endMs: end.getTime(), startHour, clippedStart, clippedEnd };
-        }).filter(item => item.clippedEnd > START_HOUR && item.clippedStart < END_HOUR);
+          return { event, index, startMs: start.getTime(), endMs: end.getTime(), clippedStart, clippedEnd };
+        }).filter(item => item.clippedEnd > item.clippedStart);
         days.push({ date, key, allDay, timed: dashboardWeekEventLayout(timed) });
       }
 
       const headers = days.map(day => `<div class="week-day-header${day.key === todayKey ? ' today' : ''}"><span class="week-day-name">${day.date.toLocaleDateString('en-MY', { weekday:'short' })}</span><span class="week-day-date">${day.date.getDate()}</span></div>`).join('');
       const allDayMarkup = hasAllDay ? `<div class="week-all-day-row"><div class="week-all-day-label">All day</div>${days.map((day, dayIndex) => `<div class="week-all-day-cell">${day.allDay.map((event, eventIndex) => { const eventKey = `wa${dayIndex}_${eventIndex}`; window._eventsCache[eventKey] = event; return `<button class="week-all-day-chip" type="button" onclick="dashboardOpenWeekEvent('${eventKey}',this)">${esc(event.summary || '(No title)')}</button>`; }).join('')}</div>`).join('')}</div>` : '';
-      const labels = Array.from({ length: END_HOUR - START_HOUR + 1 }, (_, index) => {
-        const hour = START_HOUR + index;
-        const date = new Date(2000, 0, 1, hour, 0, 0);
-        return `<span class="week-time-label" style="top:${index * HOUR_HEIGHT}px">${date.toLocaleTimeString('en-MY', { hour:'numeric', minute:'2-digit', hour12:true })}</span>`;
+      const labels = Array.from({ length: 24 }, (_, hour) => {
+        const suffix = hour < 12 ? 'AM' : 'PM';
+        const displayHour = hour % 12 || 12;
+        return `<span class="week-time-label" style="top:${hour * HOUR_HEIGHT}px">${displayHour}:00 ${suffix}</span>`;
       }).join('');
       const columns = days.map((day, dayIndex) => `<div class="week-day-column${day.key === todayKey ? ' today' : ''}">${day.timed.map((item, eventIndex) => {
         const eventKey = `wt${dayIndex}_${eventIndex}`;
         window._eventsCache[eventKey] = item.event;
-        const top = (item.clippedStart - START_HOUR) * HOUR_HEIGHT;
-        const height = Math.max(28, (item.clippedEnd - item.clippedStart) * HOUR_HEIGHT);
-        const gutter = 4;
+        const top = item.clippedStart * PIXELS_PER_MINUTE;
+        const height = Math.max(1, (item.clippedEnd - item.clippedStart) * PIXELS_PER_MINUTE);
         const laneWidth = 100 / item.laneCount;
         const left = item.lane * laneWidth;
-        const width = laneWidth;
+        const horizontalGap = 3;
         const startDate = new Date(item.event.start.dateTime);
         const endDate = item.event.end?.dateTime ? new Date(item.event.end.dateTime) : new Date(startDate.getTime() + 30 * 60000);
         const timeRange = `${formatKLTime(startDate)}–${formatKLTime(endDate)}`;
-        return `<button class="week-event" type="button" style="top:${top + 2}px;height:${Math.max(26, height - 4)}px;left:calc(${left}% + ${gutter}px);width:calc(${width}% - ${gutter * 2}px)" onclick="dashboardOpenWeekEvent('${eventKey}',this)" title="${esc(item.event.summary || '(No title)')} — ${esc(timeRange)}"><span class="week-event-title">${esc(item.event.summary || '(No title)')}</span><span class="week-event-time">${esc(timeRange)}</span></button>`;
+        const location = dashboardCleanDisplayText(item.event.location || '', '');
+        return `<button class="week-event" type="button" style="top:${top}px;height:${height}px;left:calc(${left}% + ${horizontalGap}px);width:calc(${laneWidth}% - ${horizontalGap * 2}px)" onclick="dashboardOpenWeekEvent('${eventKey}',this)" title="${esc(item.event.summary || '(No title)')} — ${esc(timeRange)}${location ? ` — ${esc(location)}` : ''}"><span class="week-event-title">${esc(item.event.summary || '(No title)')}</span><span class="week-event-time">${esc(timeRange)}</span>${location ? `<span class="week-event-location">${esc(location)}</span>` : ''}</button>`;
       }).join('')}</div>`).join('');
 
       let currentLine = '';
       const now = new Date();
       if (days.some(day => day.key === todayKey)) {
-        const currentHour = getKLHourFraction(now);
-        if (currentHour >= START_HOUR && currentHour <= END_HOUR) currentLine = `<div class="week-current-line" style="top:${(currentHour - START_HOUR) * HOUR_HEIGHT}px"></div>`;
+        const currentMinute = Math.max(0, Math.min(MINUTES_PER_DAY, Math.round(getKLHourFraction(now) * 60)));
+        currentLine = `<div class="week-current-line" style="top:${currentMinute * PIXELS_PER_MINUTE}px"></div>`;
       }
 
       grid.classList.remove('week-mode');
@@ -6224,10 +6039,9 @@
       requestAnimationFrame(() => {
         const scroll = grid.querySelector('.week-time-scroll');
         if (!scroll) return;
-        const targetHour = earliestDisplayedHour !== null && earliestDisplayedHour > 9
-          ? Math.max(START_HOUR, earliestDisplayedHour - 1)
-          : 8;
-        scroll.scrollTop = Math.max(0, (targetHour - START_HOUR) * HOUR_HEIGHT);
+        const targetMinute = earliestMeetingMinute === null ? 8 * 60 : Math.max(0, earliestMeetingMinute - 60);
+        const requestedTop = GRID_PADDING + targetMinute * PIXELS_PER_MINUTE;
+        scroll.scrollTop = Math.max(0, Math.min(requestedTop, scroll.scrollHeight - scroll.clientHeight));
       });
     }
 
@@ -7760,7 +7574,7 @@
         bars.innerHTML=weeks.map((count,index)=>`<button class="weekly-bar" type="button" onclick="dashboardOpenMeetingWeek(${index})" aria-label="Open week ${index+1}, ${count} meeting${count===1?'':'s'}"><span class="weekly-bar-value">${count}</span><span class="weekly-bar-track"><span class="weekly-bar-fill" style="height:${count?Math.max(10,Math.round(count/max*100)):4}%"></span></span><span class="weekly-bar-label">W${index+1}</span></button>`).join('');
         bars.setAttribute('aria-label',`Weekly meeting distribution: ${weeks.map((count,index)=>`week ${index+1}, ${count}`).join('; ')}`);
       }
-      if(dashboardDetailMode==='meetings') dashboardRenderDetailPanel();
+      if(dashboardExpandedCard==='meetings') dashboardRenderDetailPanel();
     }
 
     function dashboardRenderOrganisationVisual(active){
@@ -7812,7 +7626,7 @@
       if(freshSegment)freshSegment.style.width=`${freshPercent}%`;
       if(returningSegment)returningSegment.style.width=`${returningPercent}%`;
       if(bar)bar.setAttribute('aria-label',`${total} organisations engaged this month: ${fresh} new and ${returning} returning`);
-      if(dashboardDetailMode==='organisations') dashboardRenderDetailPanel();
+      if(dashboardExpandedCard==='organisations') dashboardRenderDetailPanel();
     }
 
     function dashboardAttendeeCount(value){
