@@ -5658,6 +5658,101 @@
     #pageDashboard .dashboard-meeting-card { height:auto!important; }
   }
 </style>
+
+<style id="dashboard-popover-positioning-final-v23">
+  /* Final approved scope: contextual positioning for Meetings-this-month popover only. */
+  .dashboard-meeting-popover {
+    width:min(330px,calc(100vw - 32px))!important;
+    max-width:calc(100vw - 32px)!important;
+    max-height:min(340px,calc(100vh - 32px))!important;
+    overflow:visible!important;
+    padding:14px 15px!important;
+    border:1px solid #bfdbfe!important;
+    border-radius:15px!important;
+    background:#ffffff!important;
+    box-shadow:0 18px 44px rgba(15,23,42,.16),0 3px 12px rgba(37,99,235,.09)!important;
+    isolation:isolate;
+  }
+  .dashboard-meeting-popover::before,
+  .dashboard-meeting-popover::after {
+    content:'';
+    position:absolute;
+    width:0;
+    height:0;
+    pointer-events:none;
+  }
+  .dashboard-meeting-popover.opens-right::before {
+    z-index:0;
+    left:-9px;
+    top:calc(var(--popover-arrow-y, 26px) - 8px);
+    border-top:8px solid transparent;
+    border-bottom:8px solid transparent;
+    border-right:9px solid #bfdbfe;
+  }
+  .dashboard-meeting-popover.opens-right::after {
+    z-index:1;
+    left:-7px;
+    top:calc(var(--popover-arrow-y, 26px) - 7px);
+    border-top:7px solid transparent;
+    border-bottom:7px solid transparent;
+    border-right:8px solid #ffffff;
+  }
+  .dashboard-meeting-popover.opens-left::before {
+    z-index:0;
+    right:-9px;
+    top:calc(var(--popover-arrow-y, 26px) - 8px);
+    border-top:8px solid transparent;
+    border-bottom:8px solid transparent;
+    border-left:9px solid #bfdbfe;
+  }
+  .dashboard-meeting-popover.opens-left::after {
+    z-index:1;
+    right:-7px;
+    top:calc(var(--popover-arrow-y, 26px) - 7px);
+    border-top:7px solid transparent;
+    border-bottom:7px solid transparent;
+    border-left:8px solid #ffffff;
+  }
+  #dashboardMeetingPopoverContent {
+    position:relative;
+    z-index:2;
+    display:flex;
+    min-width:0;
+    max-height:310px;
+    flex-direction:column;
+    overflow:hidden;
+    border-radius:12px;
+    background:#ffffff;
+  }
+  .dashboard-meeting-popover-head { flex:0 0 auto; }
+  .dashboard-meeting-popover-body {
+    min-height:0;
+    max-height:238px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding-right:3px;
+    scrollbar-width:thin;
+    scrollbar-color:#bfdbfe transparent;
+    overscroll-behavior:contain;
+  }
+  .dashboard-meeting-popover-body::-webkit-scrollbar { width:5px; }
+  .dashboard-meeting-popover-body::-webkit-scrollbar-track { background:transparent; }
+  .dashboard-meeting-popover-body::-webkit-scrollbar-thumb { background:#bfdbfe; border-radius:999px; }
+  #pageDashboard .dashboard-detail-meeting.popover-selected {
+    border-color:#3b82f6!important;
+    background:#f8fbff!important;
+    box-shadow:0 0 0 2px rgba(59,130,246,.15),0 8px 20px rgba(37,99,235,.08)!important;
+  }
+  @media (max-width:620px) {
+    .dashboard-meeting-popover {
+      width:min(330px,calc(100vw - 32px))!important;
+      max-width:calc(100vw - 32px)!important;
+    }
+    .dashboard-meeting-popover::before,
+    .dashboard-meeting-popover::after { display:none!important; }
+    .dashboard-meeting-popover-body { max-height:220px; }
+  }
+</style>
 </head>
 <body>
 <!-- Final standardised MRANTI CRM build: signed-out page redesigned; signed-in logic preserved. -->
@@ -6712,6 +6807,7 @@
     }
 
     let dashboardMeetingPopoverAnchor = null;
+    let dashboardMeetingPopoverPositionFrame = 0;
 
     function dashboardMeetingPresentation(item) {
       const title = dashboardCleanDisplayText(item?.title, 'Untitled meeting');
@@ -6768,50 +6864,111 @@
       return `<div class="dashboard-meeting-popover-row"><small>${crmEscape(label)}</small><strong>${crmEscape(value)}</strong></div>`;
     }
 
+    function dashboardClampPopoverValue(value, min, max) {
+      const safeMax = Math.max(min, max);
+      return Math.min(safeMax, Math.max(min, value));
+    }
+
     function dashboardPositionMeetingPopover(anchor = dashboardMeetingPopoverAnchor) {
       const popover = document.getElementById('dashboardMeetingPopover');
-      if (!popover || !popover.classList.contains('open') || !anchor?.isConnected) return;
+      if (!popover || !popover.classList.contains('open')) return;
+      if (!anchor?.isConnected) {
+        dashboardCloseMeetingPopover();
+        return;
+      }
 
-      const margin = 12;
-      const gap = 10;
-      const rect = anchor.getBoundingClientRect();
-      const width = popover.offsetWidth;
-      const height = popover.offsetHeight;
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
+      const edge = 16;
+      const gap = 11;
+      const rect = anchor.getBoundingClientRect();
+
+      const anchorVisible = rect.bottom > edge && rect.top < viewportHeight - edge && rect.right > edge && rect.left < viewportWidth - edge;
+      if (!anchorVisible) {
+        dashboardCloseMeetingPopover();
+        return;
+      }
+
+      const popoverWidth = popover.offsetWidth;
+      const popoverHeight = popover.offsetHeight;
       let left;
       let top;
+      let side = 'mobile';
+
+      popover.classList.remove('opens-right', 'opens-left', 'opens-over');
 
       if (viewportWidth <= 620) {
-        left = Math.max(margin, (viewportWidth - width) / 2);
-        top = Math.max(margin, Math.min(rect.top, viewportHeight - height - margin));
+        left = dashboardClampPopoverValue((viewportWidth - popoverWidth) / 2, edge, viewportWidth - popoverWidth - edge);
+        top = dashboardClampPopoverValue((viewportHeight - popoverHeight) / 2, edge, viewportHeight - popoverHeight - edge);
       } else {
-        const rightCandidate = rect.right + gap;
-        const leftCandidate = rect.left - width - gap;
-        if (rightCandidate + width <= viewportWidth - margin) {
-          left = rightCandidate;
-        } else if (leftCandidate >= margin) {
-          left = leftCandidate;
+        const listRect = anchor.closest('.dashboard-detail-list')?.getBoundingClientRect();
+        const anchorCentre = rect.left + (rect.width / 2);
+        const listCentre = listRect ? listRect.left + (listRect.width / 2) : viewportWidth / 2;
+        const preferredSide = anchorCentre <= listCentre ? 'right' : 'left';
+        const rightRoom = viewportWidth - edge - (rect.right + gap);
+        const leftRoom = rect.left - gap - edge;
+
+        if (preferredSide === 'right' && rightRoom >= popoverWidth) {
+          side = 'right';
+        } else if (preferredSide === 'left' && leftRoom >= popoverWidth) {
+          side = 'left';
+        } else if (preferredSide === 'right' && leftRoom >= popoverWidth) {
+          side = 'left';
+        } else if (preferredSide === 'left' && rightRoom >= popoverWidth) {
+          side = 'right';
         } else {
-          left = Math.max(margin, Math.min(rect.left, viewportWidth - width - margin));
+          side = 'over';
         }
 
+        if (side === 'right') {
+          left = rect.right + gap;
+          popover.classList.add('opens-right');
+        } else if (side === 'left') {
+          left = rect.left - popoverWidth - gap;
+          popover.classList.add('opens-left');
+        } else {
+          left = rect.left + Math.min(12, Math.max(6, rect.width * .04));
+          popover.classList.add('opens-over');
+        }
+
+        left = dashboardClampPopoverValue(left, edge, viewportWidth - popoverWidth - edge);
         top = rect.top;
-        if (top + height > viewportHeight - margin) top = rect.bottom - height;
-        top = Math.max(margin, Math.min(top, viewportHeight - height - margin));
+        if (top + popoverHeight > viewportHeight - edge) top = rect.bottom - popoverHeight;
+        top = dashboardClampPopoverValue(top, edge, viewportHeight - popoverHeight - edge);
+
+        if (side === 'right' || side === 'left') {
+          const arrowY = dashboardClampPopoverValue((rect.top + rect.height / 2) - top, 20, popoverHeight - 20);
+          popover.style.setProperty('--popover-arrow-y', `${Math.round(arrowY)}px`);
+        } else {
+          popover.style.removeProperty('--popover-arrow-y');
+        }
       }
 
       popover.style.left = `${Math.round(left)}px`;
       popover.style.top = `${Math.round(top)}px`;
     }
 
+    function dashboardScheduleMeetingPopoverPosition() {
+      if (dashboardMeetingPopoverPositionFrame) cancelAnimationFrame(dashboardMeetingPopoverPositionFrame);
+      dashboardMeetingPopoverPositionFrame = requestAnimationFrame(() => {
+        dashboardMeetingPopoverPositionFrame = 0;
+        dashboardPositionMeetingPopover();
+      });
+    }
+
     function dashboardCloseMeetingPopover() {
       const popover = document.getElementById('dashboardMeetingPopover');
       if (!popover) return;
-      popover.classList.remove('open');
+      if (dashboardMeetingPopoverPositionFrame) {
+        cancelAnimationFrame(dashboardMeetingPopoverPositionFrame);
+        dashboardMeetingPopoverPositionFrame = 0;
+      }
+      dashboardMeetingPopoverAnchor?.classList.remove('popover-selected');
+      popover.classList.remove('open', 'opens-right', 'opens-left', 'opens-over');
       popover.setAttribute('aria-hidden', 'true');
       popover.style.left = '';
       popover.style.top = '';
+      popover.style.removeProperty('--popover-arrow-y');
       dashboardMeetingPopoverAnchor = null;
     }
 
@@ -6841,15 +6998,19 @@
           <div class="dashboard-meeting-popover-date">${crmEscape(dateLabel)}</div>
           <div class="dashboard-meeting-popover-time">${crmEscape(timeLabel)}</div>
         </div>
-        <div class="dashboard-meeting-popover-details">
-          ${dashboardMeetingPopoverRow('Location', location)}
-          ${dashboardMeetingPopoverRow('Organisation', organisation)}
-          ${dashboardMeetingPopoverRow('Contact', contact)}
-          ${dashboardMeetingPopoverRow('Attendees', `${attendeeCount} attendee${attendeeCount === 1 ? '' : 's'}`)}
-        </div>
-        ${purpose ? `<div class="dashboard-meeting-popover-note"><small>Purpose / notes</small><p>${crmEscape(purpose)}</p></div>` : ''}`;
+        <div class="dashboard-meeting-popover-body">
+          <div class="dashboard-meeting-popover-details">
+            ${dashboardMeetingPopoverRow('Location', location)}
+            ${dashboardMeetingPopoverRow('Organisation', organisation)}
+            ${dashboardMeetingPopoverRow('Contact', contact)}
+            ${dashboardMeetingPopoverRow('Attendees', `${attendeeCount} attendee${attendeeCount === 1 ? '' : 's'}`)}
+          </div>
+          ${purpose ? `<div class="dashboard-meeting-popover-note"><small>Purpose / notes</small><p>${crmEscape(purpose)}</p></div>` : ''}
+        </div>`;
 
+      dashboardMeetingPopoverAnchor?.classList.remove('popover-selected');
       dashboardMeetingPopoverAnchor = button;
+      dashboardMeetingPopoverAnchor.classList.add('popover-selected');
       popover.classList.add('open');
       popover.setAttribute('aria-hidden', 'false');
       requestAnimationFrame(() => dashboardPositionMeetingPopover(button));
@@ -6864,8 +7025,8 @@
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape') dashboardCloseMeetingPopover();
     });
-    window.addEventListener('resize', () => dashboardPositionMeetingPopover());
-    window.addEventListener('scroll', () => dashboardPositionMeetingPopover(), true);
+    window.addEventListener('resize', dashboardScheduleMeetingPopoverPosition);
+    window.addEventListener('scroll', dashboardScheduleMeetingPopoverPosition, true);
 
     function dashboardShowNotice(message) {
       let notice = document.getElementById('dashboardInlineNotice');
