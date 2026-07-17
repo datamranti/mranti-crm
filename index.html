@@ -6826,6 +6826,214 @@
   }
 </style>
 
+
+<style id="crm-contact-refinement-v2">
+  #pageContacts.contact-intel-page { padding: 0 0 28px; }
+  #pageContacts .contact-dashboard-hero {
+    display: block;
+    min-height: 0;
+    padding: 18px 2px 22px;
+    margin: 0 0 18px;
+    border: 0;
+    border-bottom: 1px solid rgba(147,197,253,.34);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    overflow: visible;
+  }
+  #pageContacts .contact-dashboard-hero::after { display: none; }
+  #pageContacts .dashboard-welcome-label { font-size: 10px; letter-spacing: 1.75px; }
+  #pageContacts .dashboard-welcome-title { margin-top: 8px; font-size: clamp(28px,2.5vw,38px); line-height: 1.12; letter-spacing: -1.1px; }
+  #pageContacts .dashboard-welcome-copy { margin-top: 8px; max-width: 720px; color: #64748b; font-size: 13px; line-height: 1.55; }
+
+  #pageContacts .contact-intel-toolbar {
+    padding: 0 0 16px;
+    gap: 16px;
+    align-items: center;
+  }
+  #pageContacts .contact-intel-search-wrap { flex: 1 1 520px; min-width: 280px; }
+  #pageContacts .contact-intel-toolbar-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+  #pageContacts .contact-intel-sort { flex: 0 1 205px; min-width: 185px; }
+  #pageContacts .contact-intel-clear,
+  #pageContacts .contact-intel-filter-btn { min-width: 92px; }
+
+  #pageContacts .contact-identity-side {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    min-width: 0;
+  }
+  #pageContacts .contact-identity-stats {
+    grid-column: auto;
+    justify-content: flex-end;
+    padding-top: 3px;
+  }
+
+  #pageContacts .briefing-followups-full { margin-top: 10px; }
+  #pageContacts .briefing-followup-link { padding: 9px 13px 12px; border-top: 1px solid #eef2f7; }
+  #pageContacts .followup-table th:first-child,
+  #pageContacts .followup-table td:first-child { padding-left: 13px; }
+
+  #pageContacts .action-items-view,
+  #pageContacts .document-library {
+    min-width: 0;
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    background: #fff;
+    overflow: hidden;
+  }
+  #pageContacts .action-items-header,
+  #pageContacts .document-library-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 15px;
+    border-bottom: 1px solid #dbeafe;
+  }
+  #pageContacts .action-items-header h3,
+  #pageContacts .document-library-header h3 { margin: 0; color: #0f172a; font-size: 14px; font-weight: 800; }
+  #pageContacts .action-items-header p,
+  #pageContacts .document-library-header p { margin: 4px 0 0; color: #64748b; font-size: 10px; line-height: 1.45; }
+  #pageContacts .action-items-counts { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+  #pageContacts .action-items-counts span,
+  #pageContacts .document-library-header > span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 0 8px;
+    border: 1px solid #dbeafe;
+    border-radius: 999px;
+    background: #f8fbff;
+    color: #526aa8;
+    font-size: 8px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  #pageContacts .action-items-filters { display: flex; gap: 6px; padding: 10px 14px; border-bottom: 1px solid #eef2f7; }
+  #pageContacts .action-items-filters button {
+    min-height: 30px;
+    padding: 0 12px;
+    border: 1px solid #dbeafe;
+    border-radius: 9px;
+    background: #fff;
+    color: #52627a;
+    font: inherit;
+    font-size: 9px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  #pageContacts .action-items-filters button.active { border-color: #93c5fd; background: #eff6ff; color: #1d4ed8; }
+  #pageContacts .action-items-list { display: flex; flex-direction: column; }
+  #pageContacts .action-item-row {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(300px,.85fr);
+    gap: 18px;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    padding: 13px 15px;
+    border: 0;
+    border-bottom: 1px solid #eef2f7;
+    background: #fff;
+    color: inherit;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+  }
+  #pageContacts .action-item-row:last-child { border-bottom: 0; }
+  #pageContacts .action-item-row:hover { background: #f8fbff; }
+  #pageContacts .action-item-copy { min-width: 0; }
+  #pageContacts .action-item-copy strong { display: block; color: #0f172a; font-size: 10.5px; line-height: 1.5; overflow-wrap: anywhere; }
+  #pageContacts .action-item-copy > span { display: block; margin-top: 5px; color: #64748b; font-size: 8.8px; line-height: 1.4; }
+  #pageContacts .action-item-meta { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr) auto; gap: 10px; align-items: center; min-width: 0; color: #334155; font-size: 9px; }
+  #pageContacts .action-item-meta > span:not(.action-item-status) { min-width: 0; overflow-wrap: anywhere; }
+  #pageContacts .action-item-meta small { display: block; margin-bottom: 3px; color: #94a3b8; font-size: 7.5px; font-weight: 800; letter-spacing: .35px; text-transform: uppercase; }
+  #pageContacts .action-item-status { display: inline-flex; align-items: center; justify-content: center; min-height: 24px; padding: 0 8px; border: 1px solid #fed7aa; border-radius: 999px; background: #fff7ed; color: #c2410c; font-size: 8px; font-weight: 800; white-space: nowrap; }
+  #pageContacts .action-item-status.completed { border-color: #bfdbfe; background: #eff6ff; color: #1d4ed8; }
+
+  #pageContacts .meeting-action-list { display: flex; flex-direction: column; gap: 7px; margin-top: 8px; }
+  #pageContacts .meeting-action-row { display: grid; grid-template-columns: 20px minmax(0,1fr); gap: 8px; padding: 9px 10px; border: 1px solid #e2e8f0; border-radius: 9px; background: #f8fafc; transition: border-color .2s ease, background .2s ease; }
+  #pageContacts .meeting-action-row > span { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: #eff6ff; color: #2563eb; font-size: 8px; font-weight: 800; }
+  #pageContacts .meeting-action-row strong { display: block; color: #243b64; font-size: 9.5px; line-height: 1.5; overflow-wrap: anywhere; }
+  #pageContacts .meeting-action-row small { display: block; margin-top: 4px; color: #64748b; font-size: 8px; line-height: 1.4; }
+  #pageContacts .meeting-action-row.highlighted { border-color: #60a5fa; background: #eff6ff; box-shadow: 0 0 0 3px rgba(37,99,235,.08); }
+
+  #pageContacts .document-library-note { padding: 9px 14px; border-bottom: 1px solid #eef2f7; background: #f8fbff; color: #526aa8; font-size: 9px; font-weight: 700; }
+  #pageContacts .document-library-list { display: flex; flex-direction: column; }
+  #pageContacts .document-library-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-width: 0;
+    padding: 13px 15px;
+    border-bottom: 1px solid #eef2f7;
+    background: #fff;
+    color: inherit;
+    text-decoration: none;
+    transition: background .18s ease;
+  }
+  #pageContacts .document-library-item:last-child { border-bottom: 0; }
+  #pageContacts a.document-library-item:hover { background: #f8fbff; }
+  #pageContacts .document-library-item.latest-interaction { box-shadow: inset 3px 0 0 #93c5fd; }
+  #pageContacts .document-library-item.unavailable { cursor: default; opacity: .78; }
+  #pageContacts .document-library-copy { min-width: 0; }
+  #pageContacts .document-library-copy strong { display: block; color: #0f172a; font-size: 10.5px; line-height: 1.45; overflow-wrap: anywhere; }
+  #pageContacts .document-library-meta { display: flex; flex-wrap: wrap; gap: 5px 10px; margin-top: 6px; color: #64748b; font-size: 8.7px; line-height: 1.4; }
+  #pageContacts .document-latest-label { display: inline-flex; margin-top: 7px; padding: 3px 7px; border: 1px solid #bfdbfe; border-radius: 999px; background: #eff6ff; color: #1d4ed8; font-size: 7.8px; font-weight: 800; }
+  #pageContacts .document-library-action { flex: 0 0 auto; color: #2563eb; font-size: 9px; font-weight: 800; white-space: nowrap; }
+  #pageContacts .document-library-item.unavailable .document-library-action { color: #94a3b8; }
+
+  @media (max-width: 1260px) {
+    #pageContacts .contact-intel-toolbar { flex-wrap: wrap; }
+    #pageContacts .contact-intel-search-wrap { flex-basis: 100%; }
+    #pageContacts .contact-intel-toolbar-actions { width: 100%; }
+  }
+  @media (max-width: 1020px) {
+    #pageContacts .contact-identity-header { grid-template-columns: 1fr; gap: 10px; }
+    #pageContacts .contact-identity-side,
+    #pageContacts .contact-identity-stats { justify-content: flex-start; }
+    #pageContacts .action-item-row { grid-template-columns: 1fr; gap: 10px; }
+  }
+  @media (max-width: 780px) {
+    #pageContacts .contact-intel-toolbar { display: flex; flex-direction: column; align-items: stretch; }
+    #pageContacts .contact-intel-search-wrap { min-width: 0; width: 100%; }
+    #pageContacts .contact-intel-toolbar-actions { width: 100%; flex-wrap: wrap; justify-content: flex-start; }
+    #pageContacts .contact-intel-sort-label { width: 100%; margin: 0; display: block; }
+    #pageContacts .contact-intel-sort { flex: 1 1 220px; min-width: 0; }
+    #pageContacts .contact-intel-filter-anchor,
+    #pageContacts .contact-intel-clear { width: auto; }
+    #pageContacts .contact-intel-filter-btn { width: auto; }
+    #pageContacts .action-items-header,
+    #pageContacts .document-library-header { flex-direction: column; }
+    #pageContacts .action-items-counts { justify-content: flex-start; }
+  }
+  @media (max-width: 620px) {
+    #pageContacts .contact-dashboard-hero { padding-top: 12px; }
+  }
+  @media (max-width: 520px) {
+    #pageContacts .dashboard-welcome-title { font-size: 27px; }
+    #pageContacts .contact-intel-toolbar-actions { display: grid; grid-template-columns: minmax(0,1fr) auto auto; gap: 8px; }
+    #pageContacts .contact-intel-sort-label { grid-column: 1 / -1; }
+    #pageContacts .contact-intel-sort { width: 100%; min-width: 0; }
+    #pageContacts .contact-intel-filter-anchor,
+    #pageContacts .contact-intel-clear { width: auto; }
+    #pageContacts .contact-intel-filter-btn,
+    #pageContacts .contact-intel-clear { min-width: 78px; width: 100%; padding-inline: 10px; }
+    #pageContacts .action-item-meta { grid-template-columns: 1fr; }
+    #pageContacts .document-library-item { align-items: flex-start; }
+  }
+</style>
+
 </head>
 <body>
 <!-- Final standardised MRANTI CRM build: signed-out page redesigned; signed-in logic preserved. -->
@@ -6984,11 +7192,12 @@
 </div>
 </section>
 <section class="system-page contact-intel-page" data-page="contacts" id="pageContacts">
-  <header class="contact-intel-page-head">
-    <div class="contact-intel-eyebrow">MRANTI CRM WORKSPACE</div>
-    <h1>CRM Contacts</h1>
-    <p>Prepare for stakeholder meetings with complete MRANTI relationship context.</p>
-    <div class="contact-intel-head-divider" aria-hidden="true"></div>
+  <header class="dashboard-hero contact-dashboard-hero">
+    <div>
+      <div class="dashboard-welcome-label">MRANTI CRM WORKSPACE</div>
+      <h1 class="dashboard-welcome-title">CRM Contacts</h1>
+      <p class="dashboard-welcome-copy">Prepare for stakeholder meetings with complete MRANTI relationship context.</p>
+    </div>
   </header>
 
   <div class="contact-intel-toolbar" aria-label="Contact search and filters">
@@ -6996,35 +7205,27 @@
       <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.4-3.4"></path></svg>
       <input class="system-input" id="crmContactsSearch" oninput="crmFilterRecords()" placeholder="Search name, company, email, phone or meeting..." type="search"/>
     </label>
-    <select class="system-select" id="crmContactsStatus" onchange="crmFilterRecords()" aria-label="Record status">
-      <option value="All">All Records</option>
-      <option value="Active">Active Records</option>
-      <option value="Archived">Archived Records</option>
-    </select>
-    <button class="system-btn contact-intel-clear" onclick="crmClearSearch()" type="button">Clear</button>
-    <div class="contact-intel-count-chip" aria-live="polite">
-      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-      <span id="crmContactsCount">0 contacts</span>
-    </div>
-    <div class="contact-intel-toolbar-spacer"></div>
-    <label class="contact-intel-sort-label" for="crmContactsSort">Sort by:</label>
-    <select class="system-select contact-intel-sort" id="crmContactsSort" onchange="crmFilterRecords()">
-      <option value="engaged-desc">Last engaged (desc)</option>
-      <option value="engaged-asc">Last engaged (asc)</option>
-      <option value="name-asc">Name (A–Z)</option>
-      <option value="name-desc">Name (Z–A)</option>
-      <option value="company-asc">Organisation (A–Z)</option>
-    </select>
-    <div class="contact-intel-filter-anchor">
-      <button aria-expanded="false" class="system-btn contact-intel-filter-btn" id="crmContactFilterButton" onclick="crmToggleContactFilters(event)" type="button">
-        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"></path></svg><span>Filter</span>
-      </button>
-      <div class="contact-intel-filter-panel" id="crmContactFilterPanel" role="dialog" aria-label="Additional contact filters">
-        <div class="contact-intel-filter-title">Additional filters</div>
-        <label><input id="crmFilterHasActions" onchange="crmFilterRecords()" type="checkbox"/> Has open action items</label>
-        <label><input id="crmFilterHasDocuments" onchange="crmFilterRecords()" type="checkbox"/> Has linked documents</label>
-        <button class="contact-intel-filter-reset" onclick="crmResetAdditionalFilters()" type="button">Reset additional filters</button>
+    <div class="contact-intel-toolbar-actions">
+      <label class="contact-intel-sort-label" for="crmContactsSort">Sort by:</label>
+      <select class="system-select contact-intel-sort" id="crmContactsSort" onchange="crmFilterRecords()">
+        <option value="engaged-desc">Last engaged (desc)</option>
+        <option value="engaged-asc">Last engaged (asc)</option>
+        <option value="name-asc">Name (A–Z)</option>
+        <option value="name-desc">Name (Z–A)</option>
+        <option value="company-asc">Organisation (A–Z)</option>
+      </select>
+      <div class="contact-intel-filter-anchor">
+        <button aria-expanded="false" class="system-btn contact-intel-filter-btn" id="crmContactFilterButton" onclick="crmToggleContactFilters(event)" type="button">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"></path></svg><span>Filter</span>
+        </button>
+        <div class="contact-intel-filter-panel" id="crmContactFilterPanel" role="dialog" aria-label="Additional contact filters">
+          <div class="contact-intel-filter-title">Additional filters</div>
+          <label><input id="crmFilterHasActions" onchange="crmFilterRecords()" type="checkbox"/> Has open action items</label>
+          <label><input id="crmFilterHasDocuments" onchange="crmFilterRecords()" type="checkbox"/> Has linked documents</label>
+          <button class="contact-intel-filter-reset" onclick="crmResetAdditionalFilters()" type="button">Reset additional filters</button>
+        </div>
       </div>
+      <button class="system-btn contact-intel-clear" onclick="crmClearSearch()" type="button">Clear</button>
     </div>
   </div>
 
@@ -7054,16 +7255,8 @@
           </div>
         </div>
         <div class="contact-identity-side">
-          <span class="contact-status-badge" id="crmContactStatusBadge">—</span>
           <div class="contact-identity-stats">
             <span id="crmContactMeetingCount">0 meetings</span><span aria-hidden="true">•</span><span id="crmContactLastEngaged">Last engaged —</span>
-          </div>
-          <div class="contact-overflow-wrap">
-            <button aria-expanded="false" aria-label="Contact record actions" class="contact-overflow-button" id="crmContactOverflowButton" onclick="crmToggleContactMenu(event)" type="button">•••</button>
-            <div class="contact-overflow-menu" id="crmContactOverflowMenu">
-              <button id="crmManageOwnBtn" onclick="crmManageSelectedOwnRecord()" type="button">Manage selected record</button>
-              <button id="crmContactArchiveAction" onclick="crmContactMutateSelectedStatus()" type="button">Archive selected record</button>
-            </div>
           </div>
         </div>
       </div>
@@ -7071,6 +7264,7 @@
       <div class="contact-tabbar" role="tablist" aria-label="Contact workspace views" onkeydown="crmContactTabKeydown(event)">
         <button aria-controls="crmWorkspaceContent" aria-selected="true" class="contact-tab active" data-tab="briefing" id="crmTabBriefing" onclick="crmSwitchContactTab('briefing')" role="tab" type="button">Briefing</button>
         <button aria-controls="crmWorkspaceContent" aria-selected="false" class="contact-tab" data-tab="history" id="crmTabHistory" onclick="crmSwitchContactTab('history')" role="tab" type="button">Relationship History</button>
+        <button aria-controls="crmWorkspaceContent" aria-selected="false" class="contact-tab" data-tab="actions" id="crmTabActions" onclick="crmSwitchContactTab('actions')" role="tab" type="button">Action Items</button>
         <button aria-controls="crmWorkspaceContent" aria-selected="false" class="contact-tab" data-tab="documents" id="crmTabDocuments" onclick="crmSwitchContactTab('documents')" role="tab" type="button">Documents</button>
         <button aria-controls="crmWorkspaceContent" aria-selected="false" class="contact-tab" data-tab="record" id="crmTabRecord" onclick="crmSwitchContactTab('record')" role="tab" type="button">Record Info</button>
       </div>
@@ -8119,8 +8313,7 @@
 
       const focusExactRecord = () => {
         const search = document.getElementById('crmContactsSearch');
-        const status = document.getElementById('crmContactsStatus');
-        if (!search || !status || !crmRecords[selectedIndex]) return false;
+          if (!search || !status || !crmRecords[selectedIndex]) return false;
         search.value = organisationName;
         status.value = 'All';
         crmSelectedIndex = selectedIndex;
@@ -9904,9 +10097,7 @@
 
       const index = crmFindRecordIndexByRouteKey(recordKey);
       const search = document.getElementById('crmContactsSearch');
-      const status = document.getElementById('crmContactsStatus');
       if (search) search.value = '';
-      if (status) status.value = 'All';
 
       if (index < 0) {
         crmPendingRecordKey = '';
@@ -9928,10 +10119,8 @@
 
     function crmVisibleRecordIndices() {
       const query = crmNormalize(document.getElementById('crmContactsSearch')?.value || '');
-      const status = document.getElementById('crmContactsStatus')?.value || 'Active';
       const visible = [];
       crmRecords.forEach((record,index) => {
-        if (status !== 'All' && crmStatus(record).toLowerCase() !== status.toLowerCase()) return;
         if (!query || crmRecordSearchText(record).includes(query)) visible.push(index);
       });
       return visible;
@@ -9948,13 +10137,12 @@
     function crmFilterRecords(options = {}) {
       const allowAutoSelect = options.allowAutoSelect !== false;
       const indices = crmVisibleRecordIndices();
-      document.getElementById('crmContactsCount').textContent = `${indices.length} record${indices.length===1?'':'s'}`;
       if (!indices.length) { document.getElementById('crmContactsList').innerHTML='<div class="crm-contacts-empty">No records match the current search and status filter.</div>'; crmSelectedIndex=-1; crmClearDetail(); return; }
       if (!indices.includes(crmSelectedIndex)) crmSelectedIndex = allowAutoSelect ? indices[0] : -1;
       document.getElementById('crmContactsList').innerHTML = indices.map(index=>crmRecordCard(crmRecords[index],index,index===crmSelectedIndex,'crmSelectRecord')).join('');
       if (crmSelectedIndex >= 0) crmRenderDetail(); else crmClearDetail();
     }
-    function crmClearSearch() { document.getElementById('crmContactsSearch').value=''; document.getElementById('crmContactsStatus').value='Active'; crmFilterRecords(); }
+    function crmClearSearch() { document.getElementById('crmContactsSearch').value=''; crmFilterRecords(); }
     function crmSelectRecord(index) { if (!crmRecords[index]) return; crmSelectedIndex=index; crmFilterRecords(); }
 
     function crmSetText(id,value,fallback='Not recorded') { const el=document.getElementById(id); if(el) el.textContent=value||fallback; }
@@ -9971,7 +10159,6 @@
       ['crmDetailEmail','crmDetailPhone','crmDetailJobTitle','crmDetailMeetingTitle','crmDetailMeetingDate','crmDetailReason','crmDetailAttendees','crmDetailUploader','crmDetailUploaderEmail','crmDetailStatus','crmDetailUpdated'].forEach(id=>crmSetText(id,'',''));
       crmSetText('crmDetailNotes','No meeting notes recorded.'); crmSetText('crmDetailActionItems','No action items recorded.');
       document.getElementById('crmDocumentSection').style.display='none'; document.getElementById('crmDetailDocuments').innerHTML='';
-      document.getElementById('crmManageOwnBtn').style.display='none';
       const notice=document.getElementById('crmOwnerNotice'); notice.textContent='Select a record to view its ownership and meeting details.'; notice.className='record-owner-banner other';
     }
 
@@ -9985,7 +10172,7 @@
       crmSetText('crmDetailUploader',record.uploaderName,'Not recorded'); crmSetText('crmDetailUploaderEmail',record.uploaderEmail,'Not recorded');
       crmSetText('crmDetailStatus',crmStatus(record),'Active'); crmSetText('crmDetailUpdated',[record.lastUpdated,record.updatedBy].filter(Boolean).join(' · '),'Not updated yet');
       crmRenderDocuments('crmDetailDocuments','crmDocumentSection',record);
-      const owned=crmIsOwned(record); const manage=document.getElementById('crmManageOwnBtn'); manage.style.display=owned&&record.recordId?'inline-flex':'none';
+      const owned=crmIsOwned(record);
       const notice=document.getElementById('crmOwnerNotice');
       if(owned){notice.textContent=record.recordId?'You uploaded this record. Manage edits, action items and archive status in My CRM Entries.':'You uploaded this legacy record, but it remains view-only until a unique Record ID is added in Google Sheets.';notice.className='record-owner-banner';}
       else{notice.textContent=`Uploaded by ${record.uploaderName||record.uploaderEmail||'another MRANTI user'}. Only the uploader may modify this record.`;notice.className='record-owner-banner other';}
@@ -10308,10 +10495,11 @@
     let crmActiveContactTab = 'briefing';
     let crmContactRenderLimit = 12;
     let crmHistoryBackToBriefing = false;
+    let crmHistoryBackTab = '';
     let crmHistoryFocusSection = '';
+    let crmHistoryHighlightAction = '';
+    let crmActionItemsFilter = '';
     let crmLatestDocumentFilter = false;
-    let crmSelectedDocumentKey = '';
-    let crmDocumentPreviewMode = 'original';
 
     function crmIntelText(value, fallback = '') {
       const raw = String(value == null ? '' : value)
@@ -10402,13 +10590,81 @@
       return '';
     }
 
+    function crmIntelActionStatus(value) {
+      const normalized = crmNormalize(value || '');
+      return /(completed|complete|done|closed|resolved)/.test(normalized) ? 'Completed' : 'Open';
+    }
+
+    function crmIntelActionFragments(value) {
+      const raw = String(value == null ? '' : value)
+        .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+        .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/\r/g, '')
+        .trim();
+      if (!raw) return [];
+
+      const fragments = [];
+      const numberedMarker = /(^|\s+)(?=\d{1,2}[.)]\s+(?!(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\b))/gi;
+      raw.split(/\n+/).forEach(line => {
+        const markerSplit = line
+          .replace(numberedMarker, '\n')
+          .replace(/(^|\s+)(?=[•*-]\s+)/g, '\n')
+          .split(/\n+/)
+          .map(item => item.trim())
+          .filter(Boolean);
+
+        markerSplit.forEach(piece => {
+          const semicolonParts = piece.split(/\s*;\s*/).map(item => item.trim()).filter(Boolean);
+          const useSemicolons = semicolonParts.length > 1 && semicolonParts.every(item => item.length >= 12 && /[A-Za-z]/.test(item));
+          (useSemicolons ? semicolonParts : [piece]).forEach(item => {
+            const cleaned = crmIntelText(item.replace(/^\s*(?:\d{1,2}[.)]|[•*-])\s*/, ''));
+            if (cleaned) fragments.push(cleaned);
+          });
+        });
+      });
+
+      const seen = new Set();
+      return fragments.filter(item => {
+        const key = crmNormalize(item);
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+
+    function crmIntelActionEntries(record, recordIndex = -1) {
+      const rawItems = Array.isArray(record?.actionItems) ? record.actionItems : [record?.actionItems];
+      const fallbackOwner = crmIntelText(record?.actionOwner || record?.actionOwnerName || record?.assignee || '');
+      const fallbackDueDate = crmIntelText(record?.actionDueDate || record?.dueDate || record?.deadline || '');
+      const fallbackStatus = crmIntelText(record?.actionStatus || record?.followUpStatus || '');
+      const resolvedIndex = Number.isInteger(recordIndex) && recordIndex >= 0 ? recordIndex : crmRecords.indexOf(record);
+      const entries = [];
+
+      rawItems.forEach(item => {
+        const objectItem = item && typeof item === 'object' && !Array.isArray(item) ? item : null;
+        const textValue = objectItem ? (objectItem.action || objectItem.text || objectItem.item || objectItem.description || '') : item;
+        const owner = crmIntelText(objectItem?.owner || objectItem?.assignee || objectItem?.assignedTo || fallbackOwner, 'Owner not recorded');
+        const dueDate = crmIntelText(objectItem?.dueDate || objectItem?.deadline || objectItem?.targetDate || fallbackDueDate, 'Due date not recorded');
+        const explicitStatus = crmIntelText(objectItem?.status || objectItem?.state || fallbackStatus);
+        const status = crmIntelActionStatus(explicitStatus);
+        crmIntelActionFragments(textValue).forEach(action => {
+          const key = `${crmRecordRouteKey(record)}::action::${crmNormalize(action)}`;
+          entries.push({ action, owner, dueDate, status, recordIndex: resolvedIndex, record, key });
+        });
+      });
+
+      const seen = new Set();
+      return entries.filter(item => {
+        const key = crmNormalize(item.action);
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+
     function crmIntelActionLines(record) {
-      const raw = record?.actionItems;
-      if (Array.isArray(raw)) return raw.map(item => crmIntelText(typeof item === 'string' ? item : item?.action || item?.text || '')).filter(Boolean);
-      return String(raw || '')
-        .split(/\n+|;(?=\s*[A-Z0-9])/)
-        .map(item => crmIntelText(item.replace(/^[-•*\d.)\s]+/, '')))
-        .filter(Boolean);
+      return crmIntelActionEntries(record).map(item => item.action);
     }
 
     function crmIntelDocumentsForRecord(record, recordIndex) {
@@ -10420,7 +10676,9 @@
         _docIndex: index,
         _docKey: `${crmRecordRouteKey(record)}::${index}`,
         _meetingTitle: crmIntelText(record.meetingTitle, 'Untitled meeting'),
-        _meetingDate: crmIntelShortDate(record)
+        _meetingDate: crmIntelShortDate(record),
+        _dateAdded: crmIntelText(document.dateAdded || document.createdAt || document.uploadedAt || record.meetingDate, crmIntelShortDate(record)),
+        _source: crmIntelText(document.source || document.uploadSource || record.recordSource || record.source || record.inputMethod, 'Source not recorded')
       }));
     }
 
@@ -10438,7 +10696,13 @@
         const latestEntry = group.records[0] || { record: {}, index: -1 };
         const latest = latestEntry.record;
         const documents = group.records.flatMap(entry => crmIntelDocumentsForRecord(entry.record, entry.index));
-        const actions = group.records.flatMap(entry => crmIntelActionLines(entry.record).map(action => ({ action, recordIndex: entry.index, record: entry.record })));
+        const actionSeen = new Set();
+        const actions = group.records.flatMap(entry => crmIntelActionEntries(entry.record, entry.index)).filter(item => {
+          const key = crmNormalize(item.action);
+          if (!key || actionSeen.has(key)) return false;
+          actionSeen.add(key);
+          return true;
+        });
         return {
           ...group,
           latest,
@@ -10464,14 +10728,12 @@
     function crmVisibleContactGroups() {
       crmBuildContactGroups();
       const query = crmNormalize(document.getElementById('crmContactsSearch')?.value || '');
-      const status = document.getElementById('crmContactsStatus')?.value || 'All';
       const hasActions = Boolean(document.getElementById('crmFilterHasActions')?.checked);
       const hasDocuments = Boolean(document.getElementById('crmFilterHasDocuments')?.checked);
       const sort = document.getElementById('crmContactsSort')?.value || 'engaged-desc';
       const visible = crmContactGroups.filter(group => {
-        if (status !== 'All' && crmNormalize(group.status) !== crmNormalize(status)) return false;
         if (query && !group.searchText.includes(query)) return false;
-        if (hasActions && !group.actions.length) return false;
+        if (hasActions && !group.actions.some(item => item.status === 'Open')) return false;
         if (hasDocuments && !group.documents.length) return false;
         return true;
       });
@@ -10521,9 +10783,11 @@
       if (changed || !options.preserveTab) crmActiveContactTab = options.tab || 'briefing';
       if (options.tab) crmActiveContactTab = options.tab;
       crmHistoryBackToBriefing = Boolean(options.backToBriefing);
+      crmHistoryBackTab = options.backTab || (options.backToBriefing ? 'briefing' : '');
       crmHistoryFocusSection = options.focus || '';
+      crmHistoryHighlightAction = '';
+      if (changed) crmActionItemsFilter = group.actions.some(item => item.status === 'Open') ? 'Open' : 'All';
       crmLatestDocumentFilter = Boolean(options.latestDocuments);
-      crmSelectedDocumentKey = '';
       crmRenderContactDirectory();
       crmRenderContactIdentity();
       crmRenderContactTabs();
@@ -10544,7 +10808,6 @@
       const list = document.getElementById('crmContactsList');
       const count = crmFilteredContactGroups.length;
       const visible = crmFilteredContactGroups.slice(0, crmContactRenderLimit);
-      if (document.getElementById('crmContactsCount')) document.getElementById('crmContactsCount').textContent = `${count} contact${count === 1 ? '' : 's'}`;
       if (document.getElementById('crmDirectoryCount')) document.getElementById('crmDirectoryCount').textContent = `${count} contact${count === 1 ? '' : 's'}`;
       if (!list) return;
       list.innerHTML = visible.length ? visible.map(crmDirectoryRow).join('') : '<div class="crm-contacts-empty">No contacts match the current search and filters.</div>';
@@ -10594,10 +10857,8 @@
 
     function crmClearSearch() {
       const search = document.getElementById('crmContactsSearch');
-      const status = document.getElementById('crmContactsStatus');
       const sort = document.getElementById('crmContactsSort');
       if (search) search.value = '';
-      if (status) status.value = 'All';
       if (sort) sort.value = 'engaged-desc';
       crmResetAdditionalFilters(false);
       crmContactRenderLimit = 12;
@@ -10621,14 +10882,7 @@
       if (render) crmFilterRecords();
     }
 
-    function crmToggleContactMenu(event) {
-      event?.stopPropagation();
-      const menu = document.getElementById('crmContactOverflowMenu');
-      const button = document.getElementById('crmContactOverflowButton');
-      const show = !menu?.classList.contains('show');
-      menu?.classList.toggle('show', show);
-      button?.setAttribute('aria-expanded', String(show));
-    }
+    function crmToggleContactMenu() {}
 
     function crmContactMetaMarkup(group) {
       const items = [];
@@ -10641,26 +10895,13 @@
     function crmRenderContactIdentity() {
       const group = crmCurrentContactGroup();
       if (!group) return crmClearDetail();
-      const record = crmCurrentMeetingRecord() || group.latest;
       document.getElementById('crmContactAvatar').textContent = crmIntelInitials(group.name);
       document.getElementById('crmContactName').textContent = group.name;
       document.getElementById('crmContactOrganisation').textContent = group.company;
       document.getElementById('crmContactRole').textContent = [group.jobTitle, group.department].filter(Boolean).join(' · ');
       document.getElementById('crmContactMeta').innerHTML = crmContactMetaMarkup(group);
-      const statusBadge = document.getElementById('crmContactStatusBadge');
-      statusBadge.textContent = group.status;
-      statusBadge.className = `contact-status-badge ${crmIntelStatusClass(group.status)}`;
       document.getElementById('crmContactMeetingCount').textContent = `${group.records.length} meeting${group.records.length === 1 ? '' : 's'}`;
       document.getElementById('crmContactLastEngaged').textContent = `Last engaged ${crmIntelShortDate(group.latest)}`;
-
-      const owned = crmIsOwned(record) && Boolean(record?.recordId);
-      const manage = document.getElementById('crmManageOwnBtn');
-      const archive = document.getElementById('crmContactArchiveAction');
-      if (manage) manage.disabled = !owned;
-      if (archive) {
-        archive.disabled = !owned;
-        archive.textContent = crmNormalize(crmStatus(record)).includes('archive') ? 'Restore selected record' : 'Archive selected record';
-      }
     }
 
     function crmRenderContactTabs() {
@@ -10673,11 +10914,18 @@
     }
 
     function crmSwitchContactTab(tab, options = {}) {
-      if (!['briefing', 'history', 'documents', 'record'].includes(tab)) return;
+      if (!['briefing', 'history', 'actions', 'documents', 'record'].includes(tab)) return;
       crmActiveContactTab = tab;
       if (tab !== 'history') {
         crmHistoryBackToBriefing = false;
+        crmHistoryBackTab = '';
         crmHistoryFocusSection = '';
+        crmHistoryHighlightAction = '';
+      }
+      if (tab === 'actions') {
+        const group = crmCurrentContactGroup();
+        if (!['All', 'Open', 'Completed'].includes(crmActionItemsFilter)) crmActionItemsFilter = group?.actions.some(item => item.status === 'Open') ? 'Open' : 'All';
+        if (crmActionItemsFilter === 'Open' && !group?.actions.some(item => item.status === 'Open')) crmActionItemsFilter = 'All';
       }
       if (tab !== 'documents' && !options.preserveDocumentFilter) crmLatestDocumentFilter = false;
       crmRenderContactTabs();
@@ -10704,8 +10952,46 @@
       crmSelectedIndex = index;
       crmHistoryFocusSection = focus;
       crmHistoryBackToBriefing = backToBriefing;
+      crmHistoryBackTab = backToBriefing ? 'briefing' : '';
+      crmHistoryHighlightAction = '';
       crmActiveContactTab = 'history';
       crmRenderContactIdentity();
+      crmRenderContactTabs();
+      crmRenderContactWorkspace();
+    }
+
+    function crmOpenAllActionItems() {
+      const group = crmCurrentContactGroup();
+      if (!group) return;
+      crmActionItemsFilter = group.actions.some(item => item.status === 'Open') ? 'Open' : 'All';
+      crmSwitchContactTab('actions');
+    }
+
+    function crmSetActionItemsFilter(filter) {
+      if (!['All', 'Open', 'Completed'].includes(filter)) return;
+      crmActionItemsFilter = filter;
+      crmRenderContactWorkspace();
+    }
+
+    function crmOpenActionItem(index, actionKey) {
+      if (!crmRecords[index]) return;
+      crmSelectedMeetingIndex = index;
+      crmSelectedIndex = index;
+      crmHistoryFocusSection = 'actions';
+      crmHistoryBackToBriefing = false;
+      crmHistoryBackTab = 'actions';
+      crmHistoryHighlightAction = actionKey || '';
+      crmActiveContactTab = 'history';
+      crmRenderContactIdentity();
+      crmRenderContactTabs();
+      crmRenderContactWorkspace();
+    }
+
+    function crmBackToActionItems() {
+      crmHistoryBackTab = '';
+      crmHistoryFocusSection = '';
+      crmHistoryHighlightAction = '';
+      crmActiveContactTab = 'actions';
       crmRenderContactTabs();
       crmRenderContactWorkspace();
     }
@@ -10714,7 +11000,6 @@
       const group = crmCurrentContactGroup();
       if (!group) return;
       crmLatestDocumentFilter = true;
-      crmSelectedDocumentKey = '';
       crmActiveContactTab = 'documents';
       crmRenderContactTabs();
       crmRenderContactWorkspace();
@@ -10729,6 +11014,7 @@
         return;
       }
       if (crmActiveContactTab === 'history') content.innerHTML = crmHistoryMarkup(group);
+      else if (crmActiveContactTab === 'actions') content.innerHTML = crmActionItemsMarkup(group);
       else if (crmActiveContactTab === 'documents') content.innerHTML = crmDocumentsMarkup(group);
       else if (crmActiveContactTab === 'record') content.innerHTML = crmRecordInfoMarkup(group);
       else content.innerHTML = crmBriefingMarkup(group);
@@ -10737,35 +11023,25 @@
         const targetId = crmHistoryFocusSection === 'notes' ? 'crmMeetingNotesFocus' : crmHistoryFocusSection === 'actions' ? 'crmMeetingActionsFocus' : '';
         if (targetId) requestAnimationFrame(() => document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'center' }));
       }
+      if (crmHistoryHighlightAction) {
+        requestAnimationFrame(() => document.querySelector(`[data-action-key="${CSS.escape(encodeURIComponent(crmHistoryHighlightAction))}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+      }
     }
 
     function crmBriefingMarkup(group) {
       const latest = group.latest;
       const latestIndex = group.latestIndex;
       const summary = crmIntelText(latest.meetingNotes || latest.reason, 'No discussion summary has been recorded for the latest interaction.');
-      const latestActions = crmIntelActionLines(latest);
-      const openActions = group.actions.slice(0, 4);
-      const older = group.records.slice(1, 3);
+      const openActions = group.actions.filter(item => item.status === 'Open').slice(0, 4);
       const staff = crmIntelText(latest.uploaderName || latest.updatedBy || latest.uploaderEmail, 'MRANTI staff not recorded');
-      const owner = crmIntelText(latest.uploaderName || latest.uploaderEmail, 'Owner not recorded');
-      const continueItems = [];
-      if (openActions[0]) continueItems.push(`Follow up on: ${openActions[0].action}`);
-      if (latest.reason || latest.meetingTitle) continueItems.push(`Continue the ${crmIntelText(latest.reason || latest.meetingTitle).toLowerCase()} discussion.`);
-      if (summary && !summary.startsWith('No discussion')) continueItems.push('Review topics already covered in the latest notes before the conversation.');
-      if (!continueItems.length) continueItems.push('Review the latest meeting notes and outstanding actions before the conversation.');
-
-      const followRows = openActions.map(item => `<tr><td>${crmEscape(item.action)}</td><td>${crmEscape(crmIntelText(item.record.uploaderName || item.record.updatedBy, owner))}</td><td>${crmEscape(crmIntelText(item.record.dueDate || item.record.actionDueDate, 'Not recorded'))}</td><td><span class="followup-status">Open</span></td></tr>`).join('');
-      const olderRows = older.map(entry => {
-        const actions = crmIntelActionLines(entry.record).length;
-        const docs = Array.isArray(entry.record.meetingDocuments) ? entry.record.meetingDocuments.length : 0;
-        return `<div class="interaction-preview-row"><div class="interaction-date">${crmEscape(crmIntelShortDate(entry.record))}</div><div><div class="interaction-title">${crmEscape(crmIntelText(entry.record.meetingTitle, 'Untitled meeting'))}</div><div class="interaction-context">${crmEscape(crmIntelText(entry.record.uploaderName || entry.record.uploaderEmail, 'MRANTI staff not recorded'))} · ${crmEscape(crmIntelText(entry.record.reason || entry.record.meetingNotes, 'No context recorded'))}</div></div><div class="interaction-counts">${docs} doc${docs === 1 ? '' : 's'} · ${actions} action${actions === 1 ? '' : 's'}</div></div>`;
-      }).join('');
+      const followRows = openActions.map(item => `<tr><td>${crmEscape(item.action)}</td><td>${crmEscape(item.owner)}</td><td>${crmEscape(item.dueDate)}</td><td><span class="followup-status">${crmEscape(item.status)}</span></td></tr>`).join('');
+      const documentsRow = group.documents.length ? `<section class="contact-panel-card"><button class="supporting-doc-row" onclick="crmOpenLatestDocuments()" type="button"><span><strong>${group.documents.length} relevant document${group.documents.length === 1 ? '' : 's'} available</strong><span>Meeting documents, decks and notes connected to this contact.</span></span><strong aria-hidden="true">›</strong></button></section>` : '';
 
       return `<section class="contact-panel-card">
         <div class="contact-panel-title-row"><div><div class="contact-panel-title">Before you meet ${crmEscape(crmIntelFirstName(group.name))}</div><div class="contact-panel-subtitle">The latest MRANTI context you need for the conversation.</div></div></div>
         <div class="briefing-hero-body">
           <div class="briefing-latest">
-            <div class="contact-section-kicker">Latest MRANTI interaction</div>
+            <div class="contact-section-kicker">Latest interaction</div>
             <div class="briefing-meeting-title">${crmEscape(group.latestTitle)}</div>
             <div class="briefing-meeting-meta"><span>${crmEscape(crmIntelShortDate(latest))}</span><span>${crmEscape(crmIntelTimeRange(latest))}</span><span>${crmEscape(crmIntelText(latest.meetingFormat || latest.source || latest.inputMethod, 'Meeting source not recorded'))}</span></div>
             <div class="briefing-last-met"><div class="contact-section-kicker">Last met by MRANTI</div><strong>${crmEscape(staff)}</strong><span>${crmEscape(crmIntelText(latest.uploaderUnit || latest.department, 'MRANTI'))}</span></div>
@@ -10777,22 +11053,11 @@
           </div>
         </div>
       </section>
-      <div class="briefing-middle-grid">
-        <section class="contact-panel-card">
-          <div class="contact-panel-title-row"><div class="contact-panel-title">Open follow-ups</div></div>
-          ${followRows ? `<table class="followup-table"><thead><tr><th style="width:44%">Action</th><th style="width:24%">Owner</th><th style="width:20%">Due date</th><th>Status</th></tr></thead><tbody>${followRows}</tbody></table><div style="padding:8px 13px 11px"><button class="contact-link-button" onclick="crmOpenHistoryForMeeting(${openActions[0]?.recordIndex ?? latestIndex}, 'actions', true)" type="button">View all action items <span aria-hidden="true">→</span></button></div>` : '<div class="followup-empty">No open follow-ups recorded.</div>'}
-        </section>
-        <section class="contact-panel-card">
-          <div class="contact-panel-title-row"><div class="contact-panel-title">Continue the conversation</div></div>
-          <div class="continue-list">${continueItems.slice(0, 3).map((item, index) => `<div class="continue-item"><span class="continue-number">${index + 1}</span><span>${crmEscape(item)}</span></div>`).join('')}</div>
-        </section>
-      </div>
-      <section class="contact-panel-card">
-        <div class="contact-panel-title-row"><div class="contact-panel-title">Previous interactions with MRANTI</div></div>
-        <div class="interaction-preview-list">${olderRows || '<div class="followup-empty">No previous interactions recorded.</div>'}</div>
-        <div style="padding:0 14px 12px"><button class="contact-link-button" onclick="crmOpenHistoryForMeeting(${latestIndex}, '', false)" type="button">View complete relationship history <span aria-hidden="true">→</span></button></div>
+      <section class="contact-panel-card briefing-followups-full">
+        <div class="contact-panel-title-row"><div class="contact-panel-title">Open follow-ups</div></div>
+        ${followRows ? `<table class="followup-table"><thead><tr><th style="width:48%">Action</th><th style="width:22%">Owner</th><th style="width:19%">Due date</th><th>Status</th></tr></thead><tbody>${followRows}</tbody></table><div class="briefing-followup-link"><button class="contact-link-button" onclick="crmOpenAllActionItems()" type="button">View all action items <span aria-hidden="true">→</span></button></div>` : '<div class="followup-empty">No open follow-ups recorded.</div>'}
       </section>
-      <section class="contact-panel-card"><button class="supporting-doc-row" onclick="crmOpenLatestDocuments()" type="button"><span><strong>${group.documents.length} relevant document${group.documents.length === 1 ? '' : 's'} available</strong><span>Meeting documents, decks and notes connected to this contact.</span></span><strong aria-hidden="true">›</strong></button></section>`;
+      ${documentsRow}`;
     }
 
     function crmSelectContactMeeting(index) {
@@ -10800,9 +11065,25 @@
       crmSelectedMeetingIndex = index;
       crmSelectedIndex = index;
       crmHistoryFocusSection = '';
+      crmHistoryHighlightAction = '';
       crmRenderContactIdentity();
       crmRenderContactWorkspace();
       requestAnimationFrame(() => document.querySelector(`.timeline-item[data-record-index="${index}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
+    }
+
+    function crmActionItemsMarkup(group) {
+      const actions = group.actions.slice();
+      const openCount = actions.filter(item => item.status === 'Open').length;
+      const completedCount = actions.filter(item => item.status === 'Completed').length;
+      if (!['All', 'Open', 'Completed'].includes(crmActionItemsFilter)) crmActionItemsFilter = openCount ? 'Open' : 'All';
+      if (crmActionItemsFilter === 'Open' && !openCount) crmActionItemsFilter = 'All';
+      const visible = crmActionItemsFilter === 'All' ? actions : actions.filter(item => item.status === crmActionItemsFilter);
+      const rows = visible.map(item => {
+        const meetingTitle = crmIntelText(item.record?.meetingTitle, 'Untitled meeting');
+        const encodedKey = encodeURIComponent(item.key);
+        return `<button class="action-item-row" type="button" data-record-index="${item.recordIndex}" data-action-key="${encodedKey}" onclick="crmOpenActionItem(Number(this.dataset.recordIndex), decodeURIComponent(this.dataset.actionKey))"><span class="action-item-copy"><strong>${crmEscape(item.action)}</strong><span>${crmEscape(meetingTitle)} · ${crmEscape(crmIntelShortDate(item.record))}</span></span><span class="action-item-meta"><span><small>Owner</small>${crmEscape(item.owner)}</span><span><small>Due date</small>${crmEscape(item.dueDate)}</span><span class="action-item-status ${item.status === 'Completed' ? 'completed' : ''}">${crmEscape(item.status)}</span></span></button>`;
+      }).join('');
+      return `<section class="action-items-view"><div class="action-items-header"><div><h3>Action Items</h3><p>Follow-ups recorded across this contact’s MRANTI relationship.</p></div><div class="action-items-counts"><span>${openCount} open</span><span>${completedCount} completed</span><span>${actions.length} total</span></div></div><div class="action-items-filters" role="group" aria-label="Filter action items"><button aria-pressed="${crmActionItemsFilter === 'All'}" class="${crmActionItemsFilter === 'All' ? 'active' : ''}" onclick="crmSetActionItemsFilter('All')" type="button">All</button><button aria-pressed="${crmActionItemsFilter === 'Open'}" class="${crmActionItemsFilter === 'Open' ? 'active' : ''}" onclick="crmSetActionItemsFilter('Open')" type="button">Open</button><button aria-pressed="${crmActionItemsFilter === 'Completed'}" class="${crmActionItemsFilter === 'Completed' ? 'active' : ''}" onclick="crmSetActionItemsFilter('Completed')" type="button">Completed</button></div><div class="action-items-list">${rows || '<div class="contact-empty-state">No action items match this filter.</div>'}</div></section>`;
     }
 
     function crmHistoryMarkup(group) {
@@ -10821,7 +11102,7 @@
     function crmMeetingDetailMarkup(record) {
       if (!record) return '<div class="contact-empty-state">Select a meeting to review its details.</div>';
       const index = crmRecords.indexOf(record);
-      const actions = crmIntelActionLines(record);
+      const actions = crmIntelActionEntries(record, index);
       const documents = crmIntelDocumentsForRecord(record, index);
       const attendees = crmIntelText(record.attendees, 'No attendees recorded.');
       const staff = crmIntelText(record.uploaderName || record.updatedBy || record.uploaderEmail, 'MRANTI staff not recorded');
@@ -10830,25 +11111,23 @@
       const purpose = crmIntelText(record.reason || record.purpose, 'No purpose recorded.');
       const notes = crmIntelText(record.meetingNotes, 'No meeting notes recorded.');
       const documentMarkup = documents.length ? documents.map(doc => {
-        const url = crmSafeDocumentUrl(doc.url || doc.webViewLink || doc.downloadUrl);
+        const url = crmSafeDocumentUrl(doc.url || doc.webViewLink || doc.downloadUrl || doc.fileUrl || doc.link);
         const name = crmEscape(crmIntelText(doc.name, 'Meeting document'));
-        return url ? `<a class="detail-doc-link" href="${crmEscape(url)}" target="_blank" rel="noopener"><span>${name}</span><span>Open</span></a>` : `<div class="detail-doc-link"><span>${name}</span><span>Preview unavailable</span></div>`;
+        return url ? `<a class="detail-doc-link" href="${crmEscape(url)}" target="_blank" rel="noopener noreferrer"><span>${name}</span><span>Open</span></a>` : `<div class="detail-doc-link"><span>${name}</span><span>File link unavailable</span></div>`;
       }).join('') : '<div class="detail-section-value">No linked documents.</div>';
+      const actionMarkup = actions.length ? `<div class="meeting-action-list">${actions.map((item, itemIndex) => `<div class="meeting-action-row ${item.key === crmHistoryHighlightAction ? 'highlighted' : ''}" data-action-key="${encodeURIComponent(item.key)}"><span>${itemIndex + 1}</span><div><strong>${crmEscape(item.action)}</strong><small>${crmEscape(item.owner)} · ${crmEscape(item.dueDate)} · ${crmEscape(item.status)}</small></div></div>`).join('')}</div>` : '<div class="detail-section-value">No action items recorded.</div>';
+      const backMarkup = crmHistoryBackTab === 'actions' ? '<button class="contact-link-button back-to-briefing" onclick="crmBackToActionItems()" type="button">← Back to Action Items</button>' : crmHistoryBackToBriefing ? '<button class="contact-link-button back-to-briefing" onclick="crmSwitchContactTab(\'briefing\')" type="button">← Back to Briefing</button>' : '';
       return `<div class="meeting-detail-scroll">
-        ${crmHistoryBackToBriefing ? '<button class="contact-link-button back-to-briefing" onclick="crmSwitchContactTab(\'briefing\')" type="button">← Back to Briefing</button>' : ''}
+        ${backMarkup}
         <div class="meeting-detail-title">${crmEscape(crmIntelText(record.meetingTitle, 'Untitled meeting'))}</div>
         <div class="meeting-detail-meta"><span>${crmEscape(crmIntelFullDate(record))}</span><span>${crmEscape(crmIntelTimeRange(record))}</span><span>${crmEscape(source)}</span></div>
         <div class="detail-section"><div class="detail-grid"><div class="detail-mini-card"><div class="detail-section-label">Purpose</div><div class="detail-section-value">${crmEscape(purpose)}</div></div><div class="detail-mini-card"><div class="detail-section-label">Location</div><div class="detail-section-value">${crmEscape(location)}</div></div><div class="detail-mini-card"><div class="detail-section-label">Attendees</div><div class="detail-section-value">${crmEscape(attendees)}</div></div><div class="detail-mini-card"><div class="detail-section-label">MRANTI staff involved</div><div class="detail-section-value">${crmEscape(staff)}</div></div></div></div>
         <div class="detail-section" id="crmMeetingNotesFocus"><div class="detail-section-label">Meeting notes</div><div class="detail-section-value">${crmEscape(notes)}</div></div>
         <div class="detail-section"><div class="detail-section-label">Decisions or outcomes</div><div class="detail-section-value">${crmEscape(crmIntelText(record.decisions || record.outcomes, 'No separate decisions recorded.'))}</div></div>
-        <div class="detail-section" id="crmMeetingActionsFocus"><div class="detail-section-label">Action items</div><div class="detail-section-value">${actions.length ? crmEscape(actions.map((item, itemIndex) => `${itemIndex + 1}. ${item}`).join('\n')) : 'No action items recorded.'}</div></div>
+        <div class="detail-section" id="crmMeetingActionsFocus"><div class="detail-section-label">Action items</div>${actionMarkup}</div>
         <div class="detail-section"><div class="detail-section-label">Linked documents</div><div class="detail-doc-list">${documentMarkup}</div></div>
         <div class="detail-section"><div class="detail-section-label">Record ownership</div><div class="detail-section-value">Uploaded by ${crmEscape(crmIntelText(record.uploaderName || record.uploaderEmail, 'Not recorded'))}. ${crmIsOwned(record) ? 'You may manage this record.' : 'Only the uploader may modify it.'}</div></div>
       </div>`;
-    }
-
-    function crmDocumentStatus(document) {
-      return crmIntelText(document.extractionStatus || document.status || document.analysisStatus, document.extractedText || document.text ? 'Extracted' : 'Not analysed');
     }
 
     function crmDocumentType(document) {
@@ -10859,63 +11138,31 @@
       return extension || 'Document';
     }
 
-    function crmDocumentsMarkup(group) {
-      let documents = group.documents.slice();
-      const latestIndex = group.latestIndex;
-      if (crmLatestDocumentFilter) documents = documents.filter(document => document._recordIndex === latestIndex);
-      const typeFilter = document.querySelector('#crmDocumentTypeFilter')?.value || 'All';
-      const statusFilter = document.querySelector('#crmDocumentStatusFilter')?.value || 'All';
-      if (typeFilter !== 'All') documents = documents.filter(document => crmDocumentType(document) === typeFilter);
-      if (statusFilter !== 'All') documents = documents.filter(document => crmDocumentStatus(document) === statusFilter);
-      const allTypes = Array.from(new Set(group.documents.map(crmDocumentType))).sort();
-      const allStatuses = Array.from(new Set(group.documents.map(crmDocumentStatus))).sort();
-      if (!documents.some(document => document._docKey === crmSelectedDocumentKey)) crmSelectedDocumentKey = documents[0]?._docKey || '';
-      const selected = documents.find(document => document._docKey === crmSelectedDocumentKey) || null;
-      const list = documents.map(document => `<button class="document-list-item ${document._docKey === crmSelectedDocumentKey ? 'active' : ''}" type="button" data-document-key="${encodeURIComponent(document._docKey)}" onclick="crmSelectDocument(decodeURIComponent(this.dataset.documentKey))"><div class="document-name">${crmEscape(crmIntelText(document.name, 'Meeting document'))}</div><div class="document-meta"><span>${crmEscape(crmDocumentType(document))}</span><span>${crmEscape(document._meetingTitle)}</span><span>${crmEscape(crmDocumentStatus(document))}</span><span>${crmEscape(document._meetingDate)}</span></div></button>`).join('');
-      return `<div class="contact-split-view"><section class="contact-split-pane"><div class="contact-split-pane-head"><span>Documents</span><span>${documents.length} file${documents.length === 1 ? '' : 's'}</span></div><div class="document-toolbar"><select id="crmDocumentTypeFilter" onchange="crmRenderContactWorkspace()"><option value="All">All file types</option>${allTypes.map(type => `<option value="${crmEscape(type)}" ${type === typeFilter ? 'selected' : ''}>${crmEscape(type)}</option>`).join('')}</select><select id="crmDocumentStatusFilter" onchange="crmRenderContactWorkspace()"><option value="All">All extraction statuses</option>${allStatuses.map(status => `<option value="${crmEscape(status)}" ${status === statusFilter ? 'selected' : ''}>${crmEscape(status)}</option>`).join('')}</select></div>${crmLatestDocumentFilter ? '<div class="document-filter-pill">Filtered by latest interaction <button aria-label="Remove latest interaction filter" onclick="crmRemoveLatestDocumentFilter()" type="button">×</button></div>' : ''}<div class="document-list">${list || '<div class="contact-empty-state">No documents linked to this contact.</div>'}</div></section><section class="contact-split-pane document-preview-pane">${crmDocumentPreviewMarkup(selected)}</section></div>`;
-    }
-
-    function crmSelectDocument(key) {
-      crmSelectedDocumentKey = key;
-      crmDocumentPreviewMode = 'original';
-      crmRenderContactWorkspace();
-    }
-
-    function crmRemoveLatestDocumentFilter() {
-      crmLatestDocumentFilter = false;
-      crmSelectedDocumentKey = '';
-      crmRenderContactWorkspace();
-    }
-
-    function crmSetDocumentPreviewMode(mode) {
-      crmDocumentPreviewMode = mode;
-      crmRenderContactWorkspace();
-    }
-
     function crmSafeDocumentUrl(value) {
       const url = String(value || '').trim();
       return /^https?:\/\//i.test(url) ? url : '';
     }
 
-    function crmExtractedInfoMarkup(document) {
-      const info = document?.extractedInfo || document?.fields || document?.extractedFields;
-      if (!info) return '<div class="contact-empty-state">No extracted information is available.</div>';
-      if (typeof info === 'object') {
-        const entries = Object.entries(info).filter(([, value]) => value != null && String(value).trim());
-        return entries.length ? `<div class="document-info-grid">${entries.map(([key, value]) => `<div class="detail-mini-card"><div class="detail-section-label">${crmEscape(key.replace(/([a-z])([A-Z])/g, '$1 $2'))}</div><div class="detail-section-value">${crmEscape(typeof value === 'object' ? JSON.stringify(value) : String(value))}</div></div>`).join('')}</div>` : '<div class="contact-empty-state">No extracted information is available.</div>';
-      }
-      return `<div class="document-text-view">${crmEscape(crmIntelText(info, 'No extracted information is available.'))}</div>`;
-    }
-
-    function crmDocumentPreviewMarkup(document) {
-      if (!document) return '<div class="contact-empty-state">Select a document to preview it.</div>';
-      const url = crmSafeDocumentUrl(document.url || document.webViewLink || document.downloadUrl);
-      const extractedText = crmIntelText(document.extractedText || document.text || document.content, 'No extracted text is available.');
-      let body = '';
-      if (crmDocumentPreviewMode === 'text') body = `<div class="document-text-view">${crmEscape(extractedText)}</div>`;
-      else if (crmDocumentPreviewMode === 'info') body = crmExtractedInfoMarkup(document);
-      else body = url ? `<iframe class="document-preview-frame" src="${crmEscape(url)}" title="Document preview"></iframe><div style="padding:9px 12px;border-top:1px solid #dbeafe"><a class="contact-link-button" href="${crmEscape(url)}" target="_blank" rel="noopener">Open document in a new tab →</a></div>` : '<div class="contact-empty-state">Preview unavailable.</div>';
-      return `<div class="contact-split-pane-head"><span>${crmEscape(crmIntelText(document.name, 'Document preview'))}</span><span>${crmEscape(crmDocumentStatus(document))}</span></div><div class="document-preview-tabs" role="tablist"><button aria-selected="${crmDocumentPreviewMode === 'original'}" class="document-preview-tab ${crmDocumentPreviewMode === 'original' ? 'active' : ''}" onclick="crmSetDocumentPreviewMode('original')" role="tab" type="button">Original document</button><button aria-selected="${crmDocumentPreviewMode === 'text'}" class="document-preview-tab ${crmDocumentPreviewMode === 'text' ? 'active' : ''}" onclick="crmSetDocumentPreviewMode('text')" role="tab" type="button">Extracted text</button><button aria-selected="${crmDocumentPreviewMode === 'info'}" class="document-preview-tab ${crmDocumentPreviewMode === 'info' ? 'active' : ''}" onclick="crmSetDocumentPreviewMode('info')" role="tab" type="button">Extracted information</button></div><div class="document-preview-scroll">${body}</div>`;
+    function crmDocumentsMarkup(group) {
+      const latestIndex = group.latestIndex;
+      const documents = group.documents.slice().sort((a, b) => {
+        if (crmLatestDocumentFilter) {
+          const aLatest = a._recordIndex === latestIndex ? 1 : 0;
+          const bLatest = b._recordIndex === latestIndex ? 1 : 0;
+          if (aLatest !== bLatest) return bLatest - aLatest;
+        }
+        return (b._recordIndex === latestIndex ? 1 : 0) - (a._recordIndex === latestIndex ? 1 : 0);
+      });
+      const rows = documents.map(document => {
+        const url = crmSafeDocumentUrl(document.url || document.webViewLink || document.downloadUrl || document.fileUrl || document.link || document.driveUrl);
+        const latestClass = document._recordIndex === latestIndex ? ' latest-interaction' : '';
+        const latestLabel = document._recordIndex === latestIndex ? '<span class="document-latest-label">Related to latest interaction</span>' : '';
+        const metadata = `<span>${crmEscape(crmDocumentType(document))}</span><span>${crmEscape(document._meetingTitle)}</span><span>${crmEscape(document._dateAdded)}</span><span>${crmEscape(document._source)}</span>`;
+        const body = `<span class="document-library-copy"><strong>${crmEscape(crmIntelText(document.name, 'Meeting document'))}</strong><span class="document-library-meta">${metadata}</span>${latestLabel}</span><span class="document-library-action">${url ? 'Open ↗' : 'File link unavailable'}</span>`;
+        return url ? `<a class="document-library-item${latestClass}" href="${crmEscape(url)}" target="_blank" rel="noopener noreferrer">${body}</a>` : `<div class="document-library-item unavailable${latestClass}" aria-disabled="true">${body}</div>`;
+      }).join('');
+      const priorityNote = crmLatestDocumentFilter && documents.length ? '<div class="document-library-note">Documents related to the latest interaction are listed first.</div>' : '';
+      return `<section class="document-library"><div class="document-library-header"><div><h3>Documents</h3><p>Files connected to this contact’s MRANTI relationship.</p></div><span>${documents.length} file${documents.length === 1 ? '' : 's'}</span></div>${priorityNote}<div class="document-library-list">${rows || '<div class="contact-empty-state">No documents linked to this contact.</div>'}</div></section>`;
     }
 
     function crmInfoField(label, value, full = false) {
@@ -10924,12 +11171,13 @@
 
     function crmRecordInfoMarkup(group) {
       const record = crmCurrentMeetingRecord() || group.latest;
-      const missing = [!group.email && 'email', !group.phone && 'phone', !group.jobTitle && 'job title', !group.location && 'location'].filter(Boolean).join(', ');
+      const signedInName = crmIntelText(currentUser?.displayName || currentUser?.email, 'Signed-in user');
+      const signedInEmail = crmIntelText(currentUser?.email, 'Not recorded');
+      const owned = crmIsOwned(record) && Boolean(record?.recordId);
+      const permission = owned ? 'Uploader access — this user may edit and archive the selected record.' : 'View only — only the uploader may modify the selected record.';
       return `<div class="record-info-groups">
         <section class="record-info-group"><h3>Contact Information</h3><div class="record-info-grid">${crmInfoField('Name', group.name)}${crmInfoField('Organisation', group.company)}${crmInfoField('Email', group.email)}${crmInfoField('Phone', group.phone)}${crmInfoField('Job title', group.jobTitle)}${crmInfoField('Department', group.department)}${crmInfoField('Location', group.location, true)}</div></section>
-        <section class="record-info-group"><h3>Record Ownership and Permissions</h3><div class="record-info-grid">${crmInfoField('Uploader', record.uploaderName || record.uploaderEmail)}${crmInfoField('Uploader email', record.uploaderEmail)}${crmInfoField('Who may edit', crmIsOwned(record) ? 'Signed-in uploader' : 'Uploader only')}${crmInfoField('Record status', crmStatus(record))}${crmInfoField('Archive status', crmNormalize(crmStatus(record)).includes('archive') ? 'Archived' : 'Active')}</div></section>
-        <section class="record-info-group"><h3>Source and Data Quality</h3><div class="record-info-grid">${crmInfoField('Input method', record.inputMethod)}${crmInfoField('Record source', record.recordSource || record.source)}${crmInfoField('Origin', record.ocrStatus ? 'OCR-assisted' : record.inputMethod)}${crmInfoField('Missing fields', missing || 'No key contact fields missing')}${crmInfoField('Search index status', record.searchIndex ? 'Available' : 'Not recorded')}${crmInfoField('Processing status', record.processingStatus || record.extractionStatus)}</div></section>
-        <section class="record-info-group"><h3>Activity and Audit History</h3><div class="record-info-grid">${crmInfoField('Created date', record.createdAt || record.submittedAt || record.meetingDate)}${crmInfoField('Last updated', record.lastUpdated)}${crmInfoField('Updated by', record.updatedBy)}${crmInfoField('Record ID', record.recordId || 'Legacy record')}${crmInfoField('Audit history', record.auditHistory || 'No audit history is available beyond the current record metadata.', true)}</div></section>
+        <section class="record-info-group"><h3>Record Ownership and Permissions</h3><div class="record-info-grid">${crmInfoField('Uploader', record.uploaderName || record.uploaderEmail)}${crmInfoField('Uploader email', record.uploaderEmail)}${crmInfoField('Current signed-in user', signedInName)}${crmInfoField('Signed-in email', signedInEmail)}${crmInfoField('Permission status', permission, true)}${crmInfoField('May edit', owned ? 'Yes' : 'No')}${crmInfoField('May archive', owned ? 'Yes' : 'No')}${crmInfoField('Current record status', crmStatus(record))}</div></section>
       </div>`;
     }
 
@@ -10940,12 +11188,9 @@
       if (document.getElementById('crmContactOrganisation')) document.getElementById('crmContactOrganisation').textContent = '';
       if (document.getElementById('crmContactRole')) document.getElementById('crmContactRole').textContent = '';
       if (document.getElementById('crmContactMeta')) document.getElementById('crmContactMeta').innerHTML = '';
-      if (document.getElementById('crmContactStatusBadge')) document.getElementById('crmContactStatusBadge').textContent = '—';
       if (document.getElementById('crmContactMeetingCount')) document.getElementById('crmContactMeetingCount').textContent = '0 meetings';
       if (document.getElementById('crmContactLastEngaged')) document.getElementById('crmContactLastEngaged').textContent = 'Last engaged —';
       if (document.getElementById('crmWorkspaceContent')) document.getElementById('crmWorkspaceContent').innerHTML = '<div class="contact-empty-state">Select a contact to review relationship intelligence.</div>';
-      document.getElementById('crmManageOwnBtn')?.setAttribute('disabled', '');
-      document.getElementById('crmContactArchiveAction')?.setAttribute('disabled', '');
     }
 
     function crmRenderDetail() {
@@ -10966,7 +11211,6 @@
       if (!record || !crmIsOwned(record)) return;
       const index = crmRecords.indexOf(record);
       mySelectedIndex = index;
-      document.getElementById('crmContactOverflowMenu')?.classList.remove('show');
       systemNavigate('my-records');
       setTimeout(() => myFilterRecords(), 50);
     }
@@ -10975,7 +11219,6 @@
       const record = crmCurrentMeetingRecord();
       if (!record || !crmIsOwned(record) || !record.recordId) return;
       mySelectedIndex = crmRecords.indexOf(record);
-      document.getElementById('crmContactOverflowMenu')?.classList.remove('show');
       const action = crmNormalize(crmStatus(record)).includes('archive') ? 'restore' : 'archive';
       myMutateStatus(action);
     }
@@ -10986,9 +11229,7 @@
       if (!recordKey) return false;
       const index = crmFindRecordIndexByRouteKey(recordKey);
       const search = document.getElementById('crmContactsSearch');
-      const status = document.getElementById('crmContactsStatus');
       if (search) search.value = '';
-      if (status) status.value = 'All';
       crmResetAdditionalFilters(false);
       if (index < 0) {
         crmPendingRecordKey = '';
@@ -11007,7 +11248,9 @@
       crmSelectedIndex = index;
       crmActiveContactTab = 'history';
       crmHistoryBackToBriefing = false;
+      crmHistoryBackTab = '';
       crmHistoryFocusSection = '';
+      crmHistoryHighlightAction = '';
       crmContactRenderLimit = Math.max(crmContactRenderLimit, crmContactGroups.length);
       crmPendingRecordKey = '';
       crmFilterRecords({ allowAutoSelect: false });
@@ -11022,10 +11265,6 @@
       if (!event.target.closest('.contact-intel-filter-anchor')) {
         document.getElementById('crmContactFilterPanel')?.classList.remove('show');
         document.getElementById('crmContactFilterButton')?.setAttribute('aria-expanded', 'false');
-      }
-      if (!event.target.closest('.contact-overflow-wrap')) {
-        document.getElementById('crmContactOverflowMenu')?.classList.remove('show');
-        document.getElementById('crmContactOverflowButton')?.setAttribute('aria-expanded', 'false');
       }
     });
 
