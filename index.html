@@ -4926,6 +4926,289 @@
     }
   }
 </style>
+
+<style id="dashboard-data-calendar-week-v20">
+  /* Approved scope: meeting preview text, organisation record targeting, and Calendar Week view only. */
+  #pageDashboard .dashboard-detail-meeting-copy {
+    display:flex;
+    flex-direction:column;
+    height:100%;
+    min-width:0;
+    overflow:hidden;
+  }
+  #pageDashboard .dashboard-detail-meeting-top,
+  #pageDashboard .dashboard-detail-meeting-title,
+  #pageDashboard .dashboard-detail-contact,
+  #pageDashboard .dashboard-detail-purpose,
+  #pageDashboard .dashboard-detail-location { min-width:0; overflow-wrap:anywhere; word-break:break-word; }
+  #pageDashboard .dashboard-detail-organisation {
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    white-space:normal;
+    overflow:hidden;
+  }
+  #pageDashboard .dashboard-detail-meeting-title {
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+  }
+  #pageDashboard .dashboard-detail-contact {
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #pageDashboard .dashboard-detail-purpose {
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+  }
+  #pageDashboard .dashboard-detail-location {
+    display:flex;
+    align-items:center;
+    gap:4px;
+    margin-top:4px;
+    color:#64748b;
+    font-size:8.4px;
+    font-weight:650;
+    white-space:nowrap;
+    overflow:hidden;
+  }
+  #pageDashboard .dashboard-detail-location svg {
+    width:10px;
+    height:10px;
+    flex:0 0 10px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  #pageDashboard .dashboard-detail-location span { overflow:hidden; text-overflow:ellipsis; }
+  #pageDashboard .dashboard-detail-meeting-footer { margin-top:auto; flex:0 0 auto; }
+  #pageDashboard .dashboard-org-record,
+  #pageDashboard .dashboard-org-card-head,
+  #pageDashboard .dashboard-org-card-head strong,
+  #pageDashboard .dashboard-org-record small { min-width:0; overflow-wrap:anywhere; word-break:break-word; }
+
+  .dashboard-inline-notice {
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    z-index:2500;
+    max-width:min(360px,calc(100vw - 32px));
+    padding:11px 14px;
+    border:1px solid #bfdbfe;
+    border-radius:11px;
+    background:#ffffff;
+    color:#334155;
+    box-shadow:0 14px 36px rgba(15,23,42,.16);
+    font-family:'Inter','Segoe UI',sans-serif;
+    font-size:11px;
+    font-weight:700;
+    opacity:0;
+    transform:translateY(10px);
+    pointer-events:none;
+    transition:opacity .18s ease,transform .18s ease;
+  }
+  .dashboard-inline-notice.show { opacity:1; transform:translateY(0); }
+
+  #pageDashboard .week-summary-strip {
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+    min-height:42px;
+    margin-bottom:12px;
+    padding:9px 14px;
+    border:1px solid #dbeafe;
+    border-radius:11px;
+    background:#f8fbff;
+    color:#52627a;
+    font-size:10px;
+    font-weight:650;
+  }
+  #pageDashboard .week-summary-item { display:inline-flex; align-items:center; gap:7px; min-width:0; }
+  #pageDashboard .week-summary-item strong { color:#1e3a8a; font-weight:850; }
+  #pageDashboard .week-summary-item svg {
+    width:16px;
+    height:16px;
+    flex:0 0 16px;
+    fill:none;
+    stroke:#2563eb;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  #pageDashboard .week-summary-divider { width:1px; height:18px; background:#dbeafe; }
+
+  #pageDashboard .week-calendar-shell { border-radius:14px; }
+  #pageDashboard .week-calendar-scroll {
+    overflow-x:auto;
+    overflow-y:visible;
+    scrollbar-width:thin;
+    scrollbar-color:#bfdbfe transparent;
+  }
+  #pageDashboard .week-calendar-scroll::-webkit-scrollbar { height:6px; }
+  #pageDashboard .week-calendar-scroll::-webkit-scrollbar-thumb { background:#bfdbfe; border-radius:999px; }
+  #pageDashboard .week-calendar-inner { min-width:900px; }
+  #pageDashboard .week-calendar-header,
+  #pageDashboard .week-all-day-row { grid-template-columns:70px repeat(7,minmax(0,1fr)); }
+  #pageDashboard .week-calendar-header {
+    position:relative;
+    top:auto;
+    z-index:5;
+    background:#f8fbff;
+  }
+  #pageDashboard .week-day-header { padding:10px 6px 9px; }
+  #pageDashboard .week-day-header.today { background:rgba(239,246,255,.88); }
+  #pageDashboard .week-day-name { font-size:8px; letter-spacing:.9px; }
+  #pageDashboard .week-day-date {
+    width:auto;
+    height:auto;
+    margin:5px auto 0;
+    display:block;
+    border-radius:0;
+    color:#0f172a;
+    font-size:11px;
+    line-height:1.2;
+  }
+  #pageDashboard .week-day-header.today .week-day-date {
+    background:transparent;
+    color:#2563eb;
+    box-shadow:none;
+  }
+  #pageDashboard .week-time-scroll {
+    max-height:min(650px,66vh);
+    overflow-y:auto;
+    overflow-x:hidden;
+    overscroll-behavior-y:auto;
+    scrollbar-width:thin;
+    scrollbar-color:#94a3b8 transparent;
+  }
+  #pageDashboard .week-time-scroll::-webkit-scrollbar { width:7px; }
+  #pageDashboard .week-time-scroll::-webkit-scrollbar-track { background:transparent; }
+  #pageDashboard .week-time-scroll::-webkit-scrollbar-thumb { background:#94a3b8; border-radius:999px; }
+  #pageDashboard .week-time-grid {
+    display:grid;
+    grid-template-columns:70px minmax(0,1fr);
+    position:relative;
+    height:var(--week-grid-total-height);
+    padding:0;
+  }
+  #pageDashboard .week-time-axis {
+    position:relative;
+    height:var(--week-grid-total-height);
+    border-right:1px solid #e2e8f0;
+    background:#fff;
+  }
+  #pageDashboard .week-time-label {
+    right:10px;
+    transform:translateY(-50%);
+    color:#64748b;
+    font-size:8.2px;
+    font-weight:750;
+  }
+  #pageDashboard .week-day-columns {
+    position:relative;
+    height:var(--week-grid-total-height);
+    display:grid;
+    grid-template-columns:repeat(7,minmax(0,1fr));
+    background-color:#fff;
+    background-image:linear-gradient(to bottom,#dbeafe 1px,transparent 1px);
+    background-position:0 var(--week-grid-offset);
+    background-size:100% var(--week-hour-height);
+    background-repeat:repeat-y;
+  }
+  #pageDashboard .week-day-column { height:var(--week-grid-total-height); }
+  #pageDashboard .week-day-column.today { background:rgba(239,246,255,.42); }
+  #pageDashboard .week-event {
+    padding:7px 7px 6px;
+    border-color:#93c5fd;
+    border-left:3px solid #2563eb;
+    border-radius:7px;
+    background:linear-gradient(145deg,#dbeafe,#eff6ff);
+    box-shadow:0 4px 12px rgba(37,99,235,.12);
+  }
+  #pageDashboard .week-event-head { display:flex; align-items:flex-start; gap:5px; min-width:0; }
+  #pageDashboard .week-event-icon {
+    width:18px;
+    height:18px;
+    flex:0 0 18px;
+    display:grid;
+    place-items:center;
+    border-radius:5px;
+    background:#2563eb;
+    color:#fff;
+  }
+  #pageDashboard .week-event-icon svg {
+    width:11px;
+    height:11px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  #pageDashboard .week-event-title {
+    min-width:0;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    white-space:normal;
+    overflow:hidden;
+    overflow-wrap:anywhere;
+    font-size:8.7px;
+    line-height:1.28;
+  }
+  #pageDashboard .week-event-time {
+    margin-top:5px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    font-size:7.8px;
+  }
+  #pageDashboard .week-event-location {
+    display:flex;
+    align-items:flex-start;
+    gap:4px;
+    margin-top:4px;
+    min-width:0;
+    overflow:hidden;
+    white-space:normal;
+  }
+  #pageDashboard .week-event-location svg {
+    width:9px;
+    height:9px;
+    flex:0 0 9px;
+    margin-top:1px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.9;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  #pageDashboard .week-event-location span {
+    min-width:0;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+    overflow-wrap:anywhere;
+  }
+
+  @media (max-width:760px) {
+    #pageDashboard .week-summary-strip { align-items:flex-start; }
+    #pageDashboard .week-summary-divider { display:none; }
+    #pageDashboard .week-summary-item { flex:1 1 190px; }
+    #pageDashboard .week-calendar-inner { min-width:860px; }
+    #pageDashboard .week-time-scroll { max-height:560px; }
+  }
+  @media (max-width:430px) {
+    .dashboard-inline-notice { left:16px; right:16px; bottom:16px; }
+  }
+</style>
 </head>
 <body>
 <!-- Final standardised MRANTI CRM build: signed-out page redesigned; signed-in logic preserved. -->
@@ -5056,8 +5339,8 @@
 <div><div class="section-eyebrow">Google Calendar</div><div class="section-title">Your Meetings</div><div class="section-subtitle">Select a day to review meetings and log relationship details.</div></div>
 <div class="calendar-panel-actions">
 <div aria-label="Calendar view" class="calendar-view-toggle" role="group">
-<button class="calendar-view-btn" id="calendarViewWeekBtn" onclick="setCalendarView('week')" type="button">Week</button>
-<button class="calendar-view-btn active" id="calendarViewMonthBtn" onclick="setCalendarView('month')" type="button">Month</button>
+<button class="calendar-view-btn" id="calendarViewWeekBtn" onclick="setCalendarView('week', null, event)" type="button">Week</button>
+<button class="calendar-view-btn active" id="calendarViewMonthBtn" onclick="setCalendarView('month', null, event)" type="button">Month</button>
 </div>
 <button class="sync-btn" id="calendarSyncBtn" onclick="syncCalendar()" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect x="3" y="4" width="18" height="17" rx="3"></rect><path d="M3 10h18"></path><path d="M16.5 14.5a3.5 3.5 0 1 1-1 2.45"></path><path d="M16.5 12.5v2h-2"></path></svg><span id="calendarSyncLabel">Connect Calendar</span></button>
 </div>
@@ -5794,27 +6077,31 @@
       if (calendarView) calendarView.classList.toggle('calendar-week-active', calendarViewMode === 'week');
     }
 
-    function setCalendarView(mode, focusDate = null) {
+    function setCalendarView(mode, focusDate = null, sourceEvent = null) {
+      sourceEvent?.preventDefault?.();
+      sourceEvent?.stopPropagation?.();
+      closeDayDetail();
+
       const nextMode = mode === 'week' ? 'week' : 'month';
       const hasExplicitDate = focusDate instanceof Date && !Number.isNaN(focusDate.getTime());
-      let nextDate = hasExplicitDate ? new Date(focusDate) : null;
+      let nextDate;
 
-      if (!nextDate) {
-        if (nextMode === 'week') {
-          // A direct Week-tab selection always begins with the actual current week.
-          // Explicit Dashboard week selections pass focusDate and are preserved.
-          nextDate = calendarViewMode === 'week' ? new Date(calendarViewDate) : new Date();
-        } else {
-          // Returning to Month keeps the month currently represented by the calendar.
-          nextDate = new Date(calendarViewDate);
-        }
+      if (hasExplicitDate) {
+        nextDate = new Date(focusDate);
+      } else if (nextMode === 'week') {
+        // A normal Week-tab selection always opens the week containing today.
+        // Explicit Dashboard week selections may still pass a focusDate.
+        nextDate = new Date();
+      } else {
+        // Month view keeps the month currently represented by the calendar.
+        nextDate = new Date(calendarViewDate);
       }
 
       calendarViewMode = nextMode;
       calendarViewDate = nextMode === 'month'
         ? new Date(nextDate.getFullYear(), nextDate.getMonth(), 1)
         : new Date(nextDate);
-      selectedDateKey = nextMode === 'week' ? ymdKey(calendarViewDate) : selectedDateKey;
+      selectedDateKey = null;
       updateCalendarViewControls();
       renderCalendarGrid();
       if (googleAccessToken) loadMonthEvents(calendarViewDate);
@@ -5840,6 +6127,82 @@
       text = text.replace(/(?:https?:\/\/|www\.)\S+/gi, ' ');
       text = text.replace(/\s+/g, ' ').trim();
       return text || fallback;
+    }
+
+    function dashboardSanitiseMeetingText(value, meetingTitle = '') {
+      let text = dashboardCleanDisplayText(value, '');
+      if (!text) return '';
+
+      const systemStarts = [
+        /\bto see detailed information for automatically created events\b/i,
+        /\bthis event was created from an email\b/i,
+        /\bthis event was created from gmail\b/i,
+        /\bthis event was automatically created\b/i,
+        /\bview this event in google calendar\b/i,
+        /\bfor more information, visit google calendar\b/i
+      ];
+      for (const pattern of systemStarts) {
+        const match = text.match(pattern);
+        if (match?.index >= 0) text = text.slice(0, match.index);
+      }
+
+      text = text.replace(/\bref\s*:\s*.*$/i, ' ');
+      text = text.replace(/\b(?:calendar event|google calendar)\s*(?:notice|notification)?\s*:?\s*$/i, ' ');
+      text = text.replace(/\s+/g, ' ').replace(/^[\s\-–—:;,.]+|[\s\-–—:;,.]+$/g, '').trim();
+
+      const normalTitle = crmNormalize(meetingTitle);
+      if (normalTitle && crmNormalize(text) === normalTitle) return '';
+      if (normalTitle && crmNormalize(text).startsWith(normalTitle + ' ')) {
+        text = text.slice(meetingTitle.length).replace(/^[\s\-–—:;,.]+/, '').trim();
+      }
+      return text.length > 260 ? text.slice(0, 257).trimEnd() + '…' : text;
+    }
+
+    function dashboardRecordOrganisation(record) {
+      return dashboardCleanDisplayText(
+        record?.companyName || record?.organisation || record?.organization || record?.company || '',
+        ''
+      );
+    }
+
+    function dashboardExternalAttendees(event) {
+      const ownEmail = String(currentUser?.email || '').trim().toLowerCase();
+      return (Array.isArray(event?.attendees) ? event.attendees : []).filter(attendee => {
+        const email = String(attendee?.email || '').trim().toLowerCase();
+        return !attendee?.self && (!ownEmail || email !== ownEmail);
+      });
+    }
+
+    function dashboardPrimaryExternalContact(event) {
+      const attendee = dashboardExternalAttendees(event)[0];
+      return dashboardCleanDisplayText(attendee?.displayName || attendee?.email || '', '');
+    }
+
+    function dashboardParsedExternalOrganisation(event) {
+      const publicDomains = new Set(['gmail.com','googlemail.com','outlook.com','hotmail.com','live.com','yahoo.com','icloud.com','proton.me','protonmail.com']);
+      const attendee = dashboardExternalAttendees(event).find(item => {
+        const domain = String(item?.email || '').split('@')[1]?.toLowerCase() || '';
+        return domain && domain !== 'mranti.my' && !publicDomains.has(domain);
+      });
+      const domain = String(attendee?.email || '').split('@')[1]?.toLowerCase() || '';
+      if (!domain) return '';
+      const root = domain.split('.')[0].replace(/[-_]+/g, ' ').trim();
+      return root ? root.replace(/\b\w/g, char => char.toUpperCase()) : '';
+    }
+
+    function dashboardFindCalendarRecord(recordsForDate, event) {
+      const records = Array.isArray(recordsForDate) ? recordsForDate : [];
+      if (!records.length) return null;
+      const titleKey = crmNormalize(event?.summary || '');
+      const exactTitle = titleKey ? records.find(record => crmNormalize(record?.meetingTitle || '') === titleKey) : null;
+      if (exactTitle) return exactTitle;
+
+      const attendeeEmails = new Set(dashboardExternalAttendees(event).map(item => String(item?.email || '').trim().toLowerCase()).filter(Boolean));
+      const exactEmail = attendeeEmails.size
+        ? records.find(record => attendeeEmails.has(String(record?.email || '').trim().toLowerCase()))
+        : null;
+      if (exactEmail) return exactEmail;
+      return records.length === 1 ? records[0] : null;
     }
 
     function dashboardApplyExpandedState() {
@@ -5913,9 +6276,85 @@
       if (eventKey && window._eventsCache[eventKey]) openEventModal(eventKey);
     }
 
-    function dashboardOpenOrganisationRow(button) {
-      const recordId = button?.dataset?.recordId || '';
-      if (recordId) systemOpenRecordFromDashboard(recordId);
+    function dashboardShowNotice(message) {
+      let notice = document.getElementById('dashboardInlineNotice');
+      if (!notice) {
+        notice = document.createElement('div');
+        notice.id = 'dashboardInlineNotice';
+        notice.className = 'dashboard-inline-notice';
+        notice.setAttribute('role', 'status');
+        notice.setAttribute('aria-live', 'polite');
+        document.body.appendChild(notice);
+      }
+      notice.textContent = message;
+      notice.classList.add('show');
+      clearTimeout(dashboardShowNotice._timer);
+      dashboardShowNotice._timer = setTimeout(() => notice.classList.remove('show'), 3600);
+    }
+
+    function dashboardOrganisationRecordName(record) {
+      return record?.companyName || record?.organisation || record?.organization || record?.company || '';
+    }
+
+    function dashboardRecordDateScore(record) {
+      return Date.parse(record?.meetingDate || record?.lastUpdated || '') || 0;
+    }
+
+    async function dashboardOpenOrganisationRow(button) {
+      const organisationName = dashboardCleanDisplayText(button?.dataset?.organisation || '', '');
+      const preferredRecordId = button?.dataset?.recordId || '';
+      const organisationKey = crmNormalize(organisationName);
+      if (!organisationKey) {
+        dashboardShowNotice('No CRM meeting record was found for this organisation.');
+        return;
+      }
+
+      if (!crmContactsLoaded && !crmContactsLoading) await crmLoadContacts(false);
+      if (crmContactsLoading) {
+        await new Promise(resolve => setTimeout(resolve, 180));
+      }
+
+      const matchingIndices = crmRecords
+        .map((record, index) => ({ record, index }))
+        .filter(entry => crmNormalize(dashboardOrganisationRecordName(entry.record)) === organisationKey)
+        .sort((a, b) => {
+          if (preferredRecordId && a.record?.recordId === preferredRecordId) return -1;
+          if (preferredRecordId && b.record?.recordId === preferredRecordId) return 1;
+          return dashboardRecordDateScore(b.record) - dashboardRecordDateScore(a.record);
+        });
+
+      if (!matchingIndices.length) {
+        dashboardShowNotice('No CRM meeting record was found for this organisation.');
+        return;
+      }
+
+      const selectedIndex = matchingIndices[0].index;
+      crmSelectedIndex = selectedIndex;
+      systemNavigate('contacts');
+
+      const focusExactRecord = () => {
+        const search = document.getElementById('crmContactsSearch');
+        const status = document.getElementById('crmContactsStatus');
+        if (!search || !status || !crmRecords[selectedIndex]) return false;
+        search.value = organisationName;
+        status.value = 'All';
+        crmSelectedIndex = selectedIndex;
+        crmFilterRecords();
+        if (crmSelectedIndex !== selectedIndex) {
+          crmSelectedIndex = selectedIndex;
+          document.getElementById('crmContactsList').innerHTML = crmVisibleRecordIndices()
+            .map(index => crmRecordCard(crmRecords[index], index, index === crmSelectedIndex, 'crmSelectRecord'))
+            .join('');
+          crmRenderDetail();
+        }
+        return true;
+      };
+
+      let attempts = 0;
+      const timer = setInterval(() => {
+        attempts += 1;
+        if (focusExactRecord() || attempts >= 20) clearInterval(timer);
+      }, 60);
     }
 
     function dashboardWeekRangeLabel(index) {
@@ -5940,7 +6379,8 @@
         const organisation = dashboardCleanDisplayText(item.organisation, 'Organisation not recorded');
         const title = dashboardCleanDisplayText(item.title, 'Untitled meeting');
         const contact = dashboardCleanDisplayText(item.contact, 'External contact not recorded');
-        const purpose = dashboardCleanDisplayText(item.purpose, 'No meeting purpose recorded.');
+        const purpose = dashboardSanitiseMeetingText(item.purpose, title);
+        const location = dashboardCleanDisplayText(item.location, '');
         const recordAttribute = crmEscape(item.recordId || '');
         const eventAttribute = crmEscape(item.eventKey || '');
         const dateTime = [item.dateLabel, item.timeLabel].filter(Boolean).join(' · ');
@@ -5950,7 +6390,8 @@
             <span class="dashboard-detail-meeting-top"><span class="dashboard-detail-organisation">${crmEscape(organisation)}</span><span class="dashboard-detail-date">${crmEscape(dateTime)}</span></span>
             <span class="dashboard-detail-meeting-title">${crmEscape(title)}</span>
             <span class="dashboard-detail-contact">${crmEscape(contact)}</span>
-            <span class="dashboard-detail-purpose">${crmEscape(purpose)}</span>
+            ${purpose ? `<span class="dashboard-detail-purpose">${crmEscape(purpose)}</span>` : ''}
+            ${location ? `<span class="dashboard-detail-location"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg><span>${crmEscape(location)}</span></span>` : ''}
             <span class="dashboard-detail-meeting-footer"><span>${item.attendeeCount} attendee${item.attendeeCount === 1 ? '' : 's'}</span></span>
           </span>
         </button>`;
@@ -5973,7 +6414,7 @@
           : `No ${activeFilter} organisations are recorded for this month.`;
         return `<div class="dashboard-detail-empty">${crmEscape(message)}</div>`;
       }
-      return filtered.map(item => `<button class="dashboard-org-row" type="button" data-record-id="${crmEscape(item.recordId || '')}" onclick="dashboardOpenOrganisationRow(this)">
+      return filtered.map(item => `<button class="dashboard-org-row" type="button" data-record-id="${crmEscape(item.recordId || '')}" data-organisation="${crmEscape(item.name || '')}" onclick="dashboardOpenOrganisationRow(this)">
         <span class="dashboard-detail-item-icon network">${dashboardDetailNetworkIcon()}</span>
         <span class="dashboard-org-record">
           <span class="dashboard-org-card-head"><strong>${crmEscape(dashboardCleanDisplayText(item.name, 'Organisation not recorded'))}</strong><span class="dashboard-org-date">${crmEscape(item.latestLabel)}</span></span>
@@ -6090,7 +6531,10 @@
       renderTodayTimeline();
       renderMonthHeatmap();
       if (typeof systemRenderDashboardCRM === 'function') systemRenderDashboardCRM();
-      if (selectedDateKey) renderDayDetail(selectedDateKey);
+      const dayModal = document.getElementById('dayDetailModal');
+      if (calendarViewMode === 'month' && selectedDateKey && dayModal?.style.display === 'flex') {
+        renderDayDetail(selectedDateKey);
+      }
     }
 
     // Distinct colors per meeting so the clock arcs and legend dots line up
@@ -6325,12 +6769,16 @@
       const MINUTES_PER_DAY = 24 * 60;
       const PIXELS_PER_MINUTE = 1;
       const HOUR_HEIGHT = 60;
+      const GRID_TOP_PADDING = 24;
+      const GRID_BOTTOM_PADDING = 24;
       const GRID_HEIGHT = MINUTES_PER_DAY * PIXELS_PER_MINUTE;
-      const GRID_PADDING = 12;
+      const GRID_TOTAL_HEIGHT = GRID_TOP_PADDING + GRID_HEIGHT + GRID_BOTTOM_PADDING;
       const todayKey = ymdKey(new Date());
       const days = [];
       let hasAllDay = false;
       let earliestMeetingMinute = null;
+      let weeklyMeetingCount = 0;
+      let weeklyDurationMinutes = 0;
       window._eventsCache = window._eventsCache || {};
 
       for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
@@ -6338,6 +6786,7 @@
         date.setDate(weekStart.getDate() + dayIndex);
         const key = ymdKey(date);
         const dayEvents = (calendarEventsByDate[key] || []).slice();
+        weeklyMeetingCount += dayEvents.length;
         const allDay = dayEvents.filter(event => event.start?.date && !event.start?.dateTime);
         if (allDay.length) hasAllDay = true;
         const timed = dayEvents.filter(event => event.start?.dateTime).map((event, index) => {
@@ -6345,6 +6794,7 @@
           const end = event.end?.dateTime ? new Date(event.end.dateTime) : new Date(start.getTime() + 30 * 60000);
           const startMinute = Math.round(getKLHourFraction(start) * 60);
           const durationMinutes = Math.max(1, Math.round((end - start) / 60000));
+          weeklyDurationMinutes += durationMinutes;
           const endMinute = startMinute + durationMinutes;
           const clippedStart = Math.max(0, Math.min(MINUTES_PER_DAY, startMinute));
           const clippedEnd = Math.max(0, Math.min(MINUTES_PER_DAY, endMinute));
@@ -6356,17 +6806,29 @@
         days.push({ date, key, allDay, timed: dashboardWeekEventLayout(timed) });
       }
 
-      const headers = days.map(day => `<div class="week-day-header${day.key === todayKey ? ' today' : ''}"><span class="week-day-name">${day.date.toLocaleDateString('en-MY', { weekday:'short' })}</span><span class="week-day-date">${day.date.getDate()}</span></div>`).join('');
-      const allDayMarkup = hasAllDay ? `<div class="week-all-day-row"><div class="week-all-day-label">All day</div>${days.map((day, dayIndex) => `<div class="week-all-day-cell">${day.allDay.map((event, eventIndex) => { const eventKey = `wa${dayIndex}_${eventIndex}`; window._eventsCache[eventKey] = event; return `<button class="week-all-day-chip" type="button" onclick="dashboardOpenWeekEvent('${eventKey}',this)">${esc(event.summary || '(No title)')}</button>`; }).join('')}</div>`).join('')}</div>` : '';
+      const durationHours = weeklyDurationMinutes / 60;
+      const durationLabel = Number.isInteger(durationHours)
+        ? `${durationHours} hr${durationHours === 1 ? '' : 's'} total`
+        : `${durationHours.toFixed(1)} hrs total`;
+      const summaryStrip = `<div class="week-summary-strip" aria-label="Weekly calendar summary">
+        <span class="week-summary-item"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg><strong>${weeklyMeetingCount}</strong> meeting${weeklyMeetingCount === 1 ? '' : 's'} this week</span>
+        <span class="week-summary-divider" aria-hidden="true"></span>
+        <span class="week-summary-item"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>${durationLabel}</span>
+        <span class="week-summary-divider" aria-hidden="true"></span>
+        <span class="week-summary-item"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"></path></svg>All times shown in GMT+8</span>
+      </div>`;
+
+      const headers = days.map(day => `<div class="week-day-header${day.key === todayKey ? ' today' : ''}"><span class="week-day-name">${day.date.toLocaleDateString('en-MY', { weekday:'short' })}</span><span class="week-day-date">${day.date.getDate()} ${day.date.toLocaleDateString('en-MY', { month:'short' })}</span></div>`).join('');
+      const allDayMarkup = hasAllDay ? `<div class="week-all-day-row"><div class="week-all-day-label">All day</div>${days.map((day, dayIndex) => `<div class="week-all-day-cell">${day.allDay.map((event, eventIndex) => { const eventKey = `wa${dayIndex}_${eventIndex}`; window._eventsCache[eventKey] = event; return `<button class="week-all-day-chip" type="button" onclick="dashboardOpenWeekEvent('${eventKey}',this)">${esc(dashboardCleanDisplayText(event.summary, 'Untitled meeting'))}</button>`; }).join('')}</div>`).join('')}</div>` : '';
       const labels = Array.from({ length: 24 }, (_, hour) => {
         const suffix = hour < 12 ? 'AM' : 'PM';
         const displayHour = hour % 12 || 12;
-        return `<span class="week-time-label" style="top:${hour * HOUR_HEIGHT}px">${displayHour}:00 ${suffix}</span>`;
+        return `<span class="week-time-label" style="top:${GRID_TOP_PADDING + hour * HOUR_HEIGHT}px">${displayHour}:00 ${suffix}</span>`;
       }).join('');
       const columns = days.map((day, dayIndex) => `<div class="week-day-column${day.key === todayKey ? ' today' : ''}">${day.timed.map((item, eventIndex) => {
         const eventKey = `wt${dayIndex}_${eventIndex}`;
         window._eventsCache[eventKey] = item.event;
-        const top = item.clippedStart * PIXELS_PER_MINUTE;
+        const top = GRID_TOP_PADDING + item.clippedStart * PIXELS_PER_MINUTE;
         const height = Math.max(1, (item.clippedEnd - item.clippedStart) * PIXELS_PER_MINUTE);
         const laneWidth = 100 / item.laneCount;
         const left = item.lane * laneWidth;
@@ -6374,25 +6836,26 @@
         const startDate = new Date(item.event.start.dateTime);
         const endDate = item.event.end?.dateTime ? new Date(item.event.end.dateTime) : new Date(startDate.getTime() + 30 * 60000);
         const timeRange = `${formatKLTime(startDate)}–${formatKLTime(endDate)}`;
+        const title = dashboardCleanDisplayText(item.event.summary, 'Untitled meeting');
         const location = dashboardCleanDisplayText(item.event.location || '', '');
-        return `<button class="week-event" type="button" style="top:${top}px;height:${height}px;left:calc(${left}% + ${horizontalGap}px);width:calc(${laneWidth}% - ${horizontalGap * 2}px)" onclick="dashboardOpenWeekEvent('${eventKey}',this)" title="${esc(item.event.summary || '(No title)')} — ${esc(timeRange)}${location ? ` — ${esc(location)}` : ''}"><span class="week-event-title">${esc(item.event.summary || '(No title)')}</span><span class="week-event-time">${esc(timeRange)}</span>${location ? `<span class="week-event-location">${esc(location)}</span>` : ''}</button>`;
+        return `<button class="week-event" type="button" style="top:${top}px;height:${height}px;left:calc(${left}% + ${horizontalGap}px);width:calc(${laneWidth}% - ${horizontalGap * 2}px)" onclick="dashboardOpenWeekEvent('${eventKey}',this)" title="${esc(title)} — ${esc(timeRange)}${location ? ` — ${esc(location)}` : ''}"><span class="week-event-head"><span class="week-event-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg></span><span class="week-event-title">${esc(title)}</span></span><span class="week-event-time">${esc(timeRange)}</span>${location ? `<span class="week-event-location"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg><span>${esc(location)}</span></span>` : ''}</button>`;
       }).join('')}</div>`).join('');
 
       let currentLine = '';
       const now = new Date();
       if (days.some(day => day.key === todayKey)) {
         const currentMinute = Math.max(0, Math.min(MINUTES_PER_DAY, Math.round(getKLHourFraction(now) * 60)));
-        currentLine = `<div class="week-current-line" style="top:${currentMinute * PIXELS_PER_MINUTE}px"></div>`;
+        currentLine = `<div class="week-current-line" style="top:${GRID_TOP_PADDING + currentMinute * PIXELS_PER_MINUTE}px"></div>`;
       }
 
       grid.classList.remove('week-mode');
       grid.classList.add('week-time-mode');
-      grid.innerHTML = `<div class="week-calendar-shell"><div class="week-calendar-scroll"><div class="week-calendar-inner"><div class="week-calendar-header"><div class="week-header-axis"></div>${headers}</div>${allDayMarkup}<div class="week-time-scroll"><div class="week-time-grid" style="--week-grid-height:${GRID_HEIGHT}px;--week-hour-height:${HOUR_HEIGHT}px"><div class="week-time-axis">${labels}</div><div class="week-day-columns">${columns}${currentLine}</div></div></div></div></div></div>`;
+      grid.innerHTML = `${summaryStrip}<div class="week-calendar-shell"><div class="week-calendar-scroll"><div class="week-calendar-inner"><div class="week-calendar-header"><div class="week-header-axis"></div>${headers}</div>${allDayMarkup}<div class="week-time-scroll"><div class="week-time-grid" style="--week-grid-height:${GRID_HEIGHT}px;--week-grid-total-height:${GRID_TOTAL_HEIGHT}px;--week-grid-offset:${GRID_TOP_PADDING}px;--week-hour-height:${HOUR_HEIGHT}px"><div class="week-time-axis">${labels}</div><div class="week-day-columns">${columns}${currentLine}</div></div></div></div></div></div>`;
       requestAnimationFrame(() => {
         const scroll = grid.querySelector('.week-time-scroll');
         if (!scroll) return;
         const targetMinute = earliestMeetingMinute === null ? 8 * 60 : Math.max(0, earliestMeetingMinute - 60);
-        const requestedTop = GRID_PADDING + targetMinute * PIXELS_PER_MINUTE;
+        const requestedTop = GRID_TOP_PADDING + targetMinute * PIXELS_PER_MINUTE;
         scroll.scrollTop = Math.max(0, Math.min(requestedTop, scroll.scrollHeight - scroll.clientHeight));
       });
     }
@@ -6479,11 +6942,12 @@
 
     async function goToToday() {
       const today = new Date();
+      closeDayDetail();
       calendarViewDate = calendarViewMode === 'week'
         ? new Date(today)
         : new Date(today.getFullYear(), today.getMonth(), 1);
       const todayKey = ymdKey(today);
-      selectedDateKey = calendarViewMode === 'week' ? todayKey : selectedDateKey;
+      selectedDateKey = null;
       renderCalendarGrid();
       await loadMonthEvents(calendarViewDate);
       if (calendarViewMode === 'month') selectDay(todayKey);
@@ -7839,18 +8303,22 @@
     function dashboardBuildMeetingWeeks(active) {
       const now = new Date();
       const currentKey = dashboardMonthKey(now);
-      const recordIndex = new Map();
+      const recordsByDate = new Map();
       (Array.isArray(active) ? active : []).forEach(record => {
         const date = dashboardParseRecordDate(record.meetingDate);
         if (!date || dashboardMonthKey(date) !== currentKey) return;
-        const key = `${ymdKey(date)}|${crmNormalize(record.meetingTitle || '')}`;
-        if (!recordIndex.has(key)) recordIndex.set(key, record);
+        const dateKey = ymdKey(date);
+        const entries = recordsByDate.get(dateKey) || [];
+        entries.push(record);
+        recordsByDate.set(dateKey, entries);
       });
+
       const calendarItems = [];
       Object.entries(calendarEventsByDate || {}).forEach(([dateKey, events]) => {
         if (!dateKey.startsWith(currentKey + '-')) return;
         (Array.isArray(events) ? events : []).forEach(event => calendarItems.push({ dateKey, event }));
       });
+
       const weeks = [[], [], [], [], []];
       if (calendarItems.length) {
         calendarItems.forEach(({ dateKey, event }, index) => {
@@ -7858,18 +8326,24 @@
           const parsed = event.start?.dateTime ? new Date(event.start.dateTime) : new Date(dateKey + 'T00:00:00');
           const day = Number(dateKey.slice(-2));
           const weekIndex = Math.min(4, Math.max(0, Math.floor((day - 1) / 7)));
-          const match = recordIndex.get(`${dateKey}|${crmNormalize(event.summary || '')}`) || null;
-          const attendees = (event.attendees || []).filter(item => !item.self).map(item => item.displayName || item.email).filter(Boolean);
+          const match = dashboardFindCalendarRecord(recordsByDate.get(dateKey), event);
+          const attendees = dashboardExternalAttendees(event).map(item => item.displayName || item.email).filter(Boolean);
           const eventKey = `dashboardCalendarMeeting_${weekIndex}_${index}`;
           window._eventsCache[eventKey] = event;
           const parts = dashboardMeetingDateParts(startRaw);
+          const meetingTitle = dashboardCleanDisplayText(event.summary || match?.meetingTitle, 'Untitled meeting');
+          const organisation = dashboardRecordOrganisation(match) || dashboardParsedExternalOrganisation(event) || 'Organisation not recorded';
+          const contact = dashboardCleanDisplayText(match?.personName || match?.externalContact || dashboardPrimaryExternalContact(event), 'External contact not recorded');
+          const purpose = dashboardSanitiseMeetingText(match?.reason || match?.meetingNotes || event.description || '', meetingTitle);
+          const location = dashboardCleanDisplayText(event.location || match?.location || match?.meetingLocation || '', '');
           weeks[weekIndex].push({
             recordId: match?.recordId || '', eventKey,
-            organisation: match?.companyName || event.location || 'Organisation not recorded',
-            title: match?.meetingTitle || event.summary || 'Untitled meeting',
-            contact: match?.personName || attendees[0] || 'External contact not recorded',
+            organisation,
+            title: meetingTitle,
+            contact,
             dateLabel: parts.date, timeLabel: parts.time,
-            purpose: match?.reason || match?.meetingNotes || event.description || 'No meeting purpose recorded.',
+            purpose,
+            location,
             attendeeCount: attendees.length || dashboardAttendeeCount(match?.attendees),
             sortTime: parsed.getTime()
           });
@@ -7880,13 +8354,15 @@
           if (!parsed || dashboardMonthKey(parsed) !== currentKey) return;
           const weekIndex = Math.min(4, Math.max(0, Math.floor((parsed.getDate() - 1) / 7)));
           const parts = dashboardMeetingDateParts(record.meetingDate);
+          const meetingTitle = dashboardCleanDisplayText(record.meetingTitle, 'Untitled meeting');
           weeks[weekIndex].push({
             recordId: record.recordId || '', eventKey: '',
-            organisation: record.companyName || 'Organisation not recorded',
-            title: record.meetingTitle || 'Untitled meeting',
-            contact: record.personName || 'External contact not recorded',
+            organisation: dashboardRecordOrganisation(record) || 'Organisation not recorded',
+            title: meetingTitle,
+            contact: dashboardCleanDisplayText(record.personName || record.externalContact, 'External contact not recorded'),
             dateLabel: parts.date, timeLabel: parts.time,
-            purpose: record.reason || record.meetingNotes || 'No meeting purpose recorded.',
+            purpose: dashboardSanitiseMeetingText(record.reason || record.meetingNotes || '', meetingTitle),
+            location: dashboardCleanDisplayText(record.location || record.meetingLocation || '', ''),
             attendeeCount: dashboardAttendeeCount(record.attendees),
             sortTime: parsed.getTime()
           });
@@ -8083,5 +8559,6 @@
     systemApplyDefaultRouteOnFirstLoad();
 
   </script>
+<div class="dashboard-inline-notice" id="dashboardInlineNotice" role="status" aria-live="polite"></div>
 </body>
 </html>
