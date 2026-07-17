@@ -5458,6 +5458,206 @@
     .dashboard-meeting-popover { padding:17px 15px; }
   }
 </style>
+
+<style id="dashboard-focused-correction-v22">
+  /* Text-only primary navigation. */
+  .system-nav.modern-nav .system-nav-item {
+    gap:0!important;
+    padding-left:7px!important;
+    padding-right:7px!important;
+  }
+  .system-nav.modern-nav .system-nav-item.active {
+    color:#1d4ed8!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+  .system-nav.modern-nav .system-nav-item:hover {
+    color:#2563eb!important;
+    background:transparent!important;
+  }
+  .system-nav.modern-nav .system-nav-title { white-space:nowrap; }
+
+  /* KPI headings without decorative icon spacing. */
+  #pageDashboard .visual-kpi-title-row {
+    gap:0!important;
+    align-items:flex-start!important;
+  }
+  #pageDashboard .visual-kpi-title-row > div {
+    min-width:0;
+    text-align:left;
+  }
+
+  /* Compact contextual meeting preview. */
+  .dashboard-meeting-popover {
+    width:min(340px,calc(100vw - 24px))!important;
+    max-height:min(460px,calc(100vh - 24px))!important;
+    padding:15px 16px!important;
+    border:1px solid #bfdbfe!important;
+    border-radius:15px!important;
+    box-shadow:0 18px 46px rgba(15,23,42,.16),0 3px 12px rgba(37,99,235,.08)!important;
+  }
+  .dashboard-meeting-popover-close {
+    top:9px!important;
+    right:9px!important;
+    width:27px!important;
+    height:27px!important;
+    border-radius:8px!important;
+    font-size:17px!important;
+  }
+  .dashboard-meeting-popover-head {
+    display:block!important;
+    padding:0 34px 0 0!important;
+  }
+  .dashboard-meeting-popover-head h3 {
+    max-width:100%;
+    font-size:14px!important;
+    line-height:1.34!important;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+  .dashboard-meeting-popover-date,
+  .dashboard-meeting-popover-time {
+    margin-top:7px;
+    color:#475569;
+    font-size:10.5px;
+    line-height:1.35;
+    font-weight:700;
+    overflow-wrap:anywhere;
+  }
+  .dashboard-meeting-popover-time { margin-top:2px; color:#64748b; }
+  .dashboard-meeting-popover-details {
+    gap:0!important;
+    margin-top:13px!important;
+    padding-top:11px!important;
+    border-top:1px solid #e2e8f0!important;
+  }
+  .dashboard-meeting-popover-row {
+    display:grid!important;
+    grid-template-columns:82px minmax(0,1fr)!important;
+    gap:10px!important;
+    align-items:start!important;
+    padding:6px 0;
+    min-width:0;
+  }
+  .dashboard-meeting-popover-row small {
+    padding-top:1px;
+    color:#94a3b8!important;
+    font-size:8.5px!important;
+    line-height:1.35!important;
+    font-weight:800!important;
+    letter-spacing:.5px!important;
+    text-transform:uppercase;
+  }
+  .dashboard-meeting-popover-row strong {
+    margin:0!important;
+    min-width:0;
+    color:#334155!important;
+    font-size:10.5px!important;
+    line-height:1.4!important;
+    font-weight:720!important;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+  .dashboard-meeting-popover-note {
+    margin-top:10px!important;
+    padding:9px 10px!important;
+    border:1px solid #dbeafe!important;
+    border-radius:10px!important;
+    background:#f8fbff!important;
+  }
+  .dashboard-meeting-popover-note small {
+    display:block;
+    color:#94a3b8;
+    font-size:8.5px;
+    font-weight:800;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+  }
+  .dashboard-meeting-popover-note p {
+    margin:4px 0 0;
+    color:#52627a;
+    font-size:10.5px;
+    line-height:1.45;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:3;
+    overflow:hidden;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+
+  /* Calendar and Recent Meetings share one stretched dashboard row on desktop. */
+  @media (min-width:1031px) {
+    #pageDashboard .dashboard-workspace {
+      align-items:stretch!important;
+    }
+    #pageDashboard .dashboard-calendar-card,
+    #pageDashboard .dashboard-side-stack {
+      min-height:0;
+      height:100%;
+    }
+    #pageDashboard .dashboard-side-stack {
+      align-self:stretch!important;
+    }
+    #pageDashboard .dashboard-recent-card {
+      align-self:stretch!important;
+      height:100%;
+      min-height:0;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
+    #pageDashboard .dashboard-recent-list {
+      flex:1 1 auto;
+      min-height:0;
+      display:grid!important;
+      grid-template-columns:repeat(2,minmax(0,1fr))!important;
+      grid-template-rows:repeat(4,minmax(0,1fr));
+      align-content:stretch;
+      gap:10px!important;
+      overflow-y:auto;
+      overflow-x:hidden;
+      padding-right:3px;
+      scrollbar-width:thin;
+      scrollbar-color:#bfdbfe transparent;
+    }
+    #pageDashboard .dashboard-recent-list::-webkit-scrollbar { width:6px; }
+    #pageDashboard .dashboard-recent-list::-webkit-scrollbar-thumb { background:#bfdbfe; border-radius:999px; }
+    #pageDashboard .dashboard-meeting-card {
+      height:100%;
+      min-height:0;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
+    #pageDashboard .dashboard-meeting-company {
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    #pageDashboard .dashboard-meeting-footer { margin-top:auto; }
+  }
+
+  @media (max-width:1030px) {
+    #pageDashboard .dashboard-workspace { align-items:start!important; }
+    #pageDashboard .dashboard-side-stack,
+    #pageDashboard .dashboard-recent-card {
+      height:auto!important;
+      min-height:0;
+    }
+    #pageDashboard .dashboard-recent-list {
+      grid-template-columns:1fr!important;
+      grid-template-rows:none!important;
+      overflow:visible!important;
+      padding-right:0!important;
+    }
+    #pageDashboard .dashboard-meeting-card { height:auto!important; }
+  }
+</style>
 </head>
 <body>
 <!-- Final standardised MRANTI CRM build: signed-out page redesigned; signed-in logic preserved. -->
@@ -5510,10 +5710,10 @@
 <span aria-label="MRANTI CRM application" class="system-app-logo"></span>
 </button>
 <nav aria-label="MRANTI CRM navigation" class="system-nav modern-nav">
-<button class="system-nav-item" data-route="dashboard" onclick="systemNavigate('dashboard')"><span class="system-nav-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect height="7" rx="2" width="7" x="3" y="3"></rect><rect height="7" rx="2" width="7" x="14" y="3"></rect><rect height="7" rx="2" width="7" x="3" y="14"></rect><rect height="7" rx="2" width="7" x="14" y="14"></rect></svg></span><span class="system-nav-title">Dashboard</span></button>
-<button class="system-nav-item" data-route="contacts" onclick="systemNavigate('contacts')"><span class="system-nav-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span><span class="system-nav-title">Contacts</span></button>
-<button class="system-nav-item" data-route="my-records" onclick="systemNavigate('my-records')"><span class="system-nav-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="m9 15 2 2 4-4"></path></svg></span><span class="system-nav-title">My Entries</span><span class="modern-nav-badge" id="systemActionBadge">0</span></button>
-<button class="system-nav-item" data-route="relationships" onclick="systemNavigate('relationships')"><span class="system-nav-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="5" r="3"></circle><circle cx="5" cy="19" r="3"></circle><circle cx="19" cy="19" r="3"></circle><path d="M10.6 7.7 6.4 16.3"></path><path d="M13.4 7.7 17.6 16.3"></path><path d="M8 19h8"></path></svg></span><span class="system-nav-title">Relationships</span></button>
+<button class="system-nav-item" data-route="dashboard" onclick="systemNavigate('dashboard')"><span class="system-nav-title">Dashboard</span></button>
+<button class="system-nav-item" data-route="contacts" onclick="systemNavigate('contacts')"><span class="system-nav-title">Contacts</span></button>
+<button class="system-nav-item" data-route="my-records" onclick="systemNavigate('my-records')"><span class="system-nav-title">My Entries</span><span class="modern-nav-badge" id="systemActionBadge">0</span></button>
+<button class="system-nav-item" data-route="relationships" onclick="systemNavigate('relationships')"><span class="system-nav-title">Relationships</span></button>
 </nav>
 <div class="modern-navbar-actions">
 <button class="modern-log-button" onclick="openManualModal()" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg><span>Log meeting</span></button>
@@ -5550,7 +5750,6 @@
 <article class="system-card dashboard-visual-kpi meetings-kpi-card" id="dashboardMeetingsCard">
 <div class="visual-kpi-heading">
 <div class="visual-kpi-title-row">
-<span aria-hidden="true" class="visual-kpi-icon"><svg viewbox="0 0 24 24"><rect height="16" rx="3" width="18" x="3" y="5"></rect><path d="M16 3v4"></path><path d="M8 3v4"></path><path d="M3 10h18"></path></svg></span>
 <div><div class="visual-kpi-label">Meetings this month</div><div class="visual-kpi-context" id="dashboardMeetingsTrend">Connect Calendar to populate activity</div></div>
 </div>
 <div class="visual-kpi-value" id="dashboardMeetingsMonth">0</div>
@@ -5562,7 +5761,6 @@
 <article class="system-card dashboard-visual-kpi organisations-kpi-card" id="dashboardOrganisationsCard">
 <div class="visual-kpi-heading">
 <div class="visual-kpi-title-row">
-<span aria-hidden="true" class="visual-kpi-icon dashboard-network-icon"><svg viewbox="0 0 24 24"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg></span>
 <div><div class="visual-kpi-label">Organisations engaged</div><div class="visual-kpi-context">New and returning relationships this month</div></div>
 </div>
 <div class="visual-kpi-value" id="dashboardCompaniesCount">0</div>
@@ -6566,31 +6764,43 @@
       return dashboardCleanDisplayText(item?.timeLabel, 'Time not recorded');
     }
 
-    function dashboardMeetingPopoverRow(icon, label, value) {
-      if (!value) return '';
-      return `<div class="dashboard-meeting-popover-row"><span class="dashboard-meeting-popover-row-icon">${icon}</span><span><small>${crmEscape(label)}</small><strong>${crmEscape(value)}</strong></span></div>`;
+    function dashboardMeetingPopoverRow(label, value) {
+      return `<div class="dashboard-meeting-popover-row"><small>${crmEscape(label)}</small><strong>${crmEscape(value)}</strong></div>`;
     }
 
     function dashboardPositionMeetingPopover(anchor = dashboardMeetingPopoverAnchor) {
       const popover = document.getElementById('dashboardMeetingPopover');
       if (!popover || !popover.classList.contains('open') || !anchor?.isConnected) return;
+
       const margin = 12;
+      const gap = 10;
       const rect = anchor.getBoundingClientRect();
       const width = popover.offsetWidth;
       const height = popover.offsetHeight;
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
       let left;
       let top;
-      if (window.innerWidth <= 620) {
-        left = Math.max(margin, (window.innerWidth - width) / 2);
-        top = Math.max(margin, (window.innerHeight - height) / 2);
+
+      if (viewportWidth <= 620) {
+        left = Math.max(margin, (viewportWidth - width) / 2);
+        top = Math.max(margin, Math.min(rect.top, viewportHeight - height - margin));
       } else {
-        left = rect.right + 10;
-        if (left + width > window.innerWidth - margin) left = rect.left - width - 10;
-        if (left < margin) left = Math.min(Math.max(margin, rect.left), window.innerWidth - width - margin);
+        const rightCandidate = rect.right + gap;
+        const leftCandidate = rect.left - width - gap;
+        if (rightCandidate + width <= viewportWidth - margin) {
+          left = rightCandidate;
+        } else if (leftCandidate >= margin) {
+          left = leftCandidate;
+        } else {
+          left = Math.max(margin, Math.min(rect.left, viewportWidth - width - margin));
+        }
+
         top = rect.top;
-        if (top + height > window.innerHeight - margin) top = window.innerHeight - height - margin;
-        if (top < margin) top = margin;
+        if (top + height > viewportHeight - margin) top = rect.bottom - height;
+        top = Math.max(margin, Math.min(top, viewportHeight - height - margin));
       }
+
       popover.style.left = `${Math.round(left)}px`;
       popover.style.top = `${Math.round(top)}px`;
     }
@@ -6615,24 +6825,29 @@
       const content = document.getElementById('dashboardMeetingPopoverContent');
       if (!popover || !content) return;
 
-      const presentation = dashboardMeetingPresentation(item);
       const event = item.eventKey ? window._eventsCache[item.eventKey] : null;
+      const title = dashboardCleanDisplayText(event?.summary, '') || dashboardCleanDisplayText(item?.title, 'Untitled meeting');
       const dateLabel = dashboardMeetingPopoverDate(item, event);
       const timeLabel = dashboardMeetingPopoverTime(item, event);
-      const calendarIcon = '<svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg>';
-      const pinIcon = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>';
-      const buildingIcon = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v16"></path><path d="M9 21v-4h3v4M8 7h1M12 7h1M8 11h1M12 11h1M17 9h3v12"></path></svg>';
-      const personIcon = '<svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>';
-      const usersIcon = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>';
+      const location = dashboardCleanDisplayText(item?.location, 'Location not recorded');
+      const organisation = dashboardCleanDisplayText(item?.organisation, 'Organisation not recorded');
+      const contactValue = dashboardCleanDisplayText(item?.contact, '');
+      const contact = !contactValue || /^external contact not recorded$/i.test(contactValue) ? 'Contact not recorded' : contactValue;
+      const attendeeCount = Number(item?.attendeeCount || 0);
+      const purpose = dashboardSanitiseMeetingText(item?.purpose, title);
 
-      content.innerHTML = `<div class="dashboard-meeting-popover-head"><span class="dashboard-meeting-popover-calendar">${calendarIcon}</span><div><h3>${crmEscape(presentation.title)}</h3><p>${crmEscape(dateLabel)}</p><p>${crmEscape(timeLabel)}</p></div></div>
-        <div class="dashboard-meeting-popover-details">
-          ${dashboardMeetingPopoverRow(pinIcon, 'Location', presentation.location)}
-          ${dashboardMeetingPopoverRow(buildingIcon, 'Organisation', presentation.organisation)}
-          ${dashboardMeetingPopoverRow(personIcon, 'Contact', presentation.contact)}
-          ${dashboardMeetingPopoverRow(usersIcon, 'Attendees', `${Number(item.attendeeCount || 0)} attendee${Number(item.attendeeCount || 0) === 1 ? '' : 's'}`)}
+      content.innerHTML = `<div class="dashboard-meeting-popover-head">
+          <h3>${crmEscape(title)}</h3>
+          <div class="dashboard-meeting-popover-date">${crmEscape(dateLabel)}</div>
+          <div class="dashboard-meeting-popover-time">${crmEscape(timeLabel)}</div>
         </div>
-        ${presentation.purpose ? `<div class="dashboard-meeting-popover-note">${crmEscape(presentation.purpose)}</div>` : ''}`;
+        <div class="dashboard-meeting-popover-details">
+          ${dashboardMeetingPopoverRow('Location', location)}
+          ${dashboardMeetingPopoverRow('Organisation', organisation)}
+          ${dashboardMeetingPopoverRow('Contact', contact)}
+          ${dashboardMeetingPopoverRow('Attendees', `${attendeeCount} attendee${attendeeCount === 1 ? '' : 's'}`)}
+        </div>
+        ${purpose ? `<div class="dashboard-meeting-popover-note"><small>Purpose / notes</small><p>${crmEscape(purpose)}</p></div>` : ''}`;
 
       dashboardMeetingPopoverAnchor = button;
       popover.classList.add('open');
@@ -6640,7 +6855,7 @@
       requestAnimationFrame(() => dashboardPositionMeetingPopover(button));
     }
 
-    document.addEventListener('pointerdown', event => {
+    document.addEventListener('pointerdown' , event => {
       const popover = document.getElementById('dashboardMeetingPopover');
       if (!popover?.classList.contains('open')) return;
       if (popover.contains(event.target) || event.target.closest('.dashboard-detail-meeting')) return;
@@ -8711,7 +8926,7 @@
       if(actionBadge){actionBadge.textContent=actions.length;actionBadge.classList.toggle('show',actions.length>0);}
       dashboardRenderMeetingVisual(active);
       dashboardRenderOrganisationVisual(active);
-      const recent=crmSortRecords(active).slice(0,4);
+      const recent=crmSortRecords(active).slice(0,8);
       const recentContainer=document.getElementById('dashboardRecentActivity');
       if(recentContainer)recentContainer.innerHTML=recent.length?recent.map(dashboardRecentMeetingCard).join(''):'<div class="dashboard-empty">No meetings recorded yet.</div>';
     }
