@@ -182,70 +182,6 @@
     }
     .choice-btn:hover .choice-arrow { background: #1d4ed8; }
 
-    /* ── TODAY'S SCHEDULE TIMELINE + THIS MONTH HEATMAP ── */
-    .stats-card {
-      align-items: stretch;
-      text-align: left;
-      padding: 20px 22px;
-      gap: 8px;
-    }
-    .stats-card-title {
-      font-size: 10.5px; font-weight: 800; letter-spacing: 1.4px;
-      text-transform: uppercase; color: #1e3a5f;
-    }
-
-    .insights-divider {
-      height: 1px; background: rgba(148,163,184,0.24); margin: 6px 0 2px; width: 100%;
-    }
-
-    @keyframes popIn {
-      from { opacity: 0; transform: scaleX(0.9); }
-      to { opacity: 1; transform: scaleX(1); }
-    }
-
-    .timeline-header { display: flex; align-items: baseline; gap: 6px; margin-top: 2px; }
-    .timeline-count { font-size: 22px; font-weight: 800; color: #0f172a; }
-    .timeline-count-label { font-size: 11px; font-weight: 700; color: #94a3b8; }
-
-    .timeline-track {
-      position: relative; min-height: 34px; border-radius: 10px;
-      background: rgba(226,232,240,0.55); margin-top: 8px; overflow: hidden;
-      transform-origin: left center; animation: popIn 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .timeline-block {
-      position: absolute; border-radius: 6px;
-      box-shadow: 0 2px 5px rgba(37,99,235,0.18); cursor: default;
-      border: 1.5px solid rgba(255,255,255,0.85);
-    }
-    .timeline-ticks { display: flex; justify-content: space-between; margin-top: 6px; padding: 0 1px; }
-    .timeline-tick { font-size: 8.5px; font-weight: 700; color: #94a3b8; }
-
-    .clock-legend { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
-    .clock-legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #334155; min-width: 0; }
-    .clock-legend-dot { width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0; }
-    .clock-legend-title {
-      flex: 1; font-weight: 650; overflow: hidden; text-overflow: ellipsis;
-      white-space: nowrap; min-width: 0;
-    }
-    .clock-legend-time { font-size: 10px; color: #94a3b8; font-weight: 700; flex-shrink: 0; }
-    .clock-empty { font-size: 12px; color: #94a3b8; text-align: center; padding: 4px 0 2px; }
-
-    .month-chart-header { display: flex; align-items: baseline; gap: 6px; }
-    .month-chart-total { font-size: 22px; font-weight: 800; color: #0f172a; }
-    .month-chart-total-label { font-size: 11px; font-weight: 700; color: #94a3b8; }
-
-    .heatmap-weekday-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 10px; }
-    .heatmap-weekday { text-align: center; font-size: 8px; font-weight: 800; color: #94a3b8; text-transform: uppercase; }
-
-    .heatmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 4px; }
-    .heatmap-cell {
-      aspect-ratio: 1; border-radius: 4px; display: flex; align-items: center;
-      justify-content: center; transition: transform 0.15s ease;
-    }
-    .heatmap-cell.empty { background: transparent; }
-    .heatmap-cell:not(.empty):hover { transform: scale(1.18); }
-    .heatmap-cell.today-cell { box-shadow: 0 0 0 1.5px #2563eb; }
-    .heatmap-day-num { font-size: 7px; font-weight: 700; color: rgba(15,23,42,0.55); }
 
     /* ── CALENDAR SECTION ── */
     .calendar-section {
@@ -4199,9 +4135,6 @@
   #pageDashboard .dashboard-card-title { font-size:12.5px!important; }
   #pageDashboard .dashboard-card-subtitle { margin-top:4px; color:#64748b; font-size:9.5px; line-height:1.4; }
   #pageDashboard .dashboard-card-link { padding:2px 0; white-space:nowrap; font-size:9.5px!important; }
-  #pageDashboard .dashboard-schedule-card { min-height:180px; }
-  #pageDashboard .timeline-track { min-height:30px!important; margin-top:5px!important; }
-  #pageDashboard .clock-legend { margin-top:8px!important; }
 
   #pageDashboard .dashboard-recent-list { display:grid!important; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px!important; }
   #pageDashboard .dashboard-meeting-card {
@@ -5209,6 +5142,322 @@
     .dashboard-inline-notice { left:16px; right:16px; bottom:16px; }
   }
 </style>
+
+<style id="dashboard-meeting-popover-week-alignment-v21">
+  /* Approved scope: Meetings-this-month preview content, its compact popover,
+     Week header/grid alignment, and removal of the Today schedule gap only. */
+  #pageDashboard .dashboard-detail-meeting {
+    position:relative;
+    grid-template-columns:28px minmax(0,1fr)!important;
+    align-items:start;
+    gap:8px!important;
+    padding:9px!important;
+  }
+  #pageDashboard .dashboard-detail-meeting-copy {
+    display:flex!important;
+    flex-direction:column;
+    gap:2px;
+    min-width:0;
+    height:100%;
+    overflow:hidden;
+  }
+  #pageDashboard .dashboard-detail-meeting-title {
+    order:1;
+    margin:0!important;
+    min-width:0;
+    color:#0f172a;
+    font-size:10.2px!important;
+    font-weight:850!important;
+    line-height:1.24!important;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+  #pageDashboard .dashboard-detail-organisation {
+    order:2;
+    margin:1px 0 0!important;
+    min-width:0;
+    color:#334155;
+    font-size:8.8px!important;
+    font-weight:800!important;
+    line-height:1.25!important;
+    display:-webkit-box!important;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+  #pageDashboard .dashboard-detail-contact {
+    order:3;
+    margin:0!important;
+    min-width:0;
+    color:#64748b;
+    font-size:8.3px!important;
+    font-weight:650!important;
+    line-height:1.22!important;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #pageDashboard .dashboard-detail-date-line {
+    order:4;
+    min-width:0;
+    color:#475569;
+    font-size:8.15px;
+    font-weight:750;
+    line-height:1.22;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #pageDashboard .dashboard-detail-location {
+    order:5;
+    margin:0!important;
+    min-width:0;
+    font-size:8.1px!important;
+    line-height:1.22!important;
+    white-space:nowrap!important;
+    overflow:hidden;
+  }
+  #pageDashboard .dashboard-detail-location span { min-width:0; overflow:hidden; text-overflow:ellipsis; }
+  #pageDashboard .dashboard-detail-purpose {
+    order:6;
+    margin:0!important;
+    min-width:0;
+    color:#64748b;
+    font-size:8.15px!important;
+    line-height:1.24!important;
+    display:-webkit-box!important;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2!important;
+    overflow:hidden;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+  #pageDashboard .dashboard-detail-meeting-footer {
+    order:7;
+    margin-top:auto!important;
+    padding-top:4px!important;
+    border-top:1px solid #eff6ff;
+    flex:0 0 auto;
+    color:#64748b;
+    font-size:8px!important;
+    line-height:1.2;
+    white-space:nowrap;
+  }
+
+  .dashboard-meeting-popover {
+    position:fixed;
+    z-index:2700;
+    display:none;
+    width:min(370px,calc(100% - 24px));
+    max-height:min(520px,calc(100vh - 24px));
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding:18px;
+    border:1px solid #bfdbfe;
+    border-radius:16px;
+    background:#ffffff;
+    color:#0f172a;
+    box-shadow:0 22px 58px rgba(15,23,42,.20),0 4px 16px rgba(37,99,235,.10);
+    font-family:'Inter','Segoe UI',sans-serif;
+    scrollbar-width:thin;
+    scrollbar-color:#bfdbfe transparent;
+  }
+  .dashboard-meeting-popover.open { display:block; }
+  .dashboard-meeting-popover::-webkit-scrollbar { width:6px; }
+  .dashboard-meeting-popover::-webkit-scrollbar-thumb { background:#bfdbfe; border-radius:999px; }
+  .dashboard-meeting-popover-close {
+    position:absolute;
+    top:10px;
+    right:10px;
+    width:30px;
+    height:30px;
+    display:grid;
+    place-items:center;
+    border:0;
+    border-radius:9px;
+    background:#f1f5f9;
+    color:#64748b;
+    font:inherit;
+    font-size:19px;
+    line-height:1;
+    cursor:pointer;
+  }
+  .dashboard-meeting-popover-close:hover { background:#e2e8f0; color:#0f172a; }
+  .dashboard-meeting-popover-head {
+    display:grid;
+    grid-template-columns:34px minmax(0,1fr);
+    gap:11px;
+    padding-right:32px;
+  }
+  .dashboard-meeting-popover-calendar {
+    width:34px;
+    height:34px;
+    display:grid;
+    place-items:center;
+    border:1px solid #bfdbfe;
+    border-radius:10px;
+    background:#eff6ff;
+    color:#2563eb;
+  }
+  .dashboard-meeting-popover-calendar svg,
+  .dashboard-meeting-popover-row-icon svg {
+    width:17px;
+    height:17px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .dashboard-meeting-popover-head h3 {
+    margin:0;
+    color:#0f172a;
+    font-size:15px;
+    line-height:1.35;
+    font-weight:850;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+  .dashboard-meeting-popover-head p {
+    margin:5px 0 0;
+    color:#64748b;
+    font-size:10.5px;
+    line-height:1.35;
+    font-weight:650;
+  }
+  .dashboard-meeting-popover-details {
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:16px;
+    padding-top:14px;
+    border-top:1px solid #e2e8f0;
+  }
+  .dashboard-meeting-popover-row {
+    display:grid;
+    grid-template-columns:27px minmax(0,1fr);
+    gap:9px;
+    align-items:start;
+    min-width:0;
+  }
+  .dashboard-meeting-popover-row-icon {
+    width:27px;
+    height:27px;
+    display:grid;
+    place-items:center;
+    border-radius:8px;
+    background:#eff6ff;
+    color:#2563eb;
+  }
+  .dashboard-meeting-popover-row small {
+    display:block;
+    color:#94a3b8;
+    font-size:8.5px;
+    line-height:1.2;
+    font-weight:800;
+    letter-spacing:.55px;
+    text-transform:uppercase;
+  }
+  .dashboard-meeting-popover-row strong {
+    display:block;
+    margin-top:2px;
+    min-width:0;
+    color:#334155;
+    font-size:10.5px;
+    line-height:1.4;
+    font-weight:750;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+  .dashboard-meeting-popover-note {
+    margin-top:14px;
+    padding:11px 12px;
+    border:1px solid #dbeafe;
+    border-radius:10px;
+    background:#f8fbff;
+    color:#52627a;
+    font-size:10.5px;
+    line-height:1.5;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+
+  /* Today schedule has been removed; the unchanged Recent Meetings card now starts at the top. */
+  #pageDashboard .dashboard-side-stack { justify-content:flex-start!important; }
+  #pageDashboard .dashboard-recent-card { align-self:start; width:100%; }
+
+  /* One shared gutter variable and an explicitly reserved scrollbar width keep
+     the Week header, corner cell, time axis and seven body columns aligned. */
+  #pageDashboard .week-calendar-inner {
+    --week-time-gutter:72px;
+    --week-scrollbar-size:8px;
+  }
+  #pageDashboard .week-calendar-header,
+  #pageDashboard .week-all-day-row {
+    grid-template-columns:var(--week-time-gutter) repeat(7,minmax(0,1fr))!important;
+    margin-right:var(--week-scrollbar-size);
+  }
+  #pageDashboard .week-calendar-header {
+    min-height:64px;
+    border-bottom:1px solid #dbeafe;
+    background:#f8fbff;
+  }
+  #pageDashboard .week-header-axis {
+    min-height:64px;
+    border-right:1px solid #e2e8f0!important;
+    background:#f8fbff;
+  }
+  #pageDashboard .week-day-header {
+    min-height:64px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:9px 6px!important;
+    border-left:0!important;
+    border-right:1px solid #e2e8f0;
+    background:#f8fbff;
+  }
+  #pageDashboard .week-day-header:last-child { border-right:0; }
+  #pageDashboard .week-all-day-label {
+    border-right:1px solid #e2e8f0!important;
+  }
+  #pageDashboard .week-all-day-cell {
+    border-left:0!important;
+    border-right:1px solid #e2e8f0;
+  }
+  #pageDashboard .week-all-day-cell:last-child { border-right:0; }
+  #pageDashboard .week-time-scroll {
+    overflow-y:scroll!important;
+    scrollbar-gutter:stable;
+  }
+  #pageDashboard .week-time-scroll::-webkit-scrollbar { width:var(--week-scrollbar-size)!important; }
+  #pageDashboard .week-time-grid {
+    grid-template-columns:var(--week-time-gutter) minmax(0,1fr)!important;
+    width:100%;
+  }
+  #pageDashboard .week-time-axis {
+    border-right:1px solid #e2e8f0!important;
+  }
+  #pageDashboard .week-day-column {
+    border-left:0!important;
+    border-right:1px solid #e2e8f0;
+  }
+  #pageDashboard .week-day-column:last-child { border-right:0; }
+
+  @media (max-width:1030px) {
+    #pageDashboard .dashboard-side-stack { grid-template-columns:1fr!important; }
+  }
+  @media (max-width:620px) {
+    .dashboard-meeting-popover { padding:17px 15px; }
+  }
+</style>
 </head>
 <body>
 <!-- Final standardised MRANTI CRM build: signed-out page redesigned; signed-in logic preserved. -->
@@ -5359,18 +5608,15 @@
 </div>
 </section>
 <aside class="dashboard-side-stack">
-<section class="system-card dashboard-side-card dashboard-schedule-card">
-<div class="dashboard-card-head"><div><div class="dashboard-card-title">Today's Schedule</div><div class="dashboard-card-subtitle">Your meetings across the day</div></div><span class="timeline-count" id="timelineCount">0</span></div>
-<div class="timeline-track" id="timelineTrack"></div>
-<div class="timeline-ticks"><span class="timeline-tick">7am</span><span class="timeline-tick">10am</span><span class="timeline-tick">1pm</span><span class="timeline-tick">4pm</span><span class="timeline-tick">7pm</span></div>
-<div class="clock-legend" id="clockLegend"></div>
-<div hidden="" id="monthHeatmapTotal">0</div><div hidden="" id="monthHeatmap"></div>
-</section>
 <section class="system-card dashboard-side-card dashboard-recent-card">
 <div class="dashboard-card-head"><div><div class="dashboard-card-title">Recent Meetings</div><div class="dashboard-card-subtitle">Your latest meetings and relationship updates</div></div><button class="dashboard-card-link" onclick="systemNavigate('contacts')" type="button">View all meetings →</button></div>
 <div class="dashboard-activity-list dashboard-recent-list" id="dashboardRecentActivity"><div class="dashboard-empty">Loading recent meetings…</div></div>
 </section>
 </aside>
+</div>
+<div aria-hidden="true" class="dashboard-meeting-popover" id="dashboardMeetingPopover" role="dialog" aria-label="Meeting details">
+  <button aria-label="Close meeting details" class="dashboard-meeting-popover-close" id="dashboardMeetingPopoverClose" onclick="dashboardCloseMeetingPopover()" type="button">×</button>
+  <div id="dashboardMeetingPopoverContent"></div>
 </div>
 </section>
 <section class="system-page" data-page="contacts" id="pageContacts">
@@ -6138,6 +6384,7 @@
         /\bthis event was created from an email\b/i,
         /\bthis event was created from gmail\b/i,
         /\bthis event was automatically created\b/i,
+        /\bconfirmation (?:number|code)\b/i,
         /\bview this event in google calendar\b/i,
         /\bfor more information, visit google calendar\b/i
       ];
@@ -6266,15 +6513,144 @@
       if (list) list.innerHTML = dashboardOrganisationRowsMarkup();
     }
 
-    function dashboardOpenMeetingDetailItem(button) {
-      const recordId = button?.dataset?.recordId || '';
-      const eventKey = button?.dataset?.eventKey || '';
-      if (recordId) {
-        systemOpenRecordFromDashboard(recordId);
-        return;
-      }
-      if (eventKey && window._eventsCache[eventKey]) openEventModal(eventKey);
+    let dashboardMeetingPopoverAnchor = null;
+
+    function dashboardMeetingPresentation(item) {
+      const title = dashboardCleanDisplayText(item?.title, 'Untitled meeting');
+      const seen = new Set([crmNormalize(title)].filter(Boolean));
+      const uniqueValue = (value, fallback = '') => {
+        const clean = dashboardCleanDisplayText(value, fallback);
+        const key = crmNormalize(clean);
+        if (!clean || (key && seen.has(key))) return '';
+        if (key) seen.add(key);
+        return clean;
+      };
+      const organisation = uniqueValue(item?.organisation, 'Organisation not recorded');
+      const contact = uniqueValue(item?.contact, 'External contact not recorded');
+      const location = uniqueValue(item?.location, '');
+      let purpose = dashboardSanitiseMeetingText(item?.purpose, title);
+      const purposeKey = crmNormalize(purpose);
+      if (purposeKey && seen.has(purposeKey)) purpose = '';
+      return { title, organisation, contact, location, purpose };
     }
+
+    function dashboardMeetingPopoverDate(item, event) {
+      const startRaw = event?.start?.dateTime || event?.start?.date || '';
+      if (startRaw) {
+        const startDate = event?.start?.dateTime ? new Date(startRaw) : new Date(startRaw + 'T00:00:00');
+        if (!Number.isNaN(startDate.getTime())) {
+          return startDate.toLocaleDateString('en-MY', {
+            weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+            ...(event?.start?.dateTime ? { timeZone: 'Asia/Kuala_Lumpur' } : {})
+          });
+        }
+      }
+      const sortDate = new Date(Number(item?.sortTime || 0));
+      if (!Number.isNaN(sortDate.getTime()) && sortDate.getTime() > 0) {
+        return sortDate.toLocaleDateString('en-MY', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      }
+      return dashboardCleanDisplayText(item?.dateLabel, 'Date not recorded');
+    }
+
+    function dashboardMeetingPopoverTime(item, event) {
+      if (event?.start?.date && !event?.start?.dateTime) return 'All day';
+      if (event?.start?.dateTime) {
+        const startDate = new Date(event.start.dateTime);
+        const endDate = event?.end?.dateTime ? new Date(event.end.dateTime) : null;
+        if (!Number.isNaN(startDate.getTime())) {
+          const startLabel = formatKLTime(startDate);
+          if (endDate && !Number.isNaN(endDate.getTime())) return `${startLabel}–${formatKLTime(endDate)}`;
+          return startLabel;
+        }
+      }
+      return dashboardCleanDisplayText(item?.timeLabel, 'Time not recorded');
+    }
+
+    function dashboardMeetingPopoverRow(icon, label, value) {
+      if (!value) return '';
+      return `<div class="dashboard-meeting-popover-row"><span class="dashboard-meeting-popover-row-icon">${icon}</span><span><small>${crmEscape(label)}</small><strong>${crmEscape(value)}</strong></span></div>`;
+    }
+
+    function dashboardPositionMeetingPopover(anchor = dashboardMeetingPopoverAnchor) {
+      const popover = document.getElementById('dashboardMeetingPopover');
+      if (!popover || !popover.classList.contains('open') || !anchor?.isConnected) return;
+      const margin = 12;
+      const rect = anchor.getBoundingClientRect();
+      const width = popover.offsetWidth;
+      const height = popover.offsetHeight;
+      let left;
+      let top;
+      if (window.innerWidth <= 620) {
+        left = Math.max(margin, (window.innerWidth - width) / 2);
+        top = Math.max(margin, (window.innerHeight - height) / 2);
+      } else {
+        left = rect.right + 10;
+        if (left + width > window.innerWidth - margin) left = rect.left - width - 10;
+        if (left < margin) left = Math.min(Math.max(margin, rect.left), window.innerWidth - width - margin);
+        top = rect.top;
+        if (top + height > window.innerHeight - margin) top = window.innerHeight - height - margin;
+        if (top < margin) top = margin;
+      }
+      popover.style.left = `${Math.round(left)}px`;
+      popover.style.top = `${Math.round(top)}px`;
+    }
+
+    function dashboardCloseMeetingPopover() {
+      const popover = document.getElementById('dashboardMeetingPopover');
+      if (!popover) return;
+      popover.classList.remove('open');
+      popover.setAttribute('aria-hidden', 'true');
+      popover.style.left = '';
+      popover.style.top = '';
+      dashboardMeetingPopoverAnchor = null;
+    }
+
+    function dashboardOpenMeetingDetailItem(button) {
+      const weekIndex = Number(button?.dataset?.weekIndex);
+      const itemIndex = Number(button?.dataset?.itemIndex);
+      const item = dashboardMeetingWeeks?.[weekIndex]?.[itemIndex];
+      if (!item) return;
+
+      const popover = document.getElementById('dashboardMeetingPopover');
+      const content = document.getElementById('dashboardMeetingPopoverContent');
+      if (!popover || !content) return;
+
+      const presentation = dashboardMeetingPresentation(item);
+      const event = item.eventKey ? window._eventsCache[item.eventKey] : null;
+      const dateLabel = dashboardMeetingPopoverDate(item, event);
+      const timeLabel = dashboardMeetingPopoverTime(item, event);
+      const calendarIcon = '<svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg>';
+      const pinIcon = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>';
+      const buildingIcon = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v16"></path><path d="M9 21v-4h3v4M8 7h1M12 7h1M8 11h1M12 11h1M17 9h3v12"></path></svg>';
+      const personIcon = '<svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>';
+      const usersIcon = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>';
+
+      content.innerHTML = `<div class="dashboard-meeting-popover-head"><span class="dashboard-meeting-popover-calendar">${calendarIcon}</span><div><h3>${crmEscape(presentation.title)}</h3><p>${crmEscape(dateLabel)}</p><p>${crmEscape(timeLabel)}</p></div></div>
+        <div class="dashboard-meeting-popover-details">
+          ${dashboardMeetingPopoverRow(pinIcon, 'Location', presentation.location)}
+          ${dashboardMeetingPopoverRow(buildingIcon, 'Organisation', presentation.organisation)}
+          ${dashboardMeetingPopoverRow(personIcon, 'Contact', presentation.contact)}
+          ${dashboardMeetingPopoverRow(usersIcon, 'Attendees', `${Number(item.attendeeCount || 0)} attendee${Number(item.attendeeCount || 0) === 1 ? '' : 's'}`)}
+        </div>
+        ${presentation.purpose ? `<div class="dashboard-meeting-popover-note">${crmEscape(presentation.purpose)}</div>` : ''}`;
+
+      dashboardMeetingPopoverAnchor = button;
+      popover.classList.add('open');
+      popover.setAttribute('aria-hidden', 'false');
+      requestAnimationFrame(() => dashboardPositionMeetingPopover(button));
+    }
+
+    document.addEventListener('pointerdown', event => {
+      const popover = document.getElementById('dashboardMeetingPopover');
+      if (!popover?.classList.contains('open')) return;
+      if (popover.contains(event.target) || event.target.closest('.dashboard-detail-meeting')) return;
+      dashboardCloseMeetingPopover();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') dashboardCloseMeetingPopover();
+    });
+    window.addEventListener('resize', () => dashboardPositionMeetingPopover());
+    window.addEventListener('scroll', () => dashboardPositionMeetingPopover(), true);
 
     function dashboardShowNotice(message) {
       let notice = document.getElementById('dashboardInlineNotice');
@@ -6375,23 +6751,18 @@
           <span class="dashboard-week-range">${dashboardWeekRangeLabel(index)}</span>
           <span class="dashboard-week-count">${items.length}</span>
         </button>`).join('');
-      const list = selected.length ? selected.map(item => {
-        const organisation = dashboardCleanDisplayText(item.organisation, 'Organisation not recorded');
-        const title = dashboardCleanDisplayText(item.title, 'Untitled meeting');
-        const contact = dashboardCleanDisplayText(item.contact, 'External contact not recorded');
-        const purpose = dashboardSanitiseMeetingText(item.purpose, title);
-        const location = dashboardCleanDisplayText(item.location, '');
-        const recordAttribute = crmEscape(item.recordId || '');
-        const eventAttribute = crmEscape(item.eventKey || '');
+      const list = selected.length ? selected.map((item, itemIndex) => {
+        const presentation = dashboardMeetingPresentation(item);
         const dateTime = [item.dateLabel, item.timeLabel].filter(Boolean).join(' · ');
-        return `<button class="dashboard-detail-meeting" type="button" data-record-id="${recordAttribute}" data-event-key="${eventAttribute}" onclick="dashboardOpenMeetingDetailItem(this)">
+        return `<button class="dashboard-detail-meeting" type="button" data-week-index="${dashboardSelectedMeetingWeek}" data-item-index="${itemIndex}" onclick="dashboardOpenMeetingDetailItem(this)">
           <span class="dashboard-detail-item-icon calendar">${dashboardDetailCalendarIcon()}</span>
           <span class="dashboard-detail-meeting-copy">
-            <span class="dashboard-detail-meeting-top"><span class="dashboard-detail-organisation">${crmEscape(organisation)}</span><span class="dashboard-detail-date">${crmEscape(dateTime)}</span></span>
-            <span class="dashboard-detail-meeting-title">${crmEscape(title)}</span>
-            <span class="dashboard-detail-contact">${crmEscape(contact)}</span>
-            ${purpose ? `<span class="dashboard-detail-purpose">${crmEscape(purpose)}</span>` : ''}
-            ${location ? `<span class="dashboard-detail-location"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg><span>${crmEscape(location)}</span></span>` : ''}
+            <span class="dashboard-detail-meeting-title">${crmEscape(presentation.title)}</span>
+            ${presentation.organisation ? `<span class="dashboard-detail-organisation">${crmEscape(presentation.organisation)}</span>` : ''}
+            ${presentation.contact ? `<span class="dashboard-detail-contact">${crmEscape(presentation.contact)}</span>` : ''}
+            <span class="dashboard-detail-date-line">${crmEscape(dateTime)}</span>
+            ${presentation.location ? `<span class="dashboard-detail-location"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg><span>${crmEscape(presentation.location)}</span></span>` : ''}
+            ${presentation.purpose ? `<span class="dashboard-detail-purpose">${crmEscape(presentation.purpose)}</span>` : ''}
             <span class="dashboard-detail-meeting-footer"><span>${item.attendeeCount} attendee${item.attendeeCount === 1 ? '' : 's'}</span></span>
           </span>
         </button>`;
@@ -6528,19 +6899,12 @@
         (calendarEventsByDate[key] ||= []).push(ev);
       });
       renderCalendarGrid();
-      renderTodayTimeline();
-      renderMonthHeatmap();
       if (typeof systemRenderDashboardCRM === 'function') systemRenderDashboardCRM();
       const dayModal = document.getElementById('dayDetailModal');
       if (calendarViewMode === 'month' && selectedDateKey && dayModal?.style.display === 'flex') {
         renderDayDetail(selectedDateKey);
       }
     }
-
-    // Distinct colors per meeting so the clock arcs and legend dots line up
-    // visually. Reused loosely from the same palette family as the avatar
-    // colors for consistency across the app.
-    const CHART_PALETTE = ['#2563eb', '#7c3aed', '#0891b2', '#d97706', '#dc2626', '#2563eb', '#4f46e5', '#2563eb'];
 
     // Same KL-timezone approach as getEventDateKey() - a meeting's clock
     // position must be based on Malaysia local time, not the browser's own
@@ -6559,159 +6923,6 @@
       return new Intl.DateTimeFormat('en-MY', {
         hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'Asia/Kuala_Lumpur'
       }).format(d);
-    }
-
-    // ── TODAY'S SCHEDULE TIMELINE ──
-    // A horizontal strip spanning a 12-hour working day (7am-7pm). Each
-    // timed meeting becomes a colored block positioned and sized by its
-    // actual start time and duration - reads left to right like a normal
-    // schedule, no decoding required. The legend below gives the exact
-    // title and time for each block, color-matched. All-day events can't
-    // be placed on a linear time strip, so they're counted in the total
-    // and noted separately in the legend.
-    //
-    // Overlapping meetings (e.g. two things booked at the same time) are
-    // assigned to separate stacked lanes within the strip, the same way
-    // Google Calendar's day view handles double-bookings - the strip only
-    // grows taller when an actual overlap exists; a normal non-overlapping
-    // day stays exactly as compact as before.
-    function assignTimelineLanes(placedEvents) {
-      const laneEndTimes = [];
-      return placedEvents.map(p => {
-        let laneIndex = laneEndTimes.findIndex(endTime => p.startMs >= endTime);
-        if (laneIndex === -1) {
-          laneIndex = laneEndTimes.length;
-          laneEndTimes.push(p.endMs);
-        } else {
-          laneEndTimes[laneIndex] = p.endMs;
-        }
-        return { ...p, laneIndex };
-      }).map(p => ({ ...p, laneCount: laneEndTimes.length }));
-    }
-
-    function renderTodayTimeline() {
-      const todayKey = ymdKey(new Date());
-      const allTodayEvents = calendarEventsByDate[todayKey] || [];
-      const timedEvents = allTodayEvents
-        .filter(ev => ev.start?.dateTime)
-        .slice()
-        .sort((a, b) => new Date(a.start.dateTime) - new Date(b.start.dateTime));
-      const allDayCount = allTodayEvents.length - timedEvents.length;
-
-      const countEl = document.getElementById('timelineCount');
-      const track = document.getElementById('timelineTrack');
-      const legend = document.getElementById('clockLegend');
-      if (!countEl || !track || !legend) return;
-
-      countEl.textContent = allTodayEvents.length;
-
-      const WINDOW_START = 7;
-      const WINDOW_HOURS = 12;
-      const LANE_HEIGHT = 22;
-      const LANE_GAP = 3;
-      const TRACK_PAD = 4;
-
-      const placements = timedEvents.map((ev, i) => {
-        const start = new Date(ev.start.dateTime);
-        const end = ev.end?.dateTime ? new Date(ev.end.dateTime) : new Date(start.getTime() + 30 * 60000);
-        const startHour = getKLHourFraction(start);
-        let durationHours = (end - start) / 3600000;
-        if (!(durationHours > 0)) durationHours = 0.5;
-        if (durationHours > WINDOW_HOURS) durationHours = WINDOW_HOURS;
-
-        let startFraction = (startHour - WINDOW_START) / WINDOW_HOURS;
-        startFraction = ((startFraction % 1) + 1) % 1;
-
-        return {
-          startMs: start.getTime(),
-          endMs: end.getTime(),
-          leftPct: startFraction * 100,
-          widthPct: Math.max((durationHours / WINDOW_HOURS) * 100, 2.5),
-          color: CHART_PALETTE[i % CHART_PALETTE.length]
-        };
-      });
-
-      const laned = assignTimelineLanes(placements);
-      const laneCount = Math.max(1, ...laned.map(p => p.laneCount));
-      track.style.height = (laneCount * LANE_HEIGHT + (laneCount - 1) * LANE_GAP + TRACK_PAD * 2) + 'px';
-
-      track.innerHTML = laned.map(p => {
-        const top = TRACK_PAD + p.laneIndex * (LANE_HEIGHT + LANE_GAP);
-        return `<div class="timeline-block" style="left:${p.leftPct}%;width:${p.widthPct}%;top:${top}px;height:${LANE_HEIGHT}px;background:${p.color}"></div>`;
-      }).join('');
-
-      if (allTodayEvents.length === 0) {
-        legend.innerHTML = `<div class="clock-empty">No meetings today</div>`;
-        return;
-      }
-
-      const legendItems = timedEvents.slice(0, 4).map((ev, i) => {
-        const color = CHART_PALETTE[i % CHART_PALETTE.length];
-        const timeLabel = formatKLTime(new Date(ev.start.dateTime));
-        return `<div class="clock-legend-item"><span class="clock-legend-dot" style="background:${color}"></span><span class="clock-legend-title">${esc(ev.summary || '(No title)')}</span><span class="clock-legend-time">${timeLabel}</span></div>`;
-      }).join('');
-
-      const remaining = timedEvents.length - 4;
-      const moreLine = remaining > 0
-        ? `<div class="clock-legend-item"><span class="clock-legend-title" style="color:#94a3b8;">+${remaining} more</span></div>`
-        : '';
-      const allDayLine = allDayCount > 0
-        ? `<div class="clock-legend-item"><span class="clock-legend-dot" style="background:#cbd5e1"></span><span class="clock-legend-title">${allDayCount} all-day</span></div>`
-        : '';
-
-      legend.innerHTML = legendItems + moreLine + allDayLine;
-    }
-
-    // ── THIS MONTH CALENDAR HEATMAP ──
-    // A GitHub-contributions-style grid: one small square per day of the
-    // currently-viewed month, aligned to the same weekday columns as the
-    // main calendar above, darker = busier. Same calendarEventsByDate data
-    // the grid uses - no extra fetch. Hovering a square shows the exact
-    // count via the native title tooltip.
-    function heatColor(count) {
-      if (count === 0) return 'rgba(226,232,240,0.55)';
-      if (count === 1) return '#bfdbfe';
-      if (count === 2) return '#60a5fa';
-      if (count <= 4) return '#2563eb';
-      return '#1e3a8a';
-    }
-
-    function renderMonthHeatmap() {
-      const y = calendarViewDate.getFullYear();
-      const m = calendarViewDate.getMonth() + 1;
-      const daysInMonth = new Date(y, m, 0).getDate();
-      const firstWeekday = new Date(y, m - 1, 1).getDay();
-
-      const counts = {};
-      let total = 0;
-
-      Object.keys(calendarEventsByDate).forEach(key => {
-        const [ky, km, kd] = key.split('-').map(Number);
-        if (ky !== y || km !== m) return;
-        const count = calendarEventsByDate[key].length;
-        counts[kd] = count;
-        total += count;
-      });
-
-      const totalEl = document.getElementById('monthHeatmapTotal');
-      const grid = document.getElementById('monthHeatmap');
-      if (!totalEl || !grid) return;
-      totalEl.textContent = total;
-
-      const todayKeyStr = ymdKey(new Date());
-      const cells = [];
-      for (let i = 0; i < firstWeekday; i++) {
-        cells.push('<div class="heatmap-cell empty"></div>');
-      }
-      for (let d = 1; d <= daysInMonth; d++) {
-        const count = counts[d] || 0;
-        const cellKey = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-        const isToday = cellKey === todayKeyStr ? ' today-cell' : '';
-        const label = `${d}: ${count} meeting${count === 1 ? '' : 's'}`;
-        cells.push(`<div class="heatmap-cell${isToday}" style="background:${heatColor(count)}" title="${esc(label)}"><span class="heatmap-day-num">${d}</span></div>`);
-      }
-
-      grid.innerHTML = cells.join('');
     }
 
     function calendarDayCellMarkup(cellDate, isOutside, chipLimit) {
@@ -8331,11 +8542,11 @@
           const eventKey = `dashboardCalendarMeeting_${weekIndex}_${index}`;
           window._eventsCache[eventKey] = event;
           const parts = dashboardMeetingDateParts(startRaw);
-          const meetingTitle = dashboardCleanDisplayText(event.summary || match?.meetingTitle, 'Untitled meeting');
+          const meetingTitle = dashboardCleanDisplayText(event.summary, '') || dashboardCleanDisplayText(match?.meetingTitle, '') || 'Untitled meeting';
           const organisation = dashboardRecordOrganisation(match) || dashboardParsedExternalOrganisation(event) || 'Organisation not recorded';
-          const contact = dashboardCleanDisplayText(match?.personName || match?.externalContact || dashboardPrimaryExternalContact(event), 'External contact not recorded');
+          const contact = dashboardCleanDisplayText(match?.personName, '') || dashboardCleanDisplayText(match?.externalContact, '') || dashboardPrimaryExternalContact(event) || 'External contact not recorded';
           const purpose = dashboardSanitiseMeetingText(match?.reason || match?.meetingNotes || event.description || '', meetingTitle);
-          const location = dashboardCleanDisplayText(event.location || match?.location || match?.meetingLocation || '', '');
+          const location = dashboardCleanDisplayText(event.location, '') || dashboardCleanDisplayText(match?.location, '') || dashboardCleanDisplayText(match?.meetingLocation, '');
           weeks[weekIndex].push({
             recordId: match?.recordId || '', eventKey,
             organisation,
