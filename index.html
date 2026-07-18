@@ -7425,10 +7425,8 @@
   #pageMyRecords .my-record-row-v2 {
     position:relative;
     width:100%;
-    min-height:100px;
-    display:grid;
-    grid-template-columns:minmax(0,1fr) auto;
-    gap:12px;
+    min-height:112px;
+    display:block;
     padding:14px 15px 13px 17px;
     border:0;
     border-bottom:1px solid #e5edf8;
@@ -7443,15 +7441,17 @@
   #pageMyRecords .my-record-row-v2.active { background:#eff6ff; }
   #pageMyRecords .my-record-row-v2.active::before { background:#2563eb; }
   #pageMyRecords .my-record-row-v2:focus-visible { outline:2px solid #2563eb; outline-offset:-2px; z-index:1; }
-  #pageMyRecords .my-record-row-main-v2 { min-width:0; }
-  #pageMyRecords .my-record-row-title-v2 { color:#0f172a; font-size:11.5px; line-height:1.35; font-weight:900; overflow-wrap:anywhere; }
-  #pageMyRecords .my-record-row-contact-v2 { margin-top:6px; color:#334155; font-size:10px; line-height:1.35; font-weight:750; }
-  #pageMyRecords .my-record-row-org-v2 { margin-top:3px; color:#64748b; font-size:9.5px; line-height:1.35; overflow-wrap:anywhere; }
-  #pageMyRecords .my-record-row-date-v2 { max-width:112px; color:#2563eb; font-size:8.5px; line-height:1.4; font-weight:800; text-align:right; }
-  #pageMyRecords .my-record-row-status-v2 { display:inline-flex; margin-top:8px; padding:3px 7px; border:1px solid #bfdbfe; border-radius:999px; background:#eff6ff; color:#1d4ed8; font-size:8px; font-weight:850; }
+  #pageMyRecords .my-record-row-main-v2 { display:block; min-width:0; }
+  #pageMyRecords .my-record-row-head-v2 { display:grid; grid-template-columns:minmax(0,1fr) 92px; align-items:start; gap:12px; min-width:0; }
+  #pageMyRecords .my-record-row-title-v2 { min-width:0; color:#0f172a; font-size:11.5px; line-height:1.35; font-weight:900; overflow:hidden; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+  #pageMyRecords .my-record-row-contact-v2 { display:block; margin-top:8px; color:#334155; font-size:10px; line-height:1.35; font-weight:750; overflow-wrap:anywhere; }
+  #pageMyRecords .my-record-row-org-v2 { display:block; margin-top:3px; color:#64748b; font-size:9.5px; line-height:1.35; overflow-wrap:anywhere; }
+  #pageMyRecords .my-record-row-date-v2 { min-width:0; color:#2563eb; font-size:8.5px; line-height:1.4; font-weight:800; text-align:right; white-space:normal; }
+  #pageMyRecords .my-record-row-footer-v2 { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:9px; }
+  #pageMyRecords .my-record-row-status-v2 { display:inline-flex; margin:0; padding:3px 7px; border:1px solid #bfdbfe; border-radius:999px; background:#eff6ff; color:#1d4ed8; font-size:8px; font-weight:850; }
   #pageMyRecords .my-record-row-status-v2.archived { border-color:#cbd5e1; background:#f1f5f9; color:#64748b; }
-  #pageMyRecords .my-record-row-flags-v2 { display:flex; gap:5px; flex-wrap:wrap; margin-top:7px; }
-  #pageMyRecords .my-record-row-flag-v2 { color:#9a3412; font-size:8px; font-weight:800; }
+  #pageMyRecords .my-record-row-flags-v2 { display:flex; gap:5px; flex-wrap:wrap; margin:0; }
+  #pageMyRecords .my-record-row-flag-v2 { display:inline-flex; padding:3px 7px; border:1px solid #fed7aa; border-radius:999px; background:#fff7ed; color:#9a3412; font-size:8px; font-weight:800; }
   #pageMyRecords .my-records-empty-v2 { min-height:220px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:28px 20px; color:#64748b; font-size:10.5px; line-height:1.5; text-align:center; }
   #pageMyRecords .my-records-empty-v2 strong { color:#0f172a; font-size:13px; }
 
@@ -7467,8 +7467,7 @@
   #pageMyRecords .my-record-provenance-v2 span:empty { display:none; }
   #pageMyRecords .my-record-permission-v2 { margin-top:10px; max-width:650px; padding:8px 10px; border:1px solid #dbeafe; border-radius:9px; background:#f8fbff; color:#475569; font-size:9.5px; line-height:1.45; }
   #pageMyRecords .my-record-actions-v2 { flex:0 0 auto; display:flex; align-items:center; justify-content:flex-end; gap:7px; flex-wrap:wrap; }
-  #pageMyRecords .my-record-tabs-v2 { flex:0 0 auto; display:flex; align-items:center; gap:24px; min-width:0; padding:0 22px; border-bottom:1px solid #dbeafe; overflow-x:auto; scrollbar-width:none; }
-  #pageMyRecords .my-record-tabs-v2::-webkit-scrollbar { display:none; }
+  #pageMyRecords .my-record-tabs-v2 { flex:0 0 auto; display:flex; align-items:center; gap:24px; min-width:0; padding:0 22px; border-bottom:1px solid #dbeafe; overflow-x:auto; scrollbar-gutter:stable; }
   #pageMyRecords .my-record-tabs-v2 button { position:relative; flex:0 0 auto; min-height:46px; padding:0 1px; border:0; background:transparent; color:#64748b; font:inherit; font-size:10.5px; font-weight:800; cursor:pointer; }
   #pageMyRecords .my-record-tabs-v2 button::after { content:''; position:absolute; left:0; right:0; bottom:-1px; height:2px; border-radius:999px; background:transparent; }
   #pageMyRecords .my-record-tabs-v2 button.active { color:#2563eb; }
@@ -7508,6 +7507,7 @@
   #pageMyRecords .my-action-table-v2 td:first-child { color:#0f172a; font-weight:720; }
   #pageMyRecords .my-action-status-v2 { display:inline-flex; padding:3px 7px; border:1px solid #fed7aa; border-radius:999px; background:#fff7ed; color:#9a3412; font-size:8px; font-weight:850; }
   #pageMyRecords .my-action-status-v2.completed { border-color:#bbf7d0; background:#f0fdf4; color:#15803d; }
+  #pageMyRecords .my-action-status-v2.in-progress { border-color:#bfdbfe; background:#eff6ff; color:#1d4ed8; }
   #pageMyRecords .my-document-list-v2 { display:flex; flex-direction:column; border:1px solid #dbeafe; border-radius:13px; overflow:hidden; background:#fff; }
   #pageMyRecords .my-document-row-v2 { min-width:0; display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:14px; padding:13px 14px; border-bottom:1px solid #e8eef7; color:inherit; text-decoration:none; }
   #pageMyRecords .my-document-row-v2:last-child { border-bottom:0; }
@@ -7553,13 +7553,74 @@
     #pageMyRecords .my-action-table-v2 td { padding:4px 0; border:0; }
     #pageMyRecords .my-action-table-v2 td::before { content:attr(data-label); display:block; margin-bottom:2px; color:#94a3b8; font-size:7.5px; font-weight:900; letter-spacing:.65px; text-transform:uppercase; }
   }
+  #pageMyRecords .my-edit-icon-btn-v2 {
+    width:38px; height:38px; min-width:38px; padding:0; display:inline-flex; align-items:center; justify-content:center; border-radius:10px; text-decoration:none;
+  }
+  #pageMyRecords .my-edit-icon-btn-v2 svg { width:17px; height:17px; margin:0; }
+  #pageMyRecords .my-edit-icon-btn-v2::after { display:none!important; content:none!important; }
+  #pageMyRecords .my-action-table-v2.editing th:nth-child(1) { width:auto; }
+  #pageMyRecords .my-action-table-v2.editing th:nth-child(2) { width:200px; }
+  #pageMyRecords .my-action-table-v2.editing th:nth-child(3) { width:160px; }
+  #pageMyRecords .my-action-table-v2.editing th:nth-child(4) { width:145px; }
+  #pageMyRecords .my-action-table-v2.editing th:nth-child(5) { width:42px; }
+  #pageMyRecords .my-action-editor-v2 { width:100%; min-width:0; min-height:36px; padding:7px 8px; border:1px solid #bfdbfe; border-radius:8px; background:#fff; color:#0f172a; font:inherit; font-size:9.5px; line-height:1.4; outline:none; }
+  #pageMyRecords textarea.my-action-editor-v2 { min-height:58px; resize:vertical; }
+  #pageMyRecords .my-action-editor-v2:focus { border-color:#2563eb; box-shadow:0 0 0 2px rgba(37,99,235,.08); }
+  #pageMyRecords .my-action-remove-v2 { width:32px; height:32px; display:inline-flex; align-items:center; justify-content:center; border:1px solid #fecaca; border-radius:8px; background:#fff; color:#dc2626; cursor:pointer; }
+  #pageMyRecords .my-action-remove-v2:hover { background:#fef2f2; border-color:#ef4444; }
+  #pageMyRecords .my-action-remove-v2 svg { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:1.8; }
+  #pageMyRecords .my-action-add-v2 { margin-top:10px; min-height:36px; padding:8px 12px; border:1px solid #bfdbfe; border-radius:9px; background:#fff; color:#2563eb; font:inherit; font-size:9.5px; font-weight:850; cursor:pointer; }
+  #pageMyRecords .my-action-add-v2:hover { border-color:#2563eb; background:#eff6ff; }
+  .meeting-action-builder-v2 { margin-top:10px; border:1px solid #dbeafe; border-radius:12px; overflow:hidden; background:#fff; }
+  .meeting-action-builder-v2:empty { display:none; }
+  .meeting-action-head-v2, .meeting-action-row-v2 { display:grid; grid-template-columns:minmax(220px,1fr) minmax(130px,.45fr) 132px 124px 38px; gap:8px; align-items:start; padding:9px 10px; }
+  .meeting-action-head-v2 { background:#f8fbff; border-bottom:1px solid #dbeafe; color:#64748b; font-size:8px; font-weight:900; letter-spacing:.7px; text-transform:uppercase; }
+  .meeting-action-row-v2 { border-bottom:1px solid #e8eef7; }
+  .meeting-action-row-v2:last-child { border-bottom:0; }
+  .meeting-action-input-v2 { width:100%; min-width:0; min-height:38px; padding:8px 9px; border:1.5px solid #dbeafe; border-radius:9px; background:#fff; color:#0f172a; font:inherit; font-size:10.5px; line-height:1.4; outline:none; }
+  textarea.meeting-action-input-v2 { min-height:54px; resize:vertical; }
+  .meeting-action-input-v2:focus { border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.08); }
+  .meeting-action-remove-v2 { width:34px; height:34px; display:inline-flex; align-items:center; justify-content:center; border:1px solid #fecaca; border-radius:9px; background:#fff; color:#dc2626; cursor:pointer; }
+  .meeting-action-remove-v2 svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:1.8; }
+  .meeting-action-add-v2 { margin-top:10px; min-height:38px; padding:8px 12px; border:1px solid #bfdbfe; border-radius:9px; background:#fff; color:#2563eb; font:inherit; font-size:10.5px; font-weight:850; cursor:pointer; }
+  .meeting-action-add-v2:hover { border-color:#2563eb; background:#eff6ff; }
+  @media (max-width:760px) {
+    .meeting-action-head-v2 { display:none; }
+    .meeting-action-row-v2 { grid-template-columns:1fr; gap:7px; padding:12px; }
+    .meeting-action-row-v2 > * { min-width:0; }
+    .meeting-action-row-v2 [data-mobile-label]::before { content:attr(data-mobile-label); display:block; margin-bottom:4px; color:#94a3b8; font-size:8px; font-weight:900; letter-spacing:.65px; text-transform:uppercase; }
+    .meeting-action-remove-v2 { justify-self:end; }
+  }
   @media (max-width:430px) {
     #pageMyRecords .my-directory-filter-row-v2 { grid-template-columns:1fr 1fr; }
     #pageMyRecords .my-directory-more-v2 { grid-column:1/-1; }
     #pageMyRecords .my-directory-more-panel-v2 { grid-template-columns:1fr; }
-    #pageMyRecords .my-record-row-v2 { grid-template-columns:minmax(0,1fr); }
-    #pageMyRecords .my-record-row-date-v2 { max-width:none; text-align:left; }
+    #pageMyRecords .my-record-row-head-v2 { grid-template-columns:minmax(0,1fr) 78px; gap:9px; }
   }
+</style>
+
+
+<style id="crm-global-scrollbar-system">
+  :root {
+    --crm-scrollbar-size: 7px;
+    --crm-scrollbar-track: transparent;
+    --crm-scrollbar-thumb: #bfdbfe;
+    --crm-scrollbar-thumb-hover: #93c5fd;
+    --crm-scrollbar-radius: 999px;
+  }
+  html, body, * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--crm-scrollbar-thumb) var(--crm-scrollbar-track);
+  }
+  html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar { width:var(--crm-scrollbar-size); height:var(--crm-scrollbar-size); }
+  html::-webkit-scrollbar-track, body::-webkit-scrollbar-track, *::-webkit-scrollbar-track { background:var(--crm-scrollbar-track); border-radius:var(--crm-scrollbar-radius); }
+  html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb, *::-webkit-scrollbar-thumb { background:var(--crm-scrollbar-thumb); border-radius:var(--crm-scrollbar-radius); border:1px solid transparent; background-clip:padding-box; }
+  html::-webkit-scrollbar-thumb:hover, body::-webkit-scrollbar-thumb:hover, *::-webkit-scrollbar-thumb:hover { background:var(--crm-scrollbar-thumb-hover); background-clip:padding-box; }
+  html::-webkit-scrollbar-corner, body::-webkit-scrollbar-corner, *::-webkit-scrollbar-corner { background:transparent; }
+  .contact-directory-list, .contact-workspace-content, .contact-tab-panel,
+  #pageMyRecords .my-records-list-v2, #pageMyRecords .my-record-tab-content-v2, #pageMyRecords .my-record-tabs-v2,
+  .relationship-detail-panel, .relationship-history-list, .dashboard-week-scroll, .dashboard-recent-list,
+  #meetingModal .meeting-form-scroll, .business-card-review-list, .manual-contact-list, .my-document-list-v2 { scrollbar-gutter:stable; }
 </style>
 
 </head>
@@ -7817,9 +7878,6 @@
       <p class="dashboard-welcome-copy">Manage only the records uploaded using your MRANTI account.</p>
       <div class="standard-page-supporting-meta">Last activity: <strong id="myLastUpdated">—</strong></div>
     </div>
-    <div class="standard-page-intro-actions">
-      <button class="system-btn primary" onclick="openManualModal()"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg><span>Log new meeting</span></button>
-    </div>
   </div>
 </header>
 
@@ -7874,7 +7932,7 @@
         <div class="my-record-permission-v2" id="myRecordPermission" hidden></div>
       </div>
       <div class="my-record-actions-v2" id="myRecordActions">
-        <button class="system-btn" disabled id="myEditBtn" onclick="myOpenEdit()" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"></path></svg><span>Edit</span></button>
+        <button aria-label="Edit record" class="system-btn my-edit-icon-btn-v2" disabled id="myEditBtn" onclick="myOpenEdit()" title="Edit record" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"></path></svg></button>
         <button class="system-btn primary" id="mySaveBtn" onclick="mySaveChanges()" style="display:none" type="button"><span>Save Changes</span></button>
         <button class="system-btn subtle" id="myCancelBtn" onclick="myCancelEdit()" style="display:none" type="button"><span>Cancel</span></button>
         <button class="system-btn danger" disabled id="myArchiveBtn" onclick="myArchiveSelected()" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 6h18"></path><path d="M5 6v14h14V6"></path><path d="M8 10h8"></path></svg><span>Archive</span></button>
@@ -8071,7 +8129,9 @@
 </div>
 <div class="form-group">
 <label class="form-label">Action Items <span class="optional-tag">Optional</span></label>
-<textarea class="form-textarea action-items-box" id="fieldActionItems" placeholder="Owner, next step and due date, one item per line..."></textarea>
+<p class="helper-text">Add each follow-up as its own row. Owner and due date are optional.</p>
+<div class="meeting-action-builder-v2" id="meetingActionItemsBuilder" aria-live="polite"></div>
+<button class="meeting-action-add-v2" id="addMeetingActionItemBtn" onclick="addMeetingActionItem()" type="button">+ Add action item</button>
 </div>
 <div class="form-divider"></div>
 <div class="form-section-label">Meeting Documents</div>
@@ -8255,6 +8315,7 @@
     let monthCache = {};
     let calendarViewMode = 'month';
     let currentEvent = null;
+    let meetingActionItems = [];
     window._eventsCache = {};
     let dashboardExpandedCards = { meetings: false, organisations: false };
     let dashboardSelectedMeetingWeek = Math.min(4, Math.max(0, Math.floor((new Date().getDate() - 1) / 7)));
@@ -10064,6 +10125,64 @@
       hideDraftStatus();
     }
 
+    function normalizeMeetingActionItem(item = {}, index = 0) {
+      return {
+        actionItemId: String(item.actionItemId || item.id || crmActionItemId()).trim(),
+        action: String(item.action || item.text || item.description || '').trim(),
+        owner: String(item.owner || item.assignee || '').trim(),
+        dueDate: crmDateInputValue(item.dueDate || item.deadline || ''),
+        status: crmNormalizeActionStatus(item.status || 'Open'),
+        isActive: item.isActive !== false,
+        _index: index
+      };
+    }
+
+    function meetingActionItemsFromValue(value) {
+      if(Array.isArray(value))return value.map(normalizeMeetingActionItem).filter(item=>item.isActive!==false);
+      if(value&&typeof value==='object')return [normalizeMeetingActionItem(value,0)];
+      return crmIntelActionFragments(value).map((action,index)=>normalizeMeetingActionItem({action,status:'Open'},index));
+    }
+
+    function renderMeetingActionItems() {
+      const host=document.getElementById('meetingActionItemsBuilder');
+      if(!host)return;
+      if(!meetingActionItems.length){host.innerHTML='';return;}
+      const header='<div class="meeting-action-head-v2"><span>Action</span><span>Owner</span><span>Due date</span><span>Status</span><span></span></div>';
+      const rows=meetingActionItems.map((item,index)=>`<div class="meeting-action-row-v2">
+        <label data-mobile-label="Action"><textarea aria-label="Action" class="meeting-action-input-v2" oninput="updateMeetingActionItem(${index},'action',this.value)" placeholder="Describe the follow-up">${crmEscape(item.action||'')}</textarea></label>
+        <label data-mobile-label="Owner"><input aria-label="Owner" class="meeting-action-input-v2" oninput="updateMeetingActionItem(${index},'owner',this.value)" placeholder="Optional" type="text" value="${crmEscape(item.owner||'')}"/></label>
+        <label data-mobile-label="Due date"><input aria-label="Due date" class="meeting-action-input-v2" oninput="updateMeetingActionItem(${index},'dueDate',this.value)" type="date" value="${crmEscape(crmDateInputValue(item.dueDate))}"/></label>
+        <label data-mobile-label="Status"><select aria-label="Status" class="meeting-action-input-v2" onchange="updateMeetingActionItem(${index},'status',this.value)">${['Open','In Progress','Completed'].map(status=>`<option value="${status}" ${crmNormalizeActionStatus(item.status)===status?'selected':''}>${status}</option>`).join('')}</select></label>
+        <button aria-label="Remove action item" class="meeting-action-remove-v2" onclick="removeMeetingActionItem(${index})" title="Remove action item" type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v5M14 11v5"></path></svg></button>
+      </div>`).join('');
+      host.innerHTML=header+rows;
+    }
+
+    function addMeetingActionItem() {
+      meetingActionItems.push(normalizeMeetingActionItem({actionItemId:crmActionItemId(),status:'Open'},meetingActionItems.length));
+      renderMeetingActionItems();
+      scheduleDraftSave();
+      requestAnimationFrame(()=>document.querySelector('#meetingActionItemsBuilder .meeting-action-row-v2:last-child textarea')?.focus());
+    }
+
+    function updateMeetingActionItem(index,key,value) {
+      if(!meetingActionItems[index])return;
+      meetingActionItems[index][key]=key==='status'?crmNormalizeActionStatus(value):value;
+      scheduleDraftSave();
+    }
+
+    function removeMeetingActionItem(index) {
+      meetingActionItems.splice(index,1);
+      renderMeetingActionItems();
+      scheduleDraftSave();
+    }
+
+    function validatedMeetingActionItems() {
+      const normalized=meetingActionItems.map(normalizeMeetingActionItem);
+      const invalid=normalized.findIndex(item=>!item.action.trim());
+      return {ok:invalid<0,invalidIndex:invalid,items:normalized.map(({_index,...item})=>item)};
+    }
+
         function meetingDraftState() {
       const inputMethod = document.querySelector('input[name="contactInputMethod"]:checked')?.value || 'businessCard';
       const selectedFiles = Array.from(document.getElementById('fieldBusinessCard').files || []);
@@ -10081,7 +10200,7 @@
         manualContacts: manualContacts.map((contact,index)=>normalizeManualContact(contact,index)),
         purpose: document.getElementById('fieldPurpose').value || '',
         notes: document.getElementById('fieldNotes').value || '',
-        actionItems: document.getElementById('fieldActionItems').value || '',
+        actionItems: meetingActionItems.map(({_index,...item})=>item),
         reviewedBusinessCardContacts: reviewedBusinessCardContacts.map((contact, index) => normalizeReviewedContact(contact, index)),
         businessCardFileNames: selectedFiles.map(file => file.name),
         meetingDocumentFileNames: meetingDocumentFiles.map(file => file.name)
@@ -10092,8 +10211,9 @@
       if (!state) return false;
       return Boolean([
         state.eventTitle, state.eventDate, state.eventTime, state.attendees,
-        state.purpose, state.notes, state.actionItems
+        state.purpose, state.notes
       ].some(value => String(value || '').trim()) ||
+      (Array.isArray(state.actionItems) && state.actionItems.some(item => String(item?.action || '').trim())) ||
       (Array.isArray(state.manualContacts) && state.manualContacts.some(contact => Object.values(contact || {}).some(value => String(value || '').trim()))) ||
       (Array.isArray(state.reviewedBusinessCardContacts) && state.reviewedBusinessCardContacts.length) ||
       (Array.isArray(state.businessCardFileNames) && state.businessCardFileNames.length) ||
@@ -10173,7 +10293,8 @@
       document.getElementById(method === 'manual' ? 'methodManual' : 'methodBusinessCard').checked = true;
       document.getElementById('fieldPurpose').value = draft.purpose || '';
       document.getElementById('fieldNotes').value = draft.notes || '';
-      document.getElementById('fieldActionItems').value = draft.actionItems || '';
+      meetingActionItems = meetingActionItemsFromValue(draft.actionItems || []);
+      renderMeetingActionItems();
       manualContacts = Array.isArray(draft.manualContacts) && draft.manualContacts.length
         ? draft.manualContacts.slice(0,10).map((contact,index)=>normalizeManualContact(contact,index))
         : [normalizeManualContact({},0)];
@@ -10250,7 +10371,8 @@
       suppressDraftAutosave = true;
       document.getElementById('fieldPurpose').value = '';
       document.getElementById('fieldNotes').value = '';
-      document.getElementById('fieldActionItems').value = '';
+      meetingActionItems = [];
+      renderMeetingActionItems();
       document.getElementById('fieldBusinessCard').value = '';
       clearBusinessCardReview({ silent: true });
       setBusinessCardAnalysisState('', 'hidden');
@@ -10342,7 +10464,8 @@
       }
       const purpose = document.getElementById('fieldPurpose').value.trim();
       const notes = document.getElementById('fieldNotes').value.trim();
-      const actionItems = document.getElementById('fieldActionItems').value.trim();
+      const actionValidation = validatedMeetingActionItems();
+      const actionItems = actionValidation.items;
       const meetingDocuments = getMeetingDocuments();
       const calendarAttachments = getCalendarAttachments();
       const eventDateOnly = getMeetingDateOnly();
@@ -10350,6 +10473,7 @@
       const eventDateValue = buildEventDateValueForSubmit();
       if (!purpose) { showModalErr('Please enter the purpose of meeting.'); return; }
       if (!notes) { showModalErr('Please enter meeting notes.'); return; }
+      if (!actionValidation.ok) { showModalErr('Action item ' + (actionValidation.invalidIndex + 1) + ' requires an Action value.'); return; }
       if (eventTimeOnly && !eventDateOnly) { showModalErr('Please select the meeting date before entering the time.'); return; }
       const validation = inputMethod === 'manual' ? validateManualContacts() : validateReviewedBusinessCardContacts();
       if (!validation.ok) { showModalErr(validation.message); return; }
@@ -10370,12 +10494,13 @@
       fd.append('uploaderEmail', currentUser.email || '');
       fd.append('purpose', purpose);
       fd.append('meetingNotes', notes);
-      fd.append('actionItems', actionItems);
+      fd.append('actionItems', JSON.stringify(actionItems));
       fd.append('eventTitle', currentEvent?.summary || document.getElementById('fieldEventTitle').value || '');
       fd.append('eventDate', eventDateValue);
       fd.append('eventDateOnly', eventDateOnly);
       fd.append('eventTime', eventTimeOnly);
-      fd.append('attendees', (currentEvent?.attendees || []).filter(a => !a.self).map(a => a.displayName || a.email).join(', ') || document.getElementById('fieldAttendees').value || '');
+      const attendeeSource=(currentEvent?.attendees || []).filter(a => !a.self).map(a => a.displayName || a.email).join(', ') || document.getElementById('fieldAttendees').value || '';
+      fd.append('attendees', crmCleanAttendeeText(attendeeSource, contactsToSave.map(contact=>contact.companyName)));
       fd.append('calendarAttachments', JSON.stringify(calendarAttachments));
       fd.append('calendarAttachmentCount', String(calendarAttachments.length));
       fd.append('inputMethod', 'reviewedContacts');
@@ -10604,7 +10729,36 @@
     }
     function crmUserEmail() { return String(currentUser?.email || '').trim().toLowerCase(); }
     function crmIsOwned(record) { return Boolean(record && crmUserEmail() && String(record.uploaderEmail || '').trim().toLowerCase() === crmUserEmail()); }
-    function crmHasAction(record) { return Boolean(String(record?.actionItems || '').trim()); }
+    function crmActionItemId(prefix = 'AI') {
+      if (globalThis.crypto?.randomUUID) return `${prefix}-${globalThis.crypto.randomUUID()}`;
+      return `${prefix}-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).slice(2,10).toUpperCase()}`;
+    }
+    function crmNormalizeActionStatus(value) {
+      const normalized = crmNormalize(value);
+      if (/(completed|complete|done|closed|resolved)/.test(normalized)) return 'Completed';
+      if (/(in progress|progress|ongoing|underway|started)/.test(normalized)) return 'In Progress';
+      return 'Open';
+    }
+    function crmIsOpenActionStatus(value) { return crmNormalizeActionStatus(value) !== 'Completed'; }
+    function crmAttendeeParts(value) {
+      if (Array.isArray(value)) return value.flatMap(crmAttendeeParts);
+      return String(value || '').split(/\r?\n|;|,/).map(item => item.trim()).filter(Boolean);
+    }
+    function crmCleanAttendeeList(value, recordOrOrganisations = {}) {
+      const organisations = Array.isArray(recordOrOrganisations)
+        ? recordOrOrganisations
+        : [recordOrOrganisations?.companyName, recordOrOrganisations?.organisation, recordOrOrganisations?.organization, recordOrOrganisations?.externalCompany, recordOrOrganisations?.contactOrganisation];
+      const organisationKeys = new Set(organisations.map(crmNormalize).filter(Boolean));
+      const seen = new Set();
+      return crmAttendeeParts(value).filter(person => {
+        const key = crmNormalize(person);
+        if (!key || organisationKeys.has(key) || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+    function crmCleanAttendeeText(value, recordOrOrganisations = {}) { return crmCleanAttendeeList(value, recordOrOrganisations).join(', '); }
+    function crmHasAction(record) { return crmIntelActionEntries(record, crmRecords.indexOf(record)).length > 0; }
     function crmHasDocuments(record) { return Array.isArray(record?.meetingDocuments) && record.meetingDocuments.length > 0; }
     function crmStatus(record) { return String(record?.recordStatus || 'Active').trim() || 'Active'; }
     function crmSortRecords(records) {
@@ -10653,7 +10807,10 @@
       crmSetBanner('Loading CRM contacts…', 'info');
       try {
         const data = await crmPost(CRM_CONTACTS_DATA_URL, { action: 'list' });
-        crmRecords = Array.isArray(data.records) ? data.records.map((record,index) => ({ ...record, _clientIndex:index })) : [];
+        crmRecords = Array.isArray(data.records) ? data.records.map((record,index) => {
+          const attendeesRaw = record?.attendees ?? '';
+          return { ...record, attendeesRaw, attendees: crmCleanAttendeeText(attendeesRaw, record), _clientIndex:index };
+        }) : [];
         crmContactsLoaded = true;
         const legacyCount = crmRecords.filter(record => !record.recordId).length;
         crmSetBanner(legacyCount ? `${legacyCount} legacy record${legacyCount===1?' is':'s are'} view-only until Record ID is populated.` : '', 'info');
@@ -10677,7 +10834,7 @@
     function crmRecordSearchText(record) {
       return crmNormalize([
         record.personName,record.companyName,record.email,record.phone,record.jobTitle,record.meetingTitle,record.meetingDate,
-        record.attendees,record.reason,record.meetingNotes,record.actionItems,record.uploaderName,record.uploaderEmail,record.searchIndex,
+        record.attendees,record.reason,record.meetingNotes,crmIntelActionEntries(record).map(item=>[item.action,item.owner,item.dueDate,item.status].join(' ')).join(' '),record.uploaderName,record.uploaderEmail,record.searchIndex,
         (record.meetingDocuments||[]).map(doc=>doc.name).join(' ')
       ].join(' '));
     }
@@ -10785,7 +10942,7 @@
       crmSetText('crmDetailPhone',record.phone,'No contact number recorded'); crmSetText('crmDetailJobTitle',record.jobTitle,'No job title recorded');
       crmSetText('crmDetailMeetingTitle',record.meetingTitle,'No meeting title recorded'); crmSetText('crmDetailMeetingDate',record.meetingDate,'No meeting date recorded');
       crmSetText('crmDetailReason',record.reason,'No purpose recorded'); crmSetText('crmDetailAttendees',record.attendees,'No attendees recorded');
-      crmSetText('crmDetailNotes',record.meetingNotes,'No meeting notes recorded.'); crmSetText('crmDetailActionItems',record.actionItems,'No action items recorded.');
+      crmSetText('crmDetailNotes',record.meetingNotes,'No meeting notes recorded.'); crmSetText('crmDetailActionItems',crmIntelActionEntries(record).map(item=>item.action).join('\n'),'No action items recorded.');
       crmSetText('crmDetailUploader',record.uploaderName,'Not recorded'); crmSetText('crmDetailUploaderEmail',record.uploaderEmail,'Not recorded');
       crmSetText('crmDetailStatus',crmStatus(record),'Active'); crmSetText('crmDetailUpdated',[record.lastUpdated,record.updatedBy].filter(Boolean).join(' · '),'Not updated yet');
       crmRenderDocuments('crmDetailDocuments','crmDocumentSection',record);
@@ -10845,18 +11002,23 @@
       const status=crmStatus(record);
       const date=crmIntelShortDate(record);
       const time=crmIntelTimeRange(record);
+      const actionCount=crmIntelActionEntries(record,index).length;
       const flags=[];
-      if(crmHasAction(record))flags.push('<span class="my-record-row-flag-v2">Action items</span>');
+      if(actionCount)flags.push(`<span class="my-record-row-flag-v2">${actionCount} action item${actionCount===1?'':'s'}</span>`);
       if(crmHasDocuments(record))flags.push(`<span class="my-record-row-flag-v2">${record.meetingDocuments.length} document${record.meetingDocuments.length===1?'':'s'}</span>`);
       return `<button class="my-record-row-v2 ${selected?'active':''}" type="button" data-record-index="${index}" onclick="mySelectRecord(${index})" aria-pressed="${selected}">
         <span class="my-record-row-main-v2">
-          <span class="my-record-row-title-v2">${crmEscape(record.meetingTitle||'Untitled meeting')}</span>
+          <span class="my-record-row-head-v2">
+            <span class="my-record-row-title-v2">${crmEscape(record.meetingTitle||'Untitled meeting')}</span>
+            <span class="my-record-row-date-v2">${crmEscape(date)}<br>${crmEscape(time)}</span>
+          </span>
           <span class="my-record-row-contact-v2">${crmEscape(record.personName||'Contact not recorded')}</span>
           <span class="my-record-row-org-v2">${crmEscape(record.companyName||'Organisation not recorded')}</span>
-          <span class="my-record-row-status-v2 ${status.toLowerCase()==='archived'?'archived':''}">${crmEscape(status)}</span>
-          ${flags.length?`<span class="my-record-row-flags-v2">${flags.join('')}</span>`:''}
+          <span class="my-record-row-footer-v2">
+            <span class="my-record-row-status-v2 ${status.toLowerCase()==='archived'?'archived':''}">${crmEscape(status)}</span>
+            ${flags.length?`<span class="my-record-row-flags-v2">${flags.join('')}</span>`:''}
+          </span>
         </span>
-        <span class="my-record-row-date-v2">${crmEscape(date)}<br>${crmEscape(time)}</span>
       </button>`;
     }
 
@@ -10918,8 +11080,8 @@
       myUpdateTabs();
     }
 
-    function myParsePeopleList(value){
-      return String(value||'').split(/\n|;|,(?=\s*[A-Z])/).map(item=>item.trim()).filter(Boolean);
+    function myParsePeopleList(value, record = crmRecords[mySelectedIndex] || {}){
+      return crmCleanAttendeeList(value, record);
     }
 
     function mySafeValue(value,fallback='Not recorded'){
@@ -10970,7 +11132,7 @@
 
     function myDetailsMarkup(record){
       const draft=myEditMode&&myDraftRecord?myDraftRecord:record;
-      const people=myParsePeopleList(draft.attendees);
+      const people=myParsePeopleList(draft.attendees,draft);
       const dateParts=myEditMode?{date:draft.meetingDateDate||'',time:draft.meetingDateTime||''}:myDateInputParts(record.meetingDate);
       const source=record.inputMethod||record.recordSource||record.source||'';
       const location=record.meetingLocation||record.location||'';
@@ -11006,13 +11168,60 @@
       return notes?`<div class="my-content-panel-v2">${crmEscape(notes)}</div>`:'<div class="my-content-empty-v2">No meeting notes recorded.</div>';
     }
 
+    function crmDateInputValue(value){
+      const raw=String(value||'').trim();
+      if(/^\d{4}-\d{2}-\d{2}$/.test(raw))return raw;
+      const parsed=new Date(raw);
+      if(Number.isNaN(parsed.getTime()))return'';
+      return `${parsed.getFullYear()}-${String(parsed.getMonth()+1).padStart(2,'0')}-${String(parsed.getDate()).padStart(2,'0')}`;
+    }
+
+    function myDraftActionItems(){
+      if(!myDraftRecord)return[];
+      if(!Array.isArray(myDraftRecord.structuredActionItems))myDraftRecord.structuredActionItems=crmIntelActionEntries(myDraftRecord,mySelectedIndex).map(item=>({...item}));
+      return myDraftRecord.structuredActionItems;
+    }
+
+    function myUpdateActionItem(index,key,value){
+      const items=myDraftActionItems();
+      if(!items[index])return;
+      items[index][key]=key==='status'?crmNormalizeActionStatus(value):value;
+    }
+
+    function myAddActionItem(){
+      if(!myEditMode||!myDraftRecord)return;
+      myDraftActionItems().push({actionItemId:crmActionItemId(),recordId:myDraftRecord.recordId||'',action:'',owner:'',dueDate:'',status:'Open',isActive:true,isNew:true});
+      myRenderActiveTab(crmRecords[mySelectedIndex]);
+    }
+
+    function myRemoveActionItem(index){
+      if(!myEditMode||!myDraftRecord)return;
+      myDraftActionItems().splice(index,1);
+      myRenderActiveTab(crmRecords[mySelectedIndex]);
+    }
+
+    function myActionStatusClass(status){
+      const normalized=crmNormalizeActionStatus(status);
+      return normalized==='Completed'?'completed':normalized==='In Progress'?'in-progress':'';
+    }
+
     function myActionsMarkup(record){
+      const actions=myEditMode?myDraftActionItems():crmIntelActionEntries(record,mySelectedIndex);
       if(myEditMode){
-        return `<div class="my-tab-stack-v2"><section class="my-form-section-v2"><div class="my-form-section-head-v2">ACTION ITEMS</div>${myEditField('Action items','actionItems',myDraftRecord.actionItems,true,'textarea','notes')}</section></div>`;
+        const rows=actions.map((item,index)=>`<tr>
+          <td data-label="Action"><textarea aria-label="Action" class="my-action-editor-v2" oninput="myUpdateActionItem(${index},'action',this.value)">${crmEscape(item.action||'')}</textarea></td>
+          <td data-label="Owner"><input aria-label="Owner" class="my-action-editor-v2" type="text" value="${crmEscape(item.owner==='Owner not recorded'?'':item.owner||'')}" oninput="myUpdateActionItem(${index},'owner',this.value)"/></td>
+          <td data-label="Due date"><input aria-label="Due date" class="my-action-editor-v2" type="date" value="${crmEscape(crmDateInputValue(item.dueDate))}" oninput="myUpdateActionItem(${index},'dueDate',this.value)"/></td>
+          <td data-label="Status"><select aria-label="Status" class="my-action-editor-v2" onchange="myUpdateActionItem(${index},'status',this.value)">${['Open','In Progress','Completed'].map(status=>`<option value="${status}" ${crmNormalizeActionStatus(item.status)===status?'selected':''}>${status}</option>`).join('')}</select></td>
+          <td data-label="Remove"><button aria-label="Remove action item" class="my-action-remove-v2" onclick="myRemoveActionItem(${index})" title="Remove action item" type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v5M14 11v5"></path></svg></button></td>
+        </tr>`).join('');
+        return `<div class="my-tab-stack-v2"><section class="my-form-section-v2"><div class="my-form-section-head-v2">ACTION ITEMS</div>
+          ${actions.length?`<table class="my-action-table-v2 editing"><thead><tr><th>Action</th><th>Owner</th><th>Due date</th><th>Status</th><th aria-label="Remove"></th></tr></thead><tbody>${rows}</tbody></table>`:'<div class="my-content-empty-v2">No action items recorded. Add one below.</div>'}
+          <button class="my-action-add-v2" onclick="myAddActionItem()" type="button">+ Add action item</button>
+        </section></div>`;
       }
-      const actions=crmIntelActionEntries(record,mySelectedIndex);
       if(!actions.length)return'<div class="my-content-empty-v2">No action items recorded.</div>';
-      const rows=actions.map(item=>`<tr><td data-label="Action">${crmEscape(item.action)}</td><td data-label="Owner">${crmEscape(item.owner)}</td><td data-label="Due date">${crmEscape(item.dueDate)}</td><td data-label="Status"><span class="my-action-status-v2 ${item.status==='Completed'?'completed':''}">${crmEscape(item.status)}</span></td></tr>`).join('');
+      const rows=actions.map(item=>`<tr><td data-label="Action">${crmEscape(item.action)}</td><td data-label="Owner">${crmEscape(item.owner||'Owner not recorded')}</td><td data-label="Due date">${crmEscape(item.dueDate||'Due date not recorded')}</td><td data-label="Status"><span class="my-action-status-v2 ${myActionStatusClass(item.status)}">${crmEscape(crmNormalizeActionStatus(item.status))}</span></td></tr>`).join('');
       return `<table class="my-action-table-v2"><thead><tr><th style="width:52%">Action</th><th style="width:20%">Owner</th><th style="width:18%">Due date</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table>`;
     }
 
@@ -11105,7 +11314,7 @@
       if(!record?.recordId||!crmIsOwned(record)||crmStatus(record).toLowerCase()==='archived')return;
       const parts=myDateInputParts(record.meetingDate);
       myEditMode=true;
-      myDraftRecord={...record,meetingDateDate:parts.date,meetingDateTime:parts.time};
+      myDraftRecord={...record,attendees:crmCleanAttendeeText(record.attendees,record),meetingDateDate:parts.date,meetingDateTime:parts.time,structuredActionItems:crmIntelActionEntries(record,mySelectedIndex).map(item=>({...item}))};
       myRenderDetail();
     }
 
@@ -11117,13 +11326,25 @@
     async function mySaveChanges(){
       const record=crmRecords[mySelectedIndex];
       if(mySavingRecord||!record?.recordId||!crmIsOwned(record)||!myEditMode||!myDraftRecord)return;
+      const actionItems=myDraftActionItems().map(item=>({
+        actionItemId:String(item.actionItemId||crmActionItemId()).trim(),
+        action:String(item.action||'').trim(),
+        owner:String(item.owner||'').trim(),
+        dueDate:String(item.dueDate||'').trim(),
+        status:crmNormalizeActionStatus(item.status),
+        isActive:item.isActive!==false
+      }));
+      const invalidIndex=actionItems.findIndex(item=>!item.action);
+      if(invalidIndex>=0){window.alert(`Action item ${invalidIndex+1} requires an Action value.`);myActiveTab='actions';myRenderActiveTab(record);return;}
       const fields={};
-      ['personName','companyName','email','phone','jobTitle','meetingTitle','meetingDate','reason','attendees','meetingNotes','actionItems','meetingDocumentsRaw'].forEach(key=>fields[key]=String(myDraftRecord[key]??'').trim());
+      ['personName','companyName','email','phone','jobTitle','meetingTitle','meetingDate','reason','meetingNotes','meetingDocumentsRaw'].forEach(key=>fields[key]=String(myDraftRecord[key]??'').trim());
+      fields.attendees=crmCleanAttendeeText(myDraftRecord.attendees,myDraftRecord);
+      fields.actionItems=actionItems.map((item,index)=>`${index+1}) ${item.action}`).join(' ');
       const recordKey=crmRecordRouteKey(record);
       const button=document.getElementById('mySaveBtn');
       mySavingRecord=true;if(button){button.disabled=true;button.querySelector('span').textContent='Saving…';}
       try{
-        await crmPost(CRM_RECORD_MUTATION_URL,{action:'edit',recordId:record.recordId,record:fields});
+        await crmPost(CRM_RECORD_MUTATION_URL,{action:'edit',recordId:record.recordId,record:fields,actionItems});
         myEditMode=false;myDraftRecord=null;crmContactsLoaded=false;await crmLoadContacts(true);
         const refreshed=crmFindRecordIndexByRouteKey(recordKey);if(refreshed>=0)mySelectedIndex=refreshed;myFilterRecords();
       }catch(error){window.alert(error.message||'Unable to save the record.');}
@@ -11329,7 +11550,7 @@
       const recordKey=crmRecordRouteKey(record);
       const parts=dashboardMeetingDateParts(record.meetingDate);
       const organisation=record.companyName||'Organisation not recorded';
-      const preview=record.meetingNotes||record.actionItems||record.reason||'No meeting notes recorded.';
+      const preview=record.meetingNotes||crmIntelActionEntries(record).map(item=>item.action).join(' ')||record.reason||'No meeting notes recorded.';
       const category=record.reason||'Meeting';
       const attendeeCount=dashboardAttendeeCount(record.attendees);
       return `<button class="dashboard-meeting-card" type="button" data-record-key="${crmEscape(recordKey)}" onclick="systemOpenRecordFromDashboard(this.dataset.recordKey)">
@@ -11517,8 +11738,7 @@
     }
 
     function crmIntelActionStatus(value) {
-      const normalized = crmNormalize(value || '');
-      return /(completed|complete|done|closed|resolved)/.test(normalized) ? 'Completed' : 'Open';
+      return crmNormalizeActionStatus(value);
     }
 
     function crmIntelActionFragments(value) {
@@ -11560,30 +11780,48 @@
     }
 
     function crmIntelActionEntries(record, recordIndex = -1) {
-      const rawItems = Array.isArray(record?.actionItems) ? record.actionItems : [record?.actionItems];
+      const source=record?.actionItems;
+      let rawItems=[];
+      if(Array.isArray(source))rawItems=source;
+      else if(source&&typeof source==='object')rawItems=[source];
+      else rawItems=[source];
       const fallbackOwner = crmIntelText(record?.actionOwner || record?.actionOwnerName || record?.assignee || '');
       const fallbackDueDate = crmIntelText(record?.actionDueDate || record?.dueDate || record?.deadline || '');
       const fallbackStatus = crmIntelText(record?.actionStatus || record?.followUpStatus || '');
       const resolvedIndex = Number.isInteger(recordIndex) && recordIndex >= 0 ? recordIndex : crmRecords.indexOf(record);
       const entries = [];
 
-      rawItems.forEach(item => {
+      rawItems.forEach((item,itemIndex) => {
         const objectItem = item && typeof item === 'object' && !Array.isArray(item) ? item : null;
+        if(objectItem && (objectItem.isActive===false || /^(false|0|no)$/i.test(String(objectItem.isActive||''))))return;
         const textValue = objectItem ? (objectItem.action || objectItem.text || objectItem.item || objectItem.description || '') : item;
-        const owner = crmIntelText(objectItem?.owner || objectItem?.assignee || objectItem?.assignedTo || fallbackOwner, 'Owner not recorded');
-        const dueDate = crmIntelText(objectItem?.dueDate || objectItem?.deadline || objectItem?.targetDate || fallbackDueDate, 'Due date not recorded');
-        const explicitStatus = crmIntelText(objectItem?.status || objectItem?.state || fallbackStatus);
-        const status = crmIntelActionStatus(explicitStatus);
-        crmIntelActionFragments(textValue).forEach(action => {
-          const key = `${crmRecordRouteKey(record)}::action::${crmNormalize(action)}`;
-          entries.push({ action, owner, dueDate, status, recordIndex: resolvedIndex, record, key });
+        const ownerRaw=crmIntelText(objectItem?.owner || objectItem?.assignee || objectItem?.assignedTo || fallbackOwner);
+        const dueRaw=crmIntelText(objectItem?.dueDate || objectItem?.deadline || objectItem?.targetDate || fallbackDueDate);
+        const status = crmNormalizeActionStatus(objectItem?.status || objectItem?.state || fallbackStatus);
+        const fragments=objectItem?[crmIntelText(textValue)].filter(Boolean):crmIntelActionFragments(textValue);
+        fragments.forEach((action,fragmentIndex) => {
+          const generatedKey=`${crmRecordRouteKey(record)}::action::${crmNormalize(action)}`;
+          entries.push({
+            actionItemId:String(objectItem?.actionItemId || objectItem?.id || generatedKey).trim(),
+            recordId:String(objectItem?.recordId || record?.recordId || '').trim(),
+            action,
+            owner:ownerRaw||'Owner not recorded',
+            dueDate:dueRaw||'Due date not recorded',
+            status,
+            isActive:true,
+            createdBy:String(objectItem?.createdBy||'').trim(),
+            createdAt:String(objectItem?.createdAt||'').trim(),
+            updatedBy:String(objectItem?.updatedBy||'').trim(),
+            updatedAt:String(objectItem?.updatedAt||'').trim(),
+            recordIndex: resolvedIndex, record, key:objectItem?.actionItemId||generatedKey, itemIndex, fragmentIndex
+          });
         });
       });
 
       const seen = new Set();
       return entries.filter(item => {
-        const key = crmNormalize(item.action);
-        if (!key || seen.has(key)) return false;
+        const key = item.actionItemId ? `id:${item.actionItemId}` : `text:${crmNormalize(item.action)}`;
+        if (!crmNormalize(item.action) || seen.has(key)) return false;
         seen.add(key);
         return true;
       });
@@ -11659,7 +11897,7 @@
       const sort = document.getElementById('crmContactsSort')?.value || 'engaged-desc';
       const visible = crmContactGroups.filter(group => {
         if (query && !group.searchText.includes(query)) return false;
-        if (hasActions && !group.actions.some(item => item.status === 'Open')) return false;
+        if (hasActions && !group.actions.some(item => crmIsOpenActionStatus(item.status))) return false;
         if (hasDocuments && !group.documents.length) return false;
         return true;
       });
@@ -11712,7 +11950,7 @@
       crmHistoryBackTab = options.backTab || (options.backToOverview ? 'overview' : '');
       crmHistoryFocusSection = options.focus || '';
       crmHistoryHighlightAction = '';
-      if (changed) crmActionItemsFilter = group.actions.some(item => item.status === 'Open') ? 'Open' : 'All';
+      if (changed) crmActionItemsFilter = group.actions.some(item => crmIsOpenActionStatus(item.status)) ? 'Open' : 'All';
       crmLatestDocumentFilter = Boolean(options.latestDocuments);
       crmRenderContactDirectory();
       crmRenderContactIdentity();
@@ -11850,8 +12088,8 @@
       }
       if (tab === 'actions') {
         const group = crmCurrentContactGroup();
-        if (!['All', 'Open', 'Completed'].includes(crmActionItemsFilter)) crmActionItemsFilter = group?.actions.some(item => item.status === 'Open') ? 'Open' : 'All';
-        if (crmActionItemsFilter === 'Open' && !group?.actions.some(item => item.status === 'Open')) crmActionItemsFilter = 'All';
+        if (!['All', 'Open', 'Completed'].includes(crmActionItemsFilter)) crmActionItemsFilter = group?.actions.some(item => crmIsOpenActionStatus(item.status)) ? 'Open' : 'All';
+        if (crmActionItemsFilter === 'Open' && !group?.actions.some(item => crmIsOpenActionStatus(item.status))) crmActionItemsFilter = 'All';
       }
       if (tab !== 'documents' && !options.preserveDocumentFilter) crmLatestDocumentFilter = false;
       crmRenderContactTabs();
@@ -11889,7 +12127,7 @@
     function crmOpenAllActionItems() {
       const group = crmCurrentContactGroup();
       if (!group) return;
-      crmActionItemsFilter = group.actions.some(item => item.status === 'Open') ? 'Open' : 'All';
+      crmActionItemsFilter = group.actions.some(item => crmIsOpenActionStatus(item.status)) ? 'Open' : 'All';
       crmSwitchContactTab('actions');
     }
 
@@ -11958,7 +12196,7 @@
       const latest = group.latest;
       const latestIndex = group.latestIndex;
       const summary = crmIntelText(latest.meetingNotes || latest.reason, 'No discussion summary has been recorded for the latest interaction.');
-      const openActions = group.actions.filter(item => item.status === 'Open').slice(0, 4);
+      const openActions = group.actions.filter(item => crmIsOpenActionStatus(item.status)).slice(0, 4);
       const staff = crmIntelText(latest.uploaderName || latest.updatedBy || latest.uploaderEmail, 'MRANTI staff not recorded');
       const followRows = openActions.map(item => `<tr><td>${crmEscape(item.action)}</td><td>${crmEscape(item.owner)}</td><td>${crmEscape(item.dueDate)}</td><td><span class="followup-status">${crmEscape(item.status)}</span></td></tr>`).join('');
       const documentsRow = group.documents.length ? `<section class="contact-panel-card"><button class="supporting-doc-row" onclick="crmOpenLatestDocuments()" type="button"><span><strong>${group.documents.length} relevant document${group.documents.length === 1 ? '' : 's'} available</strong><span>Meeting documents, decks and notes connected to this contact.</span></span><strong aria-hidden="true">›</strong></button></section>` : '';
@@ -11999,11 +12237,11 @@
 
     function crmActionItemsMarkup(group) {
       const actions = group.actions.slice();
-      const openCount = actions.filter(item => item.status === 'Open').length;
+      const openCount = actions.filter(item => crmIsOpenActionStatus(item.status)).length;
       const completedCount = actions.filter(item => item.status === 'Completed').length;
       if (!['All', 'Open', 'Completed'].includes(crmActionItemsFilter)) crmActionItemsFilter = openCount ? 'Open' : 'All';
       if (crmActionItemsFilter === 'Open' && !openCount) crmActionItemsFilter = 'All';
-      const visible = crmActionItemsFilter === 'All' ? actions : actions.filter(item => item.status === crmActionItemsFilter);
+      const visible = crmActionItemsFilter === 'All' ? actions : actions.filter(item => crmActionItemsFilter === 'Open' ? crmIsOpenActionStatus(item.status) : item.status === 'Completed');
       const rows = visible.map(item => {
         const meetingTitle = crmIntelText(item.record?.meetingTitle, 'Untitled meeting');
         const meetingDate = crmIntelShortDate(item.record);
