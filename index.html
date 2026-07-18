@@ -3008,8 +3008,6 @@
   .record-card-date { max-width: 145px; color: var(--crm-blue); font-size: 9px; font-weight: 850; line-height: 1.35; text-align: right; }
   .record-card-badges { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 9px; }
   .record-badge { display: inline-flex; align-items: center; padding: 3px 7px; border-radius: 999px; font-size: 8px; font-weight: 850; }
-  .record-badge.active { color: #1d4ed8; background: #eff6ff; border: 1px solid #bfdbfe; }
-  .record-badge.archived { color: #64748b; background: #f1f5f9; border: 1px solid #cbd5e1; }
   .record-badge.action { color: #9a3412; background: #fff7ed; border: 1px solid #fed7aa; }
   .record-badge.docs { color: #5b21b6; background: #f5f3ff; border: 1px solid #ddd6fe; }
 
@@ -5901,7 +5899,7 @@
   .contact-directory-row {
     position: relative;
     display: grid;
-    grid-template-columns: 48px minmax(0,1fr) auto;
+    grid-template-columns: 48px minmax(0,1fr);
     gap: 12px;
     width: 100%;
     min-width: 0;
@@ -5959,19 +5957,6 @@
   }
   .contact-directory-org { -webkit-line-clamp: 1; }
   .contact-directory-latest { -webkit-line-clamp: 1; color: #334e79; }
-  .contact-directory-status {
-    align-self: start;
-    padding: 4px 8px;
-    border: 1px solid #bfdbfe;
-    border-radius: 999px;
-    background: #eff6ff;
-    color: #1d4ed8;
-    font-size: 8.5px;
-    font-weight: 800;
-    white-space: nowrap;
-  }
-  .contact-directory-status.follow { border-color: #fed7aa; background: #fff7ed; color: #c2410c; }
-  .contact-directory-status.archived { border-color: #cbd5e1; background: #f1f5f9; color: #64748b; }
   .contact-directory-load {
     flex: 0 0 auto;
     min-height: 44px;
@@ -7448,8 +7433,6 @@
   #pageMyRecords .my-record-row-org-v2 { display:block; margin-top:3px; color:#64748b; font-size:9.5px; line-height:1.35; overflow-wrap:anywhere; }
   #pageMyRecords .my-record-row-date-v2 { min-width:0; color:#2563eb; font-size:8.5px; line-height:1.4; font-weight:800; text-align:right; white-space:normal; }
   #pageMyRecords .my-record-row-footer-v2 { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:9px; }
-  #pageMyRecords .my-record-row-status-v2 { display:inline-flex; margin:0; padding:3px 7px; border:1px solid #bfdbfe; border-radius:999px; background:#eff6ff; color:#1d4ed8; font-size:8px; font-weight:850; }
-  #pageMyRecords .my-record-row-status-v2.archived { border-color:#cbd5e1; background:#f1f5f9; color:#64748b; }
   #pageMyRecords .my-record-row-flags-v2 { display:flex; gap:5px; flex-wrap:wrap; margin:0; }
   #pageMyRecords .my-record-row-flag-v2 { display:inline-flex; padding:3px 7px; border:1px solid #fed7aa; border-radius:999px; background:#fff7ed; color:#9a3412; font-size:8px; font-weight:800; }
   #pageMyRecords .my-records-empty-v2 { min-height:220px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:28px 20px; color:#64748b; font-size:10.5px; line-height:1.5; text-align:center; }
@@ -10583,6 +10566,12 @@
         let responseData = {};
         try { responseData = responseText ? JSON.parse(responseText) : {}; } catch (e) {}
         if (res.ok || res.status === 200) {
+          if (responseData.success === false) throw new Error(responseData.error || responseData.message || 'The CRM did not complete the submission.');
+          const expectedActionItemWrites = actionItems.length * contactsToSave.length;
+          const actionItemsWritten = Number(responseData.actionItemsWritten || 0);
+          if (expectedActionItemWrites > 0 && actionItemsWritten < expectedActionItemWrites) {
+            throw new Error(`Structured Action Items were not saved completely (${actionItemsWritten} of ${expectedActionItemWrites} confirmed).`);
+          }
           clearMeetingDraft();
           const uploaded = Number(responseData.uploadedDocuments || 0);
           const linkedCalendarAttachments = Number(responseData.linkedCalendarAttachments || calendarAttachments.length || 0);
@@ -10674,6 +10663,8 @@
     let crmEditingRecordIndex = -1;
     let crmContactsLoaded = false;
     let crmContactsLoading = false;
+    let crmContactsLoadPromise = null;
+    const pendingRecordMutations = new Map();
     let crmPendingRecordKey = '';
     let systemEmbeddedLoaded = { relationships: false };
 
@@ -10860,7 +10851,12 @@
     async function crmPost(url, payload = {}) {
       if (!currentUser) throw new Error('Your CRM session has expired. Please sign in again.');
       const idToken = await currentUser.getIdToken(false);
-      const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: JSON.stringify({ ...payload, idToken }) });
+      const response = await fetch(url, {
+        method: 'POST',
+        cache: 'no-store',
+        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+        body: JSON.stringify({ ...payload, idToken })
+      });
       const text = await response.text();
       let data = {};
       try { data = JSON.parse(text); } catch (error) { throw new Error(text || 'The CRM service returned an invalid response.'); }
@@ -10881,28 +10877,105 @@
       return text;
     }
 
-    async function crmLoadContacts(force = false) {
-      if (crmContactsLoading) return;
+    function crmRecordId(record) { return String(record?.recordId || '').trim(); }
+
+    function crmMergePendingMutation(record) {
+      const recordId = crmRecordId(record);
+      const pending = recordId ? pendingRecordMutations.get(recordId) : null;
+      if (!pending) return record;
+      const serverStatus = crmNormalize(crmStatus(record));
+      const expectedStatus = crmNormalize(pending.expectedStatus);
+      if (serverStatus === expectedStatus) {
+        pendingRecordMutations.delete(recordId);
+        return record;
+      }
+      return {
+        ...record,
+        recordStatus: pending.expectedStatus,
+        lastUpdated: pending.lastUpdated || record.lastUpdated,
+        updatedBy: pending.updatedBy || record.updatedBy
+      };
+    }
+
+    function crmApplyOptimisticStatus(recordId, expectedStatus, response = {}) {
+      const index = crmRecords.findIndex(record => crmRecordId(record) === recordId);
+      if (index < 0) return -1;
+      const now = response.lastUpdated || new Date().toISOString();
+      const updatedBy = response.updatedBy || currentUser?.email || crmRecords[index].updatedBy || '';
+      crmRecords[index] = {
+        ...crmRecords[index],
+        recordStatus: expectedStatus,
+        lastUpdated: now,
+        updatedBy
+      };
+      pendingRecordMutations.set(recordId, {
+        recordId,
+        expectedStatus,
+        timestamp: Date.now(),
+        lastUpdated: now,
+        updatedBy
+      });
+      return index;
+    }
+
+    async function crmLoadContacts(force = false, options = {}) {
+      const silent = Boolean(options.silent);
+      if (crmContactsLoadPromise) return crmContactsLoadPromise;
       if (crmContactsLoaded && !force) { systemRenderAllCRMViews(); crmApplyPendingRecordSelection(); return; }
+      const selectedMyKey = crmRecordRouteKey(crmRecords[mySelectedIndex] || {});
+      const selectedContactKey = crmSelectedContactKey;
+      const selectedMeetingKey = crmRecordRouteKey(crmRecords[crmSelectedMeetingIndex] || {});
       crmContactsLoading = true;
-      crmSetBanner('Loading CRM contacts…', 'info');
-      try {
-        const data = await crmPost(CRM_CONTACTS_DATA_URL, { action: 'list' });
-        crmRecords = Array.isArray(data.records) ? data.records.map((record,index) => {
-          const attendeesRaw = record?.attendees ?? '';
-          return { ...record, attendeesRaw, attendees: crmCleanAttendeeText(attendeesRaw, record), _clientIndex:index };
-        }) : [];
-        crmContactsLoaded = true;
-        const legacyCount = crmRecords.filter(record => !record.recordId).length;
-        crmSetBanner(legacyCount ? `${legacyCount} legacy record${legacyCount===1?' is':'s are'} view-only until Record ID is populated.` : '', 'info');
-        systemRenderAllCRMViews();
-        crmApplyPendingRecordSelection();
-      } catch (error) {
-        crmRecords = [];
-        crmSetBanner(error.message || 'Unable to load CRM contacts.', 'error');
-        document.getElementById('crmContactsList').innerHTML = '<div class="crm-contacts-empty">Unable to load CRM contacts. Use Refresh to try again.</div>';
-        document.getElementById('myRecordsList').innerHTML = '<div class="crm-contacts-empty">Unable to load your CRM entries.</div>';
-      } finally { crmContactsLoading = false; }
+      if (!silent) crmSetBanner('Loading CRM contacts…', 'info');
+      crmContactsLoadPromise = (async () => {
+        try {
+          const data = await crmPost(CRM_CONTACTS_DATA_URL, { action: 'list', _ts: Date.now() });
+          const loaded = Array.isArray(data.records) ? data.records.map((record,index) => {
+            const attendeesRaw = record?.attendees ?? '';
+            const cleaned = { ...record, attendeesRaw, attendees: crmCleanAttendeeText(attendeesRaw, record), _clientIndex:index };
+            return crmMergePendingMutation(cleaned);
+          }) : [];
+          crmRecords = loaded;
+          crmContactsLoaded = true;
+          if (selectedMyKey) {
+            const restoredMyIndex = crmFindRecordIndexByRouteKey(selectedMyKey);
+            if (restoredMyIndex >= 0) mySelectedIndex = restoredMyIndex;
+          }
+          if (selectedContactKey) crmSelectedContactKey = selectedContactKey;
+          if (selectedMeetingKey) {
+            const restoredMeetingIndex = crmFindRecordIndexByRouteKey(selectedMeetingKey);
+            if (restoredMeetingIndex >= 0) {
+              crmSelectedMeetingIndex = restoredMeetingIndex;
+              crmSelectedIndex = restoredMeetingIndex;
+            }
+          }
+          const legacyCount = crmRecords.filter(record => !record.recordId).length;
+          if (!silent) crmSetBanner(legacyCount ? `${legacyCount} legacy record${legacyCount===1?' is':'s are'} view-only until Record ID is populated.` : '', 'info');
+          systemRenderAllCRMViews();
+          crmApplyPendingRecordSelection();
+        } catch (error) {
+          if (!silent) {
+            crmRecords = [];
+            crmSetBanner(error.message || 'Unable to load CRM contacts.', 'error');
+            document.getElementById('crmContactsList').innerHTML = '<div class="crm-contacts-empty">Unable to load CRM contacts. Use Refresh to try again.</div>';
+            document.getElementById('myRecordsList').innerHTML = '<div class="crm-contacts-empty">Unable to load your CRM entries.</div>';
+          }
+          throw error;
+        } finally {
+          crmContactsLoading = false;
+          crmContactsLoadPromise = null;
+        }
+      })();
+      return crmContactsLoadPromise;
+    }
+
+    async function crmReconcileRecordMutation(recordId) {
+      for (const waitMs of [300, 600, 900]) {
+        await new Promise(resolve => setTimeout(resolve, waitMs));
+        if (!pendingRecordMutations.has(recordId)) return;
+        try { await crmLoadContacts(true, { silent: true }); } catch (error) { console.warn('CRM reconciliation retry failed', error); }
+        if (!pendingRecordMutations.has(recordId)) return;
+      }
     }
 
     function systemRenderAllCRMViews() {
@@ -10982,9 +11055,9 @@
     }
 
     function crmRecordCard(record,index,selected,handler) {
-      const status = crmStatus(record);
+      const flags = `${crmHasAction(record)?'<span class="record-badge action">Action items</span>':''}${crmHasDocuments(record)?`<span class="record-badge docs">${record.meetingDocuments.length} document${record.meetingDocuments.length===1?'':'s'}</span>`:''}`;
       return `<button class="record-card ${selected?'active':''}" type="button" data-record-index="${index}" data-record-key="${crmEscape(crmRecordRouteKey(record))}" onclick="${handler}(${index})">
-        <div><div class="record-card-name">${crmEscape(record.personName||'Unnamed contact')}</div><div class="record-card-company">${crmEscape(record.companyName||'No company recorded')}</div><div class="record-card-meeting">${crmEscape(record.meetingTitle||'No meeting title')}</div><div class="record-card-purpose">${crmEscape(record.reason||'No purpose recorded')}</div><div class="record-card-badges"><span class="record-badge ${status.toLowerCase()==='archived'?'archived':'active'}">${crmEscape(status)}</span>${crmHasAction(record)?'<span class="record-badge action">Action items</span>':''}${crmHasDocuments(record)?`<span class="record-badge docs">${record.meetingDocuments.length} document${record.meetingDocuments.length===1?'':'s'}</span>`:''}</div></div>
+        <div><div class="record-card-name">${crmEscape(record.personName||'Unnamed contact')}</div><div class="record-card-company">${crmEscape(record.companyName||'No company recorded')}</div><div class="record-card-meeting">${crmEscape(record.meetingTitle||'No meeting title')}</div><div class="record-card-purpose">${crmEscape(record.reason||'No purpose recorded')}</div>${flags?`<div class="record-card-badges">${flags}</div>`:''}</div>
         <div class="record-card-date">${crmEscape(record.meetingDate||'No date')}</div>
       </button>`;
     }
@@ -11070,7 +11143,6 @@
     }
 
     function myRecordDirectoryMarkup(record,index,selected){
-      const status=crmStatus(record);
       const date=crmIntelShortDate(record);
       const time=crmIntelTimeRange(record);
       const actionCount=crmIntelActionEntries(record,index).length;
@@ -11085,10 +11157,7 @@
           </span>
           <span class="my-record-row-contact-v2">${crmEscape(record.personName||'Contact not recorded')}</span>
           <span class="my-record-row-org-v2">${crmEscape(record.companyName||'Organisation not recorded')}</span>
-          <span class="my-record-row-footer-v2">
-            <span class="my-record-row-status-v2 ${status.toLowerCase()==='archived'?'archived':''}">${crmEscape(status)}</span>
-            ${flags.length?`<span class="my-record-row-flags-v2">${flags.join('')}</span>`:''}
-          </span>
+          ${flags.length?`<span class="my-record-row-footer-v2"><span class="my-record-row-flags-v2">${flags.join('')}</span></span>`:''}
         </span>
       </button>`;
     }
@@ -11314,8 +11383,6 @@
       const created=record.createdAt||record.createdDate||'';
       if(created)items.push({title:'Record created',meta:`${created}${record.uploaderName||record.uploaderEmail?` · ${record.uploaderName||record.uploaderEmail}`:''}`});
       if(record.lastUpdated)items.push({title:'Record updated',meta:`${record.lastUpdated}${record.updatedBy?` · ${record.updatedBy}`:''}`});
-      const status=crmStatus(record);
-      items.push({title:'Current record status',meta:status});
       if(!items.length)return'<div class="my-content-empty-v2">No record history is available beyond the current record metadata.</div>';
       return `<div class="my-history-list-v2">${items.map(item=>`<div class="my-history-item-v2"><div class="my-history-title-v2">${crmEscape(item.title)}</div><div class="my-history-meta-v2">${crmEscape(item.meta)}</div></div>`).join('')}</div>`;
     }
@@ -11423,7 +11490,30 @@
     function crmEditField(label,key,value,type='text',full=false){const control=type==='textarea'?`<textarea class="crm-edit-textarea" data-key="${key}">${crmEscape(value)}</textarea>`:`<input class="crm-edit-input" data-key="${key}" type="text" value="${crmEscape(value)}" />`;return `<div class="crm-edit-field ${full?'full':''}"><label>${label}</label>${control}</div>`;}
     function crmCloseEditModal(){document.getElementById('crmEditModal').style.display='none';crmEditingRecordIndex=-1;}
     async function crmSaveRecordEdit(){const record=crmRecords[crmEditingRecordIndex];if(!record?.recordId||!crmIsOwned(record))return;const fields={};document.querySelectorAll('#crmEditFields [data-key]').forEach(el=>fields[el.dataset.key]=el.value.trim());const button=document.getElementById('crmSaveEditBtn');const errorBox=document.getElementById('crmEditError');button.disabled=true;button.textContent='Saving…';errorBox.className='crm-contacts-banner error';errorBox.textContent='';try{await crmPost(CRM_RECORD_MUTATION_URL,{action:'edit',recordId:record.recordId,record:fields});crmCloseEditModal();crmContactsLoaded=false;await crmLoadContacts(true);}catch(error){errorBox.textContent=error.message||'Unable to save the record.';errorBox.className='crm-contacts-banner error show';}finally{button.disabled=false;button.textContent='Save Changes';}}
-    async function myMutateStatus(action){const record=crmRecords[mySelectedIndex];if(!record?.recordId||!crmIsOwned(record))return;const verb=action==='archive'?'archive':'restore';if(!window.confirm(`${verb.charAt(0).toUpperCase()+verb.slice(1)} this CRM record?`))return;try{await crmPost(CRM_RECORD_MUTATION_URL,{action,recordId:record.recordId});crmContactsLoaded=false;await crmLoadContacts(true);}catch(error){window.alert(error.message||`Unable to ${verb} the record.`);}}
+    async function myMutateStatus(action){
+      const record=crmRecords[mySelectedIndex];
+      if(!record?.recordId||!crmIsOwned(record)||mySavingRecord)return;
+      const verb=action==='archive'?'archive':'restore';
+      if(!window.confirm(`${verb.charAt(0).toUpperCase()+verb.slice(1)} this CRM record?`))return;
+      const recordId=String(record.recordId).trim();
+      const selectedKey=crmRecordRouteKey(record);
+      mySavingRecord=true;
+      try{
+        const response=await crmPost(CRM_RECORD_MUTATION_URL,{action,recordId});
+        const expectedStatus=response.recordStatus||(action==='archive'?'Archived':'Active');
+        const optimisticIndex=crmApplyOptimisticStatus(recordId,expectedStatus,response);
+        if(optimisticIndex>=0)mySelectedIndex=optimisticIndex;
+        const selectedIndex=crmFindRecordIndexByRouteKey(selectedKey);
+        if(selectedIndex>=0)mySelectedIndex=selectedIndex;
+        systemRenderAllCRMViews();
+        void crmReconcileRecordMutation(recordId);
+      }catch(error){
+        window.alert(error.message||`Unable to ${verb} the record.`);
+      }finally{
+        mySavingRecord=false;
+        myRenderDetail();
+      }
+    }
     function myArchiveSelected(){myMutateStatus('archive');}
     function myRestoreSelected(){myMutateStatus('restore');}
     document.getElementById('crmEditModal').addEventListener('click',event=>{if(event.target.id==='crmEditModal')crmCloseEditModal();});
@@ -11925,35 +12015,45 @@
       });
 
       crmContactGroups = Array.from(map.values()).map(group => {
-        group.records.sort((a, b) => crmIntelDateScore(b.record) - crmIntelDateScore(a.record));
-        const ordered = group.records.map(entry => entry.record);
-        const latestEntry = group.records[0] || { record: {}, index: -1 };
+        const allRecords = group.records.slice().sort((a, b) => crmIntelDateScore(b.record) - crmIntelDateScore(a.record));
+        const activeRecords = allRecords.filter(entry => crmNormalize(crmStatus(entry.record)) !== 'archived');
+        const identityRecords = allRecords.map(entry => entry.record);
+        const activeOrdered = activeRecords.map(entry => entry.record);
+        const identitySource = activeOrdered.length ? activeOrdered : identityRecords;
+        const latestEntry = activeRecords[0] || { record: {}, index: -1 };
         const latest = latestEntry.record;
-        const documents = group.records.flatMap(entry => crmIntelDocumentsForRecord(entry.record, entry.index));
+        const documents = activeRecords.flatMap(entry => crmIntelDocumentsForRecord(entry.record, entry.index));
         const actionSeen = new Set();
-        const actions = group.records.flatMap(entry => crmIntelActionEntries(entry.record, entry.index)).filter(item => {
-          const key = crmNormalize(item.action);
+        const actions = activeRecords.flatMap(entry => crmIntelActionEntries(entry.record, entry.index)).filter(item => {
+          const stableId = String(item.actionItemId || '').trim();
+          const key = stableId ? `id:${stableId}` : `record:${item.recordId || item.recordIndex}:${item.key || ''}`;
           if (!key || actionSeen.has(key)) return false;
           actionSeen.add(key);
           return true;
         });
+        const searchRecords = activeOrdered.length ? activeOrdered : identityRecords.map(record => ({
+          ...record,
+          meetingTitle: '', meetingDate: '', reason: '', meetingNotes: '', actionItems: '', meetingDocuments: []
+        }));
         return {
-          ...group,
+          key: group.key,
+          allRecords,
+          activeRecords,
+          records: activeRecords,
           latest,
           latestIndex: latestEntry.index,
-          name: crmIntelRecordValue(ordered, ['personName'], 'Unnamed contact'),
-          company: crmIntelRecordValue(ordered, ['companyName', 'organisation', 'organization'], 'Organisation not recorded'),
-          email: crmIntelRecordValue(ordered, ['email']),
-          phone: crmIntelRecordValue(ordered, ['phone', 'contactNumber']),
-          jobTitle: crmIntelRecordValue(ordered, ['jobTitle', 'position']),
-          department: crmIntelRecordValue(ordered, ['department', 'division']),
-          location: crmIntelRecordValue(ordered, ['contactLocation', 'city', 'country', 'location']),
-          status: crmStatus(latest),
-          latestTitle: crmIntelText(latest.meetingTitle, 'No meeting title recorded'),
-          latestDateScore: crmIntelDateScore(latest),
+          name: crmIntelRecordValue(identitySource, ['personName'], 'Unnamed contact'),
+          company: crmIntelRecordValue(identitySource, ['companyName', 'organisation', 'organization'], 'Organisation not recorded'),
+          email: crmIntelRecordValue(identitySource, ['email']),
+          phone: crmIntelRecordValue(identitySource, ['phone', 'contactNumber']),
+          jobTitle: crmIntelRecordValue(identitySource, ['jobTitle', 'position']),
+          department: crmIntelRecordValue(identitySource, ['department', 'division']),
+          location: crmIntelRecordValue(identitySource, ['contactLocation', 'city', 'country', 'location']),
+          latestTitle: activeRecords.length ? crmIntelText(latest.meetingTitle, 'No meeting title recorded') : 'No active meeting records',
+          latestDateScore: activeRecords.length ? crmIntelDateScore(latest) : 0,
           documents,
           actions,
-          searchText: crmNormalize(ordered.map(crmRecordSearchText).join(' '))
+          searchText: crmNormalize(searchRecords.map(crmRecordSearchText).join(' '))
         };
       });
       return crmContactGroups;
@@ -11987,7 +12087,6 @@
 
     function crmDirectoryRow(group) {
       const active = group.key === crmSelectedContactKey;
-      const statusClass = crmIntelStatusClass(group.status);
       return `<button class="contact-directory-row ${active ? 'active' : ''}" type="button" data-contact-key="${encodeURIComponent(group.key)}" onclick="crmSelectContactByKey(decodeURIComponent(this.dataset.contactKey))" aria-pressed="${active ? 'true' : 'false'}">
         <span class="contact-directory-avatar" aria-hidden="true">${crmEscape(crmIntelInitials(group.name))}</span>
         <span class="contact-directory-copy">
@@ -11995,7 +12094,6 @@
           <span class="contact-directory-org">${crmEscape(group.company)}</span>
           <span class="contact-directory-latest">${crmEscape(group.latestTitle)}</span>
         </span>
-        <span class="contact-directory-status ${statusClass}">${crmEscape(group.status)}</span>
       </button>`;
     }
 
@@ -12135,7 +12233,7 @@
       document.getElementById('crmContactRole').textContent = [group.jobTitle, group.department].filter(Boolean).join(' · ');
       document.getElementById('crmContactMeta').innerHTML = crmContactMetaMarkup(group);
       document.getElementById('crmContactMeetingCount').textContent = `${group.records.length} meeting${group.records.length === 1 ? '' : 's'}`;
-      document.getElementById('crmContactLastEngaged').textContent = `Last engaged ${crmIntelShortDate(group.latest)}`;
+      document.getElementById('crmContactLastEngaged').textContent = group.activeRecords.length ? `Last engaged ${crmIntelShortDate(group.latest)}` : 'Last engaged —';
     }
 
     function crmRenderContactTabs() {
@@ -12263,6 +12361,9 @@
     }
 
     function crmOverviewMarkup(group) {
+      if (!group.activeRecords.length) {
+        return `<section class="contact-panel-card"><div class="contact-panel-title-row"><div><div class="contact-panel-title">No current relationship activity</div><div class="contact-panel-subtitle">This contact remains available, but all linked meeting records are archived.</div></div></div><div class="followup-empty">Restore a meeting from My CRM Entries to include it again in current relationship activity.</div></section>`;
+      }
       const latest = group.latest;
       const latestIndex = group.latestIndex;
       const summary = crmIntelText(latest.meetingNotes || latest.reason, 'No discussion summary has been recorded for the latest interaction.');
@@ -12414,7 +12515,7 @@
       const permission = owned ? 'Uploader access — this user may edit and archive the selected record.' : 'View only — only the uploader may modify the selected record.';
       return `<div class="record-info-groups">
         <section class="record-info-group"><h3>Contact Information</h3><div class="record-info-grid">${crmInfoField('Name', group.name)}${crmInfoField('Organisation', group.company)}${crmInfoField('Email', group.email)}${crmInfoField('Phone', group.phone)}${crmInfoField('Job title', group.jobTitle)}${crmInfoField('Department', group.department)}${crmInfoField('Location', group.location, true)}</div></section>
-        <section class="record-info-group"><h3>Record Ownership and Permissions</h3><div class="record-info-grid">${crmInfoField('Uploader', record.uploaderName || record.uploaderEmail)}${crmInfoField('Uploader email', record.uploaderEmail)}${crmInfoField('Current signed-in user', signedInName)}${crmInfoField('Signed-in email', signedInEmail)}${crmInfoField('Permission status', permission, true)}${crmInfoField('May edit', owned ? 'Yes' : 'No')}${crmInfoField('May archive', owned ? 'Yes' : 'No')}${crmInfoField('Current record status', crmStatus(record))}</div></section>
+        <section class="record-info-group"><h3>Record Ownership and Permissions</h3><div class="record-info-grid">${crmInfoField('Uploader', record.uploaderName || record.uploaderEmail)}${crmInfoField('Uploader email', record.uploaderEmail)}${crmInfoField('Current signed-in user', signedInName)}${crmInfoField('Signed-in email', signedInEmail)}${crmInfoField('Permission status', permission, true)}${crmInfoField('May edit', owned ? 'Yes' : 'No')}${crmInfoField('May archive', owned ? 'Yes' : 'No')}</div></section>
       </div>`;
     }
 
