@@ -7352,6 +7352,216 @@
     #pageRelationships #relationshipFrame { height:1320px!important; min-height:1320px!important; }
   }
 </style>
+
+<style id="my-entries-record-workspace-v27">
+  /* My Entries main workspace only. The approved navbar and page-introduction remain untouched. */
+  #pageMyRecords .my-records-workspace-v2 {
+    display:grid;
+    grid-template-columns:360px minmax(0,1fr);
+    gap:16px;
+    align-items:stretch;
+    width:100%;
+    height:clamp(680px,calc(100vh - 280px),860px);
+    min-height:680px;
+  }
+  #pageMyRecords .my-records-directory-v2,
+  #pageMyRecords .my-record-workspace-v2 {
+    min-width:0;
+    height:100%;
+    padding:0;
+    border-radius:20px;
+    overflow:hidden;
+    background:rgba(255,255,255,.94);
+    border:1px solid rgba(147,197,253,.42);
+    box-shadow:0 14px 38px rgba(37,99,235,.085),0 2px 7px rgba(15,23,42,.035);
+    backdrop-filter:blur(12px);
+  }
+  #pageMyRecords .my-records-directory-v2 { display:flex; flex-direction:column; }
+  #pageMyRecords .my-directory-head-v2 {
+    flex:0 0 auto;
+    min-height:57px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:15px 17px;
+    border-bottom:1px solid #dbeafe;
+  }
+  #pageMyRecords .my-directory-title-v2 { color:#1e3a5f; font-size:10px; font-weight:900; letter-spacing:1.35px; }
+  #pageMyRecords .my-directory-count-v2 { color:#2563eb; font-size:10px; font-weight:850; white-space:nowrap; }
+  #pageMyRecords .my-directory-controls-v2 { flex:0 0 auto; padding:13px 13px 12px; border-bottom:1px solid #e5edf8; background:#fbfdff; }
+  #pageMyRecords .my-directory-search-v2 {
+    min-height:42px;
+    display:grid;
+    grid-template-columns:18px minmax(0,1fr);
+    align-items:center;
+    gap:8px;
+    padding:0 11px;
+    border:1.5px solid #bfdbfe;
+    border-radius:11px;
+    background:#fff;
+  }
+  #pageMyRecords .my-directory-search-v2:focus-within { border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.08); }
+  #pageMyRecords .my-directory-search-v2 svg { width:17px; height:17px; fill:none; stroke:#64748b; stroke-width:1.8; }
+  #pageMyRecords .my-directory-search-v2 input { width:100%; min-width:0; border:0; outline:0; background:transparent; color:#0f172a; font:inherit; font-size:10.5px; }
+  #pageMyRecords .my-directory-filter-row-v2 { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto; gap:7px; margin-top:9px; }
+  #pageMyRecords .my-directory-select-v2,
+  #pageMyRecords .my-directory-more-panel-v2 select {
+    width:100%; min-width:0; min-height:36px; padding:7px 27px 7px 9px; border:1px solid #dbeafe; border-radius:9px; background:#fff; color:#334155; font:inherit; font-size:9.5px; font-weight:700; outline:none;
+  }
+  #pageMyRecords .my-directory-select-v2:focus,
+  #pageMyRecords .my-directory-more-panel-v2 select:focus { border-color:#2563eb; box-shadow:0 0 0 2px rgba(37,99,235,.08); }
+  #pageMyRecords .my-directory-more-v2 {
+    min-height:36px; display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:7px 10px; border:1px solid #dbeafe; border-radius:9px; background:#fff; color:#2563eb; font:inherit; font-size:9.5px; font-weight:850; cursor:pointer;
+  }
+  #pageMyRecords .my-directory-more-v2:hover { border-color:#93c5fd; background:#eff6ff; }
+  #pageMyRecords .my-directory-more-v2 svg { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:1.8; }
+  #pageMyRecords .my-directory-more-panel-v2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:9px; padding:10px; border:1px solid #dbeafe; border-radius:11px; background:#f8fbff; }
+  #pageMyRecords .my-directory-more-panel-v2[hidden] { display:none; }
+  #pageMyRecords .my-directory-more-panel-v2 label { min-width:0; }
+  #pageMyRecords .my-directory-more-panel-v2 label > span { display:block; margin-bottom:5px; color:#64748b; font-size:8px; font-weight:850; letter-spacing:.65px; text-transform:uppercase; }
+  #pageMyRecords .my-directory-clear-v2 { grid-column:1/-1; min-height:32px; border:0; border-top:1px solid #dbeafe; padding-top:8px; background:transparent; color:#2563eb; font:inherit; font-size:9px; font-weight:850; cursor:pointer; }
+  #pageMyRecords .my-records-list-v2 { flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; scrollbar-gutter:stable; }
+  #pageMyRecords .my-record-row-v2 {
+    position:relative;
+    width:100%;
+    min-height:100px;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:12px;
+    padding:14px 15px 13px 17px;
+    border:0;
+    border-bottom:1px solid #e5edf8;
+    background:#fff;
+    color:#0f172a;
+    font:inherit;
+    text-align:left;
+    cursor:pointer;
+  }
+  #pageMyRecords .my-record-row-v2::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:transparent; }
+  #pageMyRecords .my-record-row-v2:hover { background:#f8fbff; }
+  #pageMyRecords .my-record-row-v2.active { background:#eff6ff; }
+  #pageMyRecords .my-record-row-v2.active::before { background:#2563eb; }
+  #pageMyRecords .my-record-row-v2:focus-visible { outline:2px solid #2563eb; outline-offset:-2px; z-index:1; }
+  #pageMyRecords .my-record-row-main-v2 { min-width:0; }
+  #pageMyRecords .my-record-row-title-v2 { color:#0f172a; font-size:11.5px; line-height:1.35; font-weight:900; overflow-wrap:anywhere; }
+  #pageMyRecords .my-record-row-contact-v2 { margin-top:6px; color:#334155; font-size:10px; line-height:1.35; font-weight:750; }
+  #pageMyRecords .my-record-row-org-v2 { margin-top:3px; color:#64748b; font-size:9.5px; line-height:1.35; overflow-wrap:anywhere; }
+  #pageMyRecords .my-record-row-date-v2 { max-width:112px; color:#2563eb; font-size:8.5px; line-height:1.4; font-weight:800; text-align:right; }
+  #pageMyRecords .my-record-row-status-v2 { display:inline-flex; margin-top:8px; padding:3px 7px; border:1px solid #bfdbfe; border-radius:999px; background:#eff6ff; color:#1d4ed8; font-size:8px; font-weight:850; }
+  #pageMyRecords .my-record-row-status-v2.archived { border-color:#cbd5e1; background:#f1f5f9; color:#64748b; }
+  #pageMyRecords .my-record-row-flags-v2 { display:flex; gap:5px; flex-wrap:wrap; margin-top:7px; }
+  #pageMyRecords .my-record-row-flag-v2 { color:#9a3412; font-size:8px; font-weight:800; }
+  #pageMyRecords .my-records-empty-v2 { min-height:220px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:28px 20px; color:#64748b; font-size:10.5px; line-height:1.5; text-align:center; }
+  #pageMyRecords .my-records-empty-v2 strong { color:#0f172a; font-size:13px; }
+
+  #pageMyRecords .my-record-workspace-v2 { display:flex; flex-direction:column; }
+  #pageMyRecords .my-record-header-v2 { flex:0 0 auto; display:flex; align-items:flex-start; justify-content:space-between; gap:22px; padding:20px 22px 18px; border-bottom:1px solid #dbeafe; }
+  #pageMyRecords .my-record-heading-v2 { min-width:0; flex:1 1 auto; }
+  #pageMyRecords .my-record-eyebrow-v2 { color:#2563eb; font-size:8.5px; font-weight:900; letter-spacing:1.25px; }
+  #pageMyRecords .my-record-heading-v2 h2 { margin:6px 0 0; color:#0f172a; font-size:22px; line-height:1.2; font-weight:900; letter-spacing:-.45px; overflow-wrap:anywhere; }
+  #pageMyRecords .my-record-meta-v2 { display:flex; align-items:center; gap:0; flex-wrap:wrap; margin-top:9px; color:#475569; font-size:10px; line-height:1.45; }
+  #pageMyRecords .my-record-meta-v2 span { min-width:0; overflow-wrap:anywhere; }
+  #pageMyRecords .my-record-meta-v2 span + span::before { content:'•'; margin:0 8px; color:#94a3b8; }
+  #pageMyRecords .my-record-provenance-v2 { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:8px; color:#94a3b8; font-size:9px; line-height:1.45; }
+  #pageMyRecords .my-record-provenance-v2 span:empty { display:none; }
+  #pageMyRecords .my-record-permission-v2 { margin-top:10px; max-width:650px; padding:8px 10px; border:1px solid #dbeafe; border-radius:9px; background:#f8fbff; color:#475569; font-size:9.5px; line-height:1.45; }
+  #pageMyRecords .my-record-actions-v2 { flex:0 0 auto; display:flex; align-items:center; justify-content:flex-end; gap:7px; flex-wrap:wrap; }
+  #pageMyRecords .my-record-tabs-v2 { flex:0 0 auto; display:flex; align-items:center; gap:24px; min-width:0; padding:0 22px; border-bottom:1px solid #dbeafe; overflow-x:auto; scrollbar-width:none; }
+  #pageMyRecords .my-record-tabs-v2::-webkit-scrollbar { display:none; }
+  #pageMyRecords .my-record-tabs-v2 button { position:relative; flex:0 0 auto; min-height:46px; padding:0 1px; border:0; background:transparent; color:#64748b; font:inherit; font-size:10.5px; font-weight:800; cursor:pointer; }
+  #pageMyRecords .my-record-tabs-v2 button::after { content:''; position:absolute; left:0; right:0; bottom:-1px; height:2px; border-radius:999px; background:transparent; }
+  #pageMyRecords .my-record-tabs-v2 button.active { color:#2563eb; }
+  #pageMyRecords .my-record-tabs-v2 button.active::after { background:#2563eb; }
+  #pageMyRecords .my-record-tabs-v2 button:focus-visible { outline:2px solid #2563eb; outline-offset:3px; border-radius:4px; }
+  #pageMyRecords .my-record-tab-content-v2 { flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:20px 22px 24px; scrollbar-gutter:stable; }
+  #pageMyRecords .my-record-no-selection-v2 { min-height:360px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:#64748b; text-align:center; }
+  #pageMyRecords .my-record-no-selection-v2 strong { color:#0f172a; font-size:15px; }
+  #pageMyRecords .my-record-no-selection-v2 span { font-size:10.5px; }
+
+  #pageMyRecords .my-tab-stack-v2 { display:flex; flex-direction:column; gap:20px; }
+  #pageMyRecords .my-form-section-v2 { min-width:0; }
+  #pageMyRecords .my-form-section-head-v2 { margin-bottom:10px; color:#1e3a5f; font-size:9px; font-weight:900; letter-spacing:1.25px; text-transform:uppercase; }
+  #pageMyRecords .my-field-grid-v2 { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  #pageMyRecords .my-field-v2 { min-width:0; padding:11px 12px; border:1px solid #e2e8f0; border-radius:11px; background:#f8fafc; }
+  #pageMyRecords .my-field-v2.full { grid-column:1/-1; }
+  #pageMyRecords .my-field-v2 label,
+  #pageMyRecords .my-field-label-v2 { display:block; margin-bottom:5px; color:#94a3b8; font-size:8px; font-weight:900; letter-spacing:.72px; text-transform:uppercase; }
+  #pageMyRecords .my-field-value-v2 { min-width:0; color:#0f172a; font-size:10.5px; line-height:1.5; font-weight:680; white-space:pre-wrap; overflow-wrap:anywhere; }
+  #pageMyRecords .my-field-value-v2 a { color:#2563eb; text-decoration:none; }
+  #pageMyRecords .my-edit-input-v2,
+  #pageMyRecords .my-edit-textarea-v2 { width:100%; min-width:0; border:1.5px solid #bfdbfe; border-radius:9px; background:#fff; color:#0f172a; font:inherit; font-size:10.5px; line-height:1.45; outline:none; }
+  #pageMyRecords .my-edit-input-v2 { min-height:38px; padding:8px 10px; }
+  #pageMyRecords .my-edit-textarea-v2 { min-height:118px; padding:10px 11px; resize:vertical; }
+  #pageMyRecords .my-edit-textarea-v2.notes { min-height:330px; }
+  #pageMyRecords .my-edit-input-v2:focus,
+  #pageMyRecords .my-edit-textarea-v2:focus { border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.08); }
+  #pageMyRecords .my-chip-list-v2 { display:flex; flex-wrap:wrap; gap:6px; }
+  #pageMyRecords .my-chip-v2 { display:inline-flex; padding:4px 8px; border:1px solid #bfdbfe; border-radius:999px; background:#eff6ff; color:#1e40af; font-size:9px; font-weight:750; }
+  #pageMyRecords .my-content-panel-v2 { padding:16px 17px; border:1px solid #dbeafe; border-radius:13px; background:#fbfdff; color:#1e293b; font-size:11px; line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere; }
+  #pageMyRecords .my-content-empty-v2 { padding:30px 20px; border:1px dashed #bfdbfe; border-radius:13px; background:#fbfdff; color:#64748b; font-size:10.5px; text-align:center; }
+
+  #pageMyRecords .my-action-table-v2 { width:100%; border-collapse:separate; border-spacing:0; border:1px solid #dbeafe; border-radius:13px; overflow:hidden; background:#fff; }
+  #pageMyRecords .my-action-table-v2 th { padding:9px 10px; border-bottom:1px solid #dbeafe; background:#f8fbff; color:#64748b; font-size:8px; line-height:1.2; font-weight:900; letter-spacing:.75px; text-align:left; text-transform:uppercase; }
+  #pageMyRecords .my-action-table-v2 td { padding:11px 10px; border-bottom:1px solid #e8eef7; color:#334155; font-size:9.5px; line-height:1.45; vertical-align:top; overflow-wrap:anywhere; }
+  #pageMyRecords .my-action-table-v2 tbody tr:last-child td { border-bottom:0; }
+  #pageMyRecords .my-action-table-v2 td:first-child { color:#0f172a; font-weight:720; }
+  #pageMyRecords .my-action-status-v2 { display:inline-flex; padding:3px 7px; border:1px solid #fed7aa; border-radius:999px; background:#fff7ed; color:#9a3412; font-size:8px; font-weight:850; }
+  #pageMyRecords .my-action-status-v2.completed { border-color:#bbf7d0; background:#f0fdf4; color:#15803d; }
+  #pageMyRecords .my-document-list-v2 { display:flex; flex-direction:column; border:1px solid #dbeafe; border-radius:13px; overflow:hidden; background:#fff; }
+  #pageMyRecords .my-document-row-v2 { min-width:0; display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:14px; padding:13px 14px; border-bottom:1px solid #e8eef7; color:inherit; text-decoration:none; }
+  #pageMyRecords .my-document-row-v2:last-child { border-bottom:0; }
+  #pageMyRecords a.my-document-row-v2:hover { background:#f8fbff; }
+  #pageMyRecords .my-document-name-v2 { color:#0f172a; font-size:10.5px; font-weight:850; overflow-wrap:anywhere; }
+  #pageMyRecords .my-document-meta-v2 { margin-top:4px; color:#64748b; font-size:9px; line-height:1.4; }
+  #pageMyRecords .my-document-open-v2 { color:#2563eb; font-size:9px; font-weight:850; white-space:nowrap; }
+  #pageMyRecords .my-document-unavailable-v2 { color:#94a3b8; }
+  #pageMyRecords .my-history-list-v2 { position:relative; display:flex; flex-direction:column; gap:0; padding-left:20px; }
+  #pageMyRecords .my-history-list-v2::before { content:''; position:absolute; left:5px; top:8px; bottom:8px; width:1px; background:#bfdbfe; }
+  #pageMyRecords .my-history-item-v2 { position:relative; padding:0 0 18px 10px; }
+  #pageMyRecords .my-history-item-v2:last-child { padding-bottom:0; }
+  #pageMyRecords .my-history-item-v2::before { content:''; position:absolute; left:-19px; top:5px; width:8px; height:8px; border-radius:50%; background:#2563eb; box-shadow:0 0 0 4px #eff6ff; }
+  #pageMyRecords .my-history-title-v2 { color:#0f172a; font-size:10.5px; font-weight:850; }
+  #pageMyRecords .my-history-meta-v2 { margin-top:4px; color:#64748b; font-size:9px; line-height:1.5; }
+
+  @media (max-width:1120px) {
+    #pageMyRecords .my-records-workspace-v2 { grid-template-columns:330px minmax(0,1fr); }
+    #pageMyRecords .my-record-header-v2 { gap:14px; }
+    #pageMyRecords .my-record-tabs-v2 { gap:18px; }
+  }
+  @media (max-width:900px) {
+    #pageMyRecords .my-records-workspace-v2 { height:auto; min-height:0; grid-template-columns:1fr; }
+    #pageMyRecords .my-records-directory-v2 { height:480px; }
+    #pageMyRecords .my-record-workspace-v2 { min-height:680px; }
+  }
+  @media (max-width:620px) {
+    #pageMyRecords .my-records-directory-v2 { height:520px; }
+    #pageMyRecords .my-record-workspace-v2 { min-height:640px; }
+    #pageMyRecords .my-record-header-v2 { flex-direction:column; padding:18px 16px 15px; }
+    #pageMyRecords .my-record-actions-v2 { width:100%; justify-content:flex-start; }
+    #pageMyRecords .my-record-tabs-v2 { padding:0 16px; gap:20px; }
+    #pageMyRecords .my-record-tab-content-v2 { padding:17px 16px 21px; }
+    #pageMyRecords .my-field-grid-v2 { grid-template-columns:1fr; }
+    #pageMyRecords .my-field-v2.full { grid-column:auto; }
+    #pageMyRecords .my-action-table-v2,
+    #pageMyRecords .my-action-table-v2 tbody,
+    #pageMyRecords .my-action-table-v2 tr,
+    #pageMyRecords .my-action-table-v2 td { display:block; width:100%; }
+    #pageMyRecords .my-action-table-v2 thead { display:none; }
+    #pageMyRecords .my-action-table-v2 tr { padding:11px 12px; border-bottom:1px solid #e8eef7; }
+    #pageMyRecords .my-action-table-v2 tr:last-child { border-bottom:0; }
+    #pageMyRecords .my-action-table-v2 td { padding:4px 0; border:0; }
+    #pageMyRecords .my-action-table-v2 td::before { content:attr(data-label); display:block; margin-bottom:2px; color:#94a3b8; font-size:7.5px; font-weight:900; letter-spacing:.65px; text-transform:uppercase; }
+  }
+  @media (max-width:430px) {
+    #pageMyRecords .my-directory-filter-row-v2 { grid-template-columns:1fr 1fr; }
+    #pageMyRecords .my-directory-more-v2 { grid-column:1/-1; }
+    #pageMyRecords .my-directory-more-panel-v2 { grid-template-columns:1fr; }
+    #pageMyRecords .my-record-row-v2 { grid-template-columns:minmax(0,1fr); }
+    #pageMyRecords .my-record-row-date-v2 { max-width:none; text-align:left; }
+  }
+</style>
+
 </head>
 <body>
 <!-- Final standardised MRANTI CRM build: signed-out page redesigned; signed-in logic preserved. -->
@@ -7612,50 +7822,78 @@
     </div>
   </div>
 </header>
-<div class="my-records-summary">
-<article class="system-card my-summary-card"><div class="my-summary-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg></div><div><div class="my-summary-value" id="myActiveCount">0</div><div class="my-summary-label">Active entries</div></div></article>
-<article class="system-card my-summary-card"><div class="my-summary-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg></div><div><div class="my-summary-value" id="myActionCount">0</div><div class="my-summary-label">Open action items</div></div></article>
-<article class="system-card my-summary-card"><div class="my-summary-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 6h18"></path><path d="M5 6v14h14V6"></path><path d="M8 10h8"></path></svg></div><div><div class="my-summary-value" id="myArchivedCount">0</div><div class="my-summary-label">Archived entries</div></div></article>
-</div>
-<div class="modern-filter-bar records-filter-grid">
-<input class="system-input" id="myRecordsSearch" oninput="myFilterRecords()" placeholder="Search my contacts or meetings..." type="search"/>
-<select class="system-select" id="myRecordsStatus" onchange="myFilterRecords()"><option value="Active">Active</option><option value="Archived">Archived</option><option value="All">All statuses</option></select>
-<select class="system-select" id="myRecordsActionFilter" onchange="myFilterRecords()"><option value="All">All action items</option><option value="Open">Has action items</option><option value="None">No action items</option></select>
-<select class="system-select" id="myRecordsDocumentFilter" onchange="myFilterRecords()"><option value="All">All documents</option><option value="Has">Has documents</option><option value="None">No documents</option></select>
-<button class="system-btn subtle" onclick="myClearFilters()">Clear filters</button>
-</div>
-<div class="records-layout">
-<section class="system-card records-panel">
-<div class="records-panel-head"><span class="records-panel-title">My Uploaded Records</span><span class="records-panel-count" id="myRecordsCount">0 records</span></div>
-<div class="records-list" id="myRecordsList"><div class="crm-contacts-empty">Loading your CRM entries…</div></div>
-</section>
-<section class="system-card record-detail">
-<div class="record-detail-header">
-<div><div class="record-detail-name" id="myDetailName">Select an entry</div><div class="record-detail-company" id="myDetailCompany"></div></div>
-<div class="record-detail-actions"><button class="system-btn" disabled="" id="myEditBtn" onclick="myOpenEdit()"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"></path></svg><span>Edit</span></button><button class="system-btn danger" disabled="" id="myArchiveBtn" onclick="myArchiveSelected()"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 6h18"></path><path d="M5 6v14h14V6"></path><path d="M8 10h8"></path></svg><span>Archive</span></button><button class="system-btn success" id="myRestoreBtn" onclick="myRestoreSelected()" style="display:none;"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg><span>Restore</span></button></div>
-</div>
-<div class="record-detail-body">
-<section><div class="record-section-title">Contact</div><div class="record-info-grid">
-<div class="record-info"><div class="record-info-label">Email</div><div class="record-info-value" id="myDetailEmail"></div></div>
-<div class="record-info"><div class="record-info-label">Contact Number</div><div class="record-info-value" id="myDetailPhone"></div></div>
-<div class="record-info full"><div class="record-info-label">Job Title</div><div class="record-info-value" id="myDetailJobTitle"></div></div>
-</div></section>
-<section><div class="record-section-title">Meeting</div><div class="record-info-grid">
-<div class="record-info full"><div class="record-info-label">Meeting Title</div><div class="record-info-value" id="myDetailMeetingTitle"></div></div>
-<div class="record-info"><div class="record-info-label">Meeting Date</div><div class="record-info-value" id="myDetailMeetingDate"></div></div>
-<div class="record-info"><div class="record-info-label">Purpose</div><div class="record-info-value" id="myDetailReason"></div></div>
-<div class="record-info full"><div class="record-info-label">Attendees</div><div class="record-info-value" id="myDetailAttendees"></div></div>
-</div></section>
-<section><div class="record-section-title">Meeting Notes</div><div class="record-notes" id="myDetailNotes">No meeting notes recorded.</div></section>
-<section><div class="record-section-title">Action Items</div><div class="record-notes" id="myDetailActionItems">No action items recorded.</div></section>
-<section><div class="record-section-title">Record Management</div><div class="record-info-grid">
-<div class="record-info"><div class="record-info-label">Record Status</div><div class="record-info-value" id="myDetailStatus"></div></div>
-<div class="record-info"><div class="record-info-label">Last Updated</div><div class="record-info-value" id="myDetailUpdated"></div></div>
-</div></section>
-<section id="myDocumentSection" style="display:none;"><div class="record-section-title">Meeting Documents</div><div class="record-docs" id="myDetailDocuments"></div></section>
-<div class="record-owner-banner" id="myLegacyNote" style="display:none"></div>
-</div>
-</section>
+
+<div class="my-records-workspace-v2">
+  <aside class="system-card my-records-directory-v2" aria-label="My Records directory">
+    <div class="my-directory-head-v2">
+      <span class="my-directory-title-v2">MY RECORDS</span>
+      <span class="my-directory-count-v2" id="myRecordsCount">0 records</span>
+    </div>
+    <div class="my-directory-controls-v2">
+      <label class="my-directory-search-v2" for="myRecordsSearch">
+        <svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <input id="myRecordsSearch" oninput="myFilterRecords()" placeholder="Search meetings, contacts or keywords..." type="search"/>
+      </label>
+      <div class="my-directory-filter-row-v2">
+        <select class="my-directory-select-v2" id="myRecordsStatus" onchange="myFilterRecords()" aria-label="Filter records by status">
+          <option value="All">All statuses</option>
+          <option value="Active" selected>Active</option>
+          <option value="Archived">Archived</option>
+        </select>
+        <select class="my-directory-select-v2" id="myRecordsDateFilter" onchange="myFilterRecords()" aria-label="Filter records by date">
+          <option value="All">All dates</option>
+          <option value="30">Last 30 days</option>
+          <option value="90">Last 90 days</option>
+          <option value="Year">This year</option>
+          <option value="Older">Older records</option>
+        </select>
+        <button aria-expanded="false" aria-controls="myMoreFiltersPanel" class="my-directory-more-v2" id="myMoreFiltersBtn" onclick="myToggleMoreFilters()" type="button">
+          <svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 6h16"></path><path d="M7 12h10"></path><path d="M10 18h4"></path></svg>
+          <span>Filters</span>
+        </button>
+      </div>
+      <div class="my-directory-more-panel-v2" id="myMoreFiltersPanel" hidden>
+        <label><span>Action items</span><select id="myRecordsActionFilter" onchange="myFilterRecords()"><option value="All">All records</option><option value="Open">With action items</option><option value="None">Without action items</option></select></label>
+        <label><span>Documents</span><select id="myRecordsDocumentFilter" onchange="myFilterRecords()"><option value="All">All records</option><option value="Has">With documents</option><option value="None">Without documents</option></select></label>
+        <button class="my-directory-clear-v2" onclick="myClearFilters()" type="button">Clear filters</button>
+      </div>
+    </div>
+    <div class="my-records-list-v2" id="myRecordsList"><div class="my-records-empty-v2">Loading your CRM entries…</div></div>
+  </aside>
+
+  <section class="system-card my-record-workspace-v2" aria-label="Selected meeting record workspace">
+    <div class="my-record-header-v2">
+      <div class="my-record-heading-v2">
+        <div class="my-record-eyebrow-v2">MEETING RECORD</div>
+        <h2 id="myRecordTitle">Select a meeting record</h2>
+        <div class="my-record-meta-v2" id="myRecordMeta"></div>
+        <div class="my-record-provenance-v2">
+          <span id="myRecordUploader"></span>
+          <span id="myRecordUpdated"></span>
+        </div>
+        <div class="my-record-permission-v2" id="myRecordPermission" hidden></div>
+      </div>
+      <div class="my-record-actions-v2" id="myRecordActions">
+        <button class="system-btn" disabled id="myEditBtn" onclick="myOpenEdit()" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"></path></svg><span>Edit</span></button>
+        <button class="system-btn primary" id="mySaveBtn" onclick="mySaveChanges()" style="display:none" type="button"><span>Save Changes</span></button>
+        <button class="system-btn subtle" id="myCancelBtn" onclick="myCancelEdit()" style="display:none" type="button"><span>Cancel</span></button>
+        <button class="system-btn danger" disabled id="myArchiveBtn" onclick="myArchiveSelected()" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 6h18"></path><path d="M5 6v14h14V6"></path><path d="M8 10h8"></path></svg><span>Archive</span></button>
+        <button class="system-btn success" id="myRestoreBtn" onclick="myRestoreSelected()" style="display:none" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg><span>Restore</span></button>
+      </div>
+    </div>
+
+    <div class="my-record-tabs-v2" id="myRecordTabs" role="tablist" aria-label="Meeting record sections">
+      <button aria-controls="myRecordTabContent" aria-selected="true" class="active" data-my-tab="details" id="myTabDetails" onclick="mySwitchRecordTab('details')" onkeydown="myRecordTabKeydown(event)" role="tab" type="button">Details</button>
+      <button aria-controls="myRecordTabContent" aria-selected="false" data-my-tab="notes" id="myTabNotes" onclick="mySwitchRecordTab('notes')" onkeydown="myRecordTabKeydown(event)" role="tab" type="button">Meeting Notes</button>
+      <button aria-controls="myRecordTabContent" aria-selected="false" data-my-tab="actions" id="myTabActions" onclick="mySwitchRecordTab('actions')" onkeydown="myRecordTabKeydown(event)" role="tab" type="button">Action Items</button>
+      <button aria-controls="myRecordTabContent" aria-selected="false" data-my-tab="documents" id="myTabDocuments" onclick="mySwitchRecordTab('documents')" onkeydown="myRecordTabKeydown(event)" role="tab" type="button">Documents</button>
+      <button aria-controls="myRecordTabContent" aria-selected="false" data-my-tab="history" id="myTabHistory" onclick="mySwitchRecordTab('history')" onkeydown="myRecordTabKeydown(event)" role="tab" type="button">History</button>
+    </div>
+
+    <div class="my-record-tab-content-v2" id="myRecordTabContent" role="tabpanel" aria-live="polite">
+      <div class="my-record-no-selection-v2"><strong>Select a meeting record</strong><span>Choose a record from My Records to review or manage its details.</span></div>
+    </div>
+  </section>
 </div>
 </section>
 <section class="system-page relationship-page" data-page="relationships" id="pageRelationships">
@@ -10238,6 +10476,11 @@
     let crmRecords = [];
     let crmSelectedIndex = -1;
     let mySelectedIndex = -1;
+    let myActiveTab = 'details';
+    let myEditMode = false;
+    let myDraftRecord = null;
+    let myMoreFiltersOpen = false;
+    let mySavingRecord = false;
     let crmEditingRecordIndex = -1;
     let crmContactsLoaded = false;
     let crmContactsLoading = false;
@@ -10344,9 +10587,11 @@
     }
 
     function systemOpenActionItems() {
+      myActiveTab = 'actions';
       systemNavigate('my-records');
       setTimeout(() => {
-        document.getElementById('myRecordsActionFilter').value = 'Open';
+        const actionFilter = document.getElementById('myRecordsActionFilter');
+        if (actionFilter) actionFilter.value = 'Open';
         myFilterRecords();
       }, 100);
     }
@@ -10552,36 +10797,339 @@
 
     function crmManageSelectedOwnRecord(){const record=crmRecords[crmSelectedIndex];if(!crmIsOwned(record))return;mySelectedIndex=crmSelectedIndex;systemNavigate('my-records');setTimeout(()=>myFilterRecords(),50);}
 
-    function myOwnedIndices(){const email=crmUserEmail();return crmRecords.map((record,index)=>({record,index})).filter(entry=>String(entry.record.uploaderEmail||'').trim().toLowerCase()===email).map(entry=>entry.index);}
-    function myVisibleIndices(){
-      const query=crmNormalize(document.getElementById('myRecordsSearch')?.value||''); const status=document.getElementById('myRecordsStatus')?.value||'Active';
-      const action=document.getElementById('myRecordsActionFilter')?.value||'All'; const docs=document.getElementById('myRecordsDocumentFilter')?.value||'All';
-      return myOwnedIndices().filter(index=>{const record=crmRecords[index];if(status!=='All'&&crmStatus(record).toLowerCase()!==status.toLowerCase())return false;if(action==='Open'&&!crmHasAction(record))return false;if(action==='None'&&crmHasAction(record))return false;if(docs==='Has'&&!crmHasDocuments(record))return false;if(docs==='None'&&crmHasDocuments(record))return false;return !query||crmRecordSearchText(record).includes(query);});
-    }
-    function myFilterRecords(){
-      const owned=myOwnedIndices(); const visible=myVisibleIndices();
-      const active=owned.filter(i=>crmStatus(crmRecords[i]).toLowerCase()!=='archived'); const archived=owned.filter(i=>crmStatus(crmRecords[i]).toLowerCase()==='archived'); const actions=owned.filter(i=>crmHasAction(crmRecords[i]));
-      document.getElementById('myActiveCount').textContent=active.length; document.getElementById('myArchivedCount').textContent=archived.length; document.getElementById('myActionCount').textContent=actions.length;
-      const last=crmSortRecords(owned.map(i=>crmRecords[i]))[0]; document.getElementById('myLastUpdated').textContent=last?(last.lastUpdated||last.meetingDate||'—'):'—';
-      document.getElementById('myRecordsCount').textContent=`${visible.length} record${visible.length===1?'':'s'}`;
-      if(!visible.length){document.getElementById('myRecordsList').innerHTML='<div class="crm-contacts-empty">No records match the current My CRM Entries filters.</div>';mySelectedIndex=-1;myClearDetail();return;}
-      if(!visible.includes(mySelectedIndex))mySelectedIndex=visible[0];
-      document.getElementById('myRecordsList').innerHTML=visible.map(index=>crmRecordCard(crmRecords[index],index,index===mySelectedIndex,'mySelectRecord')).join('');myRenderDetail();
-    }
-    function myClearFilters(){document.getElementById('myRecordsSearch').value='';document.getElementById('myRecordsStatus').value='Active';document.getElementById('myRecordsActionFilter').value='All';document.getElementById('myRecordsDocumentFilter').value='All';myFilterRecords();}
-    function mySelectRecord(index){if(!crmRecords[index]||!crmIsOwned(crmRecords[index]))return;mySelectedIndex=index;myFilterRecords();}
-    function myClearDetail(){
-      crmSetText('myDetailName','Select an entry','Select an entry');crmSetText('myDetailCompany','','');['myDetailEmail','myDetailPhone','myDetailJobTitle','myDetailMeetingTitle','myDetailMeetingDate','myDetailReason','myDetailAttendees','myDetailStatus','myDetailUpdated'].forEach(id=>crmSetText(id,'',''));
-      crmSetText('myDetailNotes','No meeting notes recorded.');crmSetText('myDetailActionItems','No action items recorded.');document.getElementById('myDocumentSection').style.display='none';document.getElementById('myDetailDocuments').innerHTML='';document.getElementById('myEditBtn').disabled=true;document.getElementById('myArchiveBtn').disabled=true;document.getElementById('myRestoreBtn').style.display='none';
-    }
-    function myRenderDetail(){
-      const record=crmRecords[mySelectedIndex];if(!record||!crmIsOwned(record)){myClearDetail();return;}
-      crmSetText('myDetailName',record.personName,'Unnamed contact');crmSetText('myDetailCompany',record.companyName,'');crmSetEmail('myDetailEmail',record.email);crmSetText('myDetailPhone',record.phone,'No contact number recorded');crmSetText('myDetailJobTitle',record.jobTitle,'No job title recorded');crmSetText('myDetailMeetingTitle',record.meetingTitle,'No meeting title recorded');crmSetText('myDetailMeetingDate',record.meetingDate,'No meeting date recorded');crmSetText('myDetailReason',record.reason,'No purpose recorded');crmSetText('myDetailAttendees',record.attendees,'No attendees recorded');crmSetText('myDetailNotes',record.meetingNotes,'No meeting notes recorded.');crmSetText('myDetailActionItems',record.actionItems,'No action items recorded.');crmSetText('myDetailStatus',crmStatus(record),'Active');crmSetText('myDetailUpdated',[record.lastUpdated,record.updatedBy].filter(Boolean).join(' · '),'Not updated yet');crmRenderDocuments('myDetailDocuments','myDocumentSection',record);
-      const legacy=!record.recordId;const archived=crmStatus(record).toLowerCase()==='archived';document.getElementById('myEditBtn').disabled=legacy;document.getElementById('myArchiveBtn').disabled=legacy||archived;document.getElementById('myArchiveBtn').style.display=archived?'none':'inline-flex';document.getElementById('myRestoreBtn').style.display=archived&&!legacy?'inline-flex':'none';const note=document.getElementById('myLegacyNote');note.style.display=legacy?'block':'none';note.textContent=legacy?'This legacy row is view-only until a unique Record ID is added in Google Sheets.':'';
+    function myOwnedIndices(){
+      const email=crmUserEmail();
+      return crmRecords.map((record,index)=>({record,index})).filter(entry=>String(entry.record.uploaderEmail||'').trim().toLowerCase()===email).map(entry=>entry.index);
     }
 
+    function myRecordDateMatches(record, filter) {
+      if (!filter || filter === 'All') return true;
+      const date = crmIntelDateValue(record);
+      if (!date) return false;
+      const now = new Date();
+      const ageDays = (now.getTime() - date.getTime()) / 86400000;
+      if (filter === '30') return ageDays >= 0 && ageDays <= 30;
+      if (filter === '90') return ageDays >= 0 && ageDays <= 90;
+      if (filter === 'Year') return date.getFullYear() === now.getFullYear();
+      if (filter === 'Older') return date.getFullYear() < now.getFullYear();
+      return true;
+    }
+
+    function myVisibleIndices(){
+      const query=crmNormalize(document.getElementById('myRecordsSearch')?.value||'');
+      const status=document.getElementById('myRecordsStatus')?.value||'Active';
+      const dateFilter=document.getElementById('myRecordsDateFilter')?.value||'All';
+      const action=document.getElementById('myRecordsActionFilter')?.value||'All';
+      const docs=document.getElementById('myRecordsDocumentFilter')?.value||'All';
+      return myOwnedIndices().filter(index=>{
+        const record=crmRecords[index];
+        if(status!=='All'&&crmStatus(record).toLowerCase()!==status.toLowerCase())return false;
+        if(!myRecordDateMatches(record,dateFilter))return false;
+        if(action==='Open'&&!crmHasAction(record))return false;
+        if(action==='None'&&crmHasAction(record))return false;
+        if(docs==='Has'&&!crmHasDocuments(record))return false;
+        if(docs==='None'&&crmHasDocuments(record))return false;
+        return !query||crmRecordSearchText(record).includes(query);
+      });
+    }
+
+    function myToggleMoreFilters(force) {
+      myMoreFiltersOpen = typeof force === 'boolean' ? force : !myMoreFiltersOpen;
+      const panel = document.getElementById('myMoreFiltersPanel');
+      const button = document.getElementById('myMoreFiltersBtn');
+      if (panel) panel.hidden = !myMoreFiltersOpen;
+      if (button) button.setAttribute('aria-expanded', String(myMoreFiltersOpen));
+    }
+
+    function myRecordDirectoryMarkup(record,index,selected){
+      const status=crmStatus(record);
+      const date=crmIntelShortDate(record);
+      const time=crmIntelTimeRange(record);
+      const flags=[];
+      if(crmHasAction(record))flags.push('<span class="my-record-row-flag-v2">Action items</span>');
+      if(crmHasDocuments(record))flags.push(`<span class="my-record-row-flag-v2">${record.meetingDocuments.length} document${record.meetingDocuments.length===1?'':'s'}</span>`);
+      return `<button class="my-record-row-v2 ${selected?'active':''}" type="button" data-record-index="${index}" onclick="mySelectRecord(${index})" aria-pressed="${selected}">
+        <span class="my-record-row-main-v2">
+          <span class="my-record-row-title-v2">${crmEscape(record.meetingTitle||'Untitled meeting')}</span>
+          <span class="my-record-row-contact-v2">${crmEscape(record.personName||'Contact not recorded')}</span>
+          <span class="my-record-row-org-v2">${crmEscape(record.companyName||'Organisation not recorded')}</span>
+          <span class="my-record-row-status-v2 ${status.toLowerCase()==='archived'?'archived':''}">${crmEscape(status)}</span>
+          ${flags.length?`<span class="my-record-row-flags-v2">${flags.join('')}</span>`:''}
+        </span>
+        <span class="my-record-row-date-v2">${crmEscape(date)}<br>${crmEscape(time)}</span>
+      </button>`;
+    }
+
+    function myFilterRecords(){
+      const owned=myOwnedIndices();
+      const visible=myVisibleIndices();
+      const last=crmSortRecords(owned.map(i=>crmRecords[i]))[0];
+      const lastUpdated=document.getElementById('myLastUpdated');
+      if(lastUpdated)lastUpdated.textContent=last?(last.lastUpdated||last.meetingDate||'—'):'—';
+      const count=document.getElementById('myRecordsCount');
+      if(count)count.textContent=`${owned.length} record${owned.length===1?'':'s'}`;
+      const list=document.getElementById('myRecordsList');
+      if(!list)return;
+      if(!owned.length){
+        list.innerHTML='<div class="my-records-empty-v2"><strong>No records uploaded yet</strong><span>Log a meeting to create your first CRM entry.</span><button class="system-btn primary" onclick="openManualModal()" type="button">Log a meeting</button></div>';
+        mySelectedIndex=-1;myEditMode=false;myDraftRecord=null;myClearDetail('empty');return;
+      }
+      if(!visible.length){
+        list.innerHTML='<div class="my-records-empty-v2"><strong>No matching records</strong><span>Adjust the search or filters to see your entries.</span><button class="system-btn subtle" onclick="myClearFilters()" type="button">Clear filters</button></div>';
+        mySelectedIndex=-1;myEditMode=false;myDraftRecord=null;myClearDetail('filtered');return;
+      }
+      if(!visible.includes(mySelectedIndex)){
+        mySelectedIndex=visible[0];
+        myEditMode=false;
+        myDraftRecord=null;
+        myActiveTab='details';
+      }
+      list.innerHTML=visible.map(index=>myRecordDirectoryMarkup(crmRecords[index],index,index===mySelectedIndex)).join('');
+      myRenderDetail();
+    }
+
+    function myClearFilters(){
+      const search=document.getElementById('myRecordsSearch');if(search)search.value='';
+      const status=document.getElementById('myRecordsStatus');if(status)status.value='Active';
+      const date=document.getElementById('myRecordsDateFilter');if(date)date.value='All';
+      const action=document.getElementById('myRecordsActionFilter');if(action)action.value='All';
+      const docs=document.getElementById('myRecordsDocumentFilter');if(docs)docs.value='All';
+      myToggleMoreFilters(false);myFilterRecords();
+    }
+
+    function mySelectRecord(index){
+      if(!crmRecords[index]||!crmIsOwned(crmRecords[index]))return;
+      mySelectedIndex=index;myEditMode=false;myDraftRecord=null;myActiveTab='details';myFilterRecords();
+      requestAnimationFrame(()=>document.querySelector(`#myRecordsList .my-record-row-v2[data-record-index="${index}"]`)?.scrollIntoView({behavior:'smooth',block:'nearest'}));
+    }
+
+    function myClearDetail(state='select'){
+      const title=document.getElementById('myRecordTitle');if(title)title.textContent=state==='empty'?'No records uploaded yet':'Select a meeting record';
+      const meta=document.getElementById('myRecordMeta');if(meta)meta.innerHTML='';
+      const uploader=document.getElementById('myRecordUploader');if(uploader)uploader.textContent='';
+      const updated=document.getElementById('myRecordUpdated');if(updated)updated.textContent='';
+      const permission=document.getElementById('myRecordPermission');if(permission){permission.hidden=true;permission.textContent='';}
+      ['myEditBtn','myArchiveBtn'].forEach(id=>{const el=document.getElementById(id);if(el)el.disabled=true;});
+      const restore=document.getElementById('myRestoreBtn');if(restore)restore.style.display='none';
+      const save=document.getElementById('mySaveBtn');if(save)save.style.display='none';
+      const cancel=document.getElementById('myCancelBtn');if(cancel)cancel.style.display='none';
+      const content=document.getElementById('myRecordTabContent');
+      if(content)content.innerHTML=state==='empty'?'<div class="my-record-no-selection-v2"><strong>No records uploaded yet</strong><span>Log a meeting to create your first CRM entry.</span></div>':'<div class="my-record-no-selection-v2"><strong>Select a meeting record</strong><span>Choose a record from My Records to review or manage its details.</span></div>';
+      myUpdateTabs();
+    }
+
+    function myParsePeopleList(value){
+      return String(value||'').split(/\n|;|,(?=\s*[A-Z])/).map(item=>item.trim()).filter(Boolean);
+    }
+
+    function mySafeValue(value,fallback='Not recorded'){
+      const clean=String(value==null?'':value).trim();return clean||fallback;
+    }
+
+    function myDraftField(key){
+      return myEditMode&&myDraftRecord?myDraftRecord[key]:crmRecords[mySelectedIndex]?.[key];
+    }
+
+    function myUpdateDraftField(key,value){
+      if(!myEditMode||!myDraftRecord)return;
+      myDraftRecord[key]=value;
+      if(key==='meetingDateDate'||key==='meetingDateTime')myDraftRecord.meetingDate=myComposeMeetingDate(myDraftRecord.meetingDateDate,myDraftRecord.meetingDateTime,myDraftRecord.meetingDate);
+    }
+
+    function myDateInputParts(value){
+      const parsed=crmIntelDateValue({meetingDate:value});
+      if(!parsed)return{date:'',time:''};
+      const date=`${parsed.getFullYear()}-${String(parsed.getMonth()+1).padStart(2,'0')}-${String(parsed.getDate()).padStart(2,'0')}`;
+      const hasTime=/T\d{2}:\d{2}|\b\d{1,2}:\d{2}|\b\d{1,2}\s*(?:am|pm)/i.test(String(value||''));
+      const time=hasTime?`${String(parsed.getHours()).padStart(2,'0')}:${String(parsed.getMinutes()).padStart(2,'0')}`:'';
+      return{date,time};
+    }
+
+    function myComposeMeetingDate(dateValue,timeValue,fallback){
+      if(!dateValue)return fallback||'';
+      const parts=dateValue.split('-').map(Number);
+      if(parts.length!==3||parts.some(Number.isNaN))return fallback||dateValue;
+      const timeParts=String(timeValue||'00:00').split(':').map(Number);
+      const date=new Date(parts[0],parts[1]-1,parts[2],timeParts[0]||0,timeParts[1]||0);
+      if(Number.isNaN(date.getTime()))return fallback||dateValue;
+      const dateLabel=date.toLocaleDateString('en-MY',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+      if(!timeValue)return dateLabel;
+      const timeLabel=date.toLocaleTimeString('en-MY',{hour:'numeric',minute:'2-digit',hour12:true});
+      return `${dateLabel}, ${timeLabel}`;
+    }
+
+    function myReadOnlyField(label,value,full=false,html=false){
+      return `<div class="my-field-v2 ${full?'full':''}"><span class="my-field-label-v2">${crmEscape(label)}</span><div class="my-field-value-v2">${html?value:crmEscape(mySafeValue(value))}</div></div>`;
+    }
+
+    function myEditField(label,key,value,full=false,type='text',extraClass=''){
+      const safe=crmEscape(value||'');
+      const control=type==='textarea'?`<textarea class="my-edit-textarea-v2 ${extraClass}" oninput="myUpdateDraftField('${key}',this.value)">${safe}</textarea>`:`<input class="my-edit-input-v2" type="${type}" value="${safe}" oninput="myUpdateDraftField('${key}',this.value)"/>`;
+      return `<div class="my-field-v2 ${full?'full':''}"><label>${crmEscape(label)}</label>${control}</div>`;
+    }
+
+    function myDetailsMarkup(record){
+      const draft=myEditMode&&myDraftRecord?myDraftRecord:record;
+      const people=myParsePeopleList(draft.attendees);
+      const dateParts=myEditMode?{date:draft.meetingDateDate||'',time:draft.meetingDateTime||''}:myDateInputParts(record.meetingDate);
+      const source=record.inputMethod||record.recordSource||record.source||'';
+      const location=record.meetingLocation||record.location||'';
+      const meetingFields=myEditMode
+        ? myEditField('Meeting Title','meetingTitle',draft.meetingTitle,true)
+        : myReadOnlyField('Meeting Title',record.meetingTitle,true);
+      const peopleFields=myEditMode
+        ? myEditField('Contact','personName',draft.personName)+myEditField('Organisation','companyName',draft.companyName)+myEditField('Email','email',draft.email)+myEditField('Phone','phone',draft.phone)+myEditField('Job Title','jobTitle',draft.jobTitle,true)+myEditField('Attendees','attendees',draft.attendees,true,'textarea')
+        : myReadOnlyField('Contact',record.personName)+myReadOnlyField('Organisation',record.companyName)+myReadOnlyField('Email',record.email||'No email recorded')+myReadOnlyField('Phone',record.phone||'No phone recorded')+myReadOnlyField('Job Title',record.jobTitle||'Not recorded',true)+myReadOnlyField('Attendees',people.length?`<div class="my-chip-list-v2">${people.map(person=>`<span class="my-chip-v2">${crmEscape(person)}</span>`).join('')}</div>`:'No attendees recorded',true,true);
+      const scheduleFields=myEditMode
+        ? myEditField('Meeting Date','meetingDateDate',dateParts.date,false,'date')+myEditField('Meeting Time','meetingDateTime',dateParts.time,false,'time')+myReadOnlyField('Location',location||'Not recorded',true)
+        : myReadOnlyField('Meeting Date',crmIntelFullDate(record))+myReadOnlyField('Meeting Time',crmIntelTimeRange(record))+myReadOnlyField('Location',location||'Not recorded',true);
+      return `<div class="my-tab-stack-v2">
+        <section class="my-form-section-v2"><div class="my-form-section-head-v2">MEETING</div><div class="my-field-grid-v2">${meetingFields}</div></section>
+        <section class="my-form-section-v2"><div class="my-form-section-head-v2">PEOPLE</div><div class="my-field-grid-v2">${peopleFields}</div></section>
+        <section class="my-form-section-v2"><div class="my-form-section-head-v2">SCHEDULE</div><div class="my-field-grid-v2">${scheduleFields}</div></section>
+        <section class="my-form-section-v2"><div class="my-form-section-head-v2">CONTENT</div><div class="my-field-grid-v2">${myEditMode?myEditField('Purpose','reason',draft.reason,true,'textarea'):myReadOnlyField('Purpose',record.reason||'No purpose recorded',true)}</div></section>
+        <section class="my-form-section-v2"><div class="my-form-section-head-v2">SOURCE &amp; RECORD</div><div class="my-field-grid-v2">
+          ${myReadOnlyField('Input Source',source||'Not recorded')}
+          ${myReadOnlyField('Record Status',crmStatus(record))}
+          ${myReadOnlyField('Uploader',record.uploaderName||record.uploaderEmail||'Not recorded')}
+          ${myReadOnlyField('Uploader Email',record.uploaderEmail||'Not recorded')}
+          ${myReadOnlyField('Last Updated',record.lastUpdated||'Not updated yet',true)}
+        </div></section>
+      </div>`;
+    }
+
+    function myNotesMarkup(record){
+      if(myEditMode){
+        return `<div class="my-tab-stack-v2"><section class="my-form-section-v2"><div class="my-form-section-head-v2">MEETING NOTES</div>${myEditField('Full meeting notes','meetingNotes',myDraftRecord.meetingNotes,true,'textarea','notes')}</section></div>`;
+      }
+      const notes=String(record.meetingNotes||'').trim();
+      return notes?`<div class="my-content-panel-v2">${crmEscape(notes)}</div>`:'<div class="my-content-empty-v2">No meeting notes recorded.</div>';
+    }
+
+    function myActionsMarkup(record){
+      if(myEditMode){
+        return `<div class="my-tab-stack-v2"><section class="my-form-section-v2"><div class="my-form-section-head-v2">ACTION ITEMS</div>${myEditField('Action items','actionItems',myDraftRecord.actionItems,true,'textarea','notes')}</section></div>`;
+      }
+      const actions=crmIntelActionEntries(record,mySelectedIndex);
+      if(!actions.length)return'<div class="my-content-empty-v2">No action items recorded.</div>';
+      const rows=actions.map(item=>`<tr><td data-label="Action">${crmEscape(item.action)}</td><td data-label="Owner">${crmEscape(item.owner)}</td><td data-label="Due date">${crmEscape(item.dueDate)}</td><td data-label="Status"><span class="my-action-status-v2 ${item.status==='Completed'?'completed':''}">${crmEscape(item.status)}</span></td></tr>`).join('');
+      return `<table class="my-action-table-v2"><thead><tr><th style="width:52%">Action</th><th style="width:20%">Owner</th><th style="width:18%">Due date</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table>`;
+    }
+
+    function myDocumentsMarkup(record){
+      const documents=Array.isArray(record.meetingDocuments)?record.meetingDocuments:[];
+      if(!documents.length)return'<div class="my-content-empty-v2">No documents are linked to this meeting.</div>';
+      const source=record.inputMethod||record.recordSource||record.source||'Meeting record';
+      return `<div class="my-document-list-v2">${documents.map((doc,index)=>{
+        const name=doc?.name||doc?.filename||`Document ${index+1}`;
+        const type=doc?.type||doc?.mimeType||name.split('.').pop()?.toUpperCase()||'File';
+        const url=String(doc?.url||doc?.webViewLink||doc?.downloadUrl||'').trim();
+        const meta=[type,source,record.lastUpdated||record.meetingDate].filter(Boolean).join(' · ');
+        if(!url)return`<div class="my-document-row-v2 my-document-unavailable-v2"><div><div class="my-document-name-v2">${crmEscape(name)}</div><div class="my-document-meta-v2">${crmEscape(meta)}</div></div><span class="my-document-open-v2 my-document-unavailable-v2">File link unavailable</span></div>`;
+        return`<a class="my-document-row-v2" href="${crmEscape(url)}" target="_blank" rel="noopener noreferrer"><div><div class="my-document-name-v2">${crmEscape(name)}</div><div class="my-document-meta-v2">${crmEscape(meta)}</div></div><span class="my-document-open-v2">Open file ↗</span></a>`;
+      }).join('')}</div>`;
+    }
+
+    function myHistoryMarkup(record){
+      const items=[];
+      const created=record.createdAt||record.createdDate||'';
+      if(created)items.push({title:'Record created',meta:`${created}${record.uploaderName||record.uploaderEmail?` · ${record.uploaderName||record.uploaderEmail}`:''}`});
+      if(record.lastUpdated)items.push({title:'Record updated',meta:`${record.lastUpdated}${record.updatedBy?` · ${record.updatedBy}`:''}`});
+      const status=crmStatus(record);
+      items.push({title:'Current record status',meta:status});
+      if(!items.length)return'<div class="my-content-empty-v2">No record history is available beyond the current record metadata.</div>';
+      return `<div class="my-history-list-v2">${items.map(item=>`<div class="my-history-item-v2"><div class="my-history-title-v2">${crmEscape(item.title)}</div><div class="my-history-meta-v2">${crmEscape(item.meta)}</div></div>`).join('')}</div>`;
+    }
+
+    function myUpdateTabs(){
+      document.querySelectorAll('#myRecordTabs [data-my-tab]').forEach(button=>{
+        const active=button.dataset.myTab===myActiveTab;
+        button.classList.toggle('active',active);
+        button.setAttribute('aria-selected',String(active));
+        button.tabIndex=active?0:-1;
+      });
+    }
+
+    function myRenderActiveTab(record){
+      const content=document.getElementById('myRecordTabContent');if(!content)return;
+      if(myActiveTab==='notes')content.innerHTML=myNotesMarkup(record);
+      else if(myActiveTab==='actions')content.innerHTML=myActionsMarkup(record);
+      else if(myActiveTab==='documents')content.innerHTML=myDocumentsMarkup(record);
+      else if(myActiveTab==='history')content.innerHTML=myHistoryMarkup(record);
+      else content.innerHTML=myDetailsMarkup(record);
+      myUpdateTabs();
+    }
+
+    function myRenderDetail(){
+      const record=crmRecords[mySelectedIndex];
+      if(!record||!crmIsOwned(record)){myClearDetail();return;}
+      const title=document.getElementById('myRecordTitle');if(title)title.textContent=record.meetingTitle||'Untitled meeting';
+      const meta=document.getElementById('myRecordMeta');if(meta)meta.innerHTML=[record.personName||'Contact not recorded',record.companyName||'Organisation not recorded',crmIntelFullDate(record),crmIntelTimeRange(record)].map(value=>`<span>${crmEscape(value)}</span>`).join('');
+      const uploader=document.getElementById('myRecordUploader');if(uploader)uploader.textContent=`Uploaded by ${record.uploaderName||record.uploaderEmail||'Unknown uploader'}`;
+      const updated=document.getElementById('myRecordUpdated');if(updated)updated.textContent=`Last edited ${record.lastUpdated||'not recorded'}`;
+      const owned=crmIsOwned(record);const legacy=!record.recordId;const archived=crmStatus(record).toLowerCase()==='archived';
+      const permission=document.getElementById('myRecordPermission');
+      if(permission){
+        permission.hidden=owned&&!legacy;
+        permission.textContent=legacy?'This legacy record is read-only until a unique Record ID is available.':owned?'':`Read-only. Only ${record.uploaderEmail||'the uploader'} may modify this record.`;
+      }
+      const edit=document.getElementById('myEditBtn');const save=document.getElementById('mySaveBtn');const cancel=document.getElementById('myCancelBtn');const archive=document.getElementById('myArchiveBtn');const restore=document.getElementById('myRestoreBtn');
+      if(edit){edit.disabled=!owned||legacy||archived||myEditMode;edit.style.display=myEditMode?'none':'inline-flex';}
+      if(save){save.style.display=myEditMode?'inline-flex':'none';save.disabled=mySavingRecord;}
+      if(cancel){cancel.style.display=myEditMode?'inline-flex':'none';cancel.disabled=mySavingRecord;}
+      if(archive){archive.disabled=!owned||legacy||archived||myEditMode;archive.style.display=!archived&&!myEditMode?'inline-flex':'none';}
+      if(restore){restore.style.display=archived&&!legacy&&!myEditMode?'inline-flex':'none';restore.disabled=!owned||mySavingRecord;}
+      myRenderActiveTab(record);
+    }
+
+    function mySwitchRecordTab(tab){
+      if(!['details','notes','actions','documents','history'].includes(tab))return;
+      myActiveTab=tab;
+      const record=crmRecords[mySelectedIndex];
+      if(record)myRenderActiveTab(record);else myUpdateTabs();
+    }
+
+    function myRecordTabKeydown(event){
+      if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+      const tabs=Array.from(document.querySelectorAll('#myRecordTabs [data-my-tab]'));
+      if(!tabs.length)return;
+      let index=tabs.indexOf(event.currentTarget);
+      if(event.key==='Home')index=0;
+      else if(event.key==='End')index=tabs.length-1;
+      else index=(index+(event.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;
+      event.preventDefault();tabs[index].focus();mySwitchRecordTab(tabs[index].dataset.myTab);
+    }
+
+    function myOpenEdit(){
+      const record=crmRecords[mySelectedIndex];
+      if(!record?.recordId||!crmIsOwned(record)||crmStatus(record).toLowerCase()==='archived')return;
+      const parts=myDateInputParts(record.meetingDate);
+      myEditMode=true;
+      myDraftRecord={...record,meetingDateDate:parts.date,meetingDateTime:parts.time};
+      myRenderDetail();
+    }
+
+    function myCancelEdit(){
+      if(mySavingRecord)return;
+      myEditMode=false;myDraftRecord=null;myRenderDetail();
+    }
+
+    async function mySaveChanges(){
+      const record=crmRecords[mySelectedIndex];
+      if(mySavingRecord||!record?.recordId||!crmIsOwned(record)||!myEditMode||!myDraftRecord)return;
+      const fields={};
+      ['personName','companyName','email','phone','jobTitle','meetingTitle','meetingDate','reason','attendees','meetingNotes','actionItems','meetingDocumentsRaw'].forEach(key=>fields[key]=String(myDraftRecord[key]??'').trim());
+      const recordKey=crmRecordRouteKey(record);
+      const button=document.getElementById('mySaveBtn');
+      mySavingRecord=true;if(button){button.disabled=true;button.querySelector('span').textContent='Saving…';}
+      try{
+        await crmPost(CRM_RECORD_MUTATION_URL,{action:'edit',recordId:record.recordId,record:fields});
+        myEditMode=false;myDraftRecord=null;crmContactsLoaded=false;await crmLoadContacts(true);
+        const refreshed=crmFindRecordIndexByRouteKey(recordKey);if(refreshed>=0)mySelectedIndex=refreshed;myFilterRecords();
+      }catch(error){window.alert(error.message||'Unable to save the record.');}
+      finally{mySavingRecord=false;if(button){button.disabled=false;button.querySelector('span').textContent='Save Changes';}myRenderDetail();}
+    }
     function crmEditField(label,key,value,type='text',full=false){const control=type==='textarea'?`<textarea class="crm-edit-textarea" data-key="${key}">${crmEscape(value)}</textarea>`:`<input class="crm-edit-input" data-key="${key}" type="text" value="${crmEscape(value)}" />`;return `<div class="crm-edit-field ${full?'full':''}"><label>${label}</label>${control}</div>`;}
-    function myOpenEdit(){const record=crmRecords[mySelectedIndex];if(!record?.recordId||!crmIsOwned(record))return;crmEditingRecordIndex=mySelectedIndex;document.getElementById('crmEditError').className='crm-contacts-banner error';document.getElementById('crmEditError').textContent='';document.getElementById('crmEditFields').innerHTML=crmEditField('Person Name','personName',record.personName)+crmEditField('Company Name','companyName',record.companyName)+crmEditField('Email','email',record.email)+crmEditField('Contact Number','phone',record.phone)+crmEditField('Job Title','jobTitle',record.jobTitle,'text',true)+crmEditField('Meeting Title','meetingTitle',record.meetingTitle,'text',true)+crmEditField('Meeting Date','meetingDate',record.meetingDate)+crmEditField('Purpose','reason',record.reason)+crmEditField('Attendees','attendees',record.attendees,'textarea',true)+crmEditField('Meeting Notes','meetingNotes',record.meetingNotes,'textarea',true)+crmEditField('Action Items','actionItems',record.actionItems,'textarea',true)+crmEditField('Meeting Documents','meetingDocumentsRaw',record.meetingDocumentsRaw,'textarea',true);document.getElementById('crmEditModal').style.display='flex';}
     function crmCloseEditModal(){document.getElementById('crmEditModal').style.display='none';crmEditingRecordIndex=-1;}
     async function crmSaveRecordEdit(){const record=crmRecords[crmEditingRecordIndex];if(!record?.recordId||!crmIsOwned(record))return;const fields={};document.querySelectorAll('#crmEditFields [data-key]').forEach(el=>fields[el.dataset.key]=el.value.trim());const button=document.getElementById('crmSaveEditBtn');const errorBox=document.getElementById('crmEditError');button.disabled=true;button.textContent='Saving…';errorBox.className='crm-contacts-banner error';errorBox.textContent='';try{await crmPost(CRM_RECORD_MUTATION_URL,{action:'edit',recordId:record.recordId,record:fields});crmCloseEditModal();crmContactsLoaded=false;await crmLoadContacts(true);}catch(error){errorBox.textContent=error.message||'Unable to save the record.';errorBox.className='crm-contacts-banner error show';}finally{button.disabled=false;button.textContent='Save Changes';}}
     async function myMutateStatus(action){const record=crmRecords[mySelectedIndex];if(!record?.recordId||!crmIsOwned(record))return;const verb=action==='archive'?'archive':'restore';if(!window.confirm(`${verb.charAt(0).toUpperCase()+verb.slice(1)} this CRM record?`))return;try{await crmPost(CRM_RECORD_MUTATION_URL,{action,recordId:record.recordId});crmContactsLoaded=false;await crmLoadContacts(true);}catch(error){window.alert(error.message||`Unable to ${verb} the record.`);}}
