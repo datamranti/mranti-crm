@@ -7467,7 +7467,7 @@
   #pageMyRecords .my-record-provenance-v2 span:empty { display:none; }
   #pageMyRecords .my-record-permission-v2 { margin-top:10px; max-width:650px; padding:8px 10px; border:1px solid #dbeafe; border-radius:9px; background:#f8fbff; color:#475569; font-size:9.5px; line-height:1.45; }
   #pageMyRecords .my-record-actions-v2 { flex:0 0 auto; display:flex; align-items:center; justify-content:flex-end; gap:7px; flex-wrap:wrap; }
-  #pageMyRecords .my-record-tabs-v2 { flex:0 0 auto; display:flex; align-items:center; gap:24px; min-width:0; padding:0 22px; border-bottom:1px solid #dbeafe; overflow-x:auto; scrollbar-gutter:stable; }
+  #pageMyRecords .my-record-tabs-v2 { flex:0 0 auto; display:flex; align-items:center; gap:24px; min-width:0; height:auto; max-height:none; padding:0 22px; border-bottom:1px solid #dbeafe; overflow-x:auto; overflow-y:hidden; scrollbar-gutter:auto; }
   #pageMyRecords .my-record-tabs-v2 button { position:relative; flex:0 0 auto; min-height:46px; padding:0 1px; border:0; background:transparent; color:#64748b; font:inherit; font-size:10.5px; font-weight:800; cursor:pointer; }
   #pageMyRecords .my-record-tabs-v2 button::after { content:''; position:absolute; left:0; right:0; bottom:-1px; height:2px; border-radius:999px; background:transparent; }
   #pageMyRecords .my-record-tabs-v2 button.active { color:#2563eb; }
@@ -7554,9 +7554,9 @@
     #pageMyRecords .my-action-table-v2 td::before { content:attr(data-label); display:block; margin-bottom:2px; color:#94a3b8; font-size:7.5px; font-weight:900; letter-spacing:.65px; text-transform:uppercase; }
   }
   #pageMyRecords .my-edit-icon-btn-v2 {
-    width:38px; height:38px; min-width:38px; padding:0; display:inline-flex; align-items:center; justify-content:center; border-radius:10px; text-decoration:none;
+    width:auto; height:38px; min-width:0; padding:0 12px; display:inline-flex; align-items:center; justify-content:center; gap:7px; border-radius:10px; text-decoration:none; white-space:nowrap;
   }
-  #pageMyRecords .my-edit-icon-btn-v2 svg { width:17px; height:17px; margin:0; }
+  #pageMyRecords .my-edit-icon-btn-v2 svg { width:17px; height:17px; margin:0; flex:0 0 auto; }
   #pageMyRecords .my-edit-icon-btn-v2::after { display:none!important; content:none!important; }
   #pageMyRecords .my-action-table-v2.editing th:nth-child(1) { width:auto; }
   #pageMyRecords .my-action-table-v2.editing th:nth-child(2) { width:200px; }
@@ -7618,9 +7618,81 @@
   html::-webkit-scrollbar-thumb:hover, body::-webkit-scrollbar-thumb:hover, *::-webkit-scrollbar-thumb:hover { background:var(--crm-scrollbar-thumb-hover); background-clip:padding-box; }
   html::-webkit-scrollbar-corner, body::-webkit-scrollbar-corner, *::-webkit-scrollbar-corner { background:transparent; }
   .contact-directory-list, .contact-workspace-content, .contact-tab-panel,
-  #pageMyRecords .my-records-list-v2, #pageMyRecords .my-record-tab-content-v2, #pageMyRecords .my-record-tabs-v2,
+  #pageMyRecords .my-records-list-v2, #pageMyRecords .my-record-tab-content-v2,
   .relationship-detail-panel, .relationship-history-list, .dashboard-week-scroll, .dashboard-recent-list,
   #meetingModal .meeting-form-scroll, .business-card-review-list, .manual-contact-list, .my-document-list-v2 { scrollbar-gutter:stable; }
+</style>
+
+
+<style id="my-entries-final-corrections-v28">
+  #pageMyRecords .my-directory-sort-v2 {
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr);
+    align-items:center;
+    gap:10px;
+    margin-top:9px;
+  }
+  #pageMyRecords .my-directory-sort-v2 label {
+    color:#64748b;
+    font-size:8.5px;
+    font-weight:850;
+    letter-spacing:.65px;
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+  #pageMyRecords .my-directory-sort-v2 .my-directory-select-v2 { min-height:38px; }
+
+  #pageMyRecords .my-record-tabs-v2 {
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    height:auto!important;
+    max-height:none!important;
+    scrollbar-gutter:auto!important;
+    scrollbar-width:none!important;
+  }
+  #pageMyRecords .my-record-tabs-v2::-webkit-scrollbar {
+    width:0!important;
+    height:0!important;
+    display:none!important;
+  }
+
+  #pageMyRecords .my-edit-icon-btn-v2 {
+    height:38px;
+    min-height:38px;
+    padding:0 13px;
+    border-color:#bfdbfe;
+    color:#2563eb;
+  }
+  #pageMyRecords .my-edit-icon-btn-v2:hover { border-color:#2563eb; background:#eff6ff; }
+  #pageMyRecords .my-edit-icon-btn-v2 svg { fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  #pageMyRecords .my-edit-icon-btn-v2,
+  #pageMyRecords .my-edit-icon-btn-v2 span { text-decoration:none!important; }
+
+  #meetingModal .meeting-workspace-card.success-mode {
+    width:min(500px,calc(100vw - 32px));
+    max-width:500px;
+    height:auto;
+    min-height:0;
+    max-height:none;
+    overflow:visible;
+  }
+  #meetingModal .meeting-workspace-card.success-mode .modal-success {
+    width:100%;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:48px 38px;
+    overflow:visible;
+    text-align:center;
+  }
+  #meetingModal .meeting-workspace-card.success-mode .modal-success p { max-width:390px; line-height:1.55; }
+  @media (max-width:620px) {
+    #pageMyRecords .my-directory-sort-v2 { grid-template-columns:1fr; gap:6px; }
+    #meetingModal .meeting-workspace-card.success-mode { width:min(440px,calc(100vw - 20px)); height:auto; max-height:none; }
+    #meetingModal .meeting-workspace-card.success-mode .modal-success { padding:40px 24px; }
+  }
 </style>
 
 </head>
@@ -7892,28 +7964,15 @@
         <svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
         <input id="myRecordsSearch" oninput="myFilterRecords()" placeholder="Search meetings, contacts or keywords..." type="search"/>
       </label>
-      <div class="my-directory-filter-row-v2">
-        <select class="my-directory-select-v2" id="myRecordsStatus" onchange="myFilterRecords()" aria-label="Filter records by status">
-          <option value="All">All statuses</option>
-          <option value="Active" selected>Active</option>
-          <option value="Archived">Archived</option>
+      <div class="my-directory-sort-v2">
+        <label for="myRecordsSort">Sort by</label>
+        <select class="my-directory-select-v2" id="myRecordsSort" onchange="myFilterRecords()" aria-label="Sort My Records">
+          <option value="meeting-desc" selected>Meeting date — newest first</option>
+          <option value="meeting-asc">Meeting date — oldest first</option>
+          <option value="updated-desc">Last updated — newest first</option>
+          <option value="title-asc">Meeting title — A to Z</option>
+          <option value="contact-asc">Contact name — A to Z</option>
         </select>
-        <select class="my-directory-select-v2" id="myRecordsDateFilter" onchange="myFilterRecords()" aria-label="Filter records by date">
-          <option value="All">All dates</option>
-          <option value="30">Last 30 days</option>
-          <option value="90">Last 90 days</option>
-          <option value="Year">This year</option>
-          <option value="Older">Older records</option>
-        </select>
-        <button aria-expanded="false" aria-controls="myMoreFiltersPanel" class="my-directory-more-v2" id="myMoreFiltersBtn" onclick="myToggleMoreFilters()" type="button">
-          <svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 6h16"></path><path d="M7 12h10"></path><path d="M10 18h4"></path></svg>
-          <span>Filters</span>
-        </button>
-      </div>
-      <div class="my-directory-more-panel-v2" id="myMoreFiltersPanel" hidden>
-        <label><span>Action items</span><select id="myRecordsActionFilter" onchange="myFilterRecords()"><option value="All">All records</option><option value="Open">With action items</option><option value="None">Without action items</option></select></label>
-        <label><span>Documents</span><select id="myRecordsDocumentFilter" onchange="myFilterRecords()"><option value="All">All records</option><option value="Has">With documents</option><option value="None">Without documents</option></select></label>
-        <button class="my-directory-clear-v2" onclick="myClearFilters()" type="button">Clear filters</button>
       </div>
     </div>
     <div class="my-records-list-v2" id="myRecordsList"><div class="my-records-empty-v2">Loading your CRM entries…</div></div>
@@ -7932,7 +7991,7 @@
         <div class="my-record-permission-v2" id="myRecordPermission" hidden></div>
       </div>
       <div class="my-record-actions-v2" id="myRecordActions">
-        <button aria-label="Edit record" class="system-btn my-edit-icon-btn-v2" disabled id="myEditBtn" onclick="myOpenEdit()" title="Edit record" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"></path></svg></button>
+        <button aria-label="Edit record" class="system-btn my-edit-icon-btn-v2" disabled id="myEditBtn" onclick="myOpenEdit()" title="Edit record" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path><path d="m15 5 4 4"></path></svg><span>Edit</span></button>
         <button class="system-btn primary" id="mySaveBtn" onclick="mySaveChanges()" style="display:none" type="button"><span>Save Changes</span></button>
         <button class="system-btn subtle" id="myCancelBtn" onclick="myCancelEdit()" style="display:none" type="button"><span>Cancel</span></button>
         <button class="system-btn danger" disabled id="myArchiveBtn" onclick="myArchiveSelected()" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 6h18"></path><path d="M5 6v14h14V6"></path><path d="M8 10h8"></path></svg><span>Archive</span></button>
@@ -10178,7 +10237,10 @@
     }
 
     function validatedMeetingActionItems() {
-      const normalized=meetingActionItems.map(normalizeMeetingActionItem);
+      const normalized=meetingActionItems.map(normalizeMeetingActionItem).filter(item=>{
+        const nonDefaultStatus=crmNormalizeActionStatus(item.status)!=='Open';
+        return Boolean(item.action.trim()||item.owner.trim()||item.dueDate.trim()||nonDefaultStatus);
+      });
       const invalid=normalized.findIndex(item=>!item.action.trim());
       return {ok:invalid<0,invalidIndex:invalid,items:normalized.map(({_index,...item})=>item)};
     }
@@ -10325,6 +10387,7 @@
     }
 
     function showMeetingModal() {
+      document.querySelector('#meetingModal .meeting-workspace-card')?.classList.remove('success-mode');
       document.getElementById('modalSuccess').style.display = 'none';
       document.getElementById('modalSuccessMessage').textContent = 'Meeting details have been saved to the CRM.';
       document.getElementById('modalForm').style.display = 'flex';
@@ -10384,6 +10447,7 @@
       document.getElementById('methodBusinessCard').checked = true;
       setContactInputMethod('businessCard', false);
       document.getElementById('modalError').style.display = 'none';
+      document.querySelector('#meetingModal .meeting-workspace-card')?.classList.remove('success-mode');
       document.getElementById('modalSuccess').style.display = 'none';
       document.getElementById('modalForm').style.display = 'flex';
       const btn = document.getElementById('submitBtn');
@@ -10534,7 +10598,8 @@
           }
           document.getElementById('modalSuccessMessage').textContent = successMessage;
           document.getElementById('modalForm').style.display = 'none';
-          document.getElementById('modalSuccess').style.display = 'block';
+          document.querySelector('#meetingModal .meeting-workspace-card')?.classList.add('success-mode');
+          document.getElementById('modalSuccess').style.display = 'flex';
         } else throw new Error(responseData.error || responseData.message || `Server error ${res.status}`);
       } catch (e) {
         showModalErr('Failed to save. Your temporary draft is still available. ' + (e.message || 'Please try again.'));
@@ -10714,11 +10779,7 @@
     function systemOpenActionItems() {
       myActiveTab = 'actions';
       systemNavigate('my-records');
-      setTimeout(() => {
-        const actionFilter = document.getElementById('myRecordsActionFilter');
-        if (actionFilter) actionFilter.value = 'Open';
-        myFilterRecords();
-      }, 100);
+      setTimeout(() => myFilterRecords(), 100);
     }
 
     function crmEscape(value) {
@@ -10740,15 +10801,35 @@
       return 'Open';
     }
     function crmIsOpenActionStatus(value) { return crmNormalizeActionStatus(value) !== 'Completed'; }
+    function crmLooksLikeExpressionPayload(value) {
+      const text = String(value || '').trim();
+      if (!text) return false;
+      return /(?:^\s*=\s*\{|\{\{|\}\}|\$json|\$\(|=>|\bconst\b|\blet\b|\breturn\b|\bfunction\b|\bString\s*\(|\bArray\s*\.|\.toLowerCase\s*\(|\.replace\s*\(|\.trim\s*\(|\.filter\s*\(|\.map\s*\(|\.join\s*\(|new\s+Set\s*\(|seen\.|item\.json|Map Meeting Data1|===|\|\|)/i.test(text);
+    }
     function crmAttendeeParts(value) {
       if (Array.isArray(value)) return value.flatMap(crmAttendeeParts);
-      return String(value || '').split(/\r?\n|;|,/).map(item => item.trim()).filter(Boolean);
+      const text = String(value || '').trim();
+      if (!text) return [];
+      if (/^\s*=\s*\{/.test(text) || /^\s*\{\{/.test(text)) return [];
+      return text.split(/\r?\n|;|,/).map(item => item.trim()).filter(item => item && !crmLooksLikeExpressionPayload(item));
     }
     function crmCleanAttendeeList(value, recordOrOrganisations = {}) {
       const organisations = Array.isArray(recordOrOrganisations)
         ? recordOrOrganisations
-        : [recordOrOrganisations?.companyName, recordOrOrganisations?.organisation, recordOrOrganisations?.organization, recordOrOrganisations?.externalCompany, recordOrOrganisations?.contactOrganisation];
+        : [
+            recordOrOrganisations?.companyName,
+            recordOrOrganisations?.company,
+            recordOrOrganisations?.organisation,
+            recordOrOrganisations?.organization,
+            recordOrOrganisations?.organisationName,
+            recordOrOrganisations?.externalCompany,
+            recordOrOrganisations?.contactOrganisation,
+            recordOrOrganisations?.department,
+            recordOrOrganisations?.team,
+            recordOrOrganisations?.unit
+          ];
       const organisationKeys = new Set(organisations.map(crmNormalize).filter(Boolean));
+      organisationKeys.add('mranti data team');
       const seen = new Set();
       return crmAttendeeParts(value).filter(person => {
         const key = crmNormalize(person);
@@ -10974,28 +11055,18 @@
 
     function myVisibleIndices(){
       const query=crmNormalize(document.getElementById('myRecordsSearch')?.value||'');
-      const status=document.getElementById('myRecordsStatus')?.value||'Active';
-      const dateFilter=document.getElementById('myRecordsDateFilter')?.value||'All';
-      const action=document.getElementById('myRecordsActionFilter')?.value||'All';
-      const docs=document.getElementById('myRecordsDocumentFilter')?.value||'All';
-      return myOwnedIndices().filter(index=>{
-        const record=crmRecords[index];
-        if(status!=='All'&&crmStatus(record).toLowerCase()!==status.toLowerCase())return false;
-        if(!myRecordDateMatches(record,dateFilter))return false;
-        if(action==='Open'&&!crmHasAction(record))return false;
-        if(action==='None'&&crmHasAction(record))return false;
-        if(docs==='Has'&&!crmHasDocuments(record))return false;
-        if(docs==='None'&&crmHasDocuments(record))return false;
-        return !query||crmRecordSearchText(record).includes(query);
+      const sort=document.getElementById('myRecordsSort')?.value||'meeting-desc';
+      const visible=myOwnedIndices().filter(index=>!query||crmRecordSearchText(crmRecords[index]).includes(query));
+      const meetingScore=index=>crmIntelDateScore(crmRecords[index]);
+      const updatedScore=index=>Date.parse(crmRecords[index]?.lastUpdated||'')||meetingScore(index);
+      visible.sort((a,b)=>{
+        if(sort==='meeting-asc')return meetingScore(a)-meetingScore(b);
+        if(sort==='updated-desc')return updatedScore(b)-updatedScore(a);
+        if(sort==='title-asc')return String(crmRecords[a]?.meetingTitle||'').localeCompare(String(crmRecords[b]?.meetingTitle||''),undefined,{sensitivity:'base'});
+        if(sort==='contact-asc')return String(crmRecords[a]?.personName||'').localeCompare(String(crmRecords[b]?.personName||''),undefined,{sensitivity:'base'});
+        return meetingScore(b)-meetingScore(a);
       });
-    }
-
-    function myToggleMoreFilters(force) {
-      myMoreFiltersOpen = typeof force === 'boolean' ? force : !myMoreFiltersOpen;
-      const panel = document.getElementById('myMoreFiltersPanel');
-      const button = document.getElementById('myMoreFiltersBtn');
-      if (panel) panel.hidden = !myMoreFiltersOpen;
-      if (button) button.setAttribute('aria-expanded', String(myMoreFiltersOpen));
+      return visible;
     }
 
     function myRecordDirectoryMarkup(record,index,selected){
@@ -11037,7 +11108,7 @@
         mySelectedIndex=-1;myEditMode=false;myDraftRecord=null;myClearDetail('empty');return;
       }
       if(!visible.length){
-        list.innerHTML='<div class="my-records-empty-v2"><strong>No matching records</strong><span>Adjust the search or filters to see your entries.</span><button class="system-btn subtle" onclick="myClearFilters()" type="button">Clear filters</button></div>';
+        list.innerHTML='<div class="my-records-empty-v2"><strong>No matching records</strong><span>Adjust the search to see your entries.</span><button class="system-btn subtle" onclick="myClearFilters()" type="button">Clear search</button></div>';
         mySelectedIndex=-1;myEditMode=false;myDraftRecord=null;myClearDetail('filtered');return;
       }
       if(!visible.includes(mySelectedIndex)){
@@ -11052,11 +11123,8 @@
 
     function myClearFilters(){
       const search=document.getElementById('myRecordsSearch');if(search)search.value='';
-      const status=document.getElementById('myRecordsStatus');if(status)status.value='Active';
-      const date=document.getElementById('myRecordsDateFilter');if(date)date.value='All';
-      const action=document.getElementById('myRecordsActionFilter');if(action)action.value='All';
-      const docs=document.getElementById('myRecordsDocumentFilter');if(docs)docs.value='All';
-      myToggleMoreFilters(false);myFilterRecords();
+      const sort=document.getElementById('myRecordsSort');if(sort)sort.value='meeting-desc';
+      myFilterRecords();
     }
 
     function mySelectRecord(index){
@@ -11134,7 +11202,6 @@
       const draft=myEditMode&&myDraftRecord?myDraftRecord:record;
       const people=myParsePeopleList(draft.attendees,draft);
       const dateParts=myEditMode?{date:draft.meetingDateDate||'',time:draft.meetingDateTime||''}:myDateInputParts(record.meetingDate);
-      const source=record.inputMethod||record.recordSource||record.source||'';
       const location=record.meetingLocation||record.location||'';
       const meetingFields=myEditMode
         ? myEditField('Meeting Title','meetingTitle',draft.meetingTitle,true)
@@ -11150,13 +11217,6 @@
         <section class="my-form-section-v2"><div class="my-form-section-head-v2">PEOPLE</div><div class="my-field-grid-v2">${peopleFields}</div></section>
         <section class="my-form-section-v2"><div class="my-form-section-head-v2">SCHEDULE</div><div class="my-field-grid-v2">${scheduleFields}</div></section>
         <section class="my-form-section-v2"><div class="my-form-section-head-v2">CONTENT</div><div class="my-field-grid-v2">${myEditMode?myEditField('Purpose','reason',draft.reason,true,'textarea'):myReadOnlyField('Purpose',record.reason||'No purpose recorded',true)}</div></section>
-        <section class="my-form-section-v2"><div class="my-form-section-head-v2">SOURCE &amp; RECORD</div><div class="my-field-grid-v2">
-          ${myReadOnlyField('Input Source',source||'Not recorded')}
-          ${myReadOnlyField('Record Status',crmStatus(record))}
-          ${myReadOnlyField('Uploader',record.uploaderName||record.uploaderEmail||'Not recorded')}
-          ${myReadOnlyField('Uploader Email',record.uploaderEmail||'Not recorded')}
-          ${myReadOnlyField('Last Updated',record.lastUpdated||'Not updated yet',true)}
-        </div></section>
       </div>`;
     }
 
@@ -11205,6 +11265,16 @@
       return normalized==='Completed'?'completed':normalized==='In Progress'?'in-progress':'';
     }
 
+    function myFormatActionDueDate(value){
+      const raw=String(value||'').trim();
+      if(!raw||raw==='Due date not recorded')return'Due date not recorded';
+      const input=crmDateInputValue(raw);
+      if(!input)return raw;
+      const [year,month,day]=input.split('-').map(Number);
+      const date=new Date(year,month-1,day);
+      return Number.isNaN(date.getTime())?raw:date.toLocaleDateString('en-MY',{day:'numeric',month:'short',year:'numeric'});
+    }
+
     function myActionsMarkup(record){
       const actions=myEditMode?myDraftActionItems():crmIntelActionEntries(record,mySelectedIndex);
       if(myEditMode){
@@ -11221,7 +11291,7 @@
         </section></div>`;
       }
       if(!actions.length)return'<div class="my-content-empty-v2">No action items recorded.</div>';
-      const rows=actions.map(item=>`<tr><td data-label="Action">${crmEscape(item.action)}</td><td data-label="Owner">${crmEscape(item.owner||'Owner not recorded')}</td><td data-label="Due date">${crmEscape(item.dueDate||'Due date not recorded')}</td><td data-label="Status"><span class="my-action-status-v2 ${myActionStatusClass(item.status)}">${crmEscape(crmNormalizeActionStatus(item.status))}</span></td></tr>`).join('');
+      const rows=actions.map(item=>`<tr><td data-label="Action">${crmEscape(item.action)}</td><td data-label="Owner">${crmEscape(item.owner||'Owner not recorded')}</td><td data-label="Due date">${crmEscape(myFormatActionDueDate(item.dueDate))}</td><td data-label="Status"><span class="my-action-status-v2 ${myActionStatusClass(item.status)}">${crmEscape(crmNormalizeActionStatus(item.status))}</span></td></tr>`).join('');
       return `<table class="my-action-table-v2"><thead><tr><th style="width:52%">Action</th><th style="width:20%">Owner</th><th style="width:18%">Due date</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table>`;
     }
 
