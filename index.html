@@ -7822,7 +7822,6 @@
     #loginScreen {
       position: fixed !important;
       inset: 0 !important;
-      display: block !important;
       width: 100% !important;
       max-width: 100% !important;
       min-height: 100dvh !important;
@@ -8161,6 +8160,14 @@
     #loginScreen .login-hero-copy { margin-top: 45px !important; }
     #loginScreen .login-hero-title { font-size: clamp(42px, 12.7vw, 48px) !important; letter-spacing: -2.2px !important; }
     #loginScreen .login-access-panel { padding-left: 28px !important; padding-right: 28px !important; }
+  }
+</style>
+
+<style id="mranti-mobile-auth-safety-fix">
+  body.crm-authenticated #loginScreen {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
   }
 </style>
 
