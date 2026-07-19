@@ -7678,6 +7678,492 @@
   }
 </style>
 
+
+<style id="mrantiLoginReferenceFinal">
+  /* Final signed-out-only refinement: approved desktop feature cards and mobile composition. */
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  #loginScreen .mobile-login-footer {
+    display: none;
+  }
+
+  /* Desktop capability group: three coordinated, equal cards with numbered hierarchy. */
+  #loginScreen .login-benefit-band {
+    grid-area: benefits !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+    min-width: 0 !important;
+    padding: 8px 46px 34px !important;
+    border: 0 !important;
+    border-right: 1px solid rgba(147, 197, 253, .38) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  #loginScreen .login-benefit-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    min-width: 0 !important;
+    min-height: 148px !important;
+    height: 100% !important;
+    padding: 21px 22px 20px !important;
+    border: 1px solid rgba(191, 219, 254, .78) !important;
+    border-radius: 18px !important;
+    background: rgba(255, 255, 255, .78) !important;
+    box-shadow: 0 10px 30px rgba(37, 99, 235, .075), inset 0 1px 0 rgba(255,255,255,.95) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    overflow: hidden !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  #loginScreen .login-benefit-card::before {
+    display: none !important;
+  }
+
+  #loginScreen .login-benefit-card:hover {
+    transform: translateY(-2px) !important;
+    border-color: rgba(147, 197, 253, .95) !important;
+    background: rgba(255, 255, 255, .93) !important;
+    box-shadow: 0 14px 34px rgba(37, 99, 235, .10), inset 0 1px 0 #fff !important;
+  }
+
+  #loginScreen .login-benefit-number {
+    display: inline-block !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 0 16px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: linear-gradient(100deg, #6d4cf5 0%, #2563eb 55%, #0891b2 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: #2563eb !important;
+    box-shadow: none !important;
+    font-size: 32px !important;
+    line-height: 1 !important;
+    font-weight: 650 !important;
+    letter-spacing: -1.2px !important;
+  }
+
+  #loginScreen .login-benefit-card:nth-child(2) .login-benefit-number {
+    background-image: linear-gradient(100deg, #7c3aed 0%, #3b82f6 62%, #0891b2 100%) !important;
+  }
+
+  #loginScreen .login-benefit-card:nth-child(3) .login-benefit-number {
+    background-image: linear-gradient(100deg, #4f46e5 0%, #2563eb 48%, #06b6d4 100%) !important;
+  }
+
+  #loginScreen .login-benefit-title {
+    color: #0f172a !important;
+    font-size: 18px !important;
+    line-height: 1.25 !important;
+    font-weight: 750 !important;
+  }
+
+  #loginScreen .login-benefit-copy {
+    margin-top: 8px !important;
+    color: #52627a !important;
+    font-size: 13.5px !important;
+    line-height: 1.48 !important;
+    font-weight: 500 !important;
+  }
+
+  #loginScreen .login-footer-row {
+    grid-column: 1 / -1 !important;
+    display: flex !important;
+    align-items: center !important;
+    min-width: 0 !important;
+    margin: 8px 0 0 !important;
+    color: #64748b !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+  }
+
+  @media (min-width: 981px) and (max-height: 900px) {
+    #loginScreen .login-benefit-band {
+      gap: 14px !important;
+      padding: 3px 44px 17px !important;
+    }
+    #loginScreen .login-benefit-card {
+      min-height: 112px !important;
+      padding: 13px 15px 14px !important;
+    }
+    #loginScreen .login-benefit-number {
+      margin-bottom: 10px !important;
+      font-size: 27px !important;
+    }
+    #loginScreen .login-benefit-title { font-size: 15px !important; }
+    #loginScreen .login-benefit-copy { margin-top: 5px !important; font-size: 11px !important; line-height: 1.4 !important; }
+    #loginScreen .login-footer-row { margin-top: 2px !important; font-size: 9.5px !important; }
+  }
+
+  /* Approved mobile composition: hero first, full-width anchored login sheet, no features. */
+  @media (max-width: 680px) {
+    html,
+    body {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+    }
+
+    #loginScreen {
+      position: fixed !important;
+      inset: 0 !important;
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-height: 100dvh !important;
+      padding: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      background:
+        linear-gradient(rgba(37,99,235,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37,99,235,.035) 1px, transparent 1px),
+        linear-gradient(116deg, transparent 42%, rgba(255,255,255,.75) 52%, transparent 63%),
+        linear-gradient(155deg, #fbfdff 0%, #eef6ff 55%, #eaf3ff 100%) !important;
+      background-size: 48px 48px, 48px 48px, 100% 100%, 100% 100% !important;
+    }
+
+    #loginScreen::before,
+    #loginScreen::after {
+      display: none !important;
+    }
+
+    #loginScreen .login-shell {
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-height: 100dvh !important;
+      height: auto !important;
+      max-height: none !important;
+      margin: 0 !important;
+      overflow: visible !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      animation: none !important;
+    }
+
+    #loginScreen .login-story-panel {
+      display: block !important;
+      width: 100% !important;
+      min-height: 53dvh !important;
+      margin: 0 !important;
+      padding: 46px clamp(24px, 7vw, 34px) 72px !important;
+      overflow: hidden !important;
+      border: 0 !important;
+      background: transparent !important;
+    }
+
+    #loginScreen .login-story-panel::before {
+      opacity: .32 !important;
+      background-size: 48px 48px !important;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.2), #000 25%, #000 82%, transparent) !important;
+    }
+
+    #loginScreen .login-brand-row {
+      display: block !important;
+      width: 100% !important;
+    }
+
+    #loginScreen .login-brand-lockup {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1.16fr) 1px 42px minmax(0, .92fr) !important;
+      align-items: center !important;
+      gap: 13px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+
+    #loginScreen .login-mranti-logo {
+      display: block !important;
+      width: 100% !important;
+      max-width: 154px !important;
+      height: 52px !important;
+      object-fit: contain !important;
+      object-position: left center !important;
+      filter: none !important;
+    }
+
+    #loginScreen .login-brand-divider {
+      width: 1px !important;
+      height: 38px !important;
+      background: rgba(148,163,184,.38) !important;
+    }
+
+    #loginScreen .login-brand-symbol {
+      display: block !important;
+      width: 42px !important;
+      height: 42px !important;
+      max-width: 42px !important;
+      flex: 0 0 42px !important;
+      object-fit: contain !important;
+    }
+
+    #loginScreen .login-brand-copy {
+      min-width: 0 !important;
+    }
+
+    #loginScreen .login-brand-name {
+      color: #0f172a !important;
+      font-size: clamp(19px, 5.3vw, 23px) !important;
+      line-height: 1 !important;
+      font-weight: 850 !important;
+      letter-spacing: -.55px !important;
+      white-space: nowrap !important;
+    }
+
+    #loginScreen .login-brand-product {
+      margin-top: 6px !important;
+      color: #0f172a !important;
+      font-size: 9px !important;
+      line-height: 1 !important;
+      font-weight: 650 !important;
+      letter-spacing: 3.3px !important;
+      white-space: nowrap !important;
+    }
+
+    #loginScreen .login-hero-copy {
+      width: 100% !important;
+      max-width: none !important;
+      margin: 54px 0 0 !important;
+      padding: 0 !important;
+      animation: none !important;
+    }
+
+    #loginScreen .login-eyebrow {
+      margin: 0 0 25px !important;
+      gap: 11px !important;
+      color: #2563eb !important;
+      font-size: 10.5px !important;
+      line-height: 1.2 !important;
+      font-weight: 820 !important;
+      letter-spacing: 2.05px !important;
+    }
+
+    #loginScreen .login-eyebrow::before {
+      width: 25px !important;
+      flex: 0 0 25px !important;
+      height: 2px !important;
+    }
+
+    #loginScreen .login-hero-title {
+      width: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 0 0 .08em !important;
+      overflow: visible !important;
+      font-size: clamp(45px, 12.8vw, 58px) !important;
+      line-height: .98 !important;
+      letter-spacing: -2.6px !important;
+      text-wrap: initial !important;
+    }
+
+    #loginScreen .login-hero-title .title-line,
+    #loginScreen .login-hero-title .title-accent {
+      display: block !important;
+      max-width: 100% !important;
+      padding: 0 .06em .08em 0 !important;
+      white-space: nowrap !important;
+      overflow: visible !important;
+    }
+
+    #loginScreen .login-hero-title .title-accent {
+      margin: 2px 0 0 !important;
+    }
+
+    #loginScreen .login-hero-subtitle {
+      width: 100% !important;
+      max-width: 370px !important;
+      margin: 27px 0 0 !important;
+      color: #334155 !important;
+      font-size: clamp(14px, 3.75vw, 16px) !important;
+      line-height: 1.72 !important;
+      font-weight: 450 !important;
+    }
+
+    #loginScreen .login-network-watermark,
+    #loginScreen .login-network-sheen,
+    #loginScreen .login-signal-card,
+    #loginScreen .workspace-secure-pill {
+      display: none !important;
+    }
+
+    #loginScreen .login-access-panel {
+      position: relative !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+      width: 100% !important;
+      min-height: 47dvh !important;
+      margin: -1px 0 0 !important;
+      padding: 50px clamp(32px, 9vw, 46px) 28px !important;
+      overflow: visible !important;
+      border: 0 !important;
+      border-radius: 20px 20px 0 0 !important;
+      background: rgba(255,255,255,.97) !important;
+      box-shadow: 0 -10px 36px rgba(37,99,235,.08) !important;
+      backdrop-filter: blur(18px) !important;
+      -webkit-backdrop-filter: blur(18px) !important;
+    }
+
+    #loginScreen .login-access-panel::before {
+      display: none !important;
+    }
+
+    #loginScreen .login-card {
+      display: block !important;
+      width: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      animation: none !important;
+    }
+
+    #loginScreen .login-title {
+      margin: 0 !important;
+      color: #0f172a !important;
+      font-size: clamp(31px, 8.2vw, 38px) !important;
+      line-height: 1.12 !important;
+      font-weight: 820 !important;
+      letter-spacing: -1.15px !important;
+      text-align: left !important;
+    }
+
+    #loginScreen .login-sub {
+      margin: 18px 0 30px !important;
+      color: #475569 !important;
+      font-size: clamp(14px, 3.75vw, 16px) !important;
+      line-height: 1.65 !important;
+      text-align: left !important;
+    }
+
+    #loginScreen .error-msg {
+      margin: 0 0 16px !important;
+    }
+
+    #loginScreen .google-btn {
+      width: 100% !important;
+      min-height: 64px !important;
+      padding: 15px 18px !important;
+      gap: 15px !important;
+      border: 1px solid #d7dce5 !important;
+      border-radius: 12px !important;
+      background: #fff !important;
+      color: #0f172a !important;
+      box-shadow: 0 1px 3px rgba(15,23,42,.035) !important;
+      font-size: clamp(15px, 4.1vw, 18px) !important;
+      font-weight: 760 !important;
+    }
+
+    #loginScreen .google-mark {
+      width: 27px !important;
+      height: 27px !important;
+      flex: 0 0 27px !important;
+    }
+
+    #loginScreen .login-card-divider {
+      height: 1px !important;
+      margin: 30px 0 25px !important;
+      background: #e8edf3 !important;
+    }
+
+    #loginScreen .login-trust-list {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 19px !important;
+      margin: 0 !important;
+    }
+
+    #loginScreen .login-trust-item {
+      display: grid !important;
+      grid-template-columns: 48px minmax(0, 1fr) !important;
+      align-items: center !important;
+      gap: 17px !important;
+      color: #52627a !important;
+      font-size: clamp(13px, 3.55vw, 15px) !important;
+      line-height: 1.55 !important;
+      font-weight: 500 !important;
+      text-align: left !important;
+    }
+
+    #loginScreen .login-trust-icon {
+      width: 48px !important;
+      height: 48px !important;
+      padding: 12px !important;
+      border: 0 !important;
+      border-radius: 13px !important;
+      box-shadow: none !important;
+    }
+
+    #loginScreen .login-trust-icon.trust-shield {
+      color: #4f46e5 !important;
+      background: #eef2ff !important;
+    }
+
+    #loginScreen .login-trust-icon.trust-lock {
+      color: #0891b2 !important;
+      background: #ecfeff !important;
+    }
+
+    #loginScreen .mobile-login-footer {
+      display: block !important;
+      margin: auto 0 0 !important;
+      padding-top: 45px !important;
+      color: #64748b !important;
+      font-size: 12.5px !important;
+      line-height: 1.4 !important;
+      font-weight: 500 !important;
+      text-align: center !important;
+    }
+
+    #loginScreen .login-benefit-band {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 380px) {
+    #loginScreen .login-story-panel {
+      padding-left: 22px !important;
+      padding-right: 22px !important;
+    }
+    #loginScreen .login-brand-lockup {
+      grid-template-columns: minmax(0, 1.08fr) 1px 38px minmax(0, .92fr) !important;
+      gap: 10px !important;
+    }
+    #loginScreen .login-mranti-logo { max-width: 137px !important; height: 47px !important; }
+    #loginScreen .login-brand-symbol { width: 38px !important; height: 38px !important; max-width: 38px !important; flex-basis: 38px !important; }
+    #loginScreen .login-brand-name { font-size: 18px !important; }
+    #loginScreen .login-brand-product { font-size: 8px !important; letter-spacing: 2.7px !important; }
+    #loginScreen .login-hero-copy { margin-top: 45px !important; }
+    #loginScreen .login-hero-title { font-size: clamp(42px, 12.7vw, 48px) !important; letter-spacing: -2.2px !important; }
+    #loginScreen .login-access-panel { padding-left: 28px !important; padding-right: 28px !important; }
+  }
+</style>
+
 </head>
 <body>
 <!-- Final standardised MRANTI CRM build: signed-out page redesigned; signed-in logic preserved. -->
@@ -7711,11 +8197,12 @@
 <div class="login-trust-item"><span class="login-trust-icon trust-lock"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><span>Access follows your organisation account and approved Workspace permissions.</span></div>
 </div>
 </div>
+<div class="mobile-login-footer">© 2026 MRANTI. All rights reserved.</div>
 </section>
 <section aria-label="MRANTI CRM capabilities" class="login-benefit-band">
-<article class="login-benefit-card"><div class="login-benefit-icon benefit-capture"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="14" rx="3"/><path d="M8 3v6M16 3v6M4 10h16"/><path d="m9 15 2 2 4-4"/></svg></div><div class="login-benefit-title">Capture</div><div class="login-benefit-copy">Meetings, contacts, business cards and action items.</div></article>
-<article class="login-benefit-card"><div class="login-benefit-icon benefit-connect"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="6" cy="7" r="3"/><circle cx="18" cy="7" r="3"/><circle cx="12" cy="18" r="3"/><path d="m8.5 8.7 2.1 6.3M15.5 8.7 13.4 15"/></svg></div><div class="login-benefit-title">Connect</div><div class="login-benefit-copy">Staff, companies, documents and relationship history.</div></article>
-<article class="login-benefit-card"><div class="login-benefit-icon benefit-understand"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4 4M10.5 7.5v3l2 1.5"/></svg></div><div class="login-benefit-title">Understand</div><div class="login-benefit-copy">Searchable context and relationship intelligence.</div></article>
+<article class="login-benefit-card"><div aria-hidden="true" class="login-benefit-number benefit-capture">01</div><div class="login-benefit-title">Capture</div><div class="login-benefit-copy">Meetings, contacts, business cards and action items.</div></article>
+<article class="login-benefit-card"><div aria-hidden="true" class="login-benefit-number benefit-connect">02</div><div class="login-benefit-title">Connect</div><div class="login-benefit-copy">Staff, companies, documents and relationship history.</div></article>
+<article class="login-benefit-card"><div aria-hidden="true" class="login-benefit-number benefit-understand">03</div><div class="login-benefit-title">Understand</div><div class="login-benefit-copy">Searchable context and relationship intelligence.</div></article>
 <div class="login-footer-row"><span>© 2026 MRANTI. All rights reserved.</span></div>
 </section>
 </main>
