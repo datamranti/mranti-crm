@@ -7829,11 +7829,20 @@
       overflow-x: hidden !important;
       overflow-y: auto !important;
       background:
-        linear-gradient(rgba(37,99,235,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(37,99,235,.035) 1px, transparent 1px),
-        linear-gradient(116deg, transparent 42%, rgba(255,255,255,.75) 52%, transparent 63%),
-        linear-gradient(155deg, #fbfdff 0%, #eef6ff 55%, #eaf3ff 100%) !important;
-      background-size: 48px 48px, 48px 48px, 100% 100%, 100% 100% !important;
+        linear-gradient(
+          116deg,
+          transparent 42%,
+          rgba(255,255,255,.75) 52%,
+          transparent 63%
+        ),
+        linear-gradient(
+          155deg,
+          #fbfdff 0%,
+          #eef6ff 55%,
+          #eaf3ff 100%
+        ) !important;
+      background-size: 100% 100%, 100% 100% !important;
+      background-repeat: no-repeat !important;
     }
 
     #loginScreen::before,
@@ -7871,9 +7880,14 @@
     }
 
     #loginScreen .login-story-panel::before {
-      opacity: .32 !important;
-      background-size: 48px 48px !important;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,.2), #000 25%, #000 82%, transparent) !important;
+      display: none !important;
+      content: none !important;
+      background: none !important;
+      background-image: none !important;
+      background-size: 0 0 !important;
+      mask-image: none !important;
+      -webkit-mask-image: none !important;
+      opacity: 0 !important;
     }
 
     #loginScreen .login-brand-row {
@@ -8163,6 +8177,518 @@
   }
 </style>
 
+
+<style id="mranti-signed-in-mobile-responsive-final">
+  /* Signed-in mobile responsiveness only. Authentication-controlled visibility is untouched. */
+  .contact-mobile-back,
+  .contact-intel-filter-close { display: none; }
+
+  @media (max-width: 680px) {
+    body.crm-authenticated {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body.crm-authenticated .system-shell,
+    body.crm-authenticated .system-main,
+    body.crm-authenticated .system-content,
+    body.crm-authenticated .system-content-inner,
+    body.crm-authenticated .system-page,
+    body.crm-authenticated #pageDashboard,
+    body.crm-authenticated #pageContacts,
+    body.crm-authenticated #pageMyRecords,
+    body.crm-authenticated .dashboard-workspace,
+    body.crm-authenticated .dashboard-calendar-card,
+    body.crm-authenticated .calendar-panel,
+    body.crm-authenticated .calendar-section,
+    body.crm-authenticated .contact-intel-toolbar,
+    body.crm-authenticated .contact-intel-workspace {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    body.crm-authenticated .system-content { padding-left: 10px; padding-right: 10px; }
+    body.crm-authenticated .system-content-inner > .system-page,
+    body.crm-authenticated .system-card { min-width: 0; }
+
+    /* Dashboard Google Calendar: compact month, contained week scrolling and safe controls. */
+    #pageDashboard .dashboard-summary-grid,
+    #pageDashboard .dashboard-workspace {
+      grid-template-columns: minmax(0, 1fr) !important;
+    }
+    #pageDashboard .dashboard-calendar-card {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      padding: 14px !important;
+      overflow: hidden !important;
+    }
+    #pageDashboard .calendar-panel {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      padding: 0 !important;
+      overflow: visible !important;
+    }
+    #pageDashboard .calendar-panel-top {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 12px !important;
+    }
+    #pageDashboard .calendar-panel-actions {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 9px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+    }
+    #pageDashboard .calendar-view-toggle {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      padding: 3px !important;
+    }
+    #pageDashboard .calendar-view-btn {
+      width: 100% !important;
+      min-width: 0 !important;
+      min-height: 44px !important;
+      height: 44px !important;
+      padding: 0 10px !important;
+      text-align: center;
+    }
+    #pageDashboard .sync-btn {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      min-height: 44px !important;
+      height: auto !important;
+      padding: 10px 14px !important;
+      white-space: normal !important;
+      overflow-wrap: anywhere;
+    }
+    #pageDashboard .calendar-section { gap: 10px !important; }
+    #pageDashboard .cal-nav {
+      display: grid !important;
+      grid-template-columns: 38px minmax(0, 1fr) 38px auto !important;
+      align-items: center !important;
+      gap: 6px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+    }
+    #pageDashboard .cal-nav-btn {
+      width: 38px !important;
+      height: 38px !important;
+      min-width: 0 !important;
+    }
+    #pageDashboard .cal-month-label {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      font-size: 12px !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    #pageDashboard .cal-today-btn {
+      width: auto !important;
+      min-width: 0 !important;
+      min-height: 38px !important;
+      margin-left: 0 !important;
+      padding: 7px 10px !important;
+      white-space: nowrap;
+    }
+    #pageDashboard .cal-weekday-row {
+      width: 100%;
+      grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+      gap: 3px !important;
+      margin-top: 1px !important;
+    }
+    #pageDashboard .cal-weekday {
+      min-width: 0;
+      padding: 1px 0 !important;
+      font-size: 8.5px !important;
+      letter-spacing: .25px !important;
+    }
+    #pageDashboard #calGrid:not(.week-time-mode) {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+      grid-auto-rows: 42px !important;
+      gap: 3px !important;
+    }
+    #pageDashboard #calGrid:not(.week-time-mode) .cal-day-cell {
+      min-width: 0 !important;
+      min-height: 0 !important;
+      padding: 3px !important;
+      gap: 1px !important;
+      border-radius: 8px !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      overflow: hidden !important;
+    }
+    #pageDashboard #calGrid:not(.week-time-mode) .cal-day-number {
+      width: 18px !important;
+      height: 18px !important;
+      font-size: 9.5px !important;
+    }
+    #pageDashboard #calGrid:not(.week-time-mode) .cal-chip,
+    #pageDashboard #calGrid:not(.week-time-mode) .cal-more { display: none !important; }
+    #pageDashboard #calGrid:not(.week-time-mode) .cal-day-dots {
+      display: flex !important;
+      justify-content: center;
+      gap: 2px !important;
+      width: 100%;
+      max-height: 5px;
+      overflow: hidden;
+    }
+    #pageDashboard #calGrid:not(.week-time-mode) .cal-dot {
+      width: 4px !important;
+      height: 4px !important;
+    }
+
+    #pageDashboard .calendar-section.calendar-week-active #calGrid.week-time-mode {
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      overflow: visible !important;
+    }
+    #pageDashboard .week-calendar-shell {
+      position: relative;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
+    }
+    #pageDashboard .calendar-section.calendar-week-active .week-calendar-shell::before {
+      content: "Swipe to view all days →";
+      display: block;
+      padding: 7px 10px;
+      border-bottom: 1px solid #dbeafe;
+      background: #f8fbff;
+      color: #64748b;
+      font-size: 9px;
+      font-weight: 750;
+      text-align: right;
+    }
+    #pageDashboard .week-calendar-scroll {
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      overscroll-behavior-x: contain !important;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-x pan-y;
+      scrollbar-gutter: stable;
+    }
+    #pageDashboard .week-calendar-inner {
+      width: 840px !important;
+      min-width: 840px !important;
+      max-width: none !important;
+    }
+    #pageDashboard .week-time-scroll {
+      max-height: 520px !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      overscroll-behavior-y: contain;
+    }
+
+    /* Contacts toolbar and mobile-safe filter panel. */
+    #pageContacts .contact-intel-toolbar {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 10px !important;
+      padding-bottom: 14px !important;
+    }
+    #pageContacts .contact-intel-search-wrap {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      flex: none !important;
+    }
+    #pageContacts .contact-intel-toolbar-actions {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 8px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+    }
+    #pageContacts .contact-intel-sort-label {
+      display: block !important;
+      grid-column: 1 / -1 !important;
+      width: 100%;
+      margin: 0 !important;
+    }
+    #pageContacts .contact-intel-sort {
+      grid-column: 1 / -1 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      min-height: 44px !important;
+      flex: none !important;
+    }
+    #pageContacts .contact-intel-filter-anchor,
+    #pageContacts .contact-intel-clear {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+    }
+    #pageContacts .contact-intel-filter-btn,
+    #pageContacts .contact-intel-clear {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      min-height: 44px !important;
+    }
+    #pageContacts .contact-intel-filter-panel {
+      position: fixed !important;
+      z-index: 1500 !important;
+      left: 12px !important;
+      right: 12px !important;
+      top: auto !important;
+      bottom: max(12px, env(safe-area-inset-bottom)) !important;
+      width: auto !important;
+      max-width: none !important;
+      max-height: min(70dvh, 520px) !important;
+      padding: 18px !important;
+      overflow-y: auto !important;
+      border-radius: 18px !important;
+      box-shadow: 0 24px 70px rgba(15,23,42,.24) !important;
+    }
+    #pageContacts .contact-intel-filter-panel label {
+      min-height: 44px;
+      padding: 10px 0;
+    }
+    #pageContacts .contact-intel-filter-reset,
+    #pageContacts .contact-intel-filter-close {
+      width: 100%;
+      min-height: 44px;
+      margin-top: 8px;
+      border: 1px solid #dbeafe;
+      border-radius: 10px;
+      background: #f8fafc;
+      color: #2563eb;
+      font: inherit;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    #pageContacts .contact-intel-filter-close { display: block; background: #fff; }
+
+    /* Contacts mobile master-detail flow. */
+    #pageContacts .contact-intel-workspace {
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+    }
+    #pageContacts .contact-directory-panel,
+    #pageContacts .contact-workspace-panel {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      position: static !important;
+    }
+    #pageContacts .contact-directory-list {
+      max-height: min(62dvh, 620px) !important;
+      overflow-y: auto !important;
+      overscroll-behavior-y: contain;
+    }
+    #pageContacts:not(.mobile-contact-detail) .contact-directory-panel { display: flex !important; }
+    #pageContacts:not(.mobile-contact-detail) .contact-workspace-panel { display: none !important; }
+    #pageContacts.mobile-contact-detail .contact-directory-panel { display: none !important; }
+    #pageContacts.mobile-contact-detail .contact-workspace-panel { display: flex !important; }
+    #pageContacts .contact-mobile-back {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      min-height: 46px;
+      padding: 0 14px;
+      border: 0;
+      border-bottom: 1px solid #dbeafe;
+      background: #f8fbff;
+      color: #2563eb;
+      font: inherit;
+      font-size: 11px;
+      font-weight: 850;
+      text-align: left;
+      cursor: pointer;
+    }
+    #pageContacts .contact-mobile-back svg {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    #pageContacts .contact-identity-header {
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 10px !important;
+      padding: 14px 13px 12px !important;
+    }
+    #pageContacts .contact-identity-main { gap: 11px !important; min-width: 0; }
+    #pageContacts .contact-identity-avatar {
+      width: 48px !important;
+      height: 48px !important;
+      flex: 0 0 48px !important;
+      font-size: 18px !important;
+    }
+    #pageContacts .contact-identity-copy,
+    #pageContacts .contact-identity-copy h2,
+    #pageContacts .contact-identity-org,
+    #pageContacts .contact-identity-role,
+    #pageContacts .contact-identity-meta,
+    #pageContacts .contact-meta-item,
+    #pageContacts .contact-meta-item a {
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+    #pageContacts .contact-identity-copy h2 { font-size: 18px !important; line-height: 1.22 !important; }
+    #pageContacts .contact-identity-org { font-size: 11px !important; }
+    #pageContacts .contact-identity-meta { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; gap: 7px !important; }
+    #pageContacts .contact-meta-item { align-items: flex-start; }
+    #pageContacts .contact-identity-side {
+      display: block !important;
+      width: 100%;
+      min-width: 0 !important;
+    }
+    #pageContacts .contact-identity-stats {
+      justify-content: flex-start !important;
+      flex-wrap: wrap !important;
+      gap: 5px 8px !important;
+      padding-top: 0 !important;
+      white-space: normal !important;
+    }
+
+    #pageContacts .contact-tabbar {
+      display: flex !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      gap: 5px !important;
+      padding: 0 12px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      scroll-snap-type: x proximity;
+      scroll-padding-inline: 12px;
+      overscroll-behavior-x: contain;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-gutter: auto !important;
+    }
+    #pageContacts .contact-tab {
+      flex: 0 0 auto !important;
+      min-width: max-content !important;
+      min-height: 46px !important;
+      padding: 0 12px !important;
+      scroll-snap-align: start;
+      white-space: nowrap;
+    }
+    #pageContacts .contact-workspace-content {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      padding: 10px !important;
+      overflow: visible !important;
+    }
+    #pageContacts .contact-panel-card,
+    #pageContacts .action-items-view,
+    #pageContacts .document-library,
+    #pageContacts .record-info-group,
+    #pageContacts .contact-split-view,
+    #pageContacts .meeting-detail-pane,
+    #pageContacts .document-preview-pane {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+    #pageContacts .overview-hero-body,
+    #pageContacts .overview-middle-grid,
+    #pageContacts .contact-split-view,
+    #pageContacts .detail-grid,
+    #pageContacts .document-info-grid,
+    #pageContacts .record-info-grid {
+      grid-template-columns: minmax(0, 1fr) !important;
+    }
+    #pageContacts .action-items-table-wrap,
+    #pageContacts .overview-followups-full {
+      max-width: 100%;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+    }
+    #pageContacts .followup-table { min-width: 620px; }
+    #pageContacts .document-library-item {
+      align-items: flex-start !important;
+      flex-wrap: wrap;
+      gap: 9px !important;
+      padding: 11px 12px !important;
+    }
+    #pageContacts .document-library-action {
+      white-space: normal !important;
+      overflow-wrap: anywhere;
+    }
+
+    /* Compact Record Info without removing any information. */
+    #pageContacts .record-info-groups { gap: 8px !important; }
+    #pageContacts .record-info-group { border-radius: 12px !important; }
+    #pageContacts .record-info-group h3 {
+      padding: 10px 11px !important;
+      font-size: 14px !important;
+      line-height: 1.3 !important;
+      font-weight: 800 !important;
+    }
+    #pageContacts .record-info-grid {
+      gap: 8px !important;
+      padding: 10px 11px !important;
+    }
+    #pageContacts .record-info-field,
+    #pageContacts .record-info-field.full { grid-column: auto !important; }
+    #pageContacts .record-info-field label {
+      font-size: 10.5px !important;
+      line-height: 1.3 !important;
+      font-weight: 800 !important;
+    }
+    #pageContacts .record-info-field div {
+      margin-top: 3px !important;
+      font-size: 13px !important;
+      line-height: 1.5 !important;
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+  }
+
+  @media (max-width: 390px) {
+    #pageDashboard .dashboard-calendar-card { padding: 12px !important; }
+    #pageDashboard .cal-nav { grid-template-columns: 36px minmax(0, 1fr) 36px auto !important; gap: 5px !important; }
+    #pageDashboard .cal-nav-btn { width: 36px !important; height: 36px !important; }
+    #pageDashboard .cal-today-btn { min-height: 36px !important; padding: 6px 8px !important; font-size: 10px !important; }
+    #pageDashboard #calGrid:not(.week-time-mode) { grid-auto-rows: 40px !important; gap: 2px !important; }
+    #pageContacts .contact-intel-filter-panel { left: 8px !important; right: 8px !important; }
+    #pageContacts .contact-tab { padding-inline: 10px !important; }
+  }
+</style>
+
 <style id="mranti-mobile-auth-safety-fix">
   body.crm-authenticated #loginScreen {
     display: none !important;
@@ -8361,6 +8887,7 @@
           <label><input id="crmFilterHasActions" onchange="crmFilterRecords()" type="checkbox"/> Has open action items</label>
           <label><input id="crmFilterHasDocuments" onchange="crmFilterRecords()" type="checkbox"/> Has linked documents</label>
           <button class="contact-intel-filter-reset" onclick="crmResetAdditionalFilters()" type="button">Reset additional filters</button>
+          <button class="contact-intel-filter-close" onclick="crmToggleContactFilters(event)" type="button">Close filters</button>
         </div>
       </div>
       <button class="system-btn contact-intel-clear" onclick="crmClearSearch()" type="button">Clear</button>
@@ -8382,6 +8909,10 @@
     </aside>
 
     <section class="contact-workspace-panel system-card" aria-label="Selected contact workspace">
+      <button class="contact-mobile-back" onclick="crmMobileBackToContacts()" type="button">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg>
+        <span>Back to contacts</span>
+      </button>
       <div class="contact-identity-header" id="crmContactIdentityHeader">
         <div class="contact-identity-main">
           <div class="contact-identity-avatar" id="crmContactAvatar">—</div>
@@ -11512,41 +12043,7 @@
       return crmRecords.findIndex(record => String(record.recordId || '').trim() === key);
     }
 
-    function crmApplyPendingRecordSelection() {
-      if (systemRouteFromHash() !== 'contacts') return false;
-      const recordKey = systemRecordKeyFromHash() || crmPendingRecordKey;
-      if (!recordKey) return false;
 
-      const index = crmFindRecordIndexByRouteKey(recordKey);
-      const search = document.getElementById('crmContactsSearch');
-      if (search) search.value = '';
-
-      if (index < 0) {
-        crmPendingRecordKey = '';
-        crmSelectedIndex = -1;
-        crmFilterRecords({ allowAutoSelect: false });
-        crmSetBanner('The selected meeting record could not be found.', 'info');
-        return false;
-      }
-
-      crmSelectedIndex = index;
-      crmPendingRecordKey = '';
-      crmFilterRecords({ allowAutoSelect: false });
-      requestAnimationFrame(() => {
-        const card = document.querySelector(`#crmContactsList .record-card[data-record-index="${index}"]`);
-        card?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      });
-      return true;
-    }
-
-    function crmVisibleRecordIndices() {
-      const query = crmNormalize(document.getElementById('crmContactsSearch')?.value || '');
-      const visible = [];
-      crmRecords.forEach((record,index) => {
-        if (!query || crmRecordSearchText(record).includes(query)) visible.push(index);
-      });
-      return visible;
-    }
 
     function crmRecordCard(record,index,selected,handler) {
       const flags = `${crmHasAction(record)?'<span class="record-badge action">Action items</span>':''}${crmHasDocuments(record)?`<span class="record-badge docs">${record.meetingDocuments.length} document${record.meetingDocuments.length===1?'':'s'}</span>`:''}`;
@@ -11556,16 +12053,6 @@
       </button>`;
     }
 
-    function crmFilterRecords(options = {}) {
-      const allowAutoSelect = options.allowAutoSelect !== false;
-      const indices = crmVisibleRecordIndices();
-      if (!indices.length) { document.getElementById('crmContactsList').innerHTML='<div class="crm-contacts-empty">No records match the current search and status filter.</div>'; crmSelectedIndex=-1; crmClearDetail(); return; }
-      if (!indices.includes(crmSelectedIndex)) crmSelectedIndex = allowAutoSelect ? indices[0] : -1;
-      document.getElementById('crmContactsList').innerHTML = indices.map(index=>crmRecordCard(crmRecords[index],index,index===crmSelectedIndex,'crmSelectRecord')).join('');
-      if (crmSelectedIndex >= 0) crmRenderDetail(); else crmClearDetail();
-    }
-    function crmClearSearch() { document.getElementById('crmContactsSearch').value=''; crmFilterRecords(); }
-    function crmSelectRecord(index) { if (!crmRecords[index]) return; crmSelectedIndex=index; crmFilterRecords(); }
 
     function crmSetText(id,value,fallback='Not recorded') { const el=document.getElementById(id); if(el) el.textContent=value||fallback; }
     function crmSetEmail(id,email) { const el=document.getElementById(id); if(!el)return; el.innerHTML=email?`<a href="mailto:${crmEscape(email)}">${crmEscape(email)}</a>`:'No email recorded'; }
@@ -11575,32 +12062,8 @@
       document.getElementById(sectionId).style.display=documents.length?'block':'none';
     }
 
-    function crmClearDetail() {
-      crmSetText('crmDetailName','Select a record','Select a record');
-      crmSetText('crmDetailCompany','','');
-      ['crmDetailEmail','crmDetailPhone','crmDetailJobTitle','crmDetailMeetingTitle','crmDetailMeetingDate','crmDetailReason','crmDetailAttendees','crmDetailUploader','crmDetailUploaderEmail','crmDetailStatus','crmDetailUpdated'].forEach(id=>crmSetText(id,'',''));
-      crmSetText('crmDetailNotes','No meeting notes recorded.'); crmSetText('crmDetailActionItems','No action items recorded.');
-      document.getElementById('crmDocumentSection').style.display='none'; document.getElementById('crmDetailDocuments').innerHTML='';
-      const notice=document.getElementById('crmOwnerNotice'); notice.textContent='Select a record to view its ownership and meeting details.'; notice.className='record-owner-banner other';
-    }
 
-    function crmRenderDetail() {
-      const record=crmRecords[crmSelectedIndex]; if(!record){crmClearDetail();return;}
-      crmSetText('crmDetailName',record.personName,'Unnamed contact'); crmSetText('crmDetailCompany',record.companyName,''); crmSetEmail('crmDetailEmail',record.email);
-      crmSetText('crmDetailPhone',record.phone,'No contact number recorded'); crmSetText('crmDetailJobTitle',record.jobTitle,'No job title recorded');
-      crmSetText('crmDetailMeetingTitle',record.meetingTitle,'No meeting title recorded'); crmSetText('crmDetailMeetingDate',record.meetingDate,'No meeting date recorded');
-      crmSetText('crmDetailReason',record.reason,'No purpose recorded'); crmSetText('crmDetailAttendees',record.attendees,'No attendees recorded');
-      crmSetText('crmDetailNotes',record.meetingNotes,'No meeting notes recorded.'); crmSetText('crmDetailActionItems',crmIntelActionEntries(record).map(item=>item.action).join('\n'),'No action items recorded.');
-      crmSetText('crmDetailUploader',record.uploaderName,'Not recorded'); crmSetText('crmDetailUploaderEmail',record.uploaderEmail,'Not recorded');
-      crmSetText('crmDetailStatus',crmStatus(record),'Active'); crmSetText('crmDetailUpdated',[record.lastUpdated,record.updatedBy].filter(Boolean).join(' · '),'Not updated yet');
-      crmRenderDocuments('crmDetailDocuments','crmDocumentSection',record);
-      const owned=crmIsOwned(record);
-      const notice=document.getElementById('crmOwnerNotice');
-      if(owned){notice.textContent=record.recordId?'You uploaded this record. Manage edits, action items and archive status in My CRM Entries.':'You uploaded this legacy record, but it remains view-only until a unique Record ID is added in Google Sheets.';notice.className='record-owner-banner';}
-      else{notice.textContent=`Uploaded by ${record.uploaderName||record.uploaderEmail||'another MRANTI user'}. Only the uploader may modify this record.`;notice.className='record-owner-banner other';}
-    }
 
-    function crmManageSelectedOwnRecord(){const record=crmRecords[crmSelectedIndex];if(!crmIsOwned(record))return;mySelectedIndex=crmSelectedIndex;systemNavigate('my-records');setTimeout(()=>myFilterRecords(),50);}
 
     function myOwnedIndices(){
       const email=crmUserEmail();
@@ -12301,6 +12764,33 @@
     let crmHistoryHighlightAction = '';
     let crmActionItemsFilter = '';
     let crmLatestDocumentFilter = false;
+    let crmMobileDirectoryScrollTop = 0;
+
+    function crmUsesMobileMasterDetail() {
+      return window.matchMedia('(max-width: 680px)').matches;
+    }
+
+    function crmOpenMobileContactDetail(captureScroll = true) {
+      if (!crmUsesMobileMasterDetail()) return;
+      const list = document.getElementById('crmContactsList');
+      if (captureScroll && list) crmMobileDirectoryScrollTop = list.scrollTop;
+      document.getElementById('pageContacts')?.classList.add('mobile-contact-detail');
+      requestAnimationFrame(() => {
+        document.querySelector('.contact-tab.active')?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        document.querySelector('#pageContacts .contact-workspace-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+
+    function crmMobileBackToContacts() {
+      const page = document.getElementById('pageContacts');
+      if (!page) return;
+      page.classList.remove('mobile-contact-detail');
+      requestAnimationFrame(() => {
+        const list = document.getElementById('crmContactsList');
+        if (list) list.scrollTop = crmMobileDirectoryScrollTop;
+        document.querySelector('#pageContacts .contact-intel-toolbar')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
 
     function crmIntelText(value, fallback = '') {
       const raw = String(value == null ? '' : value)
@@ -12602,6 +13092,10 @@
     function crmSelectContactByKey(key, options = {}) {
       const group = crmContactGroups.find(item => item.key === key);
       if (!group) return;
+      if (crmUsesMobileMasterDetail()) {
+        const list = document.getElementById('crmContactsList');
+        if (list) crmMobileDirectoryScrollTop = list.scrollTop;
+      }
       const changed = crmSelectedContactKey !== key;
       crmSelectedContactKey = key;
       crmSelectedMeetingIndex = Number.isInteger(options.meetingIndex) && crmRecords[options.meetingIndex] ? options.meetingIndex : group.latestIndex;
@@ -12618,9 +13112,13 @@
       crmRenderContactIdentity();
       crmRenderContactTabs();
       crmRenderContactWorkspace();
-      requestAnimationFrame(() => {
-        document.querySelector(`#crmContactsList [data-contact-key="${CSS.escape(encodeURIComponent(key))}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      });
+      if (crmUsesMobileMasterDetail()) {
+        crmOpenMobileContactDetail(false);
+      } else {
+        requestAnimationFrame(() => {
+          document.querySelector(`#crmContactsList [data-contact-key="${CSS.escape(encodeURIComponent(key))}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+      }
     }
 
     function crmSelectRecord(index) {
@@ -12756,6 +13254,9 @@
       if (tab !== 'documents' && !options.preserveDocumentFilter) crmLatestDocumentFilter = false;
       crmRenderContactTabs();
       crmRenderContactWorkspace();
+      if (crmUsesMobileMasterDetail()) {
+        requestAnimationFrame(() => document.querySelector('.contact-tab.active')?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }));
+      }
     }
 
     function crmContactTabKeydown(event) {
@@ -13086,8 +13587,9 @@
       crmContactRenderLimit = Math.max(crmContactRenderLimit, crmContactGroups.length);
       crmPendingRecordKey = '';
       crmFilterRecords({ allowAutoSelect: false });
+      if (crmUsesMobileMasterDetail()) crmOpenMobileContactDetail(false);
       requestAnimationFrame(() => {
-        document.querySelector(`#crmContactsList [data-contact-key="${CSS.escape(encodeURIComponent(key))}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        if (!crmUsesMobileMasterDetail()) document.querySelector(`#crmContactsList [data-contact-key="${CSS.escape(encodeURIComponent(key))}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         document.querySelector(`.timeline-item[data-record-index="${index}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       });
       return true;
