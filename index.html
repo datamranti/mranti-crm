@@ -8181,13 +8181,21 @@
 <style id="mranti-signed-in-mobile-responsive-final">
   /* Signed-in mobile responsiveness only. Authentication-controlled visibility is untouched. */
   .contact-mobile-back,
-  .contact-intel-filter-close { display: none; }
+  .contact-intel-filter-close,
+  .contact-intel-filter-apply,
+  .contact-intel-filter-backdrop { display: none; }
 
   @media (max-width: 680px) {
     body.crm-authenticated {
       width: 100%;
       max-width: 100%;
       overflow-x: hidden;
+    }
+    body.crm-authenticated.crm-contact-filter-open { overflow: hidden; }
+
+    body.crm-authenticated .system-sidebar.modern-navbar {
+      top: max(8px, env(safe-area-inset-top)) !important;
+      margin-top: 0 !important;
     }
 
     body.crm-authenticated .system-shell,
@@ -8203,7 +8211,10 @@
     body.crm-authenticated .calendar-panel,
     body.crm-authenticated .calendar-section,
     body.crm-authenticated .contact-intel-toolbar,
-    body.crm-authenticated .contact-intel-workspace {
+    body.crm-authenticated .contact-intel-workspace,
+    body.crm-authenticated .my-records-layout,
+    body.crm-authenticated .my-records-main,
+    body.crm-authenticated .my-records-sidebar {
       width: 100%;
       max-width: 100%;
       min-width: 0;
@@ -8212,13 +8223,15 @@
 
     body.crm-authenticated .system-content { padding-left: 10px; padding-right: 10px; }
     body.crm-authenticated .system-content-inner > .system-page,
-    body.crm-authenticated .system-card { min-width: 0; }
+    body.crm-authenticated .system-card,
+    body.crm-authenticated input,
+    body.crm-authenticated select,
+    body.crm-authenticated textarea,
+    body.crm-authenticated button { min-width: 0; }
 
-    /* Dashboard Google Calendar: compact month, contained week scrolling and safe controls. */
+    /* Calendar controls and unchanged compact mobile Month view. */
     #pageDashboard .dashboard-summary-grid,
-    #pageDashboard .dashboard-workspace {
-      grid-template-columns: minmax(0, 1fr) !important;
-    }
+    #pageDashboard .dashboard-workspace { grid-template-columns: minmax(0, 1fr) !important; }
     #pageDashboard .dashboard-calendar-card {
       width: 100% !important;
       max-width: 100% !important;
@@ -8285,11 +8298,7 @@
       max-width: 100% !important;
       min-width: 0 !important;
     }
-    #pageDashboard .cal-nav-btn {
-      width: 38px !important;
-      height: 38px !important;
-      min-width: 0 !important;
-    }
+    #pageDashboard .cal-nav-btn { width: 38px !important; height: 38px !important; min-width: 0 !important; }
     #pageDashboard .cal-month-label {
       width: 100% !important;
       min-width: 0 !important;
@@ -8319,7 +8328,7 @@
       font-size: 8.5px !important;
       letter-spacing: .25px !important;
     }
-    #pageDashboard #calGrid:not(.week-time-mode) {
+    #pageDashboard #calGrid:not(.week-time-mode):not(.mobile-week-mode) {
       width: 100% !important;
       max-width: 100% !important;
       min-width: 0 !important;
@@ -8327,7 +8336,7 @@
       grid-auto-rows: 42px !important;
       gap: 3px !important;
     }
-    #pageDashboard #calGrid:not(.week-time-mode) .cal-day-cell {
+    #pageDashboard #calGrid:not(.week-time-mode):not(.mobile-week-mode) .cal-day-cell {
       min-width: 0 !important;
       min-height: 0 !important;
       padding: 3px !important;
@@ -8337,345 +8346,296 @@
       justify-content: flex-start !important;
       overflow: hidden !important;
     }
-    #pageDashboard #calGrid:not(.week-time-mode) .cal-day-number {
-      width: 18px !important;
-      height: 18px !important;
-      font-size: 9.5px !important;
-    }
-    #pageDashboard #calGrid:not(.week-time-mode) .cal-chip,
-    #pageDashboard #calGrid:not(.week-time-mode) .cal-more { display: none !important; }
-    #pageDashboard #calGrid:not(.week-time-mode) .cal-day-dots {
-      display: flex !important;
-      justify-content: center;
-      gap: 2px !important;
-      width: 100%;
-      max-height: 5px;
-      overflow: hidden;
-    }
-    #pageDashboard #calGrid:not(.week-time-mode) .cal-dot {
-      width: 4px !important;
-      height: 4px !important;
-    }
+    #pageDashboard #calGrid:not(.week-time-mode):not(.mobile-week-mode) .cal-day-number { width: 18px !important; height: 18px !important; font-size: 9.5px !important; }
+    #pageDashboard #calGrid:not(.week-time-mode):not(.mobile-week-mode) .cal-chip,
+    #pageDashboard #calGrid:not(.week-time-mode):not(.mobile-week-mode) .cal-more { display: none !important; }
+    #pageDashboard #calGrid:not(.week-time-mode):not(.mobile-week-mode) .cal-day-dots { display: flex !important; justify-content: center; gap: 2px !important; width: 100%; max-height: 5px; overflow: hidden; }
+    #pageDashboard #calGrid:not(.week-time-mode):not(.mobile-week-mode) .cal-dot { width: 4px !important; height: 4px !important; }
 
-    #pageDashboard .calendar-section.calendar-week-active #calGrid.week-time-mode {
+    /* Proper mobile Week agenda: all seven days, no horizontal or hourly scrolling. */
+    #pageDashboard .calendar-section.calendar-week-active .cal-weekday-row { display: none !important; }
+    #pageDashboard #calGrid.mobile-week-mode {
       display: block !important;
       width: 100% !important;
       max-width: 100% !important;
       min-width: 0 !important;
       overflow: visible !important;
     }
-    #pageDashboard .week-calendar-shell {
-      position: relative;
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-      overflow: hidden !important;
-    }
-    #pageDashboard .calendar-section.calendar-week-active .week-calendar-shell::before {
-      content: "Swipe to view all days →";
-      display: block;
-      padding: 7px 10px;
-      border-bottom: 1px solid #dbeafe;
+    #pageDashboard .mobile-week-view { width: 100%; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+    #pageDashboard .mobile-week-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+      padding: 9px 10px;
+      border: 1px solid #dbeafe;
+      border-radius: 12px;
       background: #f8fbff;
       color: #64748b;
-      font-size: 9px;
-      font-weight: 750;
-      text-align: right;
+      font-size: 9.5px;
+      line-height: 1.35;
+      font-weight: 700;
+      text-align: center;
     }
-    #pageDashboard .week-calendar-scroll {
-      display: block !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-      overflow-x: auto !important;
-      overflow-y: hidden !important;
-      overscroll-behavior-x: contain !important;
-      -webkit-overflow-scrolling: touch;
-      touch-action: pan-x pan-y;
-      scrollbar-gutter: stable;
-    }
-    #pageDashboard .week-calendar-inner {
-      width: 840px !important;
-      min-width: 840px !important;
-      max-width: none !important;
-    }
-    #pageDashboard .week-time-scroll {
-      max-height: 520px !important;
-      overflow-y: auto !important;
-      overflow-x: hidden !important;
-      overscroll-behavior-y: contain;
-    }
-
-    /* Contacts toolbar and mobile-safe filter panel. */
-    #pageContacts .contact-intel-toolbar {
-      display: grid !important;
-      grid-template-columns: minmax(0, 1fr) !important;
-      gap: 10px !important;
-      padding-bottom: 14px !important;
-    }
-    #pageContacts .contact-intel-search-wrap {
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-      flex: none !important;
-    }
-    #pageContacts .contact-intel-toolbar-actions {
-      display: grid !important;
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      gap: 8px !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-    }
-    #pageContacts .contact-intel-sort-label {
-      display: block !important;
-      grid-column: 1 / -1 !important;
+    #pageDashboard .mobile-week-summary strong { color: #1d4ed8; font-size: 11px; }
+    #pageDashboard .mobile-week-days {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 3px;
       width: 100%;
-      margin: 0 !important;
-    }
-    #pageContacts .contact-intel-sort {
-      grid-column: 1 / -1 !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-      min-height: 44px !important;
-      flex: none !important;
-    }
-    #pageContacts .contact-intel-filter-anchor,
-    #pageContacts .contact-intel-clear {
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-    }
-    #pageContacts .contact-intel-filter-btn,
-    #pageContacts .contact-intel-clear {
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-      min-height: 44px !important;
-    }
-    #pageContacts .contact-intel-filter-panel {
-      position: fixed !important;
-      z-index: 1500 !important;
-      left: 12px !important;
-      right: 12px !important;
-      top: auto !important;
-      bottom: max(12px, env(safe-area-inset-bottom)) !important;
-      width: auto !important;
-      max-width: none !important;
-      max-height: min(70dvh, 520px) !important;
-      padding: 18px !important;
-      overflow-y: auto !important;
-      border-radius: 18px !important;
-      box-shadow: 0 24px 70px rgba(15,23,42,.24) !important;
-    }
-    #pageContacts .contact-intel-filter-panel label {
-      min-height: 44px;
-      padding: 10px 0;
-    }
-    #pageContacts .contact-intel-filter-reset,
-    #pageContacts .contact-intel-filter-close {
-      width: 100%;
-      min-height: 44px;
-      margin-top: 8px;
+      min-width: 0;
+      padding: 4px;
       border: 1px solid #dbeafe;
-      border-radius: 10px;
-      background: #f8fafc;
-      color: #2563eb;
-      font: inherit;
-      font-size: 11px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-    #pageContacts .contact-intel-filter-close { display: block; background: #fff; }
-
-    /* Contacts mobile master-detail flow. */
-    #pageContacts .contact-intel-workspace {
-      display: block !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-    }
-    #pageContacts .contact-directory-panel,
-    #pageContacts .contact-workspace-panel {
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-      height: auto !important;
-      min-height: 0 !important;
-      max-height: none !important;
-      position: static !important;
-    }
-    #pageContacts .contact-directory-list {
-      max-height: min(62dvh, 620px) !important;
-      overflow-y: auto !important;
-      overscroll-behavior-y: contain;
-    }
-    #pageContacts:not(.mobile-contact-detail) .contact-directory-panel { display: flex !important; }
-    #pageContacts:not(.mobile-contact-detail) .contact-workspace-panel { display: none !important; }
-    #pageContacts.mobile-contact-detail .contact-directory-panel { display: none !important; }
-    #pageContacts.mobile-contact-detail .contact-workspace-panel { display: flex !important; }
-    #pageContacts .contact-mobile-back {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      width: 100%;
-      min-height: 46px;
-      padding: 0 14px;
-      border: 0;
-      border-bottom: 1px solid #dbeafe;
+      border-radius: 14px;
       background: #f8fbff;
-      color: #2563eb;
+      overflow: hidden;
+    }
+    #pageDashboard .mobile-week-day {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      width: 100%;
+      min-width: 0;
+      min-height: 60px;
+      padding: 6px 1px 5px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      background: transparent;
+      color: #64748b;
       font: inherit;
-      font-size: 11px;
-      font-weight: 850;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    #pageDashboard .mobile-week-day-name { font-size: 8px; line-height: 1; font-weight: 850; letter-spacing: .25px; }
+    #pageDashboard .mobile-week-day-number { display: grid; place-items: center; width: 25px; height: 25px; border-radius: 50%; color: #0f172a; font-size: 11.5px; line-height: 1; font-weight: 850; }
+    #pageDashboard .mobile-week-day-count { display: grid; place-items: center; width: 13px; height: 13px; border-radius: 999px; color: transparent; font-size: 7px; line-height: 1; font-weight: 850; }
+    #pageDashboard .mobile-week-day-count.has-events { background: #dbeafe; color: #2563eb; }
+    #pageDashboard .mobile-week-day.today .mobile-week-day-number { box-shadow: inset 0 0 0 1.5px #3b82f6; color: #1d4ed8; }
+    #pageDashboard .mobile-week-day.selected { border-color: #93c5fd; background: #fff; box-shadow: 0 5px 14px rgba(37,99,235,.10); color: #1d4ed8; }
+    #pageDashboard .mobile-week-day.selected .mobile-week-day-number { background: #2563eb; color: #fff; box-shadow: none; }
+    #pageDashboard .mobile-week-day.selected .mobile-week-day-count.has-events { background: #bfdbfe; color: #1d4ed8; }
+    #pageDashboard .mobile-week-agenda { width: 100%; min-width: 0; border: 1px solid #dbeafe; border-radius: 14px; background: #fff; overflow: hidden; }
+    #pageDashboard .mobile-week-agenda-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; padding: 12px 13px; border-bottom: 1px solid #eaf1fb; background: linear-gradient(180deg,#fff,#f8fbff); }
+    #pageDashboard .mobile-week-agenda-head > div { min-width: 0; }
+    #pageDashboard .mobile-week-agenda-head > div span { display: block; color: #2563eb; font-size: 9.5px; line-height: 1.2; font-weight: 850; text-transform: uppercase; letter-spacing: .45px; }
+    #pageDashboard .mobile-week-agenda-head > div strong { display: block; margin-top: 3px; color: #0f172a; font-size: 14px; line-height: 1.25; font-weight: 850; }
+    #pageDashboard .mobile-week-agenda-head > span { flex: 0 0 auto; color: #64748b; font-size: 9.5px; font-weight: 750; }
+    #pageDashboard .mobile-week-agenda-list { display: flex; flex-direction: column; gap: 8px; padding: 10px; }
+    #pageDashboard .mobile-week-event-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid #dbeafe;
+      border-radius: 12px;
+      background: #fff;
+      color: #0f172a;
+      font: inherit;
       text-align: left;
       cursor: pointer;
+      box-shadow: 0 4px 14px rgba(37,99,235,.055);
     }
-    #pageContacts .contact-mobile-back svg {
-      width: 17px;
-      height: 17px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.9;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    #pageDashboard .mobile-week-event-card:active { background: #f8fbff; }
+    #pageDashboard .mobile-week-event-time { color: #2563eb; font-size: 10.5px; line-height: 1.3; font-weight: 850; }
+    #pageDashboard .mobile-week-event-title { margin-top: 5px; color: #0f172a; font-size: 14px; line-height: 1.35; font-weight: 800; white-space: normal; overflow-wrap: anywhere; }
+    #pageDashboard .mobile-week-event-meta { margin-top: 5px; color: #64748b; font-size: 11.5px; line-height: 1.45; white-space: normal; overflow-wrap: anywhere; }
+    #pageDashboard .mobile-week-event-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 9px; padding-top: 8px; border-top: 1px solid #eff6ff; color: #64748b; font-size: 9.5px; line-height: 1.3; font-weight: 750; }
+    #pageDashboard .mobile-week-event-footer span:last-child { color: #2563eb; }
+    #pageDashboard .mobile-week-empty { padding: 24px 14px; color: #64748b; font-size: 12.5px; line-height: 1.5; text-align: center; }
+
+    /* Contacts directory toolbar. */
+    #pageContacts .contact-intel-toolbar { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; gap: 10px !important; padding-bottom: 14px !important; }
+    #pageContacts .contact-intel-search-wrap { width: 100% !important; max-width: 100% !important; min-width: 0 !important; flex: none !important; }
+    #pageContacts .contact-intel-toolbar-actions { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important; width: 100% !important; max-width: 100% !important; min-width: 0 !important; }
+    #pageContacts .contact-intel-sort-label { display: block !important; grid-column: 1 / -1 !important; width: 100%; margin: 0 !important; }
+    #pageContacts .contact-intel-sort { grid-column: 1 / -1 !important; width: 100% !important; max-width: 100% !important; min-width: 0 !important; min-height: 44px !important; flex: none !important; }
+    #pageContacts .contact-intel-filter-anchor,
+    #pageContacts .contact-intel-clear { width: 100% !important; max-width: 100% !important; min-width: 0 !important; }
+    #pageContacts .contact-intel-filter-btn,
+    #pageContacts .contact-intel-clear { width: 100% !important; max-width: 100% !important; min-width: 0 !important; min-height: 44px !important; }
+
+    /* Native-style floating filter overlay. */
+    #pageContacts .contact-intel-filter-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 1590;
+      background: rgba(15,23,42,.46);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
     }
-    #pageContacts .contact-identity-header {
-      grid-template-columns: minmax(0, 1fr) !important;
-      gap: 10px !important;
-      padding: 14px 13px 12px !important;
+    #pageContacts .contact-intel-filter-backdrop.show { display: block; }
+    #pageContacts .contact-intel-filter-panel {
+      position: fixed !important;
+      z-index: 1600 !important;
+      left: 50% !important;
+      right: auto !important;
+      top: 50% !important;
+      bottom: auto !important;
+      width: calc(100% - 32px) !important;
+      max-width: 380px !important;
+      max-height: calc(100dvh - 48px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+      margin: 0 !important;
+      padding: 20px !important;
+      overflow-y: auto !important;
+      transform: translate(-50%, -50%) !important;
+      border: 1px solid rgba(147,197,253,.55) !important;
+      border-radius: 22px !important;
+      background: #fff !important;
+      box-shadow: 0 28px 84px rgba(15,23,42,.28) !important;
     }
+    #pageContacts .contact-intel-filter-title { margin-bottom: 12px !important; color: #0f172a !important; font-size: 18px !important; line-height: 1.25 !important; font-weight: 850 !important; }
+    #pageContacts .contact-intel-filter-panel label { display: flex; align-items: center; gap: 11px; min-height: 48px; padding: 10px 0; color: #334155; font-size: 13.5px; line-height: 1.4; }
+    #pageContacts .contact-intel-filter-panel input { width: 20px; height: 20px; flex: 0 0 20px; }
+    #pageContacts .contact-intel-filter-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+    #pageContacts .contact-intel-filter-reset,
+    #pageContacts .contact-intel-filter-close,
+    #pageContacts .contact-intel-filter-apply { display: inline-flex; align-items: center; justify-content: center; width: 100%; min-height: 44px; margin: 0; padding: 9px 11px; border-radius: 11px; font: inherit; font-size: 11px; line-height: 1.2; font-weight: 850; cursor: pointer; }
+    #pageContacts .contact-intel-filter-reset { grid-column: 1 / -1; border: 1px solid #dbeafe; background: #f8fbff; color: #2563eb; }
+    #pageContacts .contact-intel-filter-close { border: 1px solid #dbeafe; background: #fff; color: #475569; }
+    #pageContacts .contact-intel-filter-apply { border: 1px solid #2563eb; background: #2563eb; color: #fff; }
+
+    /* True exclusive Contacts directory and detail states. */
+    #pageContacts .contact-intel-workspace { display: block !important; width: 100% !important; max-width: 100% !important; min-width: 0 !important; }
+    #pageContacts .contact-directory-panel,
+    #pageContacts .contact-workspace-panel { width: 100% !important; max-width: 100% !important; min-width: 0 !important; height: auto !important; min-height: 0 !important; max-height: none !important; position: static !important; }
+    #pageContacts .contact-directory-list { max-height: min(62dvh, 620px) !important; overflow-y: auto !important; overflow-x: hidden !important; overscroll-behavior-y: contain; }
+    #pageContacts:not(.mobile-contact-detail) .contact-directory-panel { display: flex !important; }
+    #pageContacts:not(.mobile-contact-detail) .contact-workspace-panel { display: none !important; }
+    #pageContacts.mobile-contact-detail .contact-dashboard-hero,
+    #pageContacts.mobile-contact-detail .contact-intel-toolbar,
+    #pageContacts.mobile-contact-detail #crmContactsBanner,
+    #pageContacts.mobile-contact-detail .contact-directory-panel { display: none !important; }
+    #pageContacts.mobile-contact-detail .contact-workspace-panel { display: flex !important; }
+    #pageContacts .contact-mobile-back { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 46px; padding: 0 14px; border: 0; border-bottom: 1px solid #dbeafe; background: #f8fbff; color: #2563eb; font: inherit; font-size: 11px; font-weight: 850; text-align: left; cursor: pointer; }
+    #pageContacts .contact-mobile-back svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+    #pageContacts .contact-identity-header { grid-template-columns: minmax(0, 1fr) !important; gap: 10px !important; padding: 14px 13px 12px !important; }
     #pageContacts .contact-identity-main { gap: 11px !important; min-width: 0; }
-    #pageContacts .contact-identity-avatar {
-      width: 48px !important;
-      height: 48px !important;
-      flex: 0 0 48px !important;
-      font-size: 18px !important;
-    }
+    #pageContacts .contact-identity-avatar { width: 48px !important; height: 48px !important; flex: 0 0 48px !important; font-size: 18px !important; }
     #pageContacts .contact-identity-copy,
     #pageContacts .contact-identity-copy h2,
     #pageContacts .contact-identity-org,
     #pageContacts .contact-identity-role,
     #pageContacts .contact-identity-meta,
     #pageContacts .contact-meta-item,
-    #pageContacts .contact-meta-item a {
-      min-width: 0;
-      max-width: 100%;
-      overflow-wrap: anywhere;
-      word-break: normal;
-    }
-    #pageContacts .contact-identity-copy h2 { font-size: 18px !important; line-height: 1.22 !important; }
-    #pageContacts .contact-identity-org { font-size: 11px !important; }
+    #pageContacts .contact-meta-item a { min-width: 0; max-width: 100%; overflow-wrap: anywhere; word-break: normal; }
+    #pageContacts .contact-identity-copy h2 { font-size: 19px !important; line-height: 1.25 !important; font-weight: 850 !important; }
+    #pageContacts .contact-identity-org { font-size: 13px !important; line-height: 1.45 !important; }
+    #pageContacts .contact-identity-role { font-size: 12px !important; line-height: 1.45 !important; }
     #pageContacts .contact-identity-meta { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; gap: 7px !important; }
-    #pageContacts .contact-meta-item { align-items: flex-start; }
-    #pageContacts .contact-identity-side {
-      display: block !important;
-      width: 100%;
-      min-width: 0 !important;
-    }
-    #pageContacts .contact-identity-stats {
-      justify-content: flex-start !important;
-      flex-wrap: wrap !important;
-      gap: 5px 8px !important;
-      padding-top: 0 !important;
-      white-space: normal !important;
-    }
+    #pageContacts .contact-meta-item { align-items: flex-start; font-size: 12px !important; line-height: 1.45 !important; }
+    #pageContacts .contact-identity-side { display: block !important; width: 100%; min-width: 0 !important; }
+    #pageContacts .contact-identity-stats { justify-content: flex-start !important; flex-wrap: wrap !important; gap: 5px 8px !important; padding-top: 0 !important; white-space: normal !important; font-size: 11.5px !important; }
 
+    /* Internally scrollable Contact tab strip with safe edge spacing. */
     #pageContacts .contact-tabbar {
       display: flex !important;
       width: 100% !important;
       max-width: 100% !important;
       min-width: 0 !important;
       gap: 5px !important;
-      padding: 0 12px !important;
+      margin: 0 !important;
+      padding: 0 20px !important;
       overflow-x: auto !important;
       overflow-y: hidden !important;
-      scroll-snap-type: x proximity;
-      scroll-padding-inline: 12px;
+      scroll-padding-inline: 20px;
       overscroll-behavior-x: contain;
       -webkit-overflow-scrolling: touch;
-      scrollbar-gutter: auto !important;
+      scrollbar-width: none;
     }
-    #pageContacts .contact-tab {
-      flex: 0 0 auto !important;
-      min-width: max-content !important;
-      min-height: 46px !important;
-      padding: 0 12px !important;
-      scroll-snap-align: start;
-      white-space: nowrap;
-    }
-    #pageContacts .contact-workspace-content {
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-      padding: 10px !important;
-      overflow: visible !important;
-    }
+    #pageContacts .contact-tabbar::-webkit-scrollbar { display: none; }
+    #pageContacts .contact-tab { flex: 0 0 auto !important; min-width: max-content !important; min-height: 46px !important; padding: 0 12px !important; white-space: nowrap; }
+    #pageContacts .contact-workspace-content { width: 100% !important; max-width: 100% !important; min-width: 0 !important; padding: 10px !important; overflow: visible !important; }
     #pageContacts .contact-panel-card,
     #pageContacts .action-items-view,
     #pageContacts .document-library,
     #pageContacts .record-info-group,
     #pageContacts .contact-split-view,
     #pageContacts .meeting-detail-pane,
-    #pageContacts .document-preview-pane {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-    }
+    #pageContacts .document-preview-pane { width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
     #pageContacts .overview-hero-body,
     #pageContacts .overview-middle-grid,
     #pageContacts .contact-split-view,
     #pageContacts .detail-grid,
     #pageContacts .document-info-grid,
-    #pageContacts .record-info-grid {
-      grid-template-columns: minmax(0, 1fr) !important;
-    }
-    #pageContacts .action-items-table-wrap,
-    #pageContacts .overview-followups-full {
-      max-width: 100%;
-      overflow-x: auto;
-      overscroll-behavior-x: contain;
-    }
-    #pageContacts .followup-table { min-width: 620px; }
-    #pageContacts .document-library-item {
-      align-items: flex-start !important;
-      flex-wrap: wrap;
-      gap: 9px !important;
-      padding: 11px 12px !important;
-    }
-    #pageContacts .document-library-action {
-      white-space: normal !important;
-      overflow-wrap: anywhere;
-    }
+    #pageContacts .record-info-grid { grid-template-columns: minmax(0, 1fr) !important; }
+    #pageContacts .document-library-item { align-items: flex-start !important; flex-wrap: wrap; gap: 9px !important; padding: 11px 12px !important; }
+    #pageContacts .document-library-copy,
+    #pageContacts .document-library-action { min-width: 0; max-width: 100%; white-space: normal !important; overflow-wrap: anywhere; }
 
-    /* Compact Record Info without removing any information. */
-    #pageContacts .record-info-groups { gap: 8px !important; }
-    #pageContacts .record-info-group { border-radius: 12px !important; }
-    #pageContacts .record-info-group h3 {
-      padding: 10px 11px !important;
-      font-size: 14px !important;
-      line-height: 1.3 !important;
-      font-weight: 800 !important;
+    /* Action Items as compact single-column cards. */
+    #pageContacts .action-items-view { overflow: visible !important; }
+    #pageContacts .action-items-header { flex-direction: column !important; gap: 9px !important; padding: 14px !important; }
+    #pageContacts .action-items-header h3 { font-size: 19px !important; line-height: 1.25 !important; font-weight: 850 !important; }
+    #pageContacts .action-items-header p { margin-top: 5px !important; font-size: 13px !important; line-height: 1.5 !important; }
+    #pageContacts .action-items-counts { justify-content: flex-start !important; gap: 6px !important; }
+    #pageContacts .action-items-counts span { width: auto !important; min-height: 24px !important; padding: 0 8px !important; font-size: 10px !important; }
+    #pageContacts .action-items-filters { flex-wrap: wrap; padding: 10px 12px !important; }
+    #pageContacts .action-items-filters button { min-height: 36px !important; padding: 0 13px !important; font-size: 10.5px !important; }
+    #pageContacts .action-items-table-wrap { width: 100% !important; max-width: 100% !important; min-width: 0 !important; padding: 10px; overflow: visible !important; }
+    #pageContacts .action-items-table,
+    #pageContacts .action-items-table tbody { display: block !important; width: 100% !important; max-width: 100% !important; min-width: 0 !important; table-layout: auto !important; }
+    #pageContacts .action-items-table thead { position: absolute !important; width: 1px !important; height: 1px !important; margin: -1px !important; padding: 0 !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; white-space: nowrap !important; border: 0 !important; }
+    #pageContacts .action-items-table tr {
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      margin: 0 0 10px !important;
+      padding: 13px !important;
+      border: 1px solid #dbeafe !important;
+      border-radius: 13px !important;
+      background: #fff;
+      box-sizing: border-box;
+      overflow: hidden;
     }
-    #pageContacts .record-info-grid {
-      gap: 8px !important;
-      padding: 10px 11px !important;
-    }
-    #pageContacts .record-info-field,
-    #pageContacts .record-info-field.full { grid-column: auto !important; }
-    #pageContacts .record-info-field label {
-      font-size: 10.5px !important;
-      line-height: 1.3 !important;
-      font-weight: 800 !important;
-    }
-    #pageContacts .record-info-field div {
-      margin-top: 3px !important;
-      font-size: 13px !important;
+    #pageContacts .action-items-table tr:last-child { margin-bottom: 0 !important; }
+    #pageContacts .action-items-table td,
+    #pageContacts .action-items-table td:first-child {
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      padding: 0 0 12px !important;
+      border: 0 !important;
+      color: #334155;
+      font-size: 13.5px !important;
       line-height: 1.5 !important;
-      overflow-wrap: anywhere;
-      word-break: normal;
+      white-space: normal !important;
+      overflow-wrap: anywhere !important;
+      word-break: normal !important;
+      box-sizing: border-box;
     }
+    #pageContacts .action-items-table td:last-child { padding-bottom: 0 !important; }
+    #pageContacts .action-items-table td::before { display: block; margin-bottom: 4px; color: #64748b; font-size: 10.5px !important; line-height: 1.3 !important; font-weight: 850 !important; letter-spacing: .45px; text-transform: uppercase; }
+    #pageContacts .action-linked-meeting { display: block; width: 100%; min-width: 0; }
+    #pageContacts .action-linked-meeting strong { display: block; max-width: 100%; color: #0f172a; font-size: 14px !important; line-height: 1.4 !important; font-weight: 750 !important; white-space: normal !important; overflow-wrap: anywhere !important; word-break: normal !important; }
+    #pageContacts .action-linked-meeting small { display: block; margin-top: 4px; color: #64748b; font-size: 11.5px !important; line-height: 1.4 !important; }
+    #pageContacts .followup-status { display: inline-flex !important; width: max-content !important; max-width: 100% !important; min-height: 24px !important; padding: 4px 9px !important; font-size: 10.5px !important; line-height: 1.2 !important; white-space: normal !important; }
+
+    /* Record Info compact typography matching other tabs. */
+    #pageContacts .record-info-groups { gap: 10px !important; }
+    #pageContacts .record-info-group { width: 100%; max-width: 100%; min-width: 0; border-radius: 13px !important; overflow: hidden; }
+    #pageContacts .record-info-group h3 { padding: 12px 13px !important; font-size: 17px !important; line-height: 1.25 !important; font-weight: 850 !important; }
+    #pageContacts .record-info-grid { gap: 10px !important; padding: 12px 13px !important; }
+    #pageContacts .record-info-field,
+    #pageContacts .record-info-field.full { grid-column: auto !important; min-width: 0; }
+    #pageContacts .record-info-field label { font-size: 10.5px !important; line-height: 1.3 !important; font-weight: 850 !important; }
+    #pageContacts .record-info-field div { margin-top: 4px !important; max-width: 100%; color: #334155 !important; font-size: 13.5px !important; line-height: 1.5 !important; white-space: normal !important; overflow-wrap: anywhere !important; word-break: normal !important; }
+
+    /* Mobile overflow audit for My CRM Entries and navigation. */
+    body.crm-authenticated .system-nav,
+    body.crm-authenticated .modern-navbar-inner,
+    body.crm-authenticated .modern-navbar-actions,
+    #pageMyRecords .records-workspace,
+    #pageMyRecords .records-toolbar,
+    #pageMyRecords .records-table-wrap,
+    #pageMyRecords .record-editor,
+    #pageMyRecords table { max-width: 100%; min-width: 0; }
+    #pageMyRecords .records-table-wrap { overflow-x: auto; overscroll-behavior-x: contain; }
   }
 
   @media (max-width: 390px) {
@@ -8683,8 +8643,11 @@
     #pageDashboard .cal-nav { grid-template-columns: 36px minmax(0, 1fr) 36px auto !important; gap: 5px !important; }
     #pageDashboard .cal-nav-btn { width: 36px !important; height: 36px !important; }
     #pageDashboard .cal-today-btn { min-height: 36px !important; padding: 6px 8px !important; font-size: 10px !important; }
-    #pageDashboard #calGrid:not(.week-time-mode) { grid-auto-rows: 40px !important; gap: 2px !important; }
-    #pageContacts .contact-intel-filter-panel { left: 8px !important; right: 8px !important; }
+    #pageDashboard #calGrid:not(.week-time-mode):not(.mobile-week-mode) { grid-auto-rows: 40px !important; gap: 2px !important; }
+    #pageDashboard .mobile-week-day { min-height: 57px; padding-inline: 0; }
+    #pageDashboard .mobile-week-day-name { font-size: 7.5px; letter-spacing: 0; }
+    #pageDashboard .mobile-week-day-number { width: 23px; height: 23px; font-size: 11px; }
+    #pageDashboard .mobile-week-summary { padding-inline: 6px; font-size: 9px; }
     #pageContacts .contact-tab { padding-inline: 10px !important; }
   }
 </style>
@@ -8878,18 +8841,22 @@
         <option value="name-desc">Name (Z–A)</option>
         <option value="company-asc">Organisation (A–Z)</option>
       </select>
-      <div class="contact-intel-filter-anchor">
-        <button aria-expanded="false" class="system-btn contact-intel-filter-btn" id="crmContactFilterButton" onclick="crmToggleContactFilters(event)" type="button">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"></path></svg><span>Filter</span>
-        </button>
-        <div class="contact-intel-filter-panel" id="crmContactFilterPanel" role="dialog" aria-label="Additional contact filters">
-          <div class="contact-intel-filter-title">Additional filters</div>
-          <label><input id="crmFilterHasActions" onchange="crmFilterRecords()" type="checkbox"/> Has open action items</label>
-          <label><input id="crmFilterHasDocuments" onchange="crmFilterRecords()" type="checkbox"/> Has linked documents</label>
-          <button class="contact-intel-filter-reset" onclick="crmResetAdditionalFilters()" type="button">Reset additional filters</button>
-          <button class="contact-intel-filter-close" onclick="crmToggleContactFilters(event)" type="button">Close filters</button>
+        <div class="contact-intel-filter-anchor">
+          <button class="system-btn contact-intel-filter-btn" id="crmContactFilterButton" type="button" onclick="crmToggleContactFilters(event)" aria-expanded="false">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"></path></svg><span>Filter</span>
+          </button>
+          <div class="contact-intel-filter-backdrop" id="crmContactFilterBackdrop" onclick="crmHandleContactFilterBackdrop(event)" aria-hidden="true"></div>
+          <div class="contact-intel-filter-panel" id="crmContactFilterPanel" role="dialog" aria-modal="true" aria-labelledby="crmContactFilterTitle">
+            <div class="contact-intel-filter-title" id="crmContactFilterTitle">Filter contacts</div>
+            <label><input id="crmFilterHasActions" type="checkbox" onchange="crmHandleContactFilterChange()"> Has open action items</label>
+            <label><input id="crmFilterHasDocuments" type="checkbox" onchange="crmHandleContactFilterChange()"> Has linked documents</label>
+            <div class="contact-intel-filter-actions">
+              <button class="contact-intel-filter-reset" type="button" onclick="crmResetContactFilterDraft()">Reset filters</button>
+              <button class="contact-intel-filter-apply" type="button" onclick="crmApplyContactFilters(event)">Apply filters</button>
+              <button class="contact-intel-filter-close" type="button" onclick="crmCancelContactFilters(event)">Cancel</button>
+            </div>
+          </div>
         </div>
-      </div>
       <button class="system-btn contact-intel-clear" onclick="crmClearSearch()" type="button">Clear</button>
     </div>
   </div>
@@ -10352,6 +10319,124 @@
       if (key && window._eventsCache[key]) openEventModal(key);
     }
 
+    
+    let dashboardMobileWeekSelectedDateKey = '';
+
+    function dashboardMobileWeekDurationLabel(event) {
+      if (!event?.start?.dateTime) return 'All day';
+      const start = new Date(event.start.dateTime);
+      const end = event?.end?.dateTime ? new Date(event.end.dateTime) : new Date(start.getTime() + 30 * 60000);
+      const minutes = Math.max(1, Math.round((end - start) / 60000));
+      if (minutes < 60) return `${minutes} min`;
+      const hours = Math.floor(minutes / 60);
+      const remainder = minutes % 60;
+      return remainder ? `${hours} hr ${remainder} min` : `${hours} hr${hours === 1 ? '' : 's'}`;
+    }
+
+    function dashboardMobileWeekPeopleLabel(event) {
+      const attendeeNames = (Array.isArray(event?.attendees) ? event.attendees : [])
+        .filter(attendee => !attendee?.self)
+        .map(attendee => dashboardCleanDisplayText(attendee?.displayName || attendee?.email || '', ''))
+        .filter(Boolean);
+      if (attendeeNames.length) {
+        const shown = attendeeNames.slice(0, 2).join(', ');
+        return attendeeNames.length > 2 ? `${shown} +${attendeeNames.length - 2}` : shown;
+      }
+      const organiser = dashboardCleanDisplayText(event?.organizer?.displayName || event?.organizer?.email || '', '');
+      if (organiser) return organiser;
+      const location = dashboardCleanDisplayText(event?.location || '', '');
+      return location || 'No attendee details';
+    }
+
+    function dashboardSelectMobileWeekDay(dateKey) {
+      dashboardMobileWeekSelectedDateKey = dateKey;
+      renderCalendarGrid();
+    }
+
+    function dashboardRenderMobileWeek(grid, label, monthNames) {
+      const weekStart = getWeekStart(calendarViewDate);
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekStart.getDate() + 6);
+      const sameMonth = weekStart.getMonth() === weekEnd.getMonth();
+      const sameYear = weekStart.getFullYear() === weekEnd.getFullYear();
+      label.textContent = sameMonth
+        ? `${weekStart.getDate()}-${weekEnd.getDate()} ${monthNames[weekStart.getMonth()]} ${weekEnd.getFullYear()}`
+        : sameYear
+          ? `${weekStart.getDate()} ${monthNames[weekStart.getMonth()]} - ${weekEnd.getDate()} ${monthNames[weekEnd.getMonth()]} ${weekEnd.getFullYear()}`
+          : `${weekStart.getDate()} ${monthNames[weekStart.getMonth()]} ${weekStart.getFullYear()} - ${weekEnd.getDate()} ${monthNames[weekEnd.getMonth()]} ${weekEnd.getFullYear()}`;
+
+      const todayKey = ymdKey(new Date());
+      const days = Array.from({ length: 7 }, (_, dayIndex) => {
+        const date = new Date(weekStart);
+        date.setDate(weekStart.getDate() + dayIndex);
+        const key = ymdKey(date);
+        const events = (calendarEventsByDate[key] || []).slice().sort((a, b) => {
+          const aAllDay = Boolean(a?.start?.date && !a?.start?.dateTime);
+          const bAllDay = Boolean(b?.start?.date && !b?.start?.dateTime);
+          if (aAllDay !== bAllDay) return aAllDay ? -1 : 1;
+          const aTime = a?.start?.dateTime ? new Date(a.start.dateTime).getTime() : 0;
+          const bTime = b?.start?.dateTime ? new Date(b.start.dateTime).getTime() : 0;
+          return aTime - bTime;
+        });
+        return { date, key, events };
+      });
+
+      const weekKeys = days.map(day => day.key);
+      if (!weekKeys.includes(dashboardMobileWeekSelectedDateKey)) {
+        const firstMeetingDay = days.find(day => day.events.length);
+        dashboardMobileWeekSelectedDateKey = weekKeys.includes(todayKey)
+          ? todayKey
+          : (firstMeetingDay?.key || days[0].key);
+      }
+
+      const selectedDay = days.find(day => day.key === dashboardMobileWeekSelectedDateKey) || days[0];
+      const weeklyEvents = days.flatMap(day => day.events);
+      const weeklyDurationMinutes = weeklyEvents.reduce((total, event) => {
+        if (!event?.start?.dateTime) return total;
+        const start = new Date(event.start.dateTime);
+        const end = event?.end?.dateTime ? new Date(event.end.dateTime) : new Date(start.getTime() + 30 * 60000);
+        return total + Math.max(1, Math.round((end - start) / 60000));
+      }, 0);
+      const weeklyHours = weeklyDurationMinutes / 60;
+      const durationSummary = Number.isInteger(weeklyHours)
+        ? `${weeklyHours} hr${weeklyHours === 1 ? '' : 's'}`
+        : `${weeklyHours.toFixed(1)} hrs`;
+
+      window._eventsCache = window._eventsCache || {};
+      const dayButtons = days.map(day => {
+        const selected = day.key === selectedDay.key;
+        const today = day.key === todayKey;
+        return `<button type="button" class="mobile-week-day${selected ? ' selected' : ''}${today ? ' today' : ''}" role="tab" aria-selected="${selected}" aria-label="${esc(day.date.toLocaleDateString('en-MY', { weekday:'long', day:'numeric', month:'long', year:'numeric' }))}${day.events.length ? `, ${day.events.length} meeting${day.events.length === 1 ? '' : 's'}` : ', no meetings'}" onclick="dashboardSelectMobileWeekDay('${day.key}')"><span class="mobile-week-day-name">${day.date.toLocaleDateString('en-MY', { weekday:'short' }).toUpperCase()}</span><span class="mobile-week-day-number">${day.date.getDate()}</span><span class="mobile-week-day-count${day.events.length ? ' has-events' : ''}" aria-hidden="true">${day.events.length || ''}</span></button>`;
+      }).join('');
+
+      const agendaCards = selectedDay.events.map((event, eventIndex) => {
+        const eventKey = `mw_${selectedDay.key}_${eventIndex}`;
+        window._eventsCache[eventKey] = event;
+        const title = dashboardCleanDisplayText(event?.summary, 'Untitled meeting');
+        const isAllDay = Boolean(event?.start?.date && !event?.start?.dateTime);
+        let timeRange = 'All day';
+        if (!isAllDay && event?.start?.dateTime) {
+          const start = new Date(event.start.dateTime);
+          const end = event?.end?.dateTime ? new Date(event.end.dateTime) : new Date(start.getTime() + 30 * 60000);
+          timeRange = `${formatKLTime(start)} - ${formatKLTime(end)}`;
+        }
+        const people = dashboardMobileWeekPeopleLabel(event);
+        const duration = dashboardMobileWeekDurationLabel(event);
+        return `<button type="button" class="mobile-week-event-card" onclick="dashboardOpenWeekEvent('${eventKey}',this)" aria-label="Open ${esc(title)}"><span class="mobile-week-event-time">${esc(timeRange)}</span><span class="mobile-week-event-title">${esc(title)}</span><span class="mobile-week-event-meta">${esc(people)}</span><span class="mobile-week-event-footer"><span>${esc(duration)}</span><span>Open meeting</span></span></button>`;
+      }).join('');
+
+      grid.classList.remove('week-mode', 'week-time-mode');
+      grid.classList.add('mobile-week-mode');
+      grid.innerHTML = `<div class="mobile-week-view"><div class="mobile-week-summary" aria-label="Weekly calendar summary"><span><strong>${weeklyEvents.length}</strong> meeting${weeklyEvents.length === 1 ? '' : 's'}</span><span>${durationSummary} total</span><span>GMT+8</span></div><div class="mobile-week-days" role="tablist" aria-label="Select a day">${dayButtons}</div><section class="mobile-week-agenda" aria-label="Selected day meetings"><div class="mobile-week-agenda-head"><div><span>${selectedDay.date.toLocaleDateString('en-MY', { weekday:'long' })}</span><strong>${selectedDay.date.toLocaleDateString('en-MY', { day:'numeric', month:'long', year:'numeric' })}</strong></div><span>${selectedDay.events.length} meeting${selectedDay.events.length === 1 ? '' : 's'}</span></div><div class="mobile-week-agenda-list">${agendaCards || '<div class="mobile-week-empty">No meetings scheduled for this day.</div>'}</div></section></div>`;
+    }
+
+    const dashboardMobileWeekMediaQuery = window.matchMedia('(max-width: 680px)');
+    if (dashboardMobileWeekMediaQuery.addEventListener) {
+      dashboardMobileWeekMediaQuery.addEventListener('change', () => {
+        if (calendarViewMode === 'week') renderCalendarGrid();
+      });
+    }
+
     function dashboardRenderTimedWeek(grid, label, monthNames) {
       const weekStart = getWeekStart(calendarViewDate);
       const weekEnd = new Date(weekStart);
@@ -10470,11 +10555,15 @@
       updateCalendarViewControls();
       const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
       if (calendarViewMode === 'week') {
-        dashboardRenderTimedWeek(grid, label, monthNames);
+        if (window.matchMedia('(max-width: 680px)').matches) dashboardRenderMobileWeek(grid, label, monthNames);
+        else {
+          grid.classList.remove('mobile-week-mode');
+          dashboardRenderTimedWeek(grid, label, monthNames);
+        }
         return;
       }
       label.textContent = monthNames[calendarViewDate.getMonth()] + ' ' + calendarViewDate.getFullYear();
-      grid.classList.remove('week-mode', 'week-time-mode');
+      grid.classList.remove('week-mode', 'week-time-mode', 'mobile-week-mode');
       const cells = [];
       const { gridStart } = getGridRange(calendarViewDate);
       for (let i = 0; i < 42; i++) {
@@ -12765,6 +12854,7 @@
     let crmActionItemsFilter = '';
     let crmLatestDocumentFilter = false;
     let crmMobileDirectoryScrollTop = 0;
+    let crmMobileContactFilterDraft = null;
 
     function crmUsesMobileMasterDetail() {
       return window.matchMedia('(max-width: 680px)').matches;
@@ -13189,13 +13279,131 @@
       crmFilterRecords();
     }
 
+    function crmSetContactFilterPanelOpen(show, options = {}) {
+      const panel = document.getElementById('crmContactFilterPanel');
+      const backdrop = document.getElementById('crmContactFilterBackdrop');
+      const button = document.getElementById('crmContactFilterButton');
+      panel?.classList.toggle('show', show);
+      backdrop?.classList.toggle('show', show);
+      backdrop?.setAttribute('aria-hidden', String(!show));
+      button?.setAttribute('aria-expanded', String(show));
+      document.body.classList.toggle('crm-contact-filter-open', show && crmUsesMobileMasterDetail());
+      if (show && crmUsesMobileMasterDetail()) {
+        requestAnimationFrame(() => panel?.querySelector('input,button')?.focus());
+      } else if (!show && options.restoreFocus) {
+        requestAnimationFrame(() => button?.focus());
+      }
+    }
+
+    function crmCaptureContactFilterState() {
+      const actions = document.getElementById('crmFilterHasActions');
+      const documents = document.getElementById('crmFilterHasDocuments');
+      const hasActions = Boolean(actions?.checked);
+      const hasDocuments = Boolean(documents?.checked);
+      crmMobileContactFilterDraft = {
+        originalHasActions: hasActions,
+        originalHasDocuments: hasDocuments,
+        pendingHasActions: hasActions,
+        pendingHasDocuments: hasDocuments
+      };
+      if (actions) actions.checked = hasActions;
+      if (documents) documents.checked = hasDocuments;
+    }
+
+    function crmUpdateContactFilterButtonState() {
+      if (!crmUsesMobileMasterDetail()) return;
+      const button = document.getElementById('crmContactFilterButton');
+      const isActive = Boolean(document.getElementById('crmFilterHasActions')?.checked || document.getElementById('crmFilterHasDocuments')?.checked);
+      button?.classList.toggle('active', isActive);
+      button?.setAttribute('aria-pressed', String(isActive));
+    }
+
+    function crmHandleContactFilterChange() {
+      const panelOpen = document.getElementById('crmContactFilterPanel')?.classList.contains('show');
+      if (crmUsesMobileMasterDetail() && panelOpen) {
+        if (!crmMobileContactFilterDraft) crmCaptureContactFilterState();
+        crmMobileContactFilterDraft.pendingHasActions = Boolean(document.getElementById('crmFilterHasActions')?.checked);
+        crmMobileContactFilterDraft.pendingHasDocuments = Boolean(document.getElementById('crmFilterHasDocuments')?.checked);
+        return;
+      }
+      crmFilterRecords();
+    }
+
     function crmToggleContactFilters(event) {
       event?.stopPropagation();
       const panel = document.getElementById('crmContactFilterPanel');
-      const button = document.getElementById('crmContactFilterButton');
       const show = !panel?.classList.contains('show');
-      panel?.classList.toggle('show', show);
-      button?.setAttribute('aria-expanded', String(show));
+      if (crmUsesMobileMasterDetail()) {
+        if (show) {
+          crmCaptureContactFilterState();
+          crmSetContactFilterPanelOpen(true);
+        } else {
+          crmCancelContactFilters(event);
+        }
+        return;
+      }
+      crmSetContactFilterPanelOpen(show);
+    }
+
+    function crmApplyContactFilters(event) {
+      event?.stopPropagation();
+      const panelOpen = document.getElementById('crmContactFilterPanel')?.classList.contains('show');
+      if (!(crmUsesMobileMasterDetail() && panelOpen)) {
+        crmFilterRecords();
+        crmSetContactFilterPanelOpen(false);
+        return;
+      }
+      if (!crmMobileContactFilterDraft) crmCaptureContactFilterState();
+      crmMobileContactFilterDraft.pendingHasActions = Boolean(document.getElementById('crmFilterHasActions')?.checked);
+      crmMobileContactFilterDraft.pendingHasDocuments = Boolean(document.getElementById('crmFilterHasDocuments')?.checked);
+      const actions = document.getElementById('crmFilterHasActions');
+      const documents = document.getElementById('crmFilterHasDocuments');
+      if (actions) actions.checked = crmMobileContactFilterDraft.pendingHasActions;
+      if (documents) documents.checked = crmMobileContactFilterDraft.pendingHasDocuments;
+      crmMobileContactFilterDraft = null;
+      crmFilterRecords();
+      crmUpdateContactFilterButtonState();
+      crmSetContactFilterPanelOpen(false, { restoreFocus: true });
+    }
+
+    function crmCancelContactFilters(event) {
+      event?.stopPropagation();
+      const panelOpen = document.getElementById('crmContactFilterPanel')?.classList.contains('show');
+      if (crmUsesMobileMasterDetail() && panelOpen) {
+        const actions = document.getElementById('crmFilterHasActions');
+        const documents = document.getElementById('crmFilterHasDocuments');
+        if (crmMobileContactFilterDraft) {
+          if (actions) actions.checked = crmMobileContactFilterDraft.originalHasActions;
+          if (documents) documents.checked = crmMobileContactFilterDraft.originalHasDocuments;
+        }
+        crmMobileContactFilterDraft = null;
+        crmSetContactFilterPanelOpen(false, { restoreFocus: true });
+        return;
+      }
+      crmSetContactFilterPanelOpen(false);
+    }
+
+    function crmHandleContactFilterBackdrop(event) {
+      if (crmUsesMobileMasterDetail()) {
+        crmCancelContactFilters(event);
+      } else {
+        crmToggleContactFilters(event);
+      }
+    }
+
+    function crmResetContactFilterDraft() {
+      const panelOpen = document.getElementById('crmContactFilterPanel')?.classList.contains('show');
+      if (crmUsesMobileMasterDetail() && panelOpen) {
+        const actions = document.getElementById('crmFilterHasActions');
+        const documents = document.getElementById('crmFilterHasDocuments');
+        if (!crmMobileContactFilterDraft) crmCaptureContactFilterState();
+        if (actions) actions.checked = false;
+        if (documents) documents.checked = false;
+        crmMobileContactFilterDraft.pendingHasActions = false;
+        crmMobileContactFilterDraft.pendingHasDocuments = false;
+        return;
+      }
+      crmResetAdditionalFilters();
     }
 
     function crmResetAdditionalFilters(render = true) {
@@ -13203,6 +13411,8 @@
       const documents = document.getElementById('crmFilterHasDocuments');
       if (actions) actions.checked = false;
       if (documents) documents.checked = false;
+      crmMobileContactFilterDraft = null;
+      if (crmUsesMobileMasterDetail()) crmUpdateContactFilterButtonState();
       if (render) crmFilterRecords();
     }
 
@@ -13597,8 +13807,22 @@
 
     document.addEventListener('click', event => {
       if (!event.target.closest('.contact-intel-filter-anchor')) {
-        document.getElementById('crmContactFilterPanel')?.classList.remove('show');
-        document.getElementById('crmContactFilterButton')?.setAttribute('aria-expanded', 'false');
+        const panelOpen = document.getElementById('crmContactFilterPanel')?.classList.contains('show');
+        if (crmUsesMobileMasterDetail() && panelOpen) {
+          crmCancelContactFilters(event);
+        } else {
+          crmSetContactFilterPanelOpen(false);
+        }
+      }
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && document.getElementById('crmContactFilterPanel')?.classList.contains('show')) {
+        if (crmUsesMobileMasterDetail()) {
+          crmCancelContactFilters(event);
+        } else {
+          crmSetContactFilterPanelOpen(false, { restoreFocus: true });
+        }
       }
     });
 
