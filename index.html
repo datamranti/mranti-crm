@@ -5329,41 +5329,40 @@
     #pageDashboard .dashboard-workspace {
       grid-template-columns:minmax(0,1.58fr) minmax(330px,.72fr)!important;
       gap:16px!important;
-      align-items:start!important;
-    }
-    #pageDashboard .dashboard-calendar-card {
-      min-width:0;
-      padding:18px!important;
+      align-items:stretch!important;
     }
     #pageDashboard .dashboard-calendar-card {
       min-width:0;
       min-height:0;
+      height:100%;
+      align-self:stretch!important;
+      padding:18px!important;
     }
     #pageDashboard .dashboard-side-stack {
       min-width:0;
       min-height:0;
-      height:auto;
-      align-self:start!important;
+      height:100%;
+      align-self:stretch!important;
     }
     #pageDashboard .dashboard-recent-card {
       width:100%;
       min-width:0;
       min-height:0;
-      height:auto;
-      align-self:start!important;
+      height:100%;
+      align-self:stretch!important;
       display:flex;
       flex-direction:column;
       overflow:visible;
     }
     #pageDashboard .dashboard-recent-list {
-      flex:0 0 auto;
+      flex:1 1 auto;
       min-width:0;
       min-height:0;
       display:grid!important;
       grid-template-columns:minmax(0,1fr)!important;
-      grid-template-rows:none!important;
-      grid-auto-rows:auto;
-      align-content:start;
+      grid-template-rows:repeat(3,minmax(0,1fr))!important;
+      grid-auto-rows:unset;
+      align-content:stretch;
       gap:10px!important;
       overflow:visible!important;
       padding-right:0;
@@ -5373,11 +5372,11 @@
       max-width:100%;
       min-width:0;
       min-height:0;
-      height:auto;
+      height:100%;
       display:flex;
       flex-direction:column;
       padding:15px 16px;
-      overflow:visible;
+      overflow:hidden;
     }
     #pageDashboard .dashboard-meeting-title {
       font-size:13.5px;
@@ -5437,7 +5436,7 @@
       word-break:normal;
     }
     #pageDashboard .dashboard-meeting-footer {
-      margin-top:10px;
+      margin-top:auto;
       padding-top:9px;
       display:grid;
       grid-template-columns:minmax(0,1fr) auto;
@@ -5507,11 +5506,13 @@
   @media (min-width:681px) and (max-width:899px) {
     #pageDashboard .dashboard-workspace {
       grid-template-columns:1fr!important;
-      align-items:start!important;
+      grid-auto-rows:minmax(0,1fr);
+      align-items:stretch!important;
     }
     #pageDashboard .dashboard-side-stack,
     #pageDashboard .dashboard-recent-card {
-      height:auto!important;
+      height:100%!important;
+      align-self:stretch!important;
     }
     #pageDashboard .dashboard-recent-list {
       grid-template-columns:1fr!important;
@@ -7428,12 +7429,16 @@
     background:rgba(248,251,255,.74);
   }
 
-  /* Google Calendar-style layered desktop overlaps. */
+  /* One consistent layered-card treatment for every desktop Week overlap. */
   @media (min-width:681px) {
     #pageDashboard .week-day-column { overflow:hidden; }
     #pageDashboard .week-event {
       min-width:0!important;
       box-sizing:border-box!important;
+      display:flex!important;
+      flex-direction:column!important;
+      align-items:stretch!important;
+      justify-content:flex-start!important;
       padding:5px 6px!important;
       overflow:hidden!important;
       color:#0f172a!important;
@@ -7461,25 +7466,30 @@
       white-space:normal!important;
       overflow-wrap:anywhere!important;
       word-break:normal!important;
-      font-size:9px!important;
-      line-height:1.24!important;
+      font-size:9.4px!important;
+      line-height:1.2!important;
+      font-weight:850!important;
     }
     #pageDashboard .week-event-time {
+      display:block!important;
+      margin-top:3px!important;
       overflow:hidden!important;
-      text-overflow:ellipsis!important;
+      text-overflow:clip!important;
       white-space:nowrap!important;
-      font-size:8px!important;
+      font-size:8.2px!important;
       line-height:1.2!important;
+      font-weight:720!important;
     }
     #pageDashboard .week-event-location { min-width:0!important; overflow:hidden!important; }
+    #pageDashboard .week-event.is-overlap {
+      min-height:42px;
+      padding:5px 6px!important;
+      border-left-width:3px!important;
+      box-shadow:0 5px 14px rgba(37,99,235,.15)!important;
+    }
     #pageDashboard .week-event.is-overlap .week-event-location,
-    #pageDashboard .week-event.is-same-start .week-event-location { display:none!important; }
-    #pageDashboard .week-event.is-overlap .week-event-icon,
-    #pageDashboard .week-event.is-same-start .week-event-icon { display:none!important; }
-    #pageDashboard .week-event.is-overlap { padding:4px 5px!important; }
-    #pageDashboard .week-event.is-same-start { padding:4px!important; border-left-width:2px!important; }
-    #pageDashboard .week-event.is-same-start .week-event-title { font-size:8.7px!important; line-height:1.2!important; }
-    #pageDashboard .week-event.is-same-start .week-event-time { margin-top:2px!important; font-size:7.8px!important; line-height:1.2!important; }
+    #pageDashboard .week-event.is-overlap .week-event-icon { display:none!important; }
+    #pageDashboard .week-event.is-overlap .week-event-head { display:block!important; min-height:11px; }
     #pageDashboard .week-event-variant-1 { background:#dbeafe!important; border-color:#2563eb!important; border-left-color:#2563eb!important; }
     #pageDashboard .week-event-variant-2 { background:#e8f1ff!important; border-color:#3b82f6!important; border-left-color:#3b82f6!important; }
     #pageDashboard .week-event-variant-3 { background:#e0f2fe!important; border-color:#0ea5e9!important; border-left-color:#0ea5e9!important; }
@@ -10434,15 +10444,14 @@
     }
 
     function dashboardWeekEventLayout(events) {
-      const START_BUCKET_MS = 5 * 60 * 1000;
       const sorted = events.slice().sort((a, b) => a.startMs - b.startMs || b.endMs - a.endMs);
       const groups = [];
       let currentGroup = [];
       let groupEnd = -Infinity;
 
       sorted.forEach(item => {
-        // Boundary-touching meetings are not overlapping: 11:00 end and
-        // 11:00 start belong to separate groups.
+        // Boundary-touching meetings are not overlapping: an event ending at
+        // 11:00 and another beginning at 11:00 belong to separate groups.
         if (currentGroup.length && item.startMs >= groupEnd) {
           groups.push(currentGroup);
           currentGroup = [];
@@ -10454,36 +10463,29 @@
       if (currentGroup.length) groups.push(currentGroup);
 
       return groups.flatMap((group, overlapGroup) => {
-        const buckets = [];
-        group.forEach(item => {
-          const bucketKey = Math.floor(item.startMs / START_BUCKET_MS);
-          let bucket = buckets[buckets.length - 1];
-          if (!bucket || bucket.key !== bucketKey) {
-            bucket = { key: bucketKey, startMs: item.startMs, items: [], endMs: item.endMs };
-            buckets.push(bucket);
-          }
-          bucket.items.push(item);
-          bucket.startMs = Math.min(bucket.startMs, item.startMs);
-          bucket.endMs = Math.max(bucket.endMs, item.endMs);
-        });
-
         const depthEnds = [];
+        const sameStartCounts = new Map();
         const groupHasOverlap = group.length > 1;
-        return buckets.flatMap(bucket => {
-          let cascadeDepth = depthEnds.findIndex(end => end <= bucket.startMs);
-          if (cascadeDepth < 0) cascadeDepth = depthEnds.length;
-          depthEnds[cascadeDepth] = bucket.endMs;
 
-          const siblings = bucket.items.slice().sort((a, b) => b.endMs - a.endMs || a.startMs - b.startMs);
-          const siblingCount = siblings.length;
-          return siblings.map((item, siblingIndex) => ({
+        return group.map((item, stackOrder) => {
+          // Reuse the earliest free visual stack depth. Width is never divided
+          // by the number of concurrent meetings; depth only controls the small
+          // layered inset and deterministic z-index.
+          let stackDepth = depthEnds.findIndex(endMs => endMs <= item.startMs);
+          if (stackDepth < 0) stackDepth = depthEnds.length;
+          depthEnds[stackDepth] = item.endMs;
+
+          const sameStartIndex = sameStartCounts.get(item.startMs) || 0;
+          sameStartCounts.set(item.startMs, sameStartIndex + 1);
+
+          return {
             ...item,
             overlapGroup,
             groupHasOverlap,
-            cascadeDepth,
-            siblingIndex,
-            siblingCount
-          }));
+            stackDepth,
+            stackOrder,
+            sameStartIndex
+          };
         });
       });
     }
@@ -10700,24 +10702,20 @@
       const columns = days.map((day, dayIndex) => `<div class="week-day-column${day.key === todayKey ? ' today' : ''}">${day.timed.map((item, eventIndex) => {
         const eventKey = `wt${dayIndex}_${eventIndex}`;
         window._eventsCache[eventKey] = item.event;
-        const top = GRID_TOP_PADDING + item.clippedStart * PIXELS_PER_MINUTE;
-        const height = Math.max(30, (item.clippedEnd - item.clippedStart) * PIXELS_PER_MINUTE);
-        const cascadeDepth = Math.max(0, item.cascadeDepth || 0);
-        const siblingCount = Math.max(1, item.siblingCount || 1);
-        const siblingIndex = Math.max(0, Math.min(item.siblingIndex || 0, siblingCount - 1));
+        const stackDepth = Math.max(0, item.stackDepth || 0);
+        const sameStartIndex = Math.max(0, item.sameStartIndex || 0);
+        const stackOrder = Math.max(0, item.stackOrder || 0);
+        const exactStartVisualOffset = sameStartIndex * 24;
+        const top = GRID_TOP_PADDING + item.clippedStart * PIXELS_PER_MINUTE + exactStartVisualOffset;
+        const durationHeight = (item.clippedEnd - item.clippedStart) * PIXELS_PER_MINUTE;
+        const height = Math.max(item.groupHasOverlap ? 42 : 30, durationHeight);
         const baseInset = 3;
-        const cascadeOffset = 8;
+        const stackOffset = 8;
         const rightInset = 4;
-        const siblingGap = 3;
-        const layerLeft = baseInset + cascadeDepth * cascadeOffset;
-        const fixedSpace = layerLeft + rightInset + (siblingCount - 1) * siblingGap;
-        const siblingWidthPercent = 100 / siblingCount;
-        const siblingWidthCorrection = fixedSpace / siblingCount;
-        const siblingLeftPercent = siblingIndex * siblingWidthPercent;
-        const siblingLeftCorrection = layerLeft + siblingIndex * siblingGap - siblingIndex * siblingWidthCorrection;
-        const eventLeft = `calc(${siblingLeftPercent}% + ${siblingLeftCorrection.toFixed(3)}px)`;
-        const eventWidth = `calc(${siblingWidthPercent}% - ${siblingWidthCorrection.toFixed(3)}px)`;
-        const eventZIndex = 3 + cascadeDepth * 10 + siblingIndex;
+        const leftOffset = baseInset + stackDepth * stackOffset;
+        const eventLeft = `${leftOffset}px`;
+        const eventWidth = `calc(100% - ${leftOffset + rightInset}px)`;
+        const eventZIndex = 3 + stackOrder;
         const startDate = new Date(item.event.start.dateTime);
         const endDate = item.event.end?.dateTime ? new Date(item.event.end.dateTime) : new Date(startDate.getTime() + 30 * 60000);
         const timeRange = `${formatKLTime(startDate)}–${formatKLTime(endDate)}`;
@@ -10725,9 +10723,8 @@
         const location = dashboardCleanDisplayText(item.event.location || '', '');
         const variant = dashboardStableEventVariant(item.event);
         const overlapClass = item.groupHasOverlap ? ' is-overlap' : '';
-        const sameStartClass = siblingCount > 1 ? ' is-same-start' : '';
         const ariaLabel = `${title}. ${day.date.toLocaleDateString('en-MY', { weekday:'long', day:'numeric', month:'long', year:'numeric' })}. ${timeRange}${location ? `. ${location}` : ''}`;
-        return `<button class="week-event week-event-variant-${variant}${overlapClass}${sameStartClass}" type="button" style="top:${top}px;height:${height}px;left:${eventLeft};width:${eventWidth};z-index:${eventZIndex}" onclick="dashboardOpenWeekEvent('${eventKey}',this)" aria-label="${esc(ariaLabel)}" title="${esc(title)} — ${esc(timeRange)}${location ? ` — ${esc(location)}` : ''}"><span class="week-event-head"><span class="week-event-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg></span><span class="week-event-title">${esc(title)}</span></span><span class="week-event-time">${esc(timeRange)}</span>${location ? `<span class="week-event-location"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg><span>${esc(location)}</span></span>` : ''}</button>`;
+        return `<button class="week-event week-event-variant-${variant}${overlapClass}" type="button" data-stack-depth="${stackDepth}" data-same-start-index="${sameStartIndex}" style="top:${top}px;height:${height}px;left:${eventLeft};width:${eventWidth};z-index:${eventZIndex}" onclick="dashboardOpenWeekEvent('${eventKey}',this)" aria-label="${esc(ariaLabel)}" title="${esc(title)} — ${esc(timeRange)}${location ? ` — ${esc(location)}` : ''}"><span class="week-event-head"><span class="week-event-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg></span><span class="week-event-title">${esc(title)}</span></span><span class="week-event-time">${esc(timeRange)}</span>${location ? `<span class="week-event-location"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg><span>${esc(location)}</span></span>` : ''}</button>`;
       }).join('')}</div>`).join('');
 
       let currentLine = '';
@@ -12982,7 +12979,7 @@
       if(actionBadge){actionBadge.textContent=actions.length;actionBadge.classList.toggle('show',actions.length>0);}
       dashboardRenderMeetingVisual(active);
       dashboardRenderOrganisationVisual(active);
-      const recent=crmSortRecords(active).slice(0,8);
+      const recent=crmSortRecords(active).slice(0,3);
       const recentContainer=document.getElementById('dashboardRecentActivity');
       if(recentContainer)recentContainer.innerHTML=recent.length?recent.map(dashboardRecentMeetingCard).join(''):'<div class="dashboard-empty">No meetings recorded yet.</div>';
     }
