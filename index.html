@@ -5335,73 +5335,79 @@
       min-width:0;
       padding:18px!important;
     }
-    #pageDashboard .dashboard-calendar-card,
-    #pageDashboard .dashboard-side-stack {
+    #pageDashboard .dashboard-calendar-card {
+      min-width:0;
       min-height:0;
-      height:100%;
     }
     #pageDashboard .dashboard-side-stack {
       min-width:0;
-      align-self:stretch!important;
+      min-height:0;
+      height:auto;
+      align-self:start!important;
     }
     #pageDashboard .dashboard-recent-card {
       width:100%;
       min-width:0;
       min-height:0;
-      height:100%;
-      align-self:stretch!important;
+      height:auto;
+      align-self:start!important;
       display:flex;
       flex-direction:column;
-      overflow:hidden;
+      overflow:visible;
     }
     #pageDashboard .dashboard-recent-list {
-      flex:1 1 auto;
+      flex:0 0 auto;
       min-width:0;
       min-height:0;
       display:grid!important;
-      grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr))!important;
+      grid-template-columns:minmax(0,1fr)!important;
       grid-template-rows:none!important;
-      grid-auto-rows:minmax(184px,auto);
+      grid-auto-rows:auto;
       align-content:start;
       gap:10px!important;
-      overflow-y:auto;
-      overflow-x:hidden;
-      padding-right:3px;
-      scrollbar-width:thin;
-      scrollbar-color:#bfdbfe transparent;
+      overflow:visible!important;
+      padding-right:0;
     }
-    #pageDashboard .dashboard-recent-list::-webkit-scrollbar { width:6px; }
-    #pageDashboard .dashboard-recent-list::-webkit-scrollbar-thumb { background:#bfdbfe; border-radius:999px; }
     #pageDashboard .dashboard-meeting-card {
       width:100%;
+      max-width:100%;
       min-width:0;
-      min-height:184px;
+      min-height:0;
       height:auto;
       display:flex;
       flex-direction:column;
       padding:15px 16px;
-      overflow:hidden;
+      overflow:visible;
     }
     #pageDashboard .dashboard-meeting-title {
       font-size:13.5px;
-      line-height:1.32;
+      line-height:1.34;
       font-weight:850;
+      white-space:normal;
+      overflow-wrap:anywhere;
+      word-break:normal;
       -webkit-line-clamp:3;
     }
     #pageDashboard .dashboard-meeting-meta {
       margin-top:9px;
-      gap:6px 10px;
+      grid-template-columns:minmax(0,1fr);
+      gap:5px;
     }
     #pageDashboard .dashboard-meeting-meta-line {
+      min-width:0;
       align-items:flex-start;
       font-size:10px;
       line-height:1.35;
+      font-weight:700;
+      white-space:normal;
     }
     #pageDashboard .dashboard-meeting-meta-line span {
+      min-width:0;
       overflow:visible;
       text-overflow:clip;
       white-space:normal;
       overflow-wrap:anywhere;
+      word-break:normal;
     }
     #pageDashboard .dashboard-meeting-company {
       margin-top:9px;
@@ -5415,28 +5421,43 @@
       overflow:hidden;
       white-space:normal;
       overflow-wrap:anywhere;
+      word-break:normal;
     }
     #pageDashboard .dashboard-meeting-preview {
       margin-top:7px;
       color:#64748b;
-      font-size:10.8px;
+      font-size:10.3px;
       line-height:1.45;
+      display:-webkit-box;
+      -webkit-box-orient:vertical;
       -webkit-line-clamp:3;
+      overflow:hidden;
+      white-space:normal;
+      overflow-wrap:anywhere;
+      word-break:normal;
     }
     #pageDashboard .dashboard-meeting-footer {
-      margin-top:auto;
+      margin-top:10px;
       padding-top:9px;
-      align-items:flex-start;
-      flex-wrap:wrap;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:8px;
+      align-items:end;
       font-size:9.5px;
       line-height:1.35;
     }
     #pageDashboard .dashboard-meeting-tag {
-      max-width:68%;
+      min-width:0;
+      max-width:none;
       overflow:visible;
       text-overflow:clip;
       white-space:normal;
       overflow-wrap:anywhere;
+      word-break:normal;
+    }
+    #pageDashboard .dashboard-meeting-footer > span:last-child {
+      white-space:nowrap;
+      text-align:right;
     }
 
     #pageDashboard .week-calendar-shell,
@@ -5471,13 +5492,6 @@
       grid-template-columns:repeat(7,minmax(0,1fr))!important;
     }
     #pageDashboard .week-day-header { padding-left:4px!important; padding-right:4px!important; }
-  }
-
-  @media (min-width:1260px) {
-    #pageDashboard .dashboard-recent-list {
-      grid-auto-rows:minmax(205px,auto);
-    }
-    #pageDashboard .dashboard-meeting-card { min-height:205px; }
   }
 
   @media (min-width:681px) and (max-width:1180px) {
@@ -7414,53 +7428,64 @@
     background:rgba(248,251,255,.74);
   }
 
-  /* Google Calendar-style deterministic collision lanes. */
-  #pageDashboard .week-day-column { overflow:hidden; }
-  #pageDashboard .week-event {
-    min-width:0!important;
-    box-sizing:border-box!important;
-    padding:5px 6px!important;
-    overflow:hidden!important;
-    color:#0f172a!important;
-    transform:none!important;
+  /* Google Calendar-style layered desktop overlaps. */
+  @media (min-width:681px) {
+    #pageDashboard .week-day-column { overflow:hidden; }
+    #pageDashboard .week-event {
+      min-width:0!important;
+      box-sizing:border-box!important;
+      padding:5px 6px!important;
+      overflow:hidden!important;
+      color:#0f172a!important;
+      transform:none!important;
+    }
+    #pageDashboard .week-event:hover {
+      z-index:90!important;
+      transform:none!important;
+      border-color:#2563eb!important;
+      box-shadow:0 9px 20px rgba(37,99,235,.18)!important;
+    }
+    #pageDashboard .week-event:focus-visible,
+    #pageDashboard .week-event.selected {
+      z-index:91!important;
+      outline:2px solid #2563eb!important;
+      outline-offset:1px!important;
+    }
+    #pageDashboard .week-event-head { min-width:0!important; }
+    #pageDashboard .week-event-title {
+      min-width:0!important;
+      display:-webkit-box!important;
+      -webkit-box-orient:vertical!important;
+      -webkit-line-clamp:2!important;
+      overflow:hidden!important;
+      white-space:normal!important;
+      overflow-wrap:anywhere!important;
+      word-break:normal!important;
+      font-size:9px!important;
+      line-height:1.24!important;
+    }
+    #pageDashboard .week-event-time {
+      overflow:hidden!important;
+      text-overflow:ellipsis!important;
+      white-space:nowrap!important;
+      font-size:8px!important;
+      line-height:1.2!important;
+    }
+    #pageDashboard .week-event-location { min-width:0!important; overflow:hidden!important; }
+    #pageDashboard .week-event.is-overlap .week-event-location,
+    #pageDashboard .week-event.is-same-start .week-event-location { display:none!important; }
+    #pageDashboard .week-event.is-overlap .week-event-icon,
+    #pageDashboard .week-event.is-same-start .week-event-icon { display:none!important; }
+    #pageDashboard .week-event.is-overlap { padding:4px 5px!important; }
+    #pageDashboard .week-event.is-same-start { padding:4px!important; border-left-width:2px!important; }
+    #pageDashboard .week-event.is-same-start .week-event-title { font-size:8.7px!important; line-height:1.2!important; }
+    #pageDashboard .week-event.is-same-start .week-event-time { margin-top:2px!important; font-size:7.8px!important; line-height:1.2!important; }
+    #pageDashboard .week-event-variant-1 { background:#dbeafe!important; border-color:#2563eb!important; border-left-color:#2563eb!important; }
+    #pageDashboard .week-event-variant-2 { background:#e8f1ff!important; border-color:#3b82f6!important; border-left-color:#3b82f6!important; }
+    #pageDashboard .week-event-variant-3 { background:#e0f2fe!important; border-color:#0ea5e9!important; border-left-color:#0ea5e9!important; }
+    #pageDashboard .week-event-variant-4 { background:#dff7f7!important; border-color:#22b8c7!important; border-left-color:#22b8c7!important; }
+    #pageDashboard .week-event-variant-5 { background:#eef2ff!important; border-color:#6366f1!important; border-left-color:#6366f1!important; }
   }
-  #pageDashboard .week-event:hover {
-    z-index:9!important;
-    transform:none!important;
-    border-color:#2563eb!important;
-    box-shadow:0 9px 20px rgba(37,99,235,.18)!important;
-  }
-  #pageDashboard .week-event:focus-visible {
-    z-index:10!important;
-    outline:2px solid #2563eb!important;
-    outline-offset:1px!important;
-  }
-  #pageDashboard .week-event-head { min-width:0!important; }
-  #pageDashboard .week-event-title {
-    min-width:0!important;
-    display:-webkit-box!important;
-    -webkit-box-orient:vertical!important;
-    -webkit-line-clamp:2!important;
-    overflow:hidden!important;
-    white-space:normal!important;
-    overflow-wrap:anywhere!important;
-    line-height:1.22!important;
-  }
-  #pageDashboard .week-event-time { overflow:hidden!important; text-overflow:ellipsis!important; }
-  #pageDashboard .week-event-location { min-width:0!important; overflow:hidden!important; }
-  #pageDashboard .week-event.is-overlap .week-event-location,
-  #pageDashboard .week-event.is-crowded .week-event-location { display:none!important; }
-  #pageDashboard .week-event.is-overlap .week-event-icon,
-  #pageDashboard .week-event.is-crowded .week-event-icon { display:none!important; }
-  #pageDashboard .week-event.is-overlap { padding:4px 5px!important; }
-  #pageDashboard .week-event.is-crowded { padding:3px 4px!important; border-left-width:2px!important; }
-  #pageDashboard .week-event.is-crowded .week-event-title { font-size:8.5px!important; line-height:1.2!important; }
-  #pageDashboard .week-event.is-crowded .week-event-time { margin-top:2px!important; font-size:7.5px!important; line-height:1.2!important; }
-  #pageDashboard .week-event-variant-1 { background:#dbeafe!important; border-color:#2563eb!important; border-left-color:#2563eb!important; }
-  #pageDashboard .week-event-variant-2 { background:#e8f1ff!important; border-color:#3b82f6!important; border-left-color:#3b82f6!important; }
-  #pageDashboard .week-event-variant-3 { background:#e0f2fe!important; border-color:#0ea5e9!important; border-left-color:#0ea5e9!important; }
-  #pageDashboard .week-event-variant-4 { background:#dff7f7!important; border-color:#22b8c7!important; border-left-color:#22b8c7!important; }
-  #pageDashboard .week-event-variant-5 { background:#eef2ff!important; border-color:#6366f1!important; border-left-color:#6366f1!important; }
 
   @media(max-width:1030px) {
     body.crm-relationship-mode .system-content { padding:18px 12px 36px!important; }
@@ -10409,7 +10434,8 @@
     }
 
     function dashboardWeekEventLayout(events) {
-      const sorted = events.slice().sort((a, b) => a.startMs - b.startMs || a.endMs - b.endMs);
+      const START_BUCKET_MS = 5 * 60 * 1000;
+      const sorted = events.slice().sort((a, b) => a.startMs - b.startMs || b.endMs - a.endMs);
       const groups = [];
       let currentGroup = [];
       let groupEnd = -Infinity;
@@ -10428,15 +10454,37 @@
       if (currentGroup.length) groups.push(currentGroup);
 
       return groups.flatMap((group, overlapGroup) => {
-        const laneEnds = [];
-        const placed = group.map(item => {
-          let lane = laneEnds.findIndex(end => end <= item.startMs);
-          if (lane < 0) lane = laneEnds.length;
-          laneEnds[lane] = item.endMs;
-          return { ...item, lane, overlapGroup };
+        const buckets = [];
+        group.forEach(item => {
+          const bucketKey = Math.floor(item.startMs / START_BUCKET_MS);
+          let bucket = buckets[buckets.length - 1];
+          if (!bucket || bucket.key !== bucketKey) {
+            bucket = { key: bucketKey, startMs: item.startMs, items: [], endMs: item.endMs };
+            buckets.push(bucket);
+          }
+          bucket.items.push(item);
+          bucket.startMs = Math.min(bucket.startMs, item.startMs);
+          bucket.endMs = Math.max(bucket.endMs, item.endMs);
         });
-        const laneCount = Math.max(1, laneEnds.length);
-        return placed.map(item => ({ ...item, laneCount }));
+
+        const depthEnds = [];
+        const groupHasOverlap = group.length > 1;
+        return buckets.flatMap(bucket => {
+          let cascadeDepth = depthEnds.findIndex(end => end <= bucket.startMs);
+          if (cascadeDepth < 0) cascadeDepth = depthEnds.length;
+          depthEnds[cascadeDepth] = bucket.endMs;
+
+          const siblings = bucket.items.slice().sort((a, b) => b.endMs - a.endMs || a.startMs - b.startMs);
+          const siblingCount = siblings.length;
+          return siblings.map((item, siblingIndex) => ({
+            ...item,
+            overlapGroup,
+            groupHasOverlap,
+            cascadeDepth,
+            siblingIndex,
+            siblingCount
+          }));
+        });
       });
     }
 
@@ -10654,22 +10702,32 @@
         window._eventsCache[eventKey] = item.event;
         const top = GRID_TOP_PADDING + item.clippedStart * PIXELS_PER_MINUTE;
         const height = Math.max(30, (item.clippedEnd - item.clippedStart) * PIXELS_PER_MINUTE);
-        const laneCount = Math.max(1, item.laneCount);
-        const laneIndex = Math.max(0, Math.min(item.lane, laneCount - 1));
-        const laneGap = 2;
-        const laneWidthPercent = 100 / laneCount;
-        const laneWidthGapShare = ((laneCount - 1) * laneGap) / laneCount;
-        const laneLeftPercent = laneIndex * laneWidthPercent;
-        const laneLeftGapShare = (laneIndex * laneGap) / laneCount;
+        const cascadeDepth = Math.max(0, item.cascadeDepth || 0);
+        const siblingCount = Math.max(1, item.siblingCount || 1);
+        const siblingIndex = Math.max(0, Math.min(item.siblingIndex || 0, siblingCount - 1));
+        const baseInset = 3;
+        const cascadeOffset = 8;
+        const rightInset = 4;
+        const siblingGap = 3;
+        const layerLeft = baseInset + cascadeDepth * cascadeOffset;
+        const fixedSpace = layerLeft + rightInset + (siblingCount - 1) * siblingGap;
+        const siblingWidthPercent = 100 / siblingCount;
+        const siblingWidthCorrection = fixedSpace / siblingCount;
+        const siblingLeftPercent = siblingIndex * siblingWidthPercent;
+        const siblingLeftCorrection = layerLeft + siblingIndex * siblingGap - siblingIndex * siblingWidthCorrection;
+        const eventLeft = `calc(${siblingLeftPercent}% + ${siblingLeftCorrection.toFixed(3)}px)`;
+        const eventWidth = `calc(${siblingWidthPercent}% - ${siblingWidthCorrection.toFixed(3)}px)`;
+        const eventZIndex = 3 + cascadeDepth * 10 + siblingIndex;
         const startDate = new Date(item.event.start.dateTime);
         const endDate = item.event.end?.dateTime ? new Date(item.event.end.dateTime) : new Date(startDate.getTime() + 30 * 60000);
         const timeRange = `${formatKLTime(startDate)}–${formatKLTime(endDate)}`;
         const title = dashboardCleanDisplayText(item.event.summary, 'Untitled meeting');
         const location = dashboardCleanDisplayText(item.event.location || '', '');
         const variant = dashboardStableEventVariant(item.event);
-        const crowdClass = laneCount >= 3 ? ' is-crowded' : (laneCount === 2 ? ' is-overlap' : '');
+        const overlapClass = item.groupHasOverlap ? ' is-overlap' : '';
+        const sameStartClass = siblingCount > 1 ? ' is-same-start' : '';
         const ariaLabel = `${title}. ${day.date.toLocaleDateString('en-MY', { weekday:'long', day:'numeric', month:'long', year:'numeric' })}. ${timeRange}${location ? `. ${location}` : ''}`;
-        return `<button class="week-event week-event-variant-${variant}${crowdClass}" type="button" style="top:${top}px;height:${height}px;left:calc(${laneLeftPercent}% + ${laneLeftGapShare}px);width:calc(${laneWidthPercent}% - ${laneWidthGapShare}px)" onclick="dashboardOpenWeekEvent('${eventKey}',this)" aria-label="${esc(ariaLabel)}" title="${esc(title)} — ${esc(timeRange)}${location ? ` — ${esc(location)}` : ''}"><span class="week-event-head"><span class="week-event-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg></span><span class="week-event-title">${esc(title)}</span></span><span class="week-event-time">${esc(timeRange)}</span>${location ? `<span class="week-event-location"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg><span>${esc(location)}</span></span>` : ''}</button>`;
+        return `<button class="week-event week-event-variant-${variant}${overlapClass}${sameStartClass}" type="button" style="top:${top}px;height:${height}px;left:${eventLeft};width:${eventWidth};z-index:${eventZIndex}" onclick="dashboardOpenWeekEvent('${eventKey}',this)" aria-label="${esc(ariaLabel)}" title="${esc(title)} — ${esc(timeRange)}${location ? ` — ${esc(location)}` : ''}"><span class="week-event-head"><span class="week-event-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg></span><span class="week-event-title">${esc(title)}</span></span><span class="week-event-time">${esc(timeRange)}</span>${location ? `<span class="week-event-location"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg><span>${esc(location)}</span></span>` : ''}</button>`;
       }).join('')}</div>`).join('');
 
       let currentLine = '';
@@ -12898,6 +12956,8 @@
     function dashboardRecentMeetingCard(record){
       const recordKey=crmRecordRouteKey(record);
       const parts=dashboardMeetingDateParts(record.meetingDate);
+      const parsedMeetingDate=dashboardParseRecordDate(record.meetingDate);
+      const fullDate=parsedMeetingDate?parsedMeetingDate.toLocaleDateString('en-MY',{weekday:'long',day:'numeric',month:'long',year:'numeric'}):parts.date;
       const organisation=record.companyName||'Organisation not recorded';
       const preview=record.meetingNotes||crmIntelActionEntries(record).map(item=>item.action).join(' ')||record.reason||'No meeting notes recorded.';
       const category=record.reason||'Meeting';
@@ -12905,7 +12965,7 @@
       return `<button class="dashboard-meeting-card" type="button" data-record-key="${crmEscape(recordKey)}" onclick="systemOpenRecordFromDashboard(this.dataset.recordKey)">
         <div class="dashboard-meeting-title">${crmEscape(record.meetingTitle||'Untitled meeting')}</div>
         <div class="dashboard-meeting-meta">
-          <div class="dashboard-meeting-meta-line"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg><span>${crmEscape(parts.date)}</span></div>
+          <div class="dashboard-meeting-meta-line"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg><span>${crmEscape(fullDate)}</span></div>
           <div class="dashboard-meeting-meta-line"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span>${crmEscape(parts.time)}</span></div>
         </div>
         <div class="dashboard-meeting-company">${crmEscape(organisation)}</div>
