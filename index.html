@@ -8828,6 +8828,289 @@
   }
 </style>
 
+
+<style id="mranti-relationship-intelligence-v7">
+  /* Relationship Intelligence only. Global CRM navigation and other pages remain unchanged. */
+  body.crm-relationship-mode { overflow-x:hidden!important; overflow-y:auto!important; }
+  body.crm-relationship-mode #appScreen { min-height:100vh!important; }
+  body.crm-relationship-mode .system-content {
+    width:100%!important; height:auto!important; min-height:0!important;
+    padding:24px 24px 48px!important; overflow:visible!important;
+  }
+  body.crm-relationship-mode .system-content-inner {
+    width:min(1600px,100%)!important; max-width:1600px!important;
+    height:auto!important; min-height:0!important; margin:0 auto!important;
+  }
+  body.crm-relationship-mode #pageRelationships {
+    width:100%!important; max-width:none!important; height:auto!important; min-height:0!important;
+  }
+  #pageRelationships .relationship-workspace-host {
+    width:100%!important; min-width:0!important; margin:0!important; padding:0!important;
+    border:0!important; border-radius:0!important; background:transparent!important;
+    box-shadow:none!important; overflow:visible!important;
+  }
+  #pageRelationships .relationship-module-v7 {
+    --ri-blue:#2563eb; --ri-blue-dark:#1d4ed8; --ri-cyan:#0ea5a8; --ri-purple:#8b5cf6;
+    --ri-orange:#f59e0b; --ri-ink:#10203b; --ri-muted:#66758e; --ri-line:#dbe7f6;
+    width:100%; min-width:0; color:var(--ri-ink); font-family:Inter,'Segoe UI',sans-serif;
+  }
+  #pageRelationships .relationship-toolbar-v7 {
+    display:grid; grid-template-columns:minmax(260px,1.25fr) minmax(190px,.8fr) minmax(190px,.8fr) auto;
+    gap:10px; align-items:end; margin-bottom:12px;
+  }
+  #pageRelationships .relationship-toolbar-field-v7 {
+    display:flex; min-width:0; flex-direction:column; gap:6px; padding:10px 12px;
+    border:1px solid rgba(147,197,253,.42); border-radius:14px;
+    background:rgba(255,255,255,.86); box-shadow:0 8px 24px rgba(37,99,235,.055);
+  }
+  #pageRelationships .relationship-toolbar-field-v7>span:first-child {
+    color:#77869d; font-size:8.5px; line-height:1; font-weight:850; letter-spacing:.45px;
+  }
+  #pageRelationships .relationship-toolbar-field-v7 select,
+  #pageRelationships .relationship-toolbar-field-v7 input {
+    width:100%; min-width:0; height:24px; padding:0; border:0; outline:0; background:transparent;
+    color:var(--ri-ink); font:inherit; font-size:11.5px; font-weight:720;
+  }
+  #pageRelationships .relationship-toolbar-field-v7 select { cursor:pointer; }
+  #pageRelationships .relationship-input-shell-v7 { display:grid; grid-template-columns:16px minmax(0,1fr); align-items:center; gap:7px; min-width:0; }
+  #pageRelationships .relationship-input-shell-v7 svg { width:15px; height:15px; fill:none; stroke:#6b7f9e; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  #pageRelationships .relationship-toolbar-reset-v7,
+  #pageRelationships .relationship-mobile-filter-toggle-v7 {
+    min-height:56px; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:0 16px; border:1px solid rgba(147,197,253,.5); border-radius:14px;
+    background:rgba(255,255,255,.88); color:var(--ri-blue); font:inherit; font-size:10.5px;
+    font-weight:850; cursor:pointer; box-shadow:0 8px 24px rgba(37,99,235,.055); white-space:nowrap;
+  }
+  #pageRelationships .relationship-toolbar-reset-v7:hover,
+  #pageRelationships .relationship-mobile-filter-toggle-v7:hover { border-color:var(--ri-blue); background:#f7faff; }
+  #pageRelationships .relationship-toolbar-reset-v7 svg,
+  #pageRelationships .relationship-mobile-filter-toggle-v7 svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  #pageRelationships .relationship-mobile-filter-toggle-v7 { display:none; }
+  #pageRelationships .relationship-filter-backdrop-v7 { display:none; }
+
+  #pageRelationships .relationship-layout-v7 {
+    display:grid; grid-template-columns:250px minmax(0,1fr) 310px; gap:12px; align-items:stretch;
+    width:100%; min-width:0;
+  }
+  #pageRelationships .relationship-filter-panel-v7,
+  #pageRelationships .relationship-graph-panel-v7,
+  #pageRelationships .relationship-detail-panel-v7 {
+    min-width:0; border:1px solid rgba(147,197,253,.42); border-radius:18px;
+    background:rgba(255,255,255,.88); box-shadow:0 16px 44px rgba(37,99,235,.08);
+    backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  }
+  #pageRelationships .relationship-filter-panel-v7 {
+    display:flex; flex-direction:column; min-height:690px; padding:15px 14px 14px; overflow:hidden;
+  }
+  #pageRelationships .relationship-filter-head-v7 { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; padding:1px 1px 13px; }
+  #pageRelationships .relationship-panel-kicker-v7 { display:block; color:var(--ri-blue); font-size:8px; font-weight:900; letter-spacing:1.25px; text-transform:uppercase; }
+  #pageRelationships .relationship-filter-head-v7 h2,
+  #pageRelationships .relationship-graph-panel-head-v7 h2 { margin-top:5px; color:var(--ri-ink); font-size:15px; line-height:1.15; font-weight:850; letter-spacing:-.25px; }
+  #pageRelationships .relationship-filter-head-v7 button,
+  #pageRelationships .relationship-filter-section-head-v7 button {
+    border:0; background:transparent; color:var(--ri-blue); font:inherit; font-size:8.5px; font-weight:850; cursor:pointer;
+  }
+  #pageRelationships .relationship-filter-section-v7 { padding:13px 1px; border-top:1px solid #e6eef9; }
+  #pageRelationships .relationship-filter-section-head-v7 { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px; }
+  #pageRelationships .relationship-filter-section-head-v7 h3 { color:#34445d; font-size:9.5px; line-height:1.2; font-weight:850; }
+  #pageRelationships .relationship-filter-section-head-v7>span { color:#73839b; font-size:8.5px; font-weight:800; }
+  #pageRelationships .relationship-node-type-list-v7 { display:grid; gap:7px; }
+  #pageRelationships .relationship-node-type-list-v7 label {
+    display:grid; grid-template-columns:15px 25px minmax(0,1fr) auto; align-items:center; gap:7px;
+    min-width:0; color:#3e4e66; font-size:9.5px; font-weight:720; cursor:pointer;
+  }
+  #pageRelationships .relationship-node-type-list-v7 input,
+  #pageRelationships .relationship-department-list-v7 input,
+  #pageRelationships .relationship-depth-list-v7 input { accent-color:var(--ri-blue); }
+  #pageRelationships .relationship-node-type-list-v7 strong {
+    min-width:25px; padding:3px 6px; border-radius:999px; background:#f0f5fc; color:#60718b;
+    font-size:8px; line-height:1; text-align:center;
+  }
+  #pageRelationships .relationship-type-icon-v7 { width:25px; height:25px; display:grid; place-items:center; border-radius:8px; }
+  #pageRelationships .relationship-type-icon-v7 svg { width:13px; height:13px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  #pageRelationships .relationship-type-icon-v7.staff { color:#2563eb; background:#eaf2ff; }
+  #pageRelationships .relationship-type-icon-v7.person { color:#8b5cf6; background:#f1eefe; }
+  #pageRelationships .relationship-type-icon-v7.organisation { color:#0f9fa2; background:#e7f8f8; }
+  #pageRelationships .relationship-type-icon-v7.meeting { color:#e17f05; background:#fff5e7; }
+  #pageRelationships .relationship-department-list-v7 { display:grid; gap:6px; max-height:126px; overflow:auto; padding-right:2px; scrollbar-width:thin; }
+  #pageRelationships .relationship-department-list-v7 label { display:grid; grid-template-columns:15px minmax(0,1fr) auto; align-items:center; gap:7px; color:#4a5a72; font-size:9px; font-weight:700; cursor:pointer; }
+  #pageRelationships .relationship-department-list-v7 strong { color:#8492a7; font-size:8px; }
+  #pageRelationships #relationshipStrengthRangeV7 { width:100%; accent-color:var(--ri-blue); cursor:pointer; }
+  #pageRelationships .relationship-range-labels-v7 { display:flex; justify-content:space-between; margin-top:4px; color:#8492a7; font-size:8px; font-weight:750; }
+  #pageRelationships .relationship-depth-list-v7 { display:grid; gap:8px; }
+  #pageRelationships .relationship-depth-list-v7 label { display:grid; grid-template-columns:16px minmax(0,1fr); gap:8px; align-items:start; color:#42526a; cursor:pointer; }
+  #pageRelationships .relationship-depth-list-v7 span { display:grid; gap:2px; }
+  #pageRelationships .relationship-depth-list-v7 strong { font-size:9.5px; line-height:1.2; }
+  #pageRelationships .relationship-depth-list-v7 small { color:#8996a9; font-size:8px; line-height:1.35; }
+  #pageRelationships .relationship-apply-button-v7 {
+    width:100%; min-height:38px; margin-top:auto; display:flex; align-items:center; justify-content:center; gap:8px;
+    border:1px solid #b9d2fb; border-radius:11px; background:linear-gradient(180deg,#f7faff,#eef5ff);
+    color:var(--ri-blue); font:inherit; font-size:9.5px; font-weight:850; cursor:pointer;
+    box-shadow:0 8px 18px rgba(37,99,235,.08);
+  }
+  #pageRelationships .relationship-apply-button-v7.is-dirty { color:#fff; border-color:var(--ri-blue); background:linear-gradient(135deg,var(--ri-blue),#2f6eea); }
+  #pageRelationships .relationship-apply-button-v7 svg { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+
+  #pageRelationships .relationship-graph-panel-v7 { display:flex; flex-direction:column; min-height:690px; overflow:hidden; }
+  #pageRelationships .relationship-graph-panel-head-v7 { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:14px 16px 11px; border-bottom:1px solid #e5edf8; }
+  #pageRelationships .relationship-graph-panel-head-v7 p { margin-top:5px; color:#74839a; font-size:9px; line-height:1.45; }
+  #pageRelationships .relationship-graph-status-v7 { display:inline-flex; align-items:center; gap:7px; padding:6px 9px; border:1px solid #d8e7fb; border-radius:999px; background:#f8fbff; color:#637590; font-size:8px; font-weight:800; white-space:nowrap; }
+  #pageRelationships .relationship-graph-status-v7 i { width:7px; height:7px; border-radius:50%; background:#19a974; box-shadow:0 0 0 4px rgba(25,169,116,.1); }
+  #pageRelationships .relationship-graph-stage-v7 {
+    position:relative; flex:1 1 auto; min-height:610px; overflow:hidden; isolation:isolate;
+    background:
+      radial-gradient(circle at 50% 48%,rgba(37,99,235,.065),transparent 31%),
+      linear-gradient(rgba(37,99,235,.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(37,99,235,.025) 1px,transparent 1px),
+      linear-gradient(180deg,#fbfdff,#f7faff);
+    background-size:auto,32px 32px,32px 32px,auto;
+  }
+  #pageRelationships #relationshipGraphSvgV7 { display:block; width:100%; height:100%; min-height:610px; touch-action:none; user-select:none; cursor:grab; }
+  #pageRelationships #relationshipGraphSvgV7.is-panning { cursor:grabbing; }
+  #pageRelationships .relationship-edge-v7 { fill:none; stroke:#b9c9df; stroke-width:1.15; stroke-linecap:round; opacity:.52; transition:opacity .18s,stroke-width .18s; }
+  #pageRelationships .relationship-edge-v7.strong { stroke-width:1.8; opacity:.72; }
+  #pageRelationships .relationship-edge-v7.staff { stroke:#7ea8ea; }
+  #pageRelationships .relationship-edge-v7.organisation { stroke:#77c8ca; }
+  #pageRelationships .relationship-edge-v7.meeting { stroke:#e8bd78; stroke-dasharray:3 3; }
+  #pageRelationships .relationship-node-v7 { cursor:pointer; outline:none; }
+  #pageRelationships .relationship-node-v7 .node-hit-v7 { fill:transparent; }
+  #pageRelationships .relationship-node-v7 .node-primary-v7 { transition:filter .18s,stroke-width .18s; }
+  #pageRelationships .relationship-node-v7:hover .node-primary-v7,
+  #pageRelationships .relationship-node-v7:focus-visible .node-primary-v7,
+  #pageRelationships .relationship-node-v7.selected .node-primary-v7 { filter:url(#relationshipNodeShadowV7); stroke-width:3; }
+  #pageRelationships .relationship-node-label-v7 { fill:#273850; font-size:12px; font-weight:800; paint-order:stroke; stroke:#fff; stroke-width:3px; stroke-linejoin:round; }
+  #pageRelationships .relationship-node-meta-v7 { fill:#7a8aa0; font-size:8.5px; font-weight:650; paint-order:stroke; stroke:#fff; stroke-width:2.5px; }
+  #pageRelationships .relationship-node-initials-v7 { fill:#fff; font-size:10px; font-weight:900; text-anchor:middle; dominant-baseline:middle; }
+  #pageRelationships .relationship-node-org-label-v7 { fill:#26425b; font-size:10.5px; font-weight:820; dominant-baseline:middle; }
+  #pageRelationships .relationship-node-meeting-title-v7 { fill:#533917; font-size:8.7px; font-weight:820; text-anchor:middle; }
+  #pageRelationships .relationship-node-meeting-date-v7 { fill:#a06a24; font-size:7.3px; font-weight:700; text-anchor:middle; }
+  #pageRelationships .relationship-graph-controls-v7 { position:absolute; z-index:5; top:14px; left:14px; display:grid; overflow:hidden; border:1px solid #d9e6f6; border-radius:11px; background:rgba(255,255,255,.94); box-shadow:0 10px 24px rgba(37,99,235,.11); }
+  #pageRelationships .relationship-graph-controls-v7 button { width:34px; height:34px; display:grid; place-items:center; border:0; border-bottom:1px solid #e4edf8; background:transparent; color:#344b68; font:inherit; font-size:17px; font-weight:750; cursor:pointer; }
+  #pageRelationships .relationship-graph-controls-v7 button:last-child { border-bottom:0; }
+  #pageRelationships .relationship-graph-controls-v7 button:hover { background:#f0f6ff; color:var(--ri-blue); }
+  #pageRelationships .relationship-graph-controls-v7 svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  #pageRelationships .relationship-minimap-v7 { position:absolute; z-index:4; right:14px; bottom:14px; width:142px; height:88px; padding:5px; border:1px solid #dbe7f5; border-radius:12px; background:rgba(255,255,255,.92); box-shadow:0 12px 28px rgba(37,99,235,.11); overflow:hidden; }
+  #pageRelationships #relationshipMiniMapSvgV7 { width:100%; height:100%; display:block; }
+  #pageRelationships .relationship-minimap-edge-v7 { stroke:#c8d6e9; stroke-width:3; opacity:.55; }
+  #pageRelationships .relationship-minimap-node-v7 { fill:#8eb2ed; }
+  #pageRelationships .relationship-minimap-node-v7.organisation { fill:#71c5c7; }
+  #pageRelationships .relationship-minimap-node-v7.meeting { fill:#eab56d; }
+  #pageRelationships .relationship-minimap-node-v7.person { fill:#b39af3; }
+  #pageRelationships .relationship-minimap-viewport-v7 { fill:rgba(37,99,235,.06); stroke:#2563eb; stroke-width:8; rx:20; }
+  #pageRelationships .relationship-graph-empty-v7 { position:absolute; inset:0; z-index:8; display:grid; place-content:center; gap:5px; text-align:center; padding:20px; color:#60718a; background:rgba(248,251,255,.84); }
+  #pageRelationships .relationship-graph-empty-v7[hidden] { display:none; }
+  #pageRelationships .relationship-graph-empty-v7 strong { color:#273850; font-size:14px; }
+  #pageRelationships .relationship-graph-empty-v7 span { font-size:10px; }
+  #pageRelationships .relationship-legend-v7 { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:14px; padding:10px 14px 12px; border-top:1px solid #e6eef8; color:#718198; font-size:8.5px; font-weight:750; }
+  #pageRelationships .relationship-legend-v7 span { display:inline-flex; align-items:center; gap:6px; }
+  #pageRelationships .relationship-legend-v7 i { width:8px; height:8px; border-radius:50%; background:#2563eb; }
+  #pageRelationships .relationship-legend-v7 i.person { background:#8b5cf6; }
+  #pageRelationships .relationship-legend-v7 i.organisation { background:#0ea5a8; border-radius:2px; }
+  #pageRelationships .relationship-legend-v7 i.meeting { background:#f59e0b; border-radius:2px; }
+
+  #pageRelationships .relationship-detail-panel-v7 { min-height:690px; padding:15px 14px; overflow:auto; scrollbar-width:thin; }
+  #pageRelationships .relationship-detail-empty-v7 { min-height:620px; display:grid; place-content:center; justify-items:center; gap:8px; text-align:center; color:#7b8aa0; padding:24px; }
+  #pageRelationships .relationship-detail-empty-icon-v7 { width:46px; height:46px; display:grid; place-items:center; border-radius:15px; color:var(--ri-blue); background:#eaf2ff; border:1px solid #cfe0fb; font-size:11px; font-weight:900; }
+  #pageRelationships .relationship-detail-empty-v7 strong { color:#35465e; font-size:13px; }
+  #pageRelationships .relationship-detail-empty-v7 p { max-width:220px; font-size:9.5px; line-height:1.55; }
+  #pageRelationships .relationship-profile-v7 { display:grid; grid-template-columns:45px minmax(0,1fr) auto; align-items:center; gap:10px; padding-bottom:14px; border-bottom:1px solid #e5edf8; }
+  #pageRelationships .relationship-profile-avatar-v7 { width:45px; height:45px; display:grid; place-items:center; border-radius:15px; color:#fff; background:linear-gradient(135deg,#3b82f6,#2563eb); font-size:12px; font-weight:900; box-shadow:0 8px 18px rgba(37,99,235,.18); }
+  #pageRelationships .relationship-profile-avatar-v7.person { background:linear-gradient(135deg,#a78bfa,#7c3aed); }
+  #pageRelationships .relationship-profile-avatar-v7.organisation { background:linear-gradient(135deg,#20b8ba,#0f979a); }
+  #pageRelationships .relationship-profile-avatar-v7.meeting { background:linear-gradient(135deg,#fbbf24,#e17f05); }
+  #pageRelationships .relationship-profile-copy-v7 { min-width:0; }
+  #pageRelationships .relationship-profile-copy-v7 h2 { overflow-wrap:anywhere; color:#142641; font-size:14px; line-height:1.25; font-weight:850; }
+  #pageRelationships .relationship-profile-copy-v7 p { margin-top:3px; overflow-wrap:anywhere; color:#728199; font-size:9px; line-height:1.45; }
+  #pageRelationships .relationship-profile-type-v7 { align-self:start; padding:4px 7px; border-radius:999px; background:#f0f5fc; color:#6d7e96; font-size:7px; font-weight:900; letter-spacing:.4px; text-transform:uppercase; white-space:nowrap; }
+  #pageRelationships .relationship-detail-section-v7 { padding:14px 0; border-bottom:1px solid #e7eef8; }
+  #pageRelationships .relationship-detail-section-v7:last-child { border-bottom:0; padding-bottom:2px; }
+  #pageRelationships .relationship-detail-section-v7 h3 { margin-bottom:9px; color:#41516a; font-size:9px; font-weight:900; letter-spacing:.35px; text-transform:uppercase; }
+  #pageRelationships .relationship-connection-list-v7 { display:grid; gap:7px; }
+  #pageRelationships .relationship-connection-item-v7 { display:grid; grid-template-columns:8px minmax(0,1fr) auto; gap:8px; align-items:center; min-width:0; color:#31435d; }
+  #pageRelationships .relationship-connection-item-v7 i { width:7px; height:7px; border-radius:50%; background:#2563eb; }
+  #pageRelationships .relationship-connection-item-v7 i.person { background:#8b5cf6; }
+  #pageRelationships .relationship-connection-item-v7 i.organisation { background:#0ea5a8; border-radius:2px; }
+  #pageRelationships .relationship-connection-item-v7 i.meeting { background:#f59e0b; border-radius:2px; }
+  #pageRelationships .relationship-connection-item-v7 strong { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:9.5px; }
+  #pageRelationships .relationship-connection-item-v7 span { color:#8996a8; font-size:7.5px; white-space:nowrap; }
+  #pageRelationships .relationship-organisation-list-v7 { display:flex; flex-wrap:wrap; gap:6px; }
+  #pageRelationships .relationship-organisation-list-v7 span { max-width:100%; padding:5px 8px; border:1px solid #d7e8f6; border-radius:999px; background:#f6fbfc; color:#24797b; font-size:8px; font-weight:800; overflow-wrap:anywhere; }
+  #pageRelationships .relationship-metrics-v7 { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  #pageRelationships .relationship-metric-v7 { padding:10px; border:1px solid #dce8f6; border-radius:11px; background:#f9fbff; }
+  #pageRelationships .relationship-metric-v7 strong { display:block; color:#1d4ed8; font-size:17px; line-height:1; }
+  #pageRelationships .relationship-metric-v7 span { display:block; margin-top:4px; color:#73839b; font-size:7.5px; line-height:1.35; font-weight:750; }
+  #pageRelationships .relationship-history-button-v7 { width:100%; min-height:37px; margin-top:10px; display:flex; align-items:center; justify-content:center; gap:7px; border:1px solid #c8dcfa; border-radius:10px; background:#f6f9ff; color:var(--ri-blue); font:inherit; font-size:8.8px; font-weight:850; cursor:pointer; }
+  #pageRelationships .relationship-history-button-v7:hover { border-color:var(--ri-blue); background:#eef5ff; }
+  #pageRelationships .relationship-history-button-v7 svg { width:13px; height:13px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  #pageRelationships .relationship-timeline-list-v7 { position:relative; display:grid; gap:10px; padding-left:14px; }
+  #pageRelationships .relationship-timeline-list-v7::before { content:""; position:absolute; left:3px; top:5px; bottom:5px; width:1px; background:#d9e5f5; }
+  #pageRelationships .relationship-timeline-item-v7 { position:relative; display:block; width:100%; padding:0; border:0; background:transparent; text-align:left; font:inherit; cursor:pointer; }
+  #pageRelationships .relationship-timeline-item-v7::before { content:""; position:absolute; left:-14px; top:5px; width:7px; height:7px; border:2px solid #fff; border-radius:50%; background:var(--ri-blue); box-shadow:0 0 0 1px #afc9ef; }
+  #pageRelationships .relationship-timeline-item-v7 time { display:block; color:#8291a7; font-size:7.5px; font-weight:800; }
+  #pageRelationships .relationship-timeline-item-v7 strong { display:block; margin-top:3px; color:#273a55; font-size:9.3px; line-height:1.3; overflow-wrap:anywhere; }
+  #pageRelationships .relationship-timeline-item-v7 span { display:block; margin-top:2px; color:#7d8b9f; font-size:7.8px; line-height:1.4; overflow-wrap:anywhere; }
+  #pageRelationships .relationship-detail-note-v7 { color:#7b8aa0; font-size:8.5px; line-height:1.5; }
+
+  @media (max-width:1280px) {
+    #pageRelationships .relationship-layout-v7 { grid-template-columns:224px minmax(0,1fr) 282px; gap:10px; }
+    #pageRelationships .relationship-filter-panel-v7,
+    #pageRelationships .relationship-graph-panel-v7,
+    #pageRelationships .relationship-detail-panel-v7 { min-height:660px; }
+    #pageRelationships .relationship-graph-stage-v7,
+    #pageRelationships #relationshipGraphSvgV7 { min-height:580px; }
+  }
+  @media (max-width:1060px) {
+    body.crm-relationship-mode .system-content { padding:18px 12px 38px!important; }
+    #pageRelationships .relationship-toolbar-v7 { grid-template-columns:minmax(250px,1fr) minmax(175px,.72fr) minmax(175px,.72fr) auto; }
+    #pageRelationships .relationship-layout-v7 { grid-template-columns:210px minmax(0,1fr) 250px; }
+    #pageRelationships .relationship-minimap-v7 { width:118px; height:75px; }
+  }
+  @media (max-width:900px) {
+    #pageRelationships .relationship-toolbar-v7 { grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); }
+    #pageRelationships .relationship-toolbar-reset-v7 { min-height:52px; }
+    #pageRelationships .relationship-layout-v7 { grid-template-columns:205px minmax(0,1fr); }
+    #pageRelationships .relationship-detail-panel-v7 { grid-column:1/-1; min-height:0; overflow:visible; }
+    #pageRelationships .relationship-detail-empty-v7 { min-height:220px; }
+  }
+  @media (max-width:820px) {
+    body.crm-relationship-mode .system-content { padding:14px 10px 34px!important; }
+    #pageRelationships .relationship-toolbar-v7 { grid-template-columns:1fr 1fr; gap:8px; }
+    #pageRelationships .relationship-search-field-v7 { grid-column:1/-1; }
+    #pageRelationships .relationship-toolbar-reset-v7,
+    #pageRelationships .relationship-mobile-filter-toggle-v7 { min-height:44px; }
+    #pageRelationships .relationship-mobile-filter-toggle-v7 { display:inline-flex; }
+    #pageRelationships .relationship-layout-v7 { display:block; }
+    #pageRelationships .relationship-filter-panel-v7 {
+      position:fixed; z-index:2200; left:10px; right:10px; bottom:10px; width:auto; max-height:min(82vh,720px); min-height:0;
+      transform:translateY(calc(100% + 28px)); transition:transform .25s cubic-bezier(.22,1,.36,1);
+      overflow:auto; border-radius:20px; box-shadow:0 28px 80px rgba(15,23,42,.24);
+    }
+    #pageRelationships .relationship-filter-panel-v7.mobile-open { transform:translateY(0); }
+    #pageRelationships .relationship-filter-backdrop-v7 { position:fixed; z-index:2190; inset:0; width:100%; height:100%; border:0; background:rgba(15,23,42,.34); backdrop-filter:blur(3px); }
+    #pageRelationships .relationship-filter-backdrop-v7.show { display:block; }
+    #pageRelationships .relationship-graph-panel-v7 { min-height:0; }
+    #pageRelationships .relationship-graph-stage-v7,
+    #pageRelationships #relationshipGraphSvgV7 { min-height:560px; height:560px; }
+    #pageRelationships .relationship-detail-panel-v7 { margin-top:10px; min-height:0; overflow:visible; }
+    #pageRelationships .relationship-detail-empty-v7 { min-height:220px; }
+    #pageRelationships .relationship-minimap-v7 { width:112px; height:72px; right:10px; bottom:10px; }
+  }
+  @media (max-width:560px) {
+    #pageRelationships .relationship-toolbar-v7 { grid-template-columns:1fr; }
+    #pageRelationships .relationship-search-field-v7 { grid-column:auto; }
+    #pageRelationships .relationship-toolbar-field-v7 { padding:9px 11px; }
+    #pageRelationships .relationship-toolbar-reset-v7,
+    #pageRelationships .relationship-mobile-filter-toggle-v7 { width:100%; }
+    #pageRelationships .relationship-graph-panel-head-v7 { padding:12px; }
+    #pageRelationships .relationship-graph-status-v7 { display:none; }
+    #pageRelationships .relationship-graph-stage-v7,
+    #pageRelationships #relationshipGraphSvgV7 { min-height:500px; height:500px; }
+    #pageRelationships .relationship-minimap-v7 { width:98px; height:64px; }
+    #pageRelationships .relationship-legend-v7 { justify-content:flex-start; gap:10px; padding-inline:12px; }
+    #pageRelationships .relationship-detail-panel-v7 { padding:13px 12px; }
+  }
+</style>
+
 <style id="mranti-mobile-auth-safety-fix">
   body.crm-authenticated #loginScreen {
     display: none !important;
@@ -9173,8 +9456,112 @@
   </div>
 </header>
 <div class="relationship-workspace-host">
-  <div class="embedded-page-loading" id="relationshipLoading">Loading Relationship Intelligence…</div>
-  <iframe class="embedded-page-frame" id="relationshipFrame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads" style="display:none" title="MRANTI Relationship Intelligence"></iframe>
+  <section class="relationship-module-v7" id="relationshipModuleV7" aria-label="Relationship Intelligence network explorer">
+    <div class="relationship-toolbar-v7" aria-label="Relationship filters">
+      <label class="relationship-toolbar-field-v7 relationship-search-field-v7">
+        <span>Explore</span>
+        <span class="relationship-input-shell-v7">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.7-3.7"></path></svg>
+          <input id="relationshipSearchInputV7" type="search" placeholder="Search people, organisations, meetings…" oninput="relationshipV7SetSearch(this.value)"/>
+        </span>
+      </label>
+      <label class="relationship-toolbar-field-v7">
+        <span>Filter by organisation</span>
+        <select id="relationshipOrganisationSelectV7" onchange="relationshipV7SetTopFilter('organisation',this.value)"><option value="">All Organisations</option></select>
+      </label>
+      <label class="relationship-toolbar-field-v7">
+        <span>Filter by MRANTI staff</span>
+        <select id="relationshipStaffSelectV7" onchange="relationshipV7SetTopFilter('staff',this.value)"><option value="">All Staff</option></select>
+      </label>
+      <button class="relationship-toolbar-reset-v7" type="button" onclick="relationshipV7ResetView()">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 4v6h6"></path><path d="M20 20v-6h-6"></path><path d="M5.5 15a7 7 0 0 0 11.5 2l3-3"></path><path d="M18.5 9A7 7 0 0 0 7 7l-3 3"></path></svg>
+        <span>Reset View</span>
+      </button>
+      <button aria-controls="relationshipFilterPanelV7" aria-expanded="false" class="relationship-mobile-filter-toggle-v7" id="relationshipMobileFilterButtonV7" type="button" onclick="relationshipV7ToggleMobileFilters()">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>
+        <span>Network Filters</span>
+      </button>
+    </div>
+
+    <button aria-label="Close network filters" class="relationship-filter-backdrop-v7" id="relationshipFilterBackdropV7" type="button" onclick="relationshipV7ToggleMobileFilters(false)"></button>
+
+    <div class="relationship-layout-v7">
+      <aside class="relationship-filter-panel-v7" id="relationshipFilterPanelV7" aria-label="Network filters">
+        <div class="relationship-filter-head-v7">
+          <div><span class="relationship-panel-kicker-v7">Explore</span><h2>Network Filters</h2></div>
+          <button type="button" onclick="relationshipV7ClearAllFilters()">Clear all</button>
+        </div>
+
+        <section class="relationship-filter-section-v7">
+          <div class="relationship-filter-section-head-v7"><h3>Node Types</h3><button type="button" onclick="relationshipV7SelectAllNodeTypes()">Select all</button></div>
+          <div class="relationship-node-type-list-v7" id="relationshipNodeTypeFiltersV7">
+            <label><input checked type="checkbox" value="staff" onchange="relationshipV7MarkFiltersDirty()"/><span class="relationship-type-icon-v7 staff"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></span><span>MRANTI Staff</span><strong id="relationshipStaffCountV7">0</strong></label>
+            <label><input checked type="checkbox" value="person" onchange="relationshipV7MarkFiltersDirty()"/><span class="relationship-type-icon-v7 person"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M5 20a7 7 0 0 1 14 0"></path></svg></span><span>External Person</span><strong id="relationshipPersonCountV7">0</strong></label>
+            <label><input checked type="checkbox" value="organisation" onchange="relationshipV7MarkFiltersDirty()"/><span class="relationship-type-icon-v7 organisation"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14"></path><path d="M8 9h2M14 9h2M8 13h2M14 13h2M8 17h2M14 17h2"></path></svg></span><span>Organisation</span><strong id="relationshipOrganisationCountV7">0</strong></label>
+            <label><input checked type="checkbox" value="meeting" onchange="relationshipV7MarkFiltersDirty()"/><span class="relationship-type-icon-v7 meeting"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg></span><span>Meeting</span><strong id="relationshipMeetingCountV7">0</strong></label>
+          </div>
+        </section>
+
+        <section class="relationship-filter-section-v7">
+          <div class="relationship-filter-section-head-v7"><h3>Departments</h3><span id="relationshipDepartmentSummaryV7">All</span></div>
+          <div class="relationship-department-list-v7" id="relationshipDepartmentFiltersV7"></div>
+        </section>
+
+        <section class="relationship-filter-section-v7">
+          <div class="relationship-filter-section-head-v7"><h3>Relationship Strength</h3><span id="relationshipStrengthValueV7">1+</span></div>
+          <input aria-label="Minimum relationship strength" id="relationshipStrengthRangeV7" max="5" min="1" oninput="relationshipV7StrengthPreview(this.value)" step="1" type="range" value="1"/>
+          <div class="relationship-range-labels-v7"><span>1</span><span>5+</span></div>
+        </section>
+
+        <section class="relationship-filter-section-v7">
+          <div class="relationship-filter-section-head-v7"><h3>Connection Depth</h3></div>
+          <div class="relationship-depth-list-v7">
+            <label><input name="relationshipDepthV7" type="radio" value="1" onchange="relationshipV7MarkFiltersDirty()"/><span><strong>1st Degree</strong><small>Direct connections</small></span></label>
+            <label><input name="relationshipDepthV7" type="radio" value="2" onchange="relationshipV7MarkFiltersDirty()"/><span><strong>2nd Degree</strong><small>Connections of connections</small></span></label>
+            <label><input checked name="relationshipDepthV7" type="radio" value="3" onchange="relationshipV7MarkFiltersDirty()"/><span><strong>3rd Degree</strong><small>Extended network</small></span></label>
+          </div>
+        </section>
+
+        <button class="relationship-apply-button-v7" id="relationshipApplyFiltersV7" type="button" onclick="relationshipV7ApplyFilters()">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5h16l-6 7v5l-4 2v-7z"></path></svg>
+          <span>Apply Filters</span>
+        </button>
+      </aside>
+
+      <section class="relationship-graph-panel-v7" aria-label="Relationship graph">
+        <div class="relationship-graph-panel-head-v7">
+          <div><span class="relationship-panel-kicker-v7">Network overview</span><h2>Relationship ecosystem</h2><p id="relationshipGraphSummaryV7">Preparing relationship graph…</p></div>
+          <span class="relationship-graph-status-v7" id="relationshipGraphStatusV7"><i></i>Live CRM context</span>
+        </div>
+        <div class="relationship-graph-stage-v7" id="relationshipGraphStageV7">
+          <svg aria-label="Interactive MRANTI relationship graph" id="relationshipGraphSvgV7" preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 1200 720">
+            <defs>
+              <filter id="relationshipNodeShadowV7" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="7" flood-color="#1d4ed8" flood-opacity=".14" stdDeviation="8"/></filter>
+              <linearGradient id="relationshipMrantiFillV7" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#eaf2ff"/></linearGradient>
+              <linearGradient id="relationshipStaffFillV7" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+            </defs>
+            <g id="relationshipGraphViewportV7"></g>
+          </svg>
+          <div class="relationship-graph-controls-v7" aria-label="Graph controls">
+            <button aria-label="Zoom in" type="button" onclick="relationshipV7ZoomGraph(.16)">+</button>
+            <button aria-label="Zoom out" type="button" onclick="relationshipV7ZoomGraph(-.16)">−</button>
+            <button aria-label="Fit graph to view" type="button" onclick="relationshipV7FitGraph()"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M3 16v5h5"></path></svg></button>
+          </div>
+          <div class="relationship-minimap-v7" aria-label="Graph overview">
+            <svg id="relationshipMiniMapSvgV7" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1200 720"></svg>
+          </div>
+          <div class="relationship-graph-empty-v7" id="relationshipGraphEmptyV7" hidden><strong>No matching relationships</strong><span>Adjust the network filters to restore more nodes.</span></div>
+        </div>
+        <div class="relationship-legend-v7" aria-label="Node legend">
+          <span><i class="staff"></i>MRANTI Staff</span><span><i class="person"></i>External Person</span><span><i class="organisation"></i>Organisation</span><span><i class="meeting"></i>Meeting</span>
+        </div>
+      </section>
+
+      <aside class="relationship-detail-panel-v7" id="relationshipDetailPanelV7" aria-live="polite">
+        <div class="relationship-detail-empty-v7"><span class="relationship-detail-empty-icon-v7">RI</span><strong>Select a node</strong><p>Choose a person, organisation or meeting in the graph to review relationship context.</p></div>
+      </aside>
+    </div>
+  </section>
 </div>
 </section>
 <section class="system-page" data-page="profile" id="pageProfile">
@@ -12295,6 +12682,7 @@
       myFilterRecords();
       systemRenderDashboardCRM();
       systemRenderProfile();
+      if (systemRouteFromHash() === 'relationships') relationshipV7RenderModule(true);
     }
 
     function crmRecordSearchText(record) {
@@ -12986,52 +13374,691 @@
     function systemOpenRecordFromDashboard(recordKey){const key=String(recordKey||'').trim();if(!key){systemNavigate('contacts');return;}crmPendingRecordKey=key;systemNavigate('contacts',{recordKey:key});}
     function systemOpenMyRecord(recordId){const index=crmRecords.findIndex(record=>record.recordId===recordId);if(index>=0)mySelectedIndex=index;systemNavigate('my-records');setTimeout(myFilterRecords,50);}
 
-    async function systemLoadEmbeddedPage(type, force=false) {
-      if (type !== 'relationships') return;
-      if (systemEmbeddedLoaded.relationships && !force) return;
+    const relationshipV7State = {
+      model: null,
+      selectedId: 'mranti',
+      search: '',
+      organisation: '',
+      staff: '',
+      types: new Set(['staff','person','organisation','meeting']),
+      departments: null,
+      strength: 1,
+      depth: 3,
+      scale: 1,
+      panX: 0,
+      panY: 0,
+      positions: new Map(),
+      rendered: false,
+      resizing: 0
+    };
 
-      const frame = document.getElementById('relationshipFrame');
-      const loading = document.getElementById('relationshipLoading');
-      if (!frame || !loading) return;
+    function relationshipV7Clean(value, fallback = '') {
+      const text = String(value == null ? '' : value).trim();
+      return text || fallback;
+    }
 
-      frame.style.display = 'none';
-      loading.style.display = 'flex';
-      loading.textContent = 'Loading Relationship Intelligence…';
+    function relationshipV7Hash(value) {
+      let hash = 2166136261;
+      const text = String(value || '');
+      for (let index = 0; index < text.length; index += 1) {
+        hash ^= text.charCodeAt(index);
+        hash = Math.imul(hash, 16777619);
+      }
+      return hash >>> 0;
+    }
 
-      try {
-        let html = await crmFetchHtml(CRM_RELATIONSHIP_PAGE_URL);
-        const integratedStyles = `<style id="mrantiIntegratedRelationshipStyles">
-          *,*::before,*::after{box-sizing:border-box}
-          html,body{width:100%!important;height:100%!important;min-height:100%!important;margin:0!important;overflow:hidden!important;background:transparent!important}
-          body{padding:0!important;font-family:Inter,Segoe UI,sans-serif!important}
-          .top-nav,.page-head{display:none!important}
-          .shell{width:100%!important;max-width:none!important;height:100%!important;min-height:0!important;margin:0!important;padding:0!important;gap:10px!important;display:flex!important;flex-direction:column!important;box-sizing:border-box!important;overflow:hidden!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
-          .filter-row{flex:0 0 auto!important;width:100%!important;gap:10px!important;margin:0!important;align-items:end!important}
-          .legend-row{flex:0 0 auto!important;width:100%!important;margin:0!important;padding:0 2px!important}
-          .main-workspace{flex:1 1 auto!important;min-height:620px!important;height:auto!important;display:grid!important;grid-template-columns:minmax(0,1fr) minmax(350px,380px)!important;gap:16px!important;align-items:stretch!important;overflow:hidden!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
-          .graph-panel,.detail-panel{width:100%!important;height:100%!important;min-height:0!important;min-width:0!important;margin:0!important;box-sizing:border-box!important;border-radius:18px!important}
-          .graph-panel{overflow:hidden!important}
-          .detail-panel{min-width:350px!important;padding:16px!important;overflow-x:hidden!important;overflow-y:auto!important;scrollbar-gutter:stable!important}
-          .detail-panel *{min-width:0;box-sizing:border-box}
-          .detail-panel p,.detail-panel div,.detail-panel span,.detail-panel strong,.detail-panel button{overflow-wrap:anywhere!important;word-break:normal!important}
-          .detail-panel [class*="meeting"],.detail-panel [class*="history"],.detail-panel [class*="staff"]{max-width:100%!important}
-          #graphSvg{display:block!important;width:100%!important;height:100%!important;min-height:620px!important}
-          @media(max-width:1050px){html,body{height:auto!important;min-height:100%!important;overflow:auto!important}.shell{height:auto!important;overflow:visible!important}.filter-row{flex-wrap:wrap!important}.main-workspace{height:auto!important;min-height:0!important;grid-template-columns:1fr!important;overflow:visible!important}.graph-panel{min-height:640px!important;height:640px!important}.detail-panel{min-width:0!important;min-height:520px!important;height:auto!important;overflow:visible!important}#graphSvg{min-height:640px!important;height:640px!important}}
-          @media(max-width:620px){.filter-row{display:grid!important;grid-template-columns:1fr!important}.graph-panel{min-height:520px!important;height:520px!important}.detail-panel{padding:14px!important}#graphSvg{min-height:520px!important;height:520px!important}}
-        </style>`;
-        html = html.replace('</head>', integratedStyles + '</head>');
-        frame.srcdoc = html;
-        frame.style.display = 'block';
-        loading.style.display = 'none';
-        systemEmbeddedLoaded.relationships = true;
-      } catch (error) {
-        loading.textContent = error.message || 'Unable to load Relationship Intelligence.';
+    function relationshipV7ShortLabel(value, limit = 24) {
+      const text = relationshipV7Clean(value, 'Untitled');
+      return text.length > limit ? `${text.slice(0, Math.max(1, limit - 1)).trim()}…` : text;
+    }
+
+    function relationshipV7Initials(value) {
+      const words = relationshipV7Clean(value, 'MRANTI').split(/\s+/).filter(Boolean);
+      return words.slice(0, 2).map(word => word.charAt(0).toUpperCase()).join('') || 'M';
+    }
+
+    function relationshipV7BuildModel() {
+      const activeRecords = crmSortRecords(crmRecords.filter(record => crmStatus(record).toLowerCase() !== 'archived')).slice(0, 24);
+      const nodes = new Map();
+      const edges = new Map();
+      const recordIndexByObject = new Map(crmRecords.map((record, index) => [record, index]));
+
+      const addNode = (id, type, label, metadata = {}, recordIndex = -1) => {
+        if (!id || !label) return null;
+        let node = nodes.get(id);
+        if (!node) {
+          node = {
+            id, type, label,
+            role: metadata.role || '',
+            department: metadata.department || '',
+            organisation: metadata.organisation || '',
+            date: metadata.date || '',
+            context: metadata.context || '',
+            recordIndexes: new Set()
+          };
+          nodes.set(id, node);
+        }
+        if (!node.role && metadata.role) node.role = metadata.role;
+        if (!node.department && metadata.department) node.department = metadata.department;
+        if (!node.organisation && metadata.organisation) node.organisation = metadata.organisation;
+        if (!node.date && metadata.date) node.date = metadata.date;
+        if (!node.context && metadata.context) node.context = metadata.context;
+        if (recordIndex >= 0) node.recordIndexes.add(recordIndex);
+        return node;
+      };
+
+      const addEdge = (source, target, type, recordIndex = -1) => {
+        if (!source || !target || source === target) return;
+        const key = [source, target].sort().join('::');
+        let edge = edges.get(key);
+        if (!edge) {
+          edge = { id: key, source, target, type, weight: 0, recordIndexes: new Set() };
+          edges.set(key, edge);
+        }
+        edge.weight += 1;
+        if (recordIndex >= 0) edge.recordIndexes.add(recordIndex);
+      };
+
+      const mranti = addNode('mranti', 'mranti', 'MRANTI', { role: 'Relationship Intelligence Hub', department: 'Malaysia' });
+      activeRecords.forEach(record => {
+        const recordIndex = recordIndexByObject.get(record) ?? crmRecords.indexOf(record);
+        if (recordIndex >= 0) mranti.recordIndexes.add(recordIndex);
+        const company = relationshipV7Clean(record.companyName || record.organisation || record.organization || record.company);
+        const person = relationshipV7Clean(record.personName || record.externalContact || record.contactName || record.name);
+        const staffName = relationshipV7Clean(record.uploaderName || record.mrantiStaff || record.staffName || record.uploaderEmail, 'MRANTI Team');
+        const staffEmail = relationshipV7Clean(record.uploaderEmail);
+        const staffDepartment = relationshipV7Clean(record.uploaderUnit || record.staffDepartment || record.department || record.division, 'MRANTI');
+        const meetingTitle = relationshipV7Clean(record.meetingTitle, 'Untitled meeting');
+        const meetingDate = crmIntelShortDate(record);
+        const meetingContext = relationshipV7Clean(record.reason || record.meetingNotes, 'Meeting context not recorded');
+
+        const staffId = `staff:${crmNormalize(staffEmail || staffName) || relationshipV7Hash(staffName)}`;
+        addNode(staffId, 'staff', staffName, { role: staffDepartment, department: staffDepartment, organisation: 'MRANTI' }, recordIndex);
+        addEdge('mranti', staffId, 'staff', recordIndex);
+
+        let organisationId = '';
+        if (company) {
+          organisationId = `organisation:${crmNormalize(company) || relationshipV7Hash(company)}`;
+          addNode(organisationId, 'organisation', company, { role: 'Organisation', organisation: company }, recordIndex);
+          addEdge('mranti', organisationId, 'organisation', recordIndex);
+        }
+
+        let personId = '';
+        if (person) {
+          personId = `person:${crmNormalize(person) || relationshipV7Hash(person)}`;
+          addNode(personId, 'person', person, {
+            role: relationshipV7Clean(record.jobTitle || record.position, 'External contact'),
+            department: relationshipV7Clean(record.department || record.division),
+            organisation: company
+          }, recordIndex);
+          if (organisationId) addEdge(personId, organisationId, 'organisation', recordIndex);
+        }
+
+        const recordKey = crmRecordRouteKey(record) || `${meetingTitle}-${meetingDate}-${recordIndex}`;
+        const meetingId = `meeting:${crmNormalize(recordKey) || relationshipV7Hash(recordKey)}`;
+        addNode(meetingId, 'meeting', meetingTitle, { date: meetingDate, context: meetingContext, organisation: company }, recordIndex);
+        addEdge(staffId, meetingId, 'meeting', recordIndex);
+        if (organisationId) addEdge(organisationId, meetingId, 'meeting', recordIndex);
+        if (personId) addEdge(personId, meetingId, 'meeting', recordIndex);
+      });
+
+      const nodeList = Array.from(nodes.values()).map(node => ({ ...node, recordIndexes: Array.from(node.recordIndexes) }));
+      const edgeList = Array.from(edges.values()).map(edge => ({
+        ...edge,
+        recordIndexes: Array.from(edge.recordIndexes),
+        strength: Math.min(5, 1 + Math.floor(Math.log2(Math.max(1, edge.weight))))
+      }));
+      const nodeMap = new Map(nodeList.map(node => [node.id, node]));
+      const adjacency = new Map(nodeList.map(node => [node.id, []]));
+      edgeList.forEach(edge => {
+        adjacency.get(edge.source)?.push({ id: edge.target, edge });
+        adjacency.get(edge.target)?.push({ id: edge.source, edge });
+      });
+      return { nodes: nodeList, edges: edgeList, nodeMap, adjacency, activeRecords };
+    }
+
+    function relationshipV7PopulateControls(model) {
+      const countByType = model.nodes.reduce((counts, node) => {
+        counts[node.type] = (counts[node.type] || 0) + (node.type === 'mranti' ? 0 : 1);
+        return counts;
+      }, {});
+      const countTargets = {
+        staff: 'relationshipStaffCountV7',
+        person: 'relationshipPersonCountV7',
+        organisation: 'relationshipOrganisationCountV7',
+        meeting: 'relationshipMeetingCountV7'
+      };
+      Object.entries(countTargets).forEach(([type, id]) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = countByType[type] || 0;
+      });
+
+      const organisationSelect = document.getElementById('relationshipOrganisationSelectV7');
+      const staffSelect = document.getElementById('relationshipStaffSelectV7');
+      if (organisationSelect) {
+        const organisations = model.nodes.filter(node => node.type === 'organisation').sort((a, b) => a.label.localeCompare(b.label));
+        organisationSelect.innerHTML = '<option value="">All Organisations</option>' + organisations.map(node => `<option value="${crmEscape(node.id)}">${crmEscape(node.label)}</option>`).join('');
+        if (organisations.some(node => node.id === relationshipV7State.organisation)) organisationSelect.value = relationshipV7State.organisation;
+        else relationshipV7State.organisation = '';
+      }
+      if (staffSelect) {
+        const staff = model.nodes.filter(node => node.type === 'staff').sort((a, b) => a.label.localeCompare(b.label));
+        staffSelect.innerHTML = '<option value="">All Staff</option>' + staff.map(node => `<option value="${crmEscape(node.id)}">${crmEscape(node.label)}</option>`).join('');
+        if (staff.some(node => node.id === relationshipV7State.staff)) staffSelect.value = relationshipV7State.staff;
+        else relationshipV7State.staff = '';
+      }
+
+      const departmentCounts = new Map();
+      model.nodes.filter(node => node.type === 'staff').forEach(node => {
+        const department = relationshipV7Clean(node.department, 'MRANTI');
+        departmentCounts.set(department, (departmentCounts.get(department) || 0) + 1);
+      });
+      const departments = Array.from(departmentCounts.keys()).sort((a, b) => a.localeCompare(b));
+      if (relationshipV7State.departments === null || (departments.length && relationshipV7State.departments.size === 0)) relationshipV7State.departments = new Set(departments);
+      const departmentList = document.getElementById('relationshipDepartmentFiltersV7');
+      if (departmentList) {
+        departmentList.innerHTML = departments.length ? departments.map(department => `<label><input type="checkbox" value="${crmEscape(department)}" ${relationshipV7State.departments.has(department) ? 'checked' : ''} onchange="relationshipV7MarkFiltersDirty()"/><span>${crmEscape(department)}</span><strong>${departmentCounts.get(department)}</strong></label>`).join('') : '<div class="relationship-detail-note-v7">No staff departments recorded.</div>';
+      }
+      relationshipV7UpdateDepartmentSummary();
+      const search = document.getElementById('relationshipSearchInputV7');
+      if (search && search.value !== relationshipV7State.search) search.value = relationshipV7State.search;
+    }
+
+    function relationshipV7UpdateDepartmentSummary() {
+      const summary = document.getElementById('relationshipDepartmentSummaryV7');
+      const checkboxes = Array.from(document.querySelectorAll('#relationshipDepartmentFiltersV7 input[type="checkbox"]'));
+      if (!summary) return;
+      const checked = checkboxes.filter(input => input.checked).length;
+      summary.textContent = !checkboxes.length || checked === checkboxes.length ? 'All' : `${checked} selected`;
+    }
+
+    function relationshipV7FilteredModel(model) {
+      const threshold = relationshipV7State.strength;
+      let edges = model.edges.filter(edge => edge.strength >= threshold);
+      const contextRecordSets = [];
+      [relationshipV7State.organisation, relationshipV7State.staff].filter(Boolean).forEach(id => {
+        const node = model.nodeMap.get(id);
+        if (node) contextRecordSets.push(new Set(node.recordIndexes));
+      });
+      let contextRecords = null;
+      if (contextRecordSets.length) {
+        contextRecords = new Set(contextRecordSets[0]);
+        contextRecordSets.slice(1).forEach(set => {
+          contextRecords = new Set(Array.from(contextRecords).filter(index => set.has(index)));
+        });
+      }
+      if (contextRecords) edges = edges.filter(edge => edge.recordIndexes.some(index => contextRecords.has(index)) || edge.source === 'mranti' || edge.target === 'mranti');
+
+      const allowedByType = new Set(['mranti']);
+      model.nodes.forEach(node => {
+        if (relationshipV7State.types.has(node.type)) allowedByType.add(node.id);
+      });
+      if (relationshipV7State.departments instanceof Set) {
+        model.nodes.filter(node => node.type === 'staff' && !relationshipV7State.departments.has(relationshipV7Clean(node.department, 'MRANTI'))).forEach(node => allowedByType.delete(node.id));
+      }
+      if (contextRecords) {
+        model.nodes.forEach(node => {
+          if (node.id !== 'mranti' && !node.recordIndexes.some(index => contextRecords.has(index))) allowedByType.delete(node.id);
+        });
+      }
+
+      edges = edges.filter(edge => allowedByType.has(edge.source) && allowedByType.has(edge.target));
+      const adjacency = new Map(model.nodes.map(node => [node.id, []]));
+      edges.forEach(edge => {
+        adjacency.get(edge.source)?.push(edge.target);
+        adjacency.get(edge.target)?.push(edge.source);
+      });
+      const depthAllowed = new Set(['mranti']);
+      let frontier = ['mranti'];
+      for (let depth = 0; depth < relationshipV7State.depth; depth += 1) {
+        const next = [];
+        frontier.forEach(id => (adjacency.get(id) || []).forEach(neighbour => {
+          if (!depthAllowed.has(neighbour)) {
+            depthAllowed.add(neighbour);
+            next.push(neighbour);
+          }
+        }));
+        frontier = next;
+      }
+
+      let visibleIds = new Set(Array.from(allowedByType).filter(id => depthAllowed.has(id)));
+      const searchKey = crmNormalize(relationshipV7State.search);
+      if (searchKey) {
+        const matches = model.nodes.filter(node => visibleIds.has(node.id) && crmNormalize([node.label,node.role,node.department,node.organisation,node.context].join(' ')).includes(searchKey)).map(node => node.id);
+        const expanded = new Set(['mranti', ...matches]);
+        matches.forEach(id => (adjacency.get(id) || []).forEach(neighbour => expanded.add(neighbour)));
+        visibleIds = new Set(Array.from(visibleIds).filter(id => expanded.has(id)));
+      }
+      if (relationshipV7State.organisation) visibleIds.add(relationshipV7State.organisation);
+      if (relationshipV7State.staff) visibleIds.add(relationshipV7State.staff);
+      const nodes = model.nodes.filter(node => visibleIds.has(node.id));
+      const nodeIds = new Set(nodes.map(node => node.id));
+      edges = edges.filter(edge => nodeIds.has(edge.source) && nodeIds.has(edge.target));
+      return { nodes, edges, nodeIds };
+    }
+
+    function relationshipV7ComputePositions(nodes, edges) {
+      const width = 1200;
+      const height = 720;
+      const center = { x: width / 2, y: height / 2 };
+      const positions = new Map();
+      const velocities = new Map();
+      const ring = { staff: 170, organisation: 275, meeting: 315, person: 350, mranti: 0 };
+      const offsets = { staff: .1, organisation: 1.2, meeting: 2.25, person: 3.2, mranti: 0 };
+      const ordered = nodes.slice().sort((a, b) => a.type.localeCompare(b.type) || a.label.localeCompare(b.label));
+      const typeTotals = ordered.reduce((map, node) => map.set(node.type, (map.get(node.type) || 0) + 1), new Map());
+      const typeIndex = new Map();
+      ordered.forEach(node => {
+        if (node.id === 'mranti') {
+          positions.set(node.id, { ...center });
+          velocities.set(node.id, { x: 0, y: 0 });
+          return;
+        }
+        const index = typeIndex.get(node.type) || 0;
+        typeIndex.set(node.type, index + 1);
+        const total = Math.max(1, typeTotals.get(node.type) || 1);
+        const hash = relationshipV7Hash(node.id);
+        const angle = offsets[node.type] + (Math.PI * 2 * index / total) + ((hash % 1000) / 1000 - .5) * .62;
+        const radius = (ring[node.type] || 280) + ((hash >>> 10) % 70 - 35);
+        positions.set(node.id, { x: center.x + Math.cos(angle) * radius, y: center.y + Math.sin(angle) * radius * .78 });
+        velocities.set(node.id, { x: 0, y: 0 });
+      });
+
+      const edgeTargets = { staff: 145, organisation: 185, meeting: 122 };
+      for (let iteration = 0; iteration < 115; iteration += 1) {
+        for (let first = 0; first < ordered.length; first += 1) {
+          const nodeA = ordered[first];
+          if (nodeA.id === 'mranti') continue;
+          const posA = positions.get(nodeA.id);
+          const velA = velocities.get(nodeA.id);
+          for (let second = first + 1; second < ordered.length; second += 1) {
+            const nodeB = ordered[second];
+            const posB = positions.get(nodeB.id);
+            const velB = velocities.get(nodeB.id);
+            let dx = posA.x - posB.x;
+            let dy = posA.y - posB.y;
+            let distanceSquared = dx * dx + dy * dy;
+            if (distanceSquared < 64) {
+              dx += ((relationshipV7Hash(nodeA.id + nodeB.id) % 11) - 5) * .3;
+              dy += ((relationshipV7Hash(nodeB.id + nodeA.id) % 11) - 5) * .3;
+              distanceSquared = Math.max(64, dx * dx + dy * dy);
+            }
+            const distance = Math.sqrt(distanceSquared);
+            const force = Math.min(1.6, 5800 / distanceSquared) * .42;
+            const fx = dx / distance * force;
+            const fy = dy / distance * force;
+            velA.x += fx; velA.y += fy;
+            if (nodeB.id !== 'mranti') { velB.x -= fx; velB.y -= fy; }
+          }
+        }
+        edges.forEach(edge => {
+          const source = positions.get(edge.source);
+          const target = positions.get(edge.target);
+          if (!source || !target) return;
+          const dx = target.x - source.x;
+          const dy = target.y - source.y;
+          const distance = Math.max(1, Math.sqrt(dx * dx + dy * dy));
+          const desired = edgeTargets[edge.type] || 165;
+          const force = (distance - desired) * .0065 * Math.min(1.7, 1 + edge.strength * .08);
+          const fx = dx / distance * force;
+          const fy = dy / distance * force;
+          if (edge.source !== 'mranti') { velocities.get(edge.source).x += fx; velocities.get(edge.source).y += fy; }
+          if (edge.target !== 'mranti') { velocities.get(edge.target).x -= fx; velocities.get(edge.target).y -= fy; }
+        });
+        ordered.forEach(node => {
+          if (node.id === 'mranti') return;
+          const pos = positions.get(node.id);
+          const vel = velocities.get(node.id);
+          const radius = ring[node.type] || 280;
+          const dx = pos.x - center.x;
+          const dy = (pos.y - center.y) / .78;
+          const distance = Math.max(1, Math.sqrt(dx * dx + dy * dy));
+          const radialForce = (radius - distance) * .0024;
+          vel.x += dx / distance * radialForce;
+          vel.y += dy / distance * radialForce * .78;
+          vel.x += (center.x - pos.x) * .00055;
+          vel.y += (center.y - pos.y) * .00065;
+          vel.x *= .78;
+          vel.y *= .78;
+          pos.x = Math.max(70, Math.min(width - 70, pos.x + vel.x));
+          pos.y = Math.max(58, Math.min(height - 58, pos.y + vel.y));
+        });
+      }
+      return positions;
+    }
+
+    function relationshipV7EdgeMarkup(edge, positions) {
+      const source = positions.get(edge.source);
+      const target = positions.get(edge.target);
+      if (!source || !target) return '';
+      const middleX = (source.x + target.x) / 2;
+      const middleY = (source.y + target.y) / 2;
+      const curve = ((relationshipV7Hash(edge.id) % 29) - 14) * .65;
+      const dx = target.x - source.x;
+      const dy = target.y - source.y;
+      const length = Math.max(1, Math.sqrt(dx * dx + dy * dy));
+      const controlX = middleX - dy / length * curve;
+      const controlY = middleY + dx / length * curve;
+      const typeClass = edge.type === 'meeting' ? 'meeting' : edge.type === 'organisation' ? 'organisation' : 'staff';
+      return `<path class="relationship-edge-v7 ${typeClass} ${edge.strength >= 3 ? 'strong' : ''}" d="M ${source.x.toFixed(1)} ${source.y.toFixed(1)} Q ${controlX.toFixed(1)} ${controlY.toFixed(1)} ${target.x.toFixed(1)} ${target.y.toFixed(1)}"></path>`;
+    }
+
+    function relationshipV7NodeMarkup(node, position) {
+      const selected = node.id === relationshipV7State.selectedId ? ' selected' : '';
+      const dataId = crmEscape(encodeURIComponent(node.id));
+      const title = crmEscape([node.label,node.role,node.organisation,node.date].filter(Boolean).join(' · '));
+      const base = `class="relationship-node-v7 ${node.type}${selected}" data-node-id="${dataId}" role="button" tabindex="0" transform="translate(${position.x.toFixed(1)} ${position.y.toFixed(1)})" onclick="relationshipV7SelectNode(decodeURIComponent(this.dataset.nodeId))" onkeydown="relationshipV7NodeKeydown(event,this)"`;
+      if (node.type === 'mranti') {
+        return `<g ${base}><title>${title}</title><circle class="node-hit-v7" r="62"></circle><circle class="node-primary-v7" r="42" fill="url(#relationshipMrantiFillV7)" stroke="#2563eb" stroke-width="2"></circle><g transform="translate(-14 -14)" fill="#2563eb"><rect x="10" y="0" width="7" height="7" rx="1" transform="rotate(45 13.5 3.5)"></rect><rect x="0" y="10" width="7" height="7" rx="1" transform="rotate(45 3.5 13.5)"></rect><rect x="10" y="10" width="7" height="7" rx="1" transform="rotate(45 13.5 13.5)"></rect><rect x="20" y="10" width="7" height="7" rx="1" transform="rotate(45 23.5 13.5)"></rect><rect x="10" y="20" width="7" height="7" rx="1" transform="rotate(45 13.5 23.5)"></rect></g><text class="relationship-node-label-v7" x="0" y="61" text-anchor="middle">MRANTI</text><text class="relationship-node-meta-v7" x="0" y="75" text-anchor="middle">Relationship hub</text></g>`;
+      }
+      if (node.type === 'organisation') {
+        return `<g ${base}><title>${title}</title><rect class="node-hit-v7" x="-72" y="-28" width="144" height="56" rx="20"></rect><rect class="node-primary-v7" x="-64" y="-21" width="128" height="42" rx="18" fill="#ffffff" stroke="#23aeb0" stroke-width="1.6"></rect><circle cx="-43" cy="0" r="13" fill="#14a8ab"></circle><path d="M-49 7V-7l6-3 6 3V7M-46-4h2M-40-4h2M-46 0h2M-40 0h2M-46 4h2M-40 4h2" fill="none" stroke="#fff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path><text class="relationship-node-org-label-v7" x="-23" y="1">${crmEscape(relationshipV7ShortLabel(node.label,18))}</text></g>`;
+      }
+      if (node.type === 'meeting') {
+        return `<g ${base}><title>${title}</title><rect class="node-hit-v7" x="-62" y="-31" width="124" height="62" rx="12"></rect><rect class="node-primary-v7" x="-55" y="-24" width="110" height="48" rx="11" fill="#fffaf1" stroke="#eca43f" stroke-width="1.4"></rect><rect x="-8" y="-31" width="16" height="16" rx="5" fill="#fff" stroke="#eca43f" stroke-width="1.2"></rect><path d="M-4-28v4M4-28v4M-6-23h12M-5-20h3M1-20h4" fill="none" stroke="#e58a11" stroke-width="1.1" stroke-linecap="round"></path><text class="relationship-node-meeting-title-v7" x="0" y="-2">${crmEscape(relationshipV7ShortLabel(node.label,20))}</text><text class="relationship-node-meeting-date-v7" x="0" y="12">${crmEscape(relationshipV7ShortLabel(node.date || 'Date not recorded',18))}</text></g>`;
+      }
+      const initials = crmEscape(relationshipV7Initials(node.label));
+      const fill = node.type === 'person' ? '#9b7df0' : 'url(#relationshipStaffFillV7)';
+      const stroke = node.type === 'person' ? '#8b5cf6' : '#2563eb';
+      const radius = node.type === 'person' ? 17 : 21;
+      const labelY = node.type === 'person' ? 36 : 40;
+      return `<g ${base}><title>${title}</title><circle class="node-hit-v7" r="47"></circle><circle class="node-primary-v7" r="${radius}" fill="${fill}" stroke="${stroke}" stroke-width="1.7"></circle><text class="relationship-node-initials-v7" x="0" y="1">${initials}</text><text class="relationship-node-label-v7" x="0" y="${labelY}" text-anchor="middle">${crmEscape(relationshipV7ShortLabel(node.label,20))}</text><text class="relationship-node-meta-v7" x="0" y="${labelY + 13}" text-anchor="middle">${crmEscape(relationshipV7ShortLabel(node.role || node.organisation || (node.type === 'staff' ? 'MRANTI' : 'External contact'),24))}</text></g>`;
+    }
+
+    function relationshipV7DrawGraph() {
+      const model = relationshipV7State.model;
+      const viewport = document.getElementById('relationshipGraphViewportV7');
+      const empty = document.getElementById('relationshipGraphEmptyV7');
+      if (!model || !viewport) return;
+      const filtered = relationshipV7FilteredModel(model);
+      relationshipV7State.positions = relationshipV7ComputePositions(filtered.nodes, filtered.edges);
+      const edgesMarkup = filtered.edges.map(edge => relationshipV7EdgeMarkup(edge, relationshipV7State.positions)).join('');
+      const nodesMarkup = filtered.nodes.map(node => relationshipV7NodeMarkup(node, relationshipV7State.positions.get(node.id))).join('');
+      viewport.innerHTML = `<g class="relationship-edges-v7">${edgesMarkup}</g><g class="relationship-nodes-v7">${nodesMarkup}</g>`;
+      if (empty) empty.hidden = filtered.nodes.length > 1;
+      const summary = document.getElementById('relationshipGraphSummaryV7');
+      if (summary) summary.textContent = `${Math.max(0, filtered.nodes.length - 1)} visible nodes · ${filtered.edges.length} relationship links`;
+      const status = document.getElementById('relationshipGraphStatusV7');
+      if (status) status.lastChild.textContent = model.activeRecords.length ? `${model.activeRecords.length} recent CRM records` : 'No CRM records loaded';
+      if (!filtered.nodeIds.has(relationshipV7State.selectedId)) relationshipV7State.selectedId = 'mranti';
+      relationshipV7ApplyTransform();
+      relationshipV7RenderMiniMap(filtered);
+      relationshipV7RenderDetail(filtered);
+    }
+
+    function relationshipV7RenderMiniMap(filtered) {
+      const mini = document.getElementById('relationshipMiniMapSvgV7');
+      if (!mini) return;
+      const lines = filtered.edges.map(edge => {
+        const source = relationshipV7State.positions.get(edge.source);
+        const target = relationshipV7State.positions.get(edge.target);
+        return source && target ? `<line class="relationship-minimap-edge-v7" x1="${source.x.toFixed(1)}" y1="${source.y.toFixed(1)}" x2="${target.x.toFixed(1)}" y2="${target.y.toFixed(1)}"></line>` : '';
+      }).join('');
+      const nodes = filtered.nodes.map(node => {
+        const position = relationshipV7State.positions.get(node.id);
+        if (!position) return '';
+        const radius = node.id === 'mranti' ? 18 : node.type === 'organisation' ? 10 : node.type === 'meeting' ? 7 : 8;
+        return `<circle class="relationship-minimap-node-v7 ${node.type}" cx="${position.x.toFixed(1)}" cy="${position.y.toFixed(1)}" r="${radius}"></circle>`;
+      }).join('');
+      mini.innerHTML = `<g>${lines}${nodes}</g><rect class="relationship-minimap-viewport-v7" id="relationshipMiniViewportV7" x="0" y="0" width="1200" height="720"></rect>`;
+      relationshipV7UpdateMiniViewport();
+    }
+
+    function relationshipV7UpdateMiniViewport() {
+      const rect = document.getElementById('relationshipMiniViewportV7');
+      if (!rect) return;
+      const scale = relationshipV7State.scale;
+      const width = 1200 / scale;
+      const height = 720 / scale;
+      const x = Math.max(0, Math.min(1200 - width, -relationshipV7State.panX / scale));
+      const y = Math.max(0, Math.min(720 - height, -relationshipV7State.panY / scale));
+      rect.setAttribute('x', x.toFixed(1));
+      rect.setAttribute('y', y.toFixed(1));
+      rect.setAttribute('width', Math.max(24, width).toFixed(1));
+      rect.setAttribute('height', Math.max(18, height).toFixed(1));
+    }
+
+    function relationshipV7ApplyTransform() {
+      const viewport = document.getElementById('relationshipGraphViewportV7');
+      if (!viewport) return;
+      viewport.setAttribute('transform', `translate(${relationshipV7State.panX.toFixed(1)} ${relationshipV7State.panY.toFixed(1)}) scale(${relationshipV7State.scale.toFixed(3)})`);
+      relationshipV7UpdateMiniViewport();
+    }
+
+    function relationshipV7ZoomGraph(delta) {
+      relationshipV7State.scale = Math.max(.68, Math.min(2.25, relationshipV7State.scale + Number(delta || 0)));
+      relationshipV7ApplyTransform();
+    }
+
+    function relationshipV7FitGraph() {
+      relationshipV7State.scale = 1;
+      relationshipV7State.panX = 0;
+      relationshipV7State.panY = 0;
+      relationshipV7ApplyTransform();
+    }
+
+    function relationshipV7BindGraphInteractions() {
+      const svg = document.getElementById('relationshipGraphSvgV7');
+      if (!svg || svg.dataset.relationshipBound === 'true') return;
+      svg.dataset.relationshipBound = 'true';
+      let pointerId = null;
+      let lastX = 0;
+      let lastY = 0;
+      svg.addEventListener('pointerdown', event => {
+        if (event.target.closest('.relationship-node-v7')) return;
+        pointerId = event.pointerId;
+        lastX = event.clientX;
+        lastY = event.clientY;
+        svg.setPointerCapture(pointerId);
+        svg.classList.add('is-panning');
+      });
+      svg.addEventListener('pointermove', event => {
+        if (pointerId !== event.pointerId) return;
+        const factor = 1200 / Math.max(1, svg.clientWidth);
+        relationshipV7State.panX += (event.clientX - lastX) * factor;
+        relationshipV7State.panY += (event.clientY - lastY) * factor;
+        lastX = event.clientX;
+        lastY = event.clientY;
+        relationshipV7ApplyTransform();
+      });
+      const endPan = event => {
+        if (pointerId !== event.pointerId) return;
+        try { svg.releasePointerCapture(pointerId); } catch (error) {}
+        pointerId = null;
+        svg.classList.remove('is-panning');
+      };
+      svg.addEventListener('pointerup', endPan);
+      svg.addEventListener('pointercancel', endPan);
+      svg.addEventListener('wheel', event => {
+        event.preventDefault();
+        relationshipV7ZoomGraph(event.deltaY < 0 ? .12 : -.12);
+      }, { passive: false });
+    }
+
+    function relationshipV7SelectNode(id) {
+      if (!relationshipV7State.model?.nodeMap.has(id)) return;
+      relationshipV7State.selectedId = id;
+      document.querySelectorAll('#relationshipGraphViewportV7 .relationship-node-v7').forEach(node => node.classList.toggle('selected', decodeURIComponent(node.dataset.nodeId || '') === id));
+      relationshipV7RenderDetail(relationshipV7FilteredModel(relationshipV7State.model));
+    }
+
+    function relationshipV7NodeKeydown(event, element) {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      relationshipV7SelectNode(decodeURIComponent(element.dataset.nodeId || ''));
+    }
+
+    function relationshipV7RenderDetail(filtered) {
+      const panel = document.getElementById('relationshipDetailPanelV7');
+      const model = relationshipV7State.model;
+      if (!panel || !model) return;
+      const node = model.nodeMap.get(relationshipV7State.selectedId) || model.nodeMap.get('mranti');
+      if (!node) return;
+      const visibleIds = filtered?.nodeIds || new Set(model.nodes.map(item => item.id));
+      const neighbours = (model.adjacency.get(node.id) || [])
+        .filter(item => visibleIds.has(item.id))
+        .map(item => ({ node: model.nodeMap.get(item.id), edge: item.edge }))
+        .filter(item => item.node)
+        .sort((a, b) => b.edge.weight - a.edge.weight || a.node.label.localeCompare(b.node.label));
+      const recordIndexes = node.id === 'mranti' ? model.activeRecords.map(record => crmRecords.indexOf(record)).filter(index => index >= 0) : node.recordIndexes;
+      const records = recordIndexes.map(index => ({ index, record: crmRecords[index] })).filter(item => item.record).sort((a, b) => crmIntelDateScore(b.record) - crmIntelDateScore(a.record));
+      const organisations = Array.from(new Set(records.map(item => relationshipV7Clean(item.record.companyName || item.record.organisation || item.record.organization)).filter(Boolean))).slice(0, 6);
+      const directIds = new Set(neighbours.map(item => item.node.id));
+      const bridgeIds = new Set();
+      directIds.forEach(id => (model.adjacency.get(id) || []).forEach(item => {
+        if (item.id !== node.id && !directIds.has(item.id)) bridgeIds.add(item.id);
+      }));
+      const connectionMarkup = neighbours.slice(0, 5).map(item => `<div class="relationship-connection-item-v7"><i class="${crmEscape(item.node.type)}"></i><strong title="${crmEscape(item.node.label)}">${crmEscape(item.node.label)}</strong><span>${crmEscape(relationshipV7ShortLabel(item.node.role || item.node.organisation || item.node.type,18))}</span></div>`).join('') || '<div class="relationship-detail-note-v7">No visible direct connections under the current filters.</div>';
+      const organisationMarkup = organisations.length ? organisations.map(name => `<span>${crmEscape(name)}</span>`).join('') : '<span>MRANTI</span>';
+      const timelineMarkup = records.slice(0, 6).map(item => {
+        const title = relationshipV7Clean(item.record.meetingTitle, 'Untitled meeting');
+        const context = relationshipV7Clean(item.record.reason || item.record.meetingNotes || item.record.companyName, 'Meeting context not recorded');
+        return `<button class="relationship-timeline-item-v7" type="button" data-record-index="${item.index}" onclick="relationshipV7OpenTimelineRecord(Number(this.dataset.recordIndex))"><time>${crmEscape(crmIntelShortDate(item.record))}</time><strong>${crmEscape(title)}</strong><span>${crmEscape(relationshipV7ShortLabel(context,72))}</span></button>`;
+      }).join('') || '<div class="relationship-detail-note-v7">No meeting history is linked to this node.</div>';
+      const roleLine = [node.role,node.department,node.organisation].filter(Boolean).filter((value, index, array) => array.indexOf(value) === index).join(' · ') || (node.type === 'mranti' ? 'Relationship Intelligence Hub' : 'Relationship context');
+      panel.innerHTML = `<div class="relationship-profile-v7">
+        <span class="relationship-profile-avatar-v7 ${crmEscape(node.type)}">${crmEscape(node.type === 'organisation' ? 'ORG' : node.type === 'meeting' ? 'MTG' : relationshipV7Initials(node.label))}</span>
+        <div class="relationship-profile-copy-v7"><h2>${crmEscape(node.label)}</h2><p>${crmEscape(roleLine)}</p></div>
+        <span class="relationship-profile-type-v7">${crmEscape(node.type === 'mranti' ? 'Hub' : node.type)}</span>
+      </div>
+      <section class="relationship-detail-section-v7"><h3>Top Connections</h3><div class="relationship-connection-list-v7">${connectionMarkup}</div></section>
+      <section class="relationship-detail-section-v7"><h3>Organisations</h3><div class="relationship-organisation-list-v7">${organisationMarkup}</div></section>
+      <section class="relationship-detail-section-v7"><div class="relationship-metrics-v7"><div class="relationship-metric-v7"><strong>${bridgeIds.size}</strong><span>Bridge relationships</span></div><div class="relationship-metric-v7"><strong>${records.length}</strong><span>Meeting count</span></div></div><button class="relationship-history-button-v7" type="button" onclick="relationshipV7OpenFullHistory()"><span>Open Full Relationship History</span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M14 5h5v5M19 5l-8 8"></path><path d="M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"></path></svg></button></section>
+      <section class="relationship-detail-section-v7"><h3>Relationship Timeline</h3><div class="relationship-timeline-list-v7">${timelineMarkup}</div></section>`;
+    }
+
+    function relationshipV7OpenTimelineRecord(index) {
+      const record = crmRecords[index];
+      if (!record) return;
+      systemOpenRecordFromDashboard(crmRecordRouteKey(record));
+    }
+
+    function relationshipV7OpenFullHistory() {
+      const node = relationshipV7State.model?.nodeMap.get(relationshipV7State.selectedId);
+      if (!node || node.id === 'mranti') { systemNavigate('contacts'); return; }
+      if (node.type === 'meeting' && node.recordIndexes.length) {
+        relationshipV7OpenTimelineRecord(node.recordIndexes[0]);
+        return;
+      }
+      const query = node.label;
+      systemNavigate('contacts');
+      setTimeout(() => {
+        const input = document.getElementById('crmContactsSearch');
+        if (!input) return;
+        input.value = query;
+        crmFilterRecords();
+        input.focus();
+      }, 160);
+    }
+
+    function relationshipV7SetSearch(value) {
+      relationshipV7State.search = String(value || '');
+      relationshipV7DrawGraph();
+    }
+
+    function relationshipV7SetTopFilter(type, value) {
+      if (type === 'organisation') relationshipV7State.organisation = String(value || '');
+      if (type === 'staff') relationshipV7State.staff = String(value || '');
+      relationshipV7DrawGraph();
+    }
+
+    function relationshipV7StrengthPreview(value) {
+      const numeric = Math.max(1, Math.min(5, Number(value) || 1));
+      const output = document.getElementById('relationshipStrengthValueV7');
+      if (output) output.textContent = `${numeric}+`;
+      relationshipV7MarkFiltersDirty();
+    }
+
+    function relationshipV7MarkFiltersDirty() {
+      document.getElementById('relationshipApplyFiltersV7')?.classList.add('is-dirty');
+      relationshipV7UpdateDepartmentSummary();
+    }
+
+    function relationshipV7ApplyFilters() {
+      relationshipV7State.types = new Set(Array.from(document.querySelectorAll('#relationshipNodeTypeFiltersV7 input[type="checkbox"]:checked')).map(input => input.value));
+      relationshipV7State.departments = new Set(Array.from(document.querySelectorAll('#relationshipDepartmentFiltersV7 input[type="checkbox"]:checked')).map(input => input.value));
+      relationshipV7State.strength = Math.max(1, Math.min(5, Number(document.getElementById('relationshipStrengthRangeV7')?.value) || 1));
+      relationshipV7State.depth = Math.max(1, Math.min(3, Number(document.querySelector('input[name="relationshipDepthV7"]:checked')?.value) || 3));
+      document.getElementById('relationshipApplyFiltersV7')?.classList.remove('is-dirty');
+      relationshipV7DrawGraph();
+      relationshipV7ToggleMobileFilters(false);
+    }
+
+    function relationshipV7SelectAllNodeTypes() {
+      document.querySelectorAll('#relationshipNodeTypeFiltersV7 input[type="checkbox"]').forEach(input => { input.checked = true; });
+      relationshipV7MarkFiltersDirty();
+    }
+
+    function relationshipV7ClearAllFilters() {
+      document.querySelectorAll('#relationshipNodeTypeFiltersV7 input[type="checkbox"],#relationshipDepartmentFiltersV7 input[type="checkbox"]').forEach(input => { input.checked = true; });
+      const range = document.getElementById('relationshipStrengthRangeV7');
+      if (range) range.value = '1';
+      relationshipV7StrengthPreview(1);
+      const depth = document.querySelector('input[name="relationshipDepthV7"][value="3"]');
+      if (depth) depth.checked = true;
+      relationshipV7ApplyFilters();
+    }
+
+    function relationshipV7ResetView() {
+      relationshipV7State.search = '';
+      relationshipV7State.organisation = '';
+      relationshipV7State.staff = '';
+      const search = document.getElementById('relationshipSearchInputV7');
+      const organisation = document.getElementById('relationshipOrganisationSelectV7');
+      const staff = document.getElementById('relationshipStaffSelectV7');
+      if (search) search.value = '';
+      if (organisation) organisation.value = '';
+      if (staff) staff.value = '';
+      relationshipV7ClearAllFilters();
+      relationshipV7State.selectedId = 'mranti';
+      relationshipV7FitGraph();
+      relationshipV7DrawGraph();
+    }
+
+    function relationshipV7ToggleMobileFilters(force) {
+      const panel = document.getElementById('relationshipFilterPanelV7');
+      const backdrop = document.getElementById('relationshipFilterBackdropV7');
+      const button = document.getElementById('relationshipMobileFilterButtonV7');
+      if (!panel || !backdrop || !button) return;
+      const open = typeof force === 'boolean' ? force : !panel.classList.contains('mobile-open');
+      panel.classList.toggle('mobile-open', open);
+      backdrop.classList.toggle('show', open);
+      button.setAttribute('aria-expanded', String(open));
+    }
+
+    function relationshipV7RenderModule(force = false) {
+      const module = document.getElementById('relationshipModuleV7');
+      if (!module) return;
+      relationshipV7State.model = relationshipV7BuildModel();
+      relationshipV7PopulateControls(relationshipV7State.model);
+      relationshipV7BindGraphInteractions();
+      relationshipV7DrawGraph();
+      relationshipV7State.rendered = true;
+      systemEmbeddedLoaded.relationships = true;
+      if (!window.__relationshipV7ResizeBound) {
+        window.__relationshipV7ResizeBound = true;
+        window.addEventListener('resize', () => {
+          clearTimeout(relationshipV7State.resizing);
+          relationshipV7State.resizing = setTimeout(() => {
+            if (systemRouteFromHash() === 'relationships') relationshipV7DrawGraph();
+          }, 140);
+        });
       }
     }
+
+    async function systemLoadEmbeddedPage(type, force=false) {
+      if (type !== 'relationships') return;
+      if (systemEmbeddedLoaded.relationships && !force && relationshipV7State.rendered) {
+        relationshipV7RenderModule(false);
+        return;
+      }
+      relationshipV7RenderModule(true);
+    }
+
     function systemReloadEmbeddedPage(type) {
       if (type !== 'relationships') return;
       systemEmbeddedLoaded.relationships = false;
-      systemLoadEmbeddedPage('relationships', true);
+      relationshipV7RenderModule(true);
     }
 
     function systemGetPreferences(){try{return JSON.parse(localStorage.getItem(CRM_PREFERENCES_KEY)||'{}');}catch(error){return {};}}
